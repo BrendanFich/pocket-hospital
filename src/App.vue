@@ -11,14 +11,9 @@ export default {
 </script>
 
 <style>
-/* #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-} */
+#app {
+  font-family: "Microsoft YaHei", "Avenir", Helvetica, Arial, sans-serif;
+}
 /* 清除内外边距 */
 body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, /* structural elements 结构元素 */
 dl, dt, dd, ul, ol, li, /* list elements 列表元素 */
