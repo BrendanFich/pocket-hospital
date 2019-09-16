@@ -83,8 +83,8 @@
       </div>
     </div>
 
-    <mt-tabbar v-model="selected" :fixed="true">
-      <mt-tab-item class="active" id="首页">
+    <mt-tabbar :fixed="true">
+      <mt-tab-item class="active" id="首页" v-tap="reid">
         <img slot="icon" src="@/assets/首页_slices/首页-选中.png" />
         首页
       </mt-tab-item>
@@ -102,14 +102,16 @@
 
 <script>
 export default {
-  name: "Index",
-  data() {
-    return {};
+  name: 'Index',
+  data () {
+    return {}
   },
   methods: {
-    selected() {}
+    reid () {
+      console.log('ss')
+    }
   }
-};
+}
 </script>
 <style lang="scss" scoped>
 .index {
@@ -215,7 +217,7 @@ export default {
             color: #999999;
             margin-right: 50px;
           }
-          img{
+          img {
             width: 72px;
           }
         }
@@ -251,6 +253,10 @@ export default {
             font-weight: 400;
             line-height: 68px;
           }
+          img {
+            width: 45px;
+            height: 45px;
+          }
         }
       }
     }
@@ -261,13 +267,24 @@ export default {
     height: 98px;
     .mint-tab-item {
       padding: 12px 0 21px 0;
-      .mint-tab-item-icon {
+      text-align: center;
+      /deep/ .mint-tab-item-icon {
+        width: 34px;
+        height: 34px;
         img {
+          display: inline-block;
+          width: 34px;
+          height: 34px;
         }
       }
       /deep/ .mint-tab-item-label {
         font-size: 20px;
         color: #cccccc;
+      }
+    }
+    .mint-tab-item.active {
+      /deep/ .mint-tab-item-label {
+        color: #02d075;
       }
     }
   }
