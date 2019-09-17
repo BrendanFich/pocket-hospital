@@ -1,7 +1,6 @@
 <template>
   <div class="index">
     <mt-header fixed title="掌上医院"></mt-header>
-
     <div class="main">
       <div class="slogan">
         <img src="@/assets/首页_slices/图层 1.png" />
@@ -43,7 +42,6 @@
           </div>
         </div>
       </div>
-
       <div class="navs3">
         <h2>其他服务</h2>
         <div class="otherItems">
@@ -82,42 +80,25 @@
         </div>
       </div>
     </div>
-
-    <mt-tabbar :fixed="true">
-      <mt-tab-item class="active" id="首页" v-tap="reid">
-        <img slot="icon" src="@/assets/首页_slices/首页-选中.png" />
-        首页
-      </mt-tab-item>
-      <mt-tab-item id="互联网医院">
-        <img slot="icon" src="@/assets/首页_slices/医院 (4).png" />
-        互联网医院
-      </mt-tab-item>
-      <mt-tab-item id="个人中心">
-        <img slot="icon" src="@/assets/首页_slices/个人中心 选中.png" />
-        个人中心
-      </mt-tab-item>
-    </mt-tabbar>
+    <Tabbar></Tabbar>
   </div>
 </template>
 
 <script>
+import Tabbar from "./Tabbar";
 export default {
-  name: 'Index',
-  data () {
-    return {}
+  name: "Index",
+  data() {
+    return {};
   },
-  methods: {
-    reid () {
-      console.log('ss')
-    }
-  }
-}
+  components: { Tabbar },
+  methods: {}
+};
 </script>
 <style lang="scss" scoped>
 .index {
-  width: 750px;
   .mint-header {
-    height: 128px;
+    height: 80px;
     background-color: #ededed;
     font-size: 36px;
     font-weight: bold;
@@ -129,7 +110,7 @@ export default {
   .main {
     width: 100%;
     overflow: scroll;
-    margin-top: 128px;
+    margin-top: 80px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -164,7 +145,6 @@ export default {
         }
       }
     }
-
     .navs2 {
       border-top: 1px solid #ededed;
       border-bottom: 1px solid #ededed;
@@ -223,7 +203,6 @@ export default {
         }
       }
     }
-
     .navs3 {
       width: 100%;
       padding-bottom: 156px;
@@ -258,33 +237,6 @@ export default {
             height: 45px;
           }
         }
-      }
-    }
-  }
-
-  .mint-tabbar {
-    border-top: 1px solid #ececec;
-    height: 98px;
-    .mint-tab-item {
-      padding: 12px 0 21px 0;
-      text-align: center;
-      /deep/ .mint-tab-item-icon {
-        width: 34px;
-        height: 34px;
-        img {
-          display: inline-block;
-          width: 34px;
-          height: 34px;
-        }
-      }
-      /deep/ .mint-tab-item-label {
-        font-size: 20px;
-        color: #cccccc;
-      }
-    }
-    .mint-tab-item.active {
-      /deep/ .mint-tab-item-label {
-        color: #02d075;
       }
     }
   }

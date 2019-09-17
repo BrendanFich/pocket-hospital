@@ -13,6 +13,7 @@ export default {
 <style>
 #app {
   font-family: "Microsoft YaHei", "Avenir", Helvetica, Arial, sans-serif;
+  width: 750px;
 }
 /* 清除内外边距 */
 body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, /* structural elements 结构元素 */
