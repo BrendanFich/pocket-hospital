@@ -1,20 +1,17 @@
 <template>
   <div id="app">
+    <mt-header fixed title="掌上医院"></mt-header>
     <router-view />
   </div>
 </template>
 
 <script>
 export default {
-  name: "App"
-};
+  name: 'App'
+}
 </script>
 
 <style>
-#app {
-  font-family: "Microsoft YaHei", "Avenir", Helvetica, Arial, sans-serif;
-  width: 750px;
-}
 /* 清除内外边距 */
 body, h1, h2, h3, h4, h5, h6, hr, p, blockquote, /* structural elements 结构元素 */
 dl, dt, dd, ul, ol, li, /* list elements 列表元素 */
@@ -38,5 +35,18 @@ a {
 }
 a:hover {
   text-decoration: underline;
+}
+</style>
+<style lang="scss">
+#app {
+  font-family: "Microsoft YaHei", "Avenir", Helvetica, Arial, sans-serif;
+  width: 750px;
+  .mint-header {
+    height: 80px;
+    background-color: #ededed;
+    font-size: 36px;
+    font-weight: bold;
+    color: #333;
+  }
 }
 </style>

@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Index from '@/components/Index/Index'
-import Reserve from '@/components/Reserve/Reserve'
-import Reserve2 from '@/components/Reserve/Reserve2'
-
+import Index from '@/views/Index'
+import Reserve1 from '@/views/Reserve1'
+import Reserve2 from '@/views/Reserve2'
+import Reserve3 from '@/views/Reserve3'
+import Reserve4 from '@/views/Reserve4'
 
 Vue.use(Router)
 
@@ -19,14 +20,24 @@ export default new Router({
       component: Index
     },
     {
-      path: '/reserve',
-      name: 'Reserve',
-      component: Reserve
+      path: '/reserve1',
+      name: 'reserve1',
+      component: Reserve1
     },
     {
       path: '/reserve2',
-      name: 'Reserve2',
+      name: 'reserve2',
       component: Reserve2
     },
+    {
+      path: '/reserve3',
+      name: 'reserve3',
+      component: Reserve3
+    },
+    {
+      path: '/reserve4',
+      name: 'reserve4',
+      component: Reserve4
+    }
   ]
 })
