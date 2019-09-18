@@ -9,6 +9,7 @@ import PayOnline from '@/views/PayOnline'
 import CheckIn from '@/views/CheckIn'
 import QueueInfo from '@/views/QueueInfo'
 import HospitalInfo from '@/views/HospitalInfo'
+import DoctorIntro from '@/views/DoctorIntro'
 
 Vue.use(Router)
 
@@ -62,6 +63,11 @@ export default new Router({
       path: '/hospitalInfo',
       name: 'hospitalInfo',
       component: HospitalInfo
+    },
+    {
+      path: '/doctorIntro',
+      name: 'doctorIntro',
+      component: DoctorIntro
     }
   ]
 })
