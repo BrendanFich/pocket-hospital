@@ -13,20 +13,32 @@
         研究院专业研修学习。已在岗位十年经验。
       </div>
     </div>
-    <div class="workTime">ss</div>
-
-    <SimpleTabbar></SimpleTabbar>
+    <div class="workTime">
+      <ul>
+        <li v-for="(item,index) in workTimeList" :key="index">
+          <div class="time">
+            <img src="@/assets/预约挂号3_slices/时间.png" />
+            <span>{{item.time}}</span>
+          </div>
+          <div class="remaining">
+            <span :class="{over: item.remaining<=0}">剩余 {{item.remaining}}</span>
+            <span :class="{over: item.remaining<=0}" class="icon">&gt;</span>
+            <span :class="{overShow: item.remaining<=0}" class="overMsg">已约满</span>
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
-import SimpleTabbar from '../components/SimpleTabbar'
 export default {
   name: 'Reserve3',
   data () {
-    return {}
+    return {
+      workTimeList: [{ time: '09:00 - 10:00', remaining: 23 }]
+    }
   },
-  components: { SimpleTabbar },
   methods: {}
 }
 </script>
@@ -34,7 +46,7 @@ export default {
 <style lang="scss" scoped>
 .reserve3 {
   margin-top: 80px;
-  background: #F2F2F2;
+  background: #f2f2f2;
   .doctorInfo {
     background: #fff;
     display: flex;
@@ -73,7 +85,7 @@ export default {
       color: #333333;
     }
   }
-  .workTime{
+  .workTime {
     background: #fff;
     margin-top: 8px;
   }

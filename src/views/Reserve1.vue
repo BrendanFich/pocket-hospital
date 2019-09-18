@@ -9,9 +9,11 @@
 
       <mt-tab-container v-model="selected" class="right_container">
         <mt-tab-container-item id="1">
-          <mt-cell v-for="(item,index) in items" :title="item.name" :key="index">
-            <img class="icon" src="@/assets/预约挂号_slices/科室.png" />&gt;
-          </mt-cell>
+          <router-link to="/reserve2" v-for="(item,index) in items" :key="index">
+            <mt-cell :title="item.name">
+              <img class="icon" src="@/assets/预约挂号_slices/科室.png" />&gt;
+            </mt-cell>
+          </router-link>
         </mt-tab-container-item>
         <mt-tab-container-item id="2">
           <mt-cell v-for="n in 4" :title="'content ' + n" :key="n">
@@ -20,12 +22,10 @@
         </mt-tab-container-item>
       </mt-tab-container>
     </div>
-    <SimpleTabbar></SimpleTabbar>
   </div>
 </template>
 
 <script>
-import SimpleTabbar from '../components/SimpleTabbar'
 export default {
   name: 'Reserve1',
   data () {
@@ -54,8 +54,7 @@ export default {
         }
       ]
     }
-  },
-  components: { SimpleTabbar }
+  }
 }
 </script>
 
@@ -64,7 +63,7 @@ export default {
   background: #f2f2f2;
   .mint-search {
     margin: 0 auto;
-    padding-top: 100px;
+    padding-top: 10px;
     width: 700px;
     height: 66px;
     /deep/ .mint-searchbar {

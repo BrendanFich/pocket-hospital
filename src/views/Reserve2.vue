@@ -13,7 +13,7 @@
         activeBgColor="#09CF74"
       ></week-slider>
       <div class="doctorItems">
-        <div class="item" v-for="(item,index) in doctorItems" :key="index">
+        <router-link class="item" to="/reserve3" v-for="(item,index) in doctorItems" :key="index">
           <div class="doctorInfo">
             <img slot="icon" src="@/assets/预约挂号_slices/图层 826 拷贝 2.png" />
             <div class="textInfo">
@@ -28,17 +28,15 @@
             <span :class="{over: item.remaining<=0}" class="icon">&gt;</span>
             <span :class="{overShow: item.remaining<=0}" class="overMsg">已约满</span>
           </div>
-        </div>
+        </router-link>
       </div>
     </div>
-    <SimpleTabbar></SimpleTabbar>
   </div>
 </template>
 
 <script>
 import moment from 'moment'
 import weekSlider from '../components/weekSlider'
-import SimpleTabbar from '../components/SimpleTabbar'
 
 export default {
   name: 'Reserve2',
@@ -99,7 +97,7 @@ export default {
       ]
     }
   },
-  components: { weekSlider, SimpleTabbar },
+  components: { weekSlider },
   methods: {
     dateClickhandler (e) {
       this.date = e
@@ -112,7 +110,6 @@ export default {
 <style lang="scss" scoped>
 .reserve2 {
   .container {
-    margin-top: 80px;
     .selectedInfo {
       height: 100px;
       display: flex;

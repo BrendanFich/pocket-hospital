@@ -5,11 +5,11 @@
         <img src="@/assets/首页_slices/图层 1.png" />
       </div>
       <div class="navs1">
-        <div class="nav1">
+        <router-link class="nav1" to='/reserve1'>
           <img src="@/assets/首页_slices/组26(1).png" />
           <h2>预约、挂号</h2>
           <p>当天挂号、预约挂号</p>
-        </div>
+        </router-link>
         <div class="nav1">
           <img src="@/assets/首页_slices/组26.png" />
           <h2>缴费</h2>
@@ -99,7 +99,6 @@ export default {
   .main {
     width: 100%;
     overflow: scroll;
-    margin-top: 80px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -114,6 +113,7 @@ export default {
     .navs1 {
       display: flex;
       .nav1 {
+        display: block;
         width: 368px;
         height: 148px;
         color: #fff;

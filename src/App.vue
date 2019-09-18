@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <mt-header fixed title="掌上医院"></mt-header>
     <router-view />
   </div>
 </template>
@@ -41,12 +40,5 @@ a:hover {
 #app {
   font-family: "Microsoft YaHei", "Avenir", Helvetica, Arial, sans-serif;
   width: 750px;
-  .mint-header {
-    height: 80px;
-    background-color: #ededed;
-    font-size: 36px;
-    font-weight: bold;
-    color: #333;
-  }
 }
 </style>
