@@ -1,33 +1,13 @@
 <template>
   <div class="payOnline">
     <mt-navbar v-model="selected">
-      <mt-tab-item id="1">已付款</mt-tab-item>
-      <mt-tab-item id="2">未付款</mt-tab-item>
+      <mt-tab-item id="1">未付款</mt-tab-item>
+      <mt-tab-item id="2">已付款</mt-tab-item>
     </mt-navbar>
 
     <!-- tab-container -->
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
-        <mt-cell v-for="(item,index) in paid" :key="index">
-          <div class="leftInfo">
-            <div class="name">{{item.name}}</div>
-            <div class="medical_card">{{item.medical_card}}</div>
-            <div class="serial_number">
-              流水号：
-              <span class="value">{{item.serial_number}}</span>
-            </div>
-            <div class="department">
-              开单科室：
-              <span class="value">{{item.department}}</span>
-            </div>
-          </div>
-          <div class="rightInfo">
-            <div class="price">{{item.price}}</div>
-            <div class="date">{{item.date}}</div>
-          </div>
-        </mt-cell>
-      </mt-tab-container-item>
-      <mt-tab-container-item id="2">
         <router-link to="/checkIn" v-for="(item,index) in unpaid" :key="index">
           <mt-cell>
             <div class="leftInfo">
@@ -48,6 +28,28 @@
             </div>
           </mt-cell>
         </router-link>
+      </mt-tab-container-item>
+      <mt-tab-container-item id="2">
+        <div v-for="(item,index) in paid" :key="index">
+          <mt-cell>
+            <div class="leftInfo">
+              <div class="name">{{item.name}}</div>
+              <div class="medical_card">{{item.medical_card}}</div>
+              <div class="serial_number">
+                流水号：
+                <span class="value">{{item.serial_number}}</span>
+              </div>
+              <div class="department">
+                开单科室：
+                <span class="value">{{item.department}}</span>
+              </div>
+            </div>
+            <div class="rightInfo">
+              <div class="price">{{item.price}}</div>
+              <div class="date">{{item.date}}</div>
+            </div>
+          </mt-cell>
+        </div>
       </mt-tab-container-item>
     </mt-tab-container>
   </div>
@@ -102,6 +104,38 @@ export default {
         }
       ],
       paid: [
+        {
+          name: '陈小春',
+          medical_card: '3567901',
+          serial_number: '2019082854321',
+          department: '内分泌科(门)',
+          date: '2019-08-28 11:30',
+          price: '113.21元'
+        },
+        {
+          name: '陈小春',
+          medical_card: '3567901',
+          serial_number: '2019082854321',
+          department: '内分泌科(门)',
+          date: '2019-08-28 11:30',
+          price: '113.21元'
+        },
+        {
+          name: '陈小春',
+          medical_card: '3567901',
+          serial_number: '2019082854321',
+          department: '内分泌科(门)',
+          date: '2019-08-28 11:30',
+          price: '113.21元'
+        },
+        {
+          name: '陈小春',
+          medical_card: '3567901',
+          serial_number: '2019082854321',
+          department: '内分泌科(门)',
+          date: '2019-08-28 11:30',
+          price: '113.21元'
+        },
         {
           name: '陈小春',
           medical_card: '3567901',

@@ -5,77 +5,79 @@
         <img src="@/assets/首页_slices/图层 1.png" />
       </div>
       <div class="navs1">
-        <router-link class="nav1" to='/reserve1'>
+        <router-link class="nav1" to="/reserve1">
           <img src="@/assets/首页_slices/组26(1).png" />
           <h2>预约、挂号</h2>
           <p>当天挂号、预约挂号</p>
         </router-link>
-        <div class="nav1">
-          <img src="@/assets/首页_slices/组26.png" />
-          <h2>缴费</h2>
-          <p>在线缴检查费、药费</p>
+        <div class="navs1">
+          <router-link class="nav1" to="/payOnline">
+            <img src="@/assets/首页_slices/组26.png" />
+            <h2>缴费</h2>
+            <p>在线缴检查费、药费</p>
+          </router-link>
         </div>
       </div>
       <div class="navs2">
-        <div class="left">
+        <router-link class="left" to="/guidance">
           <div>
             <h2>智能导诊</h2>
             <p>精准，安全，快捷</p>
           </div>
           <img src="@/assets/首页_slices/f51a82f794ecc.png" />
-        </div>
+        </router-link>
         <div class="right">
-          <div class="nav2">
+          <router-link class="nav2" to="/checkIn">
             <div>
               <h2>就诊报到</h2>
               <p>报到后获取排队信息</p>
             </div>
             <img src="@/assets/首页_slices/组 27.png" />
-          </div>
-          <div class="nav2">
+          </router-link>
+          <router-link class="nav2" to="/liveHospital">
             <div>
               <h2>住院服务</h2>
               <p>住院手续一条龙服务</p>
             </div>
             <img src="@/assets/首页_slices/住院服务.png" />
-          </div>
+          </router-link>
         </div>
       </div>
       <div class="navs3">
         <h2>其他服务</h2>
         <div class="otherItems">
-          <div class="item">
+          <router-link class="item" to="/hospitalInfo">
             <img src="@/assets/首页_slices/医院 (2).png" />
             <h3>医院信息</h3>
-          </div>
-          <div class="item">
+          </router-link>
+          <router-link class="item" to="/doctorIntro">
             <img src="@/assets/首页_slices/医生 (1).png" />
             <h3>医生介绍</h3>
-          </div>
-          <div class="item">
+          </router-link>
+          <router-link class="item" to="/report">
             <img src="@/assets/首页_slices/报告 (1).png" />
             <h3>报告查询</h3>
-          </div>
-          <div class="item">
+          </router-link>
+          <router-link class="item" to="/drug">
             <img src="@/assets/首页_slices/药.png" />
             <h3>药品查询</h3>
-          </div>
-          <div class="item">
+          </router-link>
+          <router-link class="item" to="/servePrice">
             <img src="@/assets/首页_slices/医疗.png" />
             <h3>医疗服务价格</h3>
-          </div>
-          <div class="item">
+          </router-link>
+          <router-link class="item" to="/parkinSpace">
             <img src="@/assets/首页_slices/车位.png" />
             <h3>车位查询</h3>
-          </div>
-          <div class="item">
+          </router-link>
+          <router-link class="item" to="/suggestion">
             <img src="@/assets/首页_slices/意见.png" />
             <h3>意见提交</h3>
-          </div>
-          <div class="item">
+          </router-link>
+          <router-link class="item" to="/addrNav">
             <img src="@/assets/首页_slices/导航.png" />
             <h3>来院导航</h3>
-          </div>
+          </router-link>
         </div>
       </div>
     </div>
@@ -201,7 +203,6 @@ export default {
         padding-left: 49px;
         line-height: 68px;
         font-weight: 400;
-        font-size: 24px;
         border-bottom: 1px solid #ededed;
       }
       .otherItems {
