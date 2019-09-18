@@ -16,15 +16,17 @@
     <div class="workTime">
       <ul>
         <li v-for="(item,index) in workTimeList" :key="index">
-          <div class="time">
-            <img src="@/assets/预约挂号3_slices/时间.png" />
-            <span>{{item.time}}</span>
-          </div>
-          <div class="remaining">
-            <span :class="{over: item.remaining<=0}">剩余 {{item.remaining}}</span>
-            <span :class="{over: item.remaining<=0}" class="icon">&gt;</span>
-            <span :class="{overShow: item.remaining<=0}" class="overMsg">已约满</span>
-          </div>
+          <router-link to="/reserve4" class="itemContent">
+            <div class="time">
+              <img src="@/assets/预约挂号3_slices/时间.png" />
+              <span>{{item.time}}</span>
+            </div>
+            <div class="remaining">
+              <span :class="{over: item.remaining<=0}">剩余 {{item.remaining}}</span>
+              <span :class="{over: item.remaining<=0}" class="icon">&gt;</span>
+              <span :class="{overShow: item.remaining<=0}" class="overMsg">已约满</span>
+            </div>
+          </router-link>
         </li>
       </ul>
     </div>
@@ -36,7 +38,11 @@ export default {
   name: 'Reserve3',
   data () {
     return {
-      workTimeList: [{ time: '09:00 - 10:00', remaining: 23 }]
+      workTimeList: [
+        { time: '09:00 - 10:00', remaining: 23 },
+        { time: '10:00 - 11:00', remaining: 0 },
+        { time: '11:00 - 12:00', remaining: 23 }
+      ]
     }
   },
   methods: {}
@@ -45,8 +51,8 @@ export default {
 
 <style lang="scss" scoped>
 .reserve3 {
-  margin-top: 80px;
   background: #f2f2f2;
+  height: 100vh;
   .doctorInfo {
     background: #fff;
     display: flex;
@@ -88,6 +94,48 @@ export default {
   .workTime {
     background: #fff;
     margin-top: 8px;
+    ul > li {
+      padding-left: 31px;
+      padding-right: 47px;
+      border-bottom: 1px solid #ededed;
+      .itemContent {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 88px;
+        .time {
+          display: flex;
+          align-items: center;
+          color: #333333;
+          font-size: 30px;
+          img {
+            width: 24px;
+            height: 24px;
+            margin-right: 16px;
+          }
+        }
+      }
+      .remaining {
+        font-size: 24px;
+        color: #09cf74;
+        .over {
+          display: none;
+        }
+        .overMsg {
+          display: none;
+          color: #999999;
+          float: right;
+        }
+        .overShow {
+          display: inline;
+        }
+        .icon {
+          color: #999999;
+          float: right;
+          margin-left: 38px;
+        }
+      }
+    }
   }
 }
 </style>

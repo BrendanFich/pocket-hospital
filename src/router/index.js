@@ -5,6 +5,10 @@ import Reserve1 from '@/views/Reserve1'
 import Reserve2 from '@/views/Reserve2'
 import Reserve3 from '@/views/Reserve3'
 import Reserve4 from '@/views/Reserve4'
+import PayOnline from '@/views/PayOnline'
+import CheckIn from '@/views/CheckIn'
+import QueueInfo from '@/views/QueueInfo'
+import HospitalInfo from '@/views/HospitalInfo'
 
 Vue.use(Router)
 
@@ -38,6 +42,26 @@ export default new Router({
       path: '/reserve4',
       name: 'reserve4',
       component: Reserve4
+    },
+    {
+      path: '/payOnline',
+      name: 'payOnline',
+      component: PayOnline
+    },
+    {
+      path: '/checkIn',
+      name: 'checkIn',
+      component: CheckIn
+    },
+    {
+      path: '/queueInfo',
+      name: 'queueInfo',
+      component: QueueInfo
+    },
+    {
+      path: '/hospitalInfo',
+      name: 'hospitalInfo',
+      component: HospitalInfo
     }
   ]
 })
