@@ -10,6 +10,7 @@ import CheckIn from '@/views/CheckIn'
 import QueueInfo from '@/views/QueueInfo'
 import HospitalInfo from '@/views/HospitalInfo'
 import DoctorIntro from '@/views/DoctorIntro'
+import Guidance from '@/views/Guidance'
 
 Vue.use(Router)
 
@@ -68,6 +69,11 @@ export default new Router({
       path: '/doctorIntro',
       name: 'doctorIntro',
       component: DoctorIntro
+    },
+    {
+      path: '/guidance',
+      name: 'guidance',
+      component: Guidance
     }
   ]
 })

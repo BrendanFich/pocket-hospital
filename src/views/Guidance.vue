@@ -1,14 +1,13 @@
 <template>
-  <div class="doctorIntro">
-    <div style="background: #fff;">
-      <swiper :options="swiperOption">
-        <swiper-slide v-for="(item,index) in departments" :key="index">
-          <div class="icon" :style="{background: item.bgcolor}">{{item.name.substring(0,1)}}</div>
-          <div class="department">{{item.name}}</div>
-        </swiper-slide>
-      </swiper>
+  <div class="guidance">
+    <div class="search">
+      <div class="searchBox">
+        <mt-search v-model="value" placeholder="搜索科室或医生" cancel-text="取消"></mt-search>
+      </div>
+      <div class="searchTags">
+        <span class="tag" v-for="(tag,index) in searchTags" :key="index">{{tag}}</span>
+      </div>
     </div>
-    <div class="title">医生简介</div>
     <mt-tab-container v-model="selected">
       <mt-tab-container-item v-for="(item,index) in departments" :key="index" :id="index">
         <ul style="background: #fff;">
@@ -30,26 +29,27 @@
 </template>
 
 <script>
-let vm = null
 export default {
-  name: 'DoctorIntro',
+  name: 'Guidance',
   data () {
     return {
+      value: '',
       selected: 0,
-      swiperOption: {
-        slidesPerView: 5.5,
-        slideToClickedSlide: true,
-        on: {
-          tap: function () {
-            const clickedIndex = this.clickedIndex
-            vm.handleClickSlide(clickedIndex)
-          }
-        }
-      },
+      searchTags: [
+        '头痛',
+        '消化不良',
+        '月经不调',
+        '妇科炎症',
+        '过敏',
+        '头痛',
+        '消化不良',
+        '月经不调'
+      ],
       departments: [
         {
           name: '内分泌专科',
           bgcolor: '#E3B461',
+
           doctors: [
             {
               avatarUrl: '',
@@ -133,54 +133,57 @@ export default {
       ]
     }
   },
-  created () {
-    vm = this
-    console.log(this.selected)
-  },
-  methods: {
-    handleClickSlide (index) {
-      this.selected = index
-      console.log(index)
-    }
-  }
+  methods: {}
 }
 </script>
 
 <style lang="scss" scoped>
-.doctorIntro {
+.guidance {
   background: #f2f2f2;
   height: 100vh;
-  /deep/ .swiper-wrapper {
-    padding: 0 20px;
-  }
-  .swiper-slide {
-    height: 144px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    .icon {
-      width: 70px;
-      height: 70px;
-      line-height: 70px;
-      text-align: center;
-      border-radius: 50%;
-      color: #fff;
-      font-size: 30px;
+  .search {
+    background: #fff;
+    .searchBox {
+      height: 116px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      .mint-search {
+        width: 700px;
+        height: 66px;
+        /deep/ .mint-searchbar {
+          width: 700px;
+          height: 66px;
+          z-index: 0;
+          background: #f6f6f6;
+          padding: 0;
+          .mint-searchbar-inner {
+            background: #f6f6f6;
+            height: 24px;
+            font-size: 24px;
+            .mint-searchbar-core {
+              background: #f6f6f6;
+            }
+          }
+        }
+      }
     }
-    .department {
-      margin-top: 15px;
-      font-size: 20px;
-      color: #666666;
+    .searchTags {
+      width: 710px;
+      margin: 0 auto;
+      padding-bottom: 27px;
+      .tag {
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 10px;
+        border: 1px dashed #dfdfdf;
+        border-radius: 10px;
+      }
     }
   }
-  .title {
-    font-size: 24px;
-    color: #999999;
-    line-height: 88px;
-    margin-left: 30px;
-  }
+
   .doctorIntroCard {
+    margin-top: 10px;
     height: 195px;
     padding: 30px 50px 40px 30px;
     border-bottom: 1px solid#dedede;
