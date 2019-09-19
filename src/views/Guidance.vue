@@ -2,7 +2,7 @@
   <div class="guidance">
     <div class="search">
       <div class="searchBox">
-        <mt-search v-model="value" placeholder="搜索科室或医生" cancel-text="取消"></mt-search>
+        <mt-search v-model="value" placeholder="搜索科室或医生"></mt-search>
       </div>
       <div class="searchTags">
         <span class="tag" v-for="(tag,index) in searchTags" :key="index">{{tag}}</span>
@@ -143,35 +143,46 @@ export default {
   height: 100vh;
   .search {
     background: #fff;
+    padding: 30px 25px 38px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     .searchBox {
-      height: 116px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      width: 690px;
+      height: 66px;
+      background: #f6f6f6;
+      border-radius: 10px;
       .mint-search {
-        width: 700px;
         height: 66px;
+        border-radius: 10px;
         /deep/ .mint-searchbar {
-          width: 700px;
-          height: 66px;
-          z-index: 0;
           background: #f6f6f6;
+          border-radius: 10px;
+          height: 66px;
           padding: 0;
           .mint-searchbar-inner {
+            padding: 20px 38px;
             background: #f6f6f6;
-            height: 24px;
-            font-size: 24px;
+            border-radius: 10px;
+            .mintui.mintui-search {
+              margin-top: 3px;
+              margin-right: 10px;
+            }
             .mint-searchbar-core {
               background: #f6f6f6;
+              font-size: 24px;
             }
+          }
+          .mint-searchbar-cancel {
+            margin-right: 38px;
+            font-size: 24px;
           }
         }
       }
     }
     .searchTags {
       width: 710px;
-      margin: 0 auto;
-      padding-bottom: 27px;
       .tag {
         display: inline-block;
         padding: 10px 20px;

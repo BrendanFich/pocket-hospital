@@ -62,13 +62,31 @@ export default {
 .reserve1 {
   background: #f2f2f2;
   .mint-search {
-    margin: 0 auto;
-    padding-top: 10px;
-    width: 700px;
+    border-radius: 10px;
     height: 66px;
+    padding: 30px 25px;
     /deep/ .mint-searchbar {
-      z-index: 0;
       background: #f6f6f6;
+      border-radius: 10px;
+      height: 66px;
+      padding: 0;
+      .mint-searchbar-inner {
+        padding: 20px 38px;
+        background: #f6f6f6;
+        border-radius: 10px;
+        .mintui.mintui-search {
+          margin-top: 3px;
+          margin-right: 10px;
+        }
+        .mint-searchbar-core {
+          background: #f6f6f6;
+          font-size: 24px;
+        }
+      }
+      .mint-searchbar-cancel {
+        margin-right: 38px;
+        font-size: 24px;
+      }
     }
   }
   .content {
