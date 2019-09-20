@@ -1,104 +1,143 @@
 <template>
   <div class="index">
-    <div class="main">
-      <div class="slogan">
-        <img src="@/assets/首页_slices/图层 1.png" />
-      </div>
-      <div class="navs1">
-        <router-link class="nav1" to="/reserve1">
-          <img src="@/assets/首页_slices/组26(1).png" />
-          <h2>预约、挂号</h2>
-          <p>当天挂号、预约挂号</p>
-        </router-link>
-        <div class="navs1">
-          <router-link class="nav1" to="/payOnline">
-            <img src="@/assets/首页_slices/组26.png" />
-            <h2>缴费</h2>
-            <p>在线缴检查费、药费</p>
-          </router-link>
-        </div>
-      </div>
-      <div class="navs2">
-        <router-link class="left" to="/guidance">
-          <div>
-            <h2>智能导诊</h2>
-            <p>精准，安全，快捷</p>
+    <mt-tab-container v-model="selected">
+      <mt-tab-container-item id="首页">
+        <div class="index">
+          <div class="slogan">
+            <img src="@/assets/首页_slices/图层 1.png" />
           </div>
-          <img src="@/assets/首页_slices/f51a82f794ecc.png" />
-        </router-link>
-        <div class="right">
-          <router-link class="nav2" to="/checkIn">
-            <div>
-              <h2>就诊报到</h2>
-              <p>报到后获取排队信息</p>
+          <div class="navs1">
+            <router-link class="nav1" to="/reserve1">
+              <img src="@/assets/首页_slices/组26(1).png" />
+              <h2>预约、挂号</h2>
+              <p>当天挂号、预约挂号</p>
+            </router-link>
+            <div class="navs1">
+              <router-link class="nav1" to="/payOnline">
+                <img src="@/assets/首页_slices/组26.png" />
+                <h2>缴费</h2>
+                <p>在线缴检查费、药费</p>
+              </router-link>
             </div>
-            <img src="@/assets/首页_slices/组 27.png" />
-          </router-link>
-          <router-link class="nav2" to="/liveHospital">
-            <div>
-              <h2>住院服务</h2>
-              <p>住院手续一条龙服务</p>
+          </div>
+          <div class="navs2">
+            <router-link class="left" to="/guidance">
+              <div>
+                <h2>智能导诊</h2>
+                <p>精准，安全，快捷</p>
+              </div>
+              <img src="@/assets/首页_slices/f51a82f794ecc.png" />
+            </router-link>
+            <div class="right">
+              <router-link class="nav2" to="/checkIn">
+                <div>
+                  <h2>就诊报到</h2>
+                  <p>报到后获取排队信息</p>
+                </div>
+                <img src="@/assets/首页_slices/组 27.png" />
+              </router-link>
+              <router-link class="nav2" to="/liveHospital">
+                <div>
+                  <h2>住院服务</h2>
+                  <p>住院手续一条龙服务</p>
+                </div>
+                <img src="@/assets/首页_slices/住院服务.png" />
+              </router-link>
             </div>
-            <img src="@/assets/首页_slices/住院服务.png" />
-          </router-link>
+          </div>
+          <div class="navs3">
+            <h2>其他服务</h2>
+            <div class="otherItems">
+              <router-link class="item" to="/hospitalInfo">
+                <img src="@/assets/首页_slices/医院 (2).png" />
+                <h3>医院信息</h3>
+              </router-link>
+              <router-link class="item" to="/doctorIntro">
+                <img src="@/assets/首页_slices/医生 (1).png" />
+                <h3>医生介绍</h3>
+              </router-link>
+              <router-link class="item" to="/report">
+                <img src="@/assets/首页_slices/报告 (1).png" />
+                <h3>报告查询</h3>
+              </router-link>
+              <router-link class="item" to="/drugSearch">
+                <img src="@/assets/首页_slices/药.png" />
+                <h3>药品查询</h3>
+              </router-link>
+              <router-link class="item" to="/servePrice">
+                <img src="@/assets/首页_slices/医疗.png" />
+                <h3>医疗服务价格</h3>
+              </router-link>
+              <router-link class="item" to="/parkingSpace">
+                <img src="@/assets/首页_slices/车位.png" />
+                <h3>车位查询</h3>
+              </router-link>
+              <router-link class="item" to="/suggestion">
+                <img src="@/assets/首页_slices/意见.png" />
+                <h3>意见提交</h3>
+              </router-link>
+              <router-link class="item" to="/addrNav">
+                <img src="@/assets/首页_slices/导航.png" />
+                <h3>来院导航</h3>
+              </router-link>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="navs3">
-        <h2>其他服务</h2>
-        <div class="otherItems">
-          <router-link class="item" to="/hospitalInfo">
-            <img src="@/assets/首页_slices/医院 (2).png" />
-            <h3>医院信息</h3>
-          </router-link>
-          <router-link class="item" to="/doctorIntro">
-            <img src="@/assets/首页_slices/医生 (1).png" />
-            <h3>医生介绍</h3>
-          </router-link>
-          <router-link class="item" to="/report">
-            <img src="@/assets/首页_slices/报告 (1).png" />
-            <h3>报告查询</h3>
-          </router-link>
-          <router-link class="item" to="/drug">
-            <img src="@/assets/首页_slices/药.png" />
-            <h3>药品查询</h3>
-          </router-link>
-          <router-link class="item" to="/servePrice">
-            <img src="@/assets/首页_slices/医疗.png" />
-            <h3>医疗服务价格</h3>
-          </router-link>
-          <router-link class="item" to="/parkinSpace">
-            <img src="@/assets/首页_slices/车位.png" />
-            <h3>车位查询</h3>
-          </router-link>
-          <router-link class="item" to="/suggestion">
-            <img src="@/assets/首页_slices/意见.png" />
-            <h3>意见提交</h3>
-          </router-link>
-          <router-link class="item" to="/addrNav">
-            <img src="@/assets/首页_slices/导航.png" />
-            <h3>来院导航</h3>
-          </router-link>
+      </mt-tab-container-item>
+      <mt-tab-container-item id="互联网医院">
+        <div class="internetHospital">
+          <img src="@/assets/互联网医院_slices/组 20.png" alt />
+          <div class="btns">
+            <router-link to="/inquiryOnline">
+              <img src="@/assets/互联网医院_slices/组 20(1).png" />
+              <p>在线问诊</p>
+            </router-link>
+            <router-link to="/">
+              <img src="@/assets/互联网医院_slices/组 20(2).png" />
+              <p>在线复诊</p>
+            </router-link>
+            <router-link to="/">
+              <img src="@/assets/互联网医院_slices/组 20(3).png" />
+              <p>药物配送</p>
+            </router-link>
+          </div>
         </div>
-      </div>
-    </div>
-    <HomeTabbar></HomeTabbar>
+      </mt-tab-container-item>
+      <mt-tab-container-item id="个人中心">个人中心</mt-tab-container-item>
+    </mt-tab-container>
+
+    <mt-tabbar v-model="selected" :fixed="true">
+      <mt-tab-item id="首页">
+        <img slot="icon" src="@/assets/首页_slices/首页-选中.png" />
+        首页
+      </mt-tab-item>
+      <mt-tab-item id="互联网医院">
+        <img slot="icon" src="@/assets/首页_slices/医院 (4).png" />
+        互联网医院
+      </mt-tab-item>
+      <mt-tab-item id="个人中心">
+        <img slot="icon" src="@/assets/首页_slices/个人中心 选中.png" />
+        个人中心
+      </mt-tab-item>
+    </mt-tabbar>
   </div>
 </template>
 
 <script>
-import HomeTabbar from '../components/HomeTabbar'
 export default {
   name: 'Index',
   data () {
-    return {}
+    return {
+      selected: '首页'
+    }
   },
-  components: { HomeTabbar },
+  components: {},
   methods: {}
 }
 </script>
 <style lang="scss" scoped>
 .index {
-  .main {
+  .index {
     width: 100%;
     overflow: scroll;
     display: flex;
@@ -108,7 +147,7 @@ export default {
     flex-wrap: wrap;
     .slogan {
       width: 100%;
-      img {
+      > img {
         width: 100%;
       }
     }
@@ -120,7 +159,7 @@ export default {
         height: 148px;
         color: #fff;
         position: relative;
-        img {
+        > img {
           width: 358px;
           position: absolute;
           z-index: -1;
@@ -128,11 +167,11 @@ export default {
         h2 {
           font-size: 30px;
           margin-left: 125px;
-          margin-top: 46px;
+          margin-top: 40px;
         }
         p {
           margin-left: 125px;
-          font-size: 20px;
+          font-size: 18px;
         }
       }
     }
@@ -156,7 +195,7 @@ export default {
           font-size: 18px;
           color: #999999;
         }
-        img {
+        > img {
           position: absolute;
           right: -4px;
           bottom: -10px;
@@ -188,7 +227,7 @@ export default {
             color: #999999;
             margin-right: 50px;
           }
-          img {
+          > img {
             width: 72px;
           }
         }
@@ -196,12 +235,12 @@ export default {
     }
     .navs3 {
       width: 100%;
-      padding-bottom: 156px;
+      padding-bottom: 110px;
       h2 {
         color: #333333;
-        font-size: 24px;
+        font-size: 30px;
         padding-left: 49px;
-        line-height: 68px;
+        line-height: 88px;
         font-weight: 400;
         border-bottom: 1px solid #ededed;
       }
@@ -222,12 +261,68 @@ export default {
             font-weight: 400;
             line-height: 68px;
           }
-          img {
+          > img {
             width: 45px;
             height: 45px;
           }
         }
       }
+    }
+  }
+  .internetHospital {
+    > img {
+      display: block;
+      margin: 0 auto;
+      margin-top: 32px;
+      width: 680px;
+      height: 282px;
+    }
+    .btns {
+      margin-top: 40px;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      text-align: center;
+      img{
+        width: 170px;
+        height: 170px;
+      }
+      p {
+        color: #999999;
+        font-size: 24px;
+        margin-top: -12px;
+      }
+    }
+  }
+
+  .mint-tabbar {
+    border-top: 1px solid #ececec;
+    height: 98px;
+    background: #ffffff;
+    .mint-tab-item {
+      padding: 12px 0 21px 0;
+      text-align: center;
+      /deep/ .mint-tab-item-icon {
+        width: 34px;
+        height: 34px;
+        img {
+          display: inline-block;
+          width: 34px;
+          height: 34px;
+        }
+      }
+    }
+    .mint-tab-item {
+      color: #cccccc;
+      /deep/ .mint-tab-item-label {
+        font-size: 20px;
+        margin-top: 10px;
+      }
+    }
+    .mint-tab-item.is-selected {
+      color: #02d075;
+      text-decoration: none;
+      background-color: #fff;
     }
   }
 }

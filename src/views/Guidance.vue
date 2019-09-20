@@ -10,19 +10,27 @@
     </div>
     <mt-tab-container v-model="selected">
       <mt-tab-container-item v-for="(item,index) in departments" :key="index" :id="index">
-        <ul style="background: #fff;">
-          <li class="doctorIntroCard" v-for="(doctor,dindex) in item.doctors" :key="dindex">
-            <img class="avatar" src="@/assets/医生介绍_slices/图层 826 拷贝 5.png" />
-            <div class="doctorInfo">
-              <p class="doctorName">{{doctor.name}}</p>
-              <p class="doctorTitle">{{item.name}} {{doctor.title}}</p>
-              <div class="star">
-                <img v-for="n in doctor.star" :key="n" src="@/assets/医生介绍_slices/星星 拷贝 8.png" />
+        <router-link class="item" to="/guidance2">
+          <ul style="background: #fff;">
+            <li class="doctorIntroCard" v-for="(doctor,dindex) in item.doctors" :key="dindex">
+              <div class="baseInfo">
+                <img class="avatar" src="@/assets/医生介绍_slices/图层 826 拷贝 5.png" />
+                <div>
+                  <p class="doctorName">{{doctor.name}}</p>
+                  <p class="doctorTitle">{{item.name}} {{doctor.title}}</p>
+                  <div class="star">
+                    <img v-for="n in doctor.star" :key="n" src="@/assets/医生介绍_slices/星星 拷贝 8.png" />
+                  </div>
+                </div>
+                <div class="price">
+                  <img src="@/assets/智能导诊_slices/沟通.png" />
+                  <span>{{doctor.price}}元</span>
+                </div>
               </div>
               <p class="textIntro">{{doctor.intro}}</p>
-            </div>
-          </li>
-        </ul>
+            </li>
+          </ul>
+        </router-link>
       </mt-tab-container-item>
     </mt-tab-container>
   </div>
@@ -56,6 +64,7 @@ export default {
               name: '杨辉',
               title: '主任医师',
               star: 5,
+              price: 20,
               intro:
                 '擅长免疫性皮肤病，男性内分泌不平衡，由内分泌 引起的各种疾病。'
             },
@@ -64,6 +73,7 @@ export default {
               name: '杨辉',
               title: '主任医师',
               star: 4,
+              price: 30,
               intro:
                 '擅长免疫性皮肤病，男性内分泌不平衡，由内分泌 引起的各种疾病。'
             },
@@ -72,6 +82,7 @@ export default {
               name: '杨辉',
               title: '主任医师',
               star: 3,
+              price: 50,
               intro:
                 '擅长免疫性皮肤病，男性内分泌不平衡，由内分泌 引起的各种疾病。'
             }
@@ -86,6 +97,7 @@ export default {
               name: '刘玉明',
               title: '主任医师',
               star: 5,
+              price: 50,
               intro:
                 '肠道主任医师，曾在中山大学附属研究参与研究，有多年主治经验，擅长治疗各种肠道疾病。'
             },
@@ -94,6 +106,7 @@ export default {
               name: '刘玉明',
               title: '主任医师',
               star: 5,
+              price: 50,
               intro:
                 '肠道主任医师，曾在中山大学附属研究参与研究，有多年主治经验，擅长治疗各种肠道疾病。'
             }
@@ -108,6 +121,7 @@ export default {
               name: '梁君婷',
               title: '主任医师',
               star: 5,
+              price: 50,
               intro:
                 '肠道主任医师，曾在中山大学附属研究参与研究，有多年主治经验，擅长治疗各种肠道疾病。'
             }
@@ -198,36 +212,56 @@ export default {
     height: 195px;
     padding: 30px 50px 40px 30px;
     border-bottom: 1px solid#dedede;
-    display: flex;
-    .avatar {
-      width: 100px;
-      height: 100px;
-      margin-right: 24px;
-    }
-    .doctorInfo {
-      flex: 1;
-      .doctorName {
-        font-size: 30px;
-        color: #333333;
-        font-weight: bold;
-        line-height: 42px;
+
+    .baseInfo {
+      display: flex;
+      justify-content: flex-start;
+      align-items: center;
+      .avatar {
+        width: 100px;
+        height: 100px;
+        margin-right: 24px;
       }
-      .doctorTitle {
-        font-size: 24px;
-        color: #333333;
-        line-height: 34px;
-      }
-      .star {
-        padding: 5px 0 10px 0;
-        img {
-          width: 20px;
-          height: 20px;
+      div {
+        .doctorName {
+          font-size: 30px;
+          color: #333333;
+          font-weight: bold;
+          line-height: 42px;
+        }
+        .doctorTitle {
+          font-size: 24px;
+          color: #333333;
+          line-height: 34px;
+        }
+        .star {
+          padding: 5px 0 10px 0;
+          img {
+            width: 20px;
+            height: 20px;
+          }
         }
       }
-      .textIntro {
-        font-size: 24px;
-        color: #999999;
+      .price {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        margin-left: 240px;
+        img {
+          width: 38px;
+          height: 35px;
+        }
+        span {
+          color: #333333;
+          font-size: 24px;
+        }
       }
+    }
+    .textIntro {
+      font-size: 24px;
+      color: #999999;
+      margin-left: 124px;
     }
   }
 }

@@ -11,6 +11,14 @@ import QueueInfo from '@/views/QueueInfo'
 import HospitalInfo from '@/views/HospitalInfo'
 import DoctorIntro from '@/views/DoctorIntro'
 import Guidance from '@/views/Guidance'
+import Guidance2 from '@/views/Guidance2'
+import Report from '@/views/Report'
+import BodyExam from '@/views/BodyExam'
+import Examination from '@/views/Examination'
+import OtherReport from '@/views/OtherReport'
+import DrugSearch from '@/views/DrugSearch'
+import ParkingSpace from '@/views/ParkingSpace'
+import Suggestion from '@/views/Suggestion'
 
 Vue.use(Router)
 
@@ -74,6 +82,46 @@ export default new Router({
       path: '/guidance',
       name: 'guidance',
       component: Guidance
+    },
+    {
+      path: '/guidance2',
+      name: 'guidance2',
+      component: Guidance2
+    },
+    {
+      path: '/report',
+      name: 'report',
+      component: Report
+    },
+    {
+      path: '/bodyExam',
+      name: 'bodyExam',
+      component: BodyExam
+    },
+    {
+      path: '/examination',
+      name: 'examination',
+      component: Examination
+    },
+    {
+      path: '/otherReport',
+      name: 'otherReport',
+      component: OtherReport
+    },
+    {
+      path: '/drugSearch',
+      name: 'drugSearch',
+      component: DrugSearch
+    },
+    {
+      path: '/parkingSpace',
+      name: 'parkingSpace',
+      component: ParkingSpace
+    },
+    {
+      path: '/suggestion',
+      name: 'suggestion',
+      component: Suggestion
     }
   ]
 })
