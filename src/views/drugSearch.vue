@@ -1,14 +1,15 @@
 <template>
   <div class="drugSearch">
     <div class="displayCard">
-      <img src="@/assets/药品搜索_slices/ecbdfe95978b0.png" />
+      <img src="@/assets/img/ecbdfe95978b0.png" />
       <div class="title">
         <h1>掌上医院</h1>
         <p>自助药品搜索</p>
         <div class="icon"></div>
       </div>
     </div>
-    <mt-search v-model="value" placeholder="搜索科室或医生"></mt-search>
+    <Searchbar placeholder="搜索科室或医生"></Searchbar>
+
     <mt-cell class="cell" is-link>
       <div slot="icon" class="fakePicture"></div>
       <div slot="title" class="content">
@@ -37,6 +38,7 @@
 </template>
 
 <script>
+import Searchbar from '@/components/Searchbar'
 export default {
   name: 'DrugSearch',
   data () {
@@ -44,7 +46,7 @@ export default {
       value: ''
     }
   },
-  components: {},
+  components: { Searchbar },
   methods: {
     dateClickhandler (e) {
       this.date = e

@@ -1,24 +1,26 @@
 <template>
   <div class="reserve1">
-    <mt-search v-model="value" placeholder="搜索科室或医生"></mt-search>
+    <Searchbar placeholder="搜索科室" @getSearchContent="showSearchContent"></Searchbar>
     <div class="content">
       <mt-navbar v-model="selected" class="left_navbar">
-        <mt-tab-item id="1">南海院区</mt-tab-item>
-        <mt-tab-item id="2">西院区</mt-tab-item>
+        <mt-tab-item :id="index" v-for="(item,index) in searchData" :key="index">{{item.block}}</mt-tab-item>
       </mt-navbar>
-
       <mt-tab-container v-model="selected" class="right_container">
-        <mt-tab-container-item id="1">
-          <router-link to="/reserve2" v-for="(item,index) in items" :key="index">
-            <mt-cell :title="item.name">
-              <img class="icon" src="@/assets/预约挂号_slices/科室.png" />&gt;
+        <mt-tab-container-item :id="index" v-for="(item,index) in searchData" :key="index">
+          <div class="hiddenMsg" :class="{notFound: !item.division.length}">无相关科室</div>
+          <router-link
+            :to="{
+          name: 'reserve2',
+          params:{
+            dname: ditem.name
+          }}"
+            v-for="(ditem,dindex) in item.division"
+            :key="dindex"
+          >
+            <mt-cell :title="ditem.name">
+              <img class="icon" src="@/assets/img/科室.png" />&gt;
             </mt-cell>
           </router-link>
-        </mt-tab-container-item>
-        <mt-tab-container-item id="2">
-          <mt-cell v-for="n in 4" :title="'content ' + n" :key="n">
-            <img class="icon" src="@/assets/预约挂号_slices/科室.png" />&gt;
-          </mt-cell>
         </mt-tab-container-item>
       </mt-tab-container>
     </div>
@@ -26,33 +28,57 @@
 </template>
 
 <script>
+import Searchbar from '@/components/Searchbar'
 export default {
   name: 'Reserve1',
+  components: { Searchbar },
   data () {
     return {
-      value: '',
-      selected: '1',
-      tbSelected: '',
-      items: [
+      selected: 0,
+      searchContent: '',
+      fakeData: [
         {
-          name: '内分泌科(门)'
+          block: '南海院区',
+          division: [
+            { name: '内分泌科', id: '001' },
+            { name: '骨内科', id: '002' },
+            { name: '肠道专科', id: '003' }
+          ]
         },
         {
-          name: '内分泌科(门)'
-        },
-        {
-          name: '内分泌科(门)'
-        },
-        {
-          name: '内分泌科(门)'
-        },
-        {
-          name: '内分泌科(门)'
-        },
-        {
-          name: '内分泌科(门)'
+          block: '西院区',
+          division: [
+            { name: '皮肤科', id: '004' },
+            { name: '耳鼻喉科', id: '005' }
+          ]
         }
       ]
+    }
+  },
+  computed: {
+    searchData () {
+      let searchContent = this.searchContent
+      let $this = this
+      if (searchContent) {
+        return this.fakeData.map((item, index) => {
+          return {
+            block: item.block,
+            division: item.division.filter(ditem => {
+              if (ditem.name.includes(searchContent)) {
+                $this.selected = index
+                return ditem
+              }
+            })
+          }
+        })
+      }
+      $this.selected = 0
+      return this.fakeData
+    }
+  },
+  methods: {
+    showSearchContent (data) {
+      this.searchContent = data
     }
   }
 }
@@ -61,35 +87,9 @@ export default {
 <style lang="scss" scoped>
 .reserve1 {
   background: #f2f2f2;
-  .mint-search {
-    border-radius: 10px;
-    height: 66px;
-    padding: 30px 25px;
-    /deep/ .mint-searchbar {
-      background: #f6f6f6;
-      border-radius: 10px;
-      height: 66px;
-      padding: 0;
-      .mint-searchbar-inner {
-        padding: 20px 38px;
-        background: #f6f6f6;
-        border-radius: 10px;
-        .mintui.mintui-search {
-          margin-top: 3px;
-          margin-right: 10px;
-        }
-        .mint-searchbar-core {
-          background: #f6f6f6;
-          font-size: 24px;
-        }
-      }
-      .mint-searchbar-cancel {
-        margin-right: 38px;
-        font-size: 24px;
-      }
-    }
-  }
+  height: 100vh;
   .content {
+    min-height: calc(100vh - 126px);
     width: 100%;
     display: flex;
     justify-content: center;
@@ -97,7 +97,6 @@ export default {
       display: flex;
       flex-direction: column;
       width: 161px;
-      height: 100vh;
       flex-wrap: wrap;
       background: #f2f2f2;
       .mint-tab-item {
@@ -121,6 +120,16 @@ export default {
     .right_container {
       width: 589px;
       background: #fff;
+      .hiddenMsg {
+        display: none;
+      }
+      .notFound {
+        display: block;
+        text-align: center;
+        font-size: 26px;
+        color: #333333;
+        margin-top: 30px;
+      }
       /deep/ .mint-cell-wrapper {
         height: 80px;
         padding: 0 25px;

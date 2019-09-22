@@ -15,7 +15,7 @@
           <span class="value highlight">肩部异物切片</span>
         </div>
       </div>
-      <img slot="icon" src="@/assets/报告查询_slices/报告 (1) 拷贝.png" width="70" height="83" />
+      <img slot="icon" src="@/assets/img/报告 (1) 拷贝.png" width="70" height="83" />
     </mt-cell>
   </div>
 </template>
@@ -60,10 +60,6 @@ export default {
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    .mint-cell-text {
-    }
-    img {
-    }
   }
 }
 </style>

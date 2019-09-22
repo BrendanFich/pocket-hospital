@@ -22,7 +22,7 @@
                 @click.stop="dayClickHandle(day.date)"
                 :style="buildDateStyle(day.isToday, day.isDay)"
               >
-                <span>{{day.week}}</span>
+                <span :style="buildDateStyle(day.isToday, day.isDay)">{{day.week}}</span>
                 <strong>{{day.date.split('-')[2]}}</strong>
               </div>
             </div>
@@ -143,12 +143,13 @@ export default {
         weekOfDate = 0
       }
       for (var i = 0; i < 7; i++) {
-        let _theDate = moment(date).subtract(weekOfDate - i, 'd')
+        let _theDate = moment(date).subtract(weekOfDate - i, 'd')//
         arr.push({
           date: _theDate.format('YYYY-MM-DD'),
           week: weeks[i],
           isToday: _theDate.format('YYYY-MM-DD') === today.format('YYYY-MM-DD'),
-          isDay: _theDate.format('E') === defaultDay.format('E')
+          // isDay: _theDate.format('E') === defaultDay.format('E')
+          isDay: _theDate.format('YYYY-MM-DD') === defaultDay.format('YYYY-MM-DD')
         })
       }
       return arr
@@ -332,7 +333,7 @@ export default {
           align-items: center;
           flex-wrap: wrap;
           span {
-            color: #cccccc;
+            color: #CCCCCC;
             font-weight: 400;
             font-size: 26px;
           }

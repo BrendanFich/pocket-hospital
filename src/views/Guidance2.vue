@@ -1,12 +1,12 @@
 <template>
   <div class="guidance2">
     <div class="doctorIntroCard">
-      <img class="avatar" src="@/assets/医生介绍_slices/图层 826 拷贝 5.png" />
+      <img class="avatar" src="@/assets/img/图层 826 拷贝 5.png" />
       <div class="doctorInfo">
         <p class="doctorName">杨辉</p>
         <p class="doctorTitle">内分泌科 主任医师</p>
         <div class="star">
-          <img v-for="n in 5" :key="n" src="@/assets/医生介绍_slices/星星 拷贝 8.png" />
+          <img v-for="n in 5" :key="n" src="@/assets/img/星星 拷贝 8.png" />
         </div>
         <p class="textIntro">擅长免疫性皮肤病，男性内分泌不平衡，由内分泌引起的各种疾病。</p>
       </div>
@@ -23,7 +23,7 @@
         <li v-for="(item,index) in workTimeList" :key="index">
           <router-link to="/reserve4" class="itemContent">
             <div class="time">
-              <img src="@/assets/预约挂号3_slices/时间.png" />
+              <img src="@/assets/img/时间.png" />
               <span>{{item.time}}</span>
             </div>
             <div class="remaining">

@@ -13,12 +13,12 @@
       <mt-tab-container-item v-for="(item,index) in departments" :key="index" :id="index">
         <ul style="background: #fff;">
           <li class="doctorIntroCard" v-for="(doctor,dindex) in item.doctors" :key="dindex">
-            <img class="avatar" src="@/assets/医生介绍_slices/图层 826 拷贝 5.png" />
+            <img class="avatar" src="@/assets/img/图层 826 拷贝 5.png" />
             <div class="doctorInfo">
               <p class="doctorName">{{doctor.name}}</p>
               <p class="doctorTitle">{{item.name}} {{doctor.title}}</p>
               <div class="star">
-                <img v-for="n in doctor.star" :key="n" src="@/assets/医生介绍_slices/星星 拷贝 8.png" />
+                <img v-for="n in doctor.star" :key="n" src="@/assets/img/星星 拷贝 8.png" />
               </div>
               <p class="textIntro">{{doctor.intro}}</p>
             </div>

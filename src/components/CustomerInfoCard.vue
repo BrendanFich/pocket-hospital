@@ -1,7 +1,7 @@
 <template>
   <div class="customerInfoCard">
     <div>
-      <img src="@/assets/预约挂号4_slices/组 27.png" />
+      <img src="@/assets/img/组 27.png" />
       <div class="textInfo">
         <span class="name">张家辉</span>
         <span class="status">默认</span>

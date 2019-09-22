@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/views/Index'
+import Home from '@/views/Home'
+import InternetHospital from '@/views/InternetHospital'
+import Mine from '@/views/Mine'
 import Reserve1 from '@/views/Reserve1'
 import Reserve2 from '@/views/Reserve2'
 import Reserve3 from '@/views/Reserve3'
@@ -30,8 +33,13 @@ export default new Router({
     },
     {
       path: '/index',
-      name: 'Index',
-      component: Index
+      component: Index,
+      children: [
+        { path: '', component: Home },
+        { path: '/home', name: 'home', component: Home },
+        { path: '/internetHospital', name: 'internetHospital', component: InternetHospital },
+        { path: '/mine', name: 'mine', component: Mine }
+      ]
     },
     {
       path: '/reserve1',
@@ -39,7 +47,7 @@ export default new Router({
       component: Reserve1
     },
     {
-      path: '/reserve2',
+      path: '/reserve2/:dname',
       name: 'reserve2',
       component: Reserve2
     },

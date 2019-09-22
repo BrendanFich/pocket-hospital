@@ -1,9 +1,7 @@
 <template>
   <div class="guidance">
     <div class="search">
-      <div class="searchBox">
-        <mt-search v-model="value" placeholder="搜索科室或医生"></mt-search>
-      </div>
+      <Searchbar placeholder="搜索科室或医生"></Searchbar>
       <div class="searchTags">
         <span class="tag" v-for="(tag,index) in searchTags" :key="index">{{tag}}</span>
       </div>
@@ -14,16 +12,16 @@
           <ul style="background: #fff;">
             <li class="doctorIntroCard" v-for="(doctor,dindex) in item.doctors" :key="dindex">
               <div class="baseInfo">
-                <img class="avatar" src="@/assets/医生介绍_slices/图层 826 拷贝 5.png" />
+                <img class="avatar" src="@/assets/img/图层 826 拷贝 5.png" />
                 <div>
                   <p class="doctorName">{{doctor.name}}</p>
                   <p class="doctorTitle">{{item.name}} {{doctor.title}}</p>
                   <div class="star">
-                    <img v-for="n in doctor.star" :key="n" src="@/assets/医生介绍_slices/星星 拷贝 8.png" />
+                    <img v-for="n in doctor.star" :key="n" src="@/assets/img/星星 拷贝 8.png" />
                   </div>
                 </div>
                 <div class="price">
-                  <img src="@/assets/智能导诊_slices/沟通.png" />
+                  <img src="@/assets/img/沟通.png" />
                   <span>{{doctor.price}}元</span>
                 </div>
               </div>
@@ -37,11 +35,12 @@
 </template>
 
 <script>
+import Searchbar from '@/components/Searchbar'
 export default {
   name: 'Guidance',
+  components: { Searchbar },
   data () {
     return {
-      value: '',
       selected: 0,
       searchTags: [
         '头痛',
@@ -157,52 +156,21 @@ export default {
   height: 100vh;
   .search {
     background: #fff;
-    padding: 30px 25px 38px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    .searchBox {
-      width: 690px;
-      height: 66px;
-      background: #f6f6f6;
-      border-radius: 10px;
-      .mint-search {
-        height: 66px;
-        border-radius: 10px;
-        /deep/ .mint-searchbar {
-          background: #f6f6f6;
-          border-radius: 10px;
-          height: 66px;
-          padding: 0;
-          .mint-searchbar-inner {
-            padding: 20px 38px;
-            background: #f6f6f6;
-            border-radius: 10px;
-            .mintui.mintui-search {
-              margin-top: 3px;
-              margin-right: 10px;
-            }
-            .mint-searchbar-core {
-              background: #f6f6f6;
-              font-size: 24px;
-            }
-          }
-          .mint-searchbar-cancel {
-            margin-right: 38px;
-            font-size: 24px;
-          }
-        }
-      }
-    }
     .searchTags {
       width: 710px;
+      margin-bottom: 38px;
       .tag {
         display: inline-block;
         padding: 10px 20px;
         margin: 10px;
         border: 1px dashed #dfdfdf;
         border-radius: 10px;
+        font-size: 24px;
+        color: #999999;
       }
     }
   }

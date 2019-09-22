@@ -2,7 +2,7 @@
   <div class="reserve3">
     <div class="doctorInfo">
       <div class="baseInfo">
-        <img src="@/assets/预约挂号3_slices/图层 826 拷贝 2.png" alt />
+        <img src="@/assets/img/图层 826 拷贝 2.png" alt />
         <div>
           <div class="name">杨辉</div>
           <div class="department">内分泌科(门)</div>
@@ -18,7 +18,7 @@
         <li v-for="(item,index) in workTimeList" :key="index">
           <router-link to="/reserve4" class="itemContent">
             <div class="time">
-              <img src="@/assets/预约挂号3_slices/时间.png" />
+              <img src="@/assets/img/时间.png" />
               <span>{{item.time}}</span>
             </div>
             <div class="remaining">

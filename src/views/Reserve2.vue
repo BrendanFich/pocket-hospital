@@ -2,7 +2,7 @@
   <div class="reserve2">
     <div class="container">
       <div class="selectedInfo">
-        <span class="department">内分泌科(门)</span>
+        <span class="department">{{$route.params.dname}}</span>
         <span class="selectedDate">已选:{{date}}</span>
       </div>
       <week-slider
@@ -11,11 +11,12 @@
         :defaultDate="date"
         :showYear="false"
         activeBgColor="#09CF74"
+        todayBgColor="#eee"
       ></week-slider>
       <div class="doctorItems">
         <router-link class="item" to="/reserve3" v-for="(item,index) in doctorItems" :key="index">
           <div class="doctorInfo">
-            <img slot="icon" src="@/assets/预约挂号_slices/图层 826 拷贝 2.png" />
+            <img slot="icon" src="@/assets/img/图层 826 拷贝 2.png" />
             <div class="textInfo">
               <span class="name">{{item.name}}</span>
               <span class="title">{{item.title}}</span>
