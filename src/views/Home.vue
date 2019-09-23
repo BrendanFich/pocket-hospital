@@ -120,12 +120,12 @@ export default {
       }
       h2 {
         font-size: 30px;
-        margin-left: 125px;
-        margin-top: 40px;
+        font-weight:bold;
+        margin: 46px 0 10px 125px;
       }
       p {
         margin-left: 125px;
-        font-size: 18px;
+        font-size: 20px;
       }
     }
   }
@@ -144,8 +144,10 @@ export default {
       h2 {
         font-size: 30px;
         color: #666666;
+        font-weight:bold;
       }
       p {
+        margin-top: 10px;
         font-size: 18px;
         color: #999999;
       }
@@ -175,8 +177,10 @@ export default {
         h2 {
           font-size: 30px;
           color: #666666;
+          font-weight:bold;
         }
         p {
+          margin-top: 10px;
           font-size: 18px;
           color: #999999;
           margin-right: 50px;

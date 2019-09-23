@@ -22,6 +22,10 @@ import OtherReport from '@/views/OtherReport'
 import DrugSearch from '@/views/DrugSearch'
 import ParkingSpace from '@/views/ParkingSpace'
 import Suggestion from '@/views/Suggestion'
+import SelectDept from '@/views/SelectDept'
+import SelectDoc from '@/views/SelectDoc'
+import DocIntro from '@/views/DocIntro'
+import Inquiry from '@/views/Inquiry'
 
 Vue.use(Router)
 
@@ -130,6 +134,26 @@ export default new Router({
       path: '/suggestion',
       name: 'suggestion',
       component: Suggestion
+    },
+    {
+      path: '/selectDept',
+      name: 'selectDept',
+      component: SelectDept
+    },
+    {
+      path: '/selectDoc',
+      name: 'selectDoc',
+      component: SelectDoc
+    },
+    {
+      path: '/docIntro',
+      name: 'docIntro',
+      component: DocIntro
+    },
+    {
+      path: '/inquiry',
+      name: 'inquiry',
+      component: Inquiry
     }
   ]
 })

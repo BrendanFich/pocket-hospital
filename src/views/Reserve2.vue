@@ -165,6 +165,7 @@ export default {
               color: #fff;
               border-radius: 5px;
               font-size: 24px;
+              margin-top: 8px;
             }
           }
         }

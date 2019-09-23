@@ -15,7 +15,7 @@
           <span class="value highlight">肩部异物切片</span>
         </div>
       </div>
-      <img slot="icon" src="@/assets/img/报告 (1) 拷贝.png" width="70" height="83" />
+      <img slot="icon" src="@/assets/img/报告 (1) 拷贝.png" />
     </mt-cell>
   </div>
 </template>
@@ -46,6 +46,10 @@ export default {
       .highlight{
         color: #09CF74;
       }
+    }
+    img{
+      width: 70px;
+      height: 83px;
     }
     /deep/ .mint-cell-allow-right::after {
       width: 15px;

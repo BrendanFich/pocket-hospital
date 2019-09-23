@@ -5,21 +5,21 @@
           <div class="title">检验报告</div>
           <div class="description">查看最近或历史检验报告</div>
         </div>
-        <img slot="icon" src="@/assets/img/报告 (1) 拷贝.png" width="70" height="83" />
+        <img slot="icon" src="@/assets/img/报告 (1) 拷贝.png" />
       </mt-cell>
       <mt-cell class="cell" is-link to='/examination'>
         <div slot="title" class="content">
           <div class="title">检查报告</div>
           <div class="description">查看最近或历史检查报告</div>
         </div>
-        <img slot="icon" src="@/assets/img/报告1 拷贝.png" width="70" height="83" />
+        <img slot="icon" src="@/assets/img/报告1 拷贝.png" />
       </mt-cell>
       <mt-cell class="cell" is-link to='/otherReport'>
         <div slot="title" class="content">
           <div class="title">其他报告</div>
           <div class="description">查看其他报告</div>
         </div>
-        <img slot="icon" src="@/assets/img/报告 (2) 拷贝.png" width="70" height="83" />
+        <img slot="icon" src="@/assets/img/报告 (2) 拷贝.png" />
       </mt-cell>
   </div>
 </template>
@@ -54,6 +54,10 @@ export default {
         line-height: 34px;
         color: #cccccc;
       }
+    }
+    img{
+      width: 70px;
+      height: 83px;
     }
     /deep/ .mint-cell-allow-right::after {
       width: 15px;

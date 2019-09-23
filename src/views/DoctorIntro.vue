@@ -11,6 +11,7 @@
     <div class="title">医生简介</div>
     <mt-tab-container v-model="selected">
       <mt-tab-container-item v-for="(item,index) in departments" :key="index" :id="index">
+        <div class="hiddenMsg" :class="{notFound: item.doctors.length <= 0}" v-if="departments">暂无数据</div>
         <ul style="background: #fff;">
           <li class="doctorIntroCard" v-for="(doctor,dindex) in item.doctors" :key="dindex">
             <img class="avatar" src="@/assets/img/图层 826 拷贝 5.png" />
@@ -113,34 +114,32 @@ export default {
             }
           ]
         },
-        { name: '耳鼻喉科', bgcolor: '#61E3B4' },
-        { name: '骨内科', bgcolor: '#619BE3' },
-        { name: '内分泌专科', bgcolor: '#E3B461' },
-        { name: '皮肤科', bgcolor: '#E36A61' },
-        { name: '肠道专科', bgcolor: '#98E361' },
-        { name: '耳鼻喉科', bgcolor: '#61E3B4' },
-        { name: '骨内科', bgcolor: '#619BE3' },
-        { name: '内分泌专科', bgcolor: '#E3B461' },
-        { name: '皮肤科', bgcolor: '#E36A61' },
-        { name: '肠道专科', bgcolor: '#98E361' },
-        { name: '耳鼻喉科', bgcolor: '#61E3B4' },
-        { name: '骨内科', bgcolor: '#619BE3' },
-        { name: '内分泌专科', bgcolor: '#E3B461' },
-        { name: '皮肤科', bgcolor: '#E36A61' },
-        { name: '肠道专科', bgcolor: '#98E361' },
-        { name: '耳鼻喉科', bgcolor: '#61E3B4' },
-        { name: '骨内科', bgcolor: '#619BE3' }
+        { name: '耳鼻喉科', bgcolor: '#61E3B4', doctors: [] },
+        { name: '骨内科', bgcolor: '#619BE3', doctors: [] },
+        { name: '内分泌专科', bgcolor: '#E3B461', doctors: [] },
+        { name: '皮肤科', bgcolor: '#E36A61', doctors: [] },
+        { name: '肠道专科', bgcolor: '#98E361', doctors: [] },
+        { name: '耳鼻喉科', bgcolor: '#61E3B4', doctors: [] },
+        { name: '骨内科', bgcolor: '#619BE3', doctors: [] },
+        { name: '内分泌专科', bgcolor: '#E3B461', doctors: [] },
+        { name: '皮肤科', bgcolor: '#E36A61', doctors: [] },
+        { name: '肠道专科', bgcolor: '#98E361', doctors: [] },
+        { name: '耳鼻喉科', bgcolor: '#61E3B4', doctors: [] },
+        { name: '骨内科', bgcolor: '#619BE3', doctors: [] },
+        { name: '内分泌专科', bgcolor: '#E3B461', doctors: [] },
+        { name: '皮肤科', bgcolor: '#E36A61', doctors: [] },
+        { name: '肠道专科', bgcolor: '#98E361', doctors: [] },
+        { name: '耳鼻喉科', bgcolor: '#61E3B4', doctors: [] },
+        { name: '骨内科', bgcolor: '#619BE3,doctors:[]', doctors: [] }
       ]
     }
   },
   created () {
     vm = this
-    console.log(this.selected)
   },
   methods: {
     handleClickSlide (index) {
       this.selected = index
-      console.log(index)
     }
   }
 }
@@ -179,6 +178,16 @@ export default {
     color: #999999;
     line-height: 88px;
     margin-left: 30px;
+  }
+  .hiddenMsg {
+    display: none;
+  }
+  .notFound {
+    display: block;
+    text-align: center;
+    font-size: 26px;
+    color: #333333;
+    margin-top: 30px;
   }
   .doctorIntroCard {
     height: 195px;

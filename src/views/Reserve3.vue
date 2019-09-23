@@ -77,6 +77,7 @@ export default {
           font-weight: bold;
         }
         .department {
+          margin-top: 12px;
           font-size: 24px;
           font-weight: 400;
           color: #999999;
@@ -87,6 +88,7 @@ export default {
       margin-bottom: 24px;
       width: 690px;
       font-size: 24px;
+      line-height: 36px;
       font-weight: 400;
       color: #333333;
     }
