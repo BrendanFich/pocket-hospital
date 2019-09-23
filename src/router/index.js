@@ -26,6 +26,9 @@ import SelectDept from '@/views/SelectDept'
 import SelectDoc from '@/views/SelectDoc'
 import DocIntro from '@/views/DocIntro'
 import Inquiry from '@/views/Inquiry'
+import Evaluate from '@/views/Evaluate'
+import LiveHosOrder from '@/views/LiveHosOrder'
+import RegOrder from '@/views/RegOrder'
 
 Vue.use(Router)
 
@@ -154,6 +157,21 @@ export default new Router({
       path: '/inquiry',
       name: 'inquiry',
       component: Inquiry
+    },
+    {
+      path: '/evaluate',
+      name: 'evaluate',
+      component: Evaluate
+    },
+    {
+      path: '/liveHosOrder',
+      name: 'liveHosOrder',
+      component: LiveHosOrder
+    },
+    {
+      path: '/regOrder',
+      name: 'regOrder',
+      component: RegOrder
     }
   ]
 })

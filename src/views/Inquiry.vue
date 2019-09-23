@@ -1,23 +1,52 @@
 <template>
   <div class="inquiry">
+    <div class="nowTime">{{time}}</div>
+    <ul class="msgList">
+      <li
+        :class="[{leftSide : msg.identity==='doctor'},{rightSide : msg.identity==='patient'}]"
+        v-for="(msg,index) in msgList"
+        :key="index"
+      >
+        <img class="avatar" :src="msg.avatarUrl" alt />
+        <div class="msgCell">{{msg.content}}</div>
+      </li>
+    </ul>
     <div class="inputMsg">
-      <mt-field v-model="msg" placeholder="请输入内容..."></mt-field>
-      <!-- <mt-palette-button content="+"></mt-palette-button> -->
+      <mt-field v-model="msg" placeholder="请输入内容..." :disableClear="true" @keydown="commit"></mt-field>
       <button class="moreBtn">+</button>
     </div>
   </div>
 </template>
 
 <script>
+import moment from 'moment'
 export default {
   name: 'Inquiry',
+  components: {},
   data () {
     return {
-      msg: ''
+      msg: '',
+      time: moment().format('YYYY-MM-DD HH:mm'),
+      msgList: [
+        {
+          identity: 'doctor',
+          avatarUrl: require('@/assets/img/图层 826 拷贝 4.png'),
+          content: '我是主任医师陈辉'
+        },
+        {
+          identity: 'patient',
+          avatarUrl: require('@/assets/img/图层 826 拷贝 4.png'),
+          content: '我也是陈辉'
+        }
+      ]
     }
   },
   created () {},
-  methods: {}
+  methods: {
+    commit (e) {
+      console.log(e)
+    }
+  }
 }
 </script>
 
@@ -25,6 +54,62 @@ export default {
 .inquiry {
   background: #f2f2f2;
   height: 100vh;
+  .nowTime {
+    color: #999999;
+    font-size: 24px;
+    padding-top: 50px;
+    padding-bottom: 40px;
+    text-align: center;
+  }
+  .msgList {
+    width: 650px;
+    margin: 0 auto;
+    li {
+      display: flex;
+      margin: 15px 0;
+      img {
+        width: 80px;
+        height: 80px;
+      }
+      .msgCell {
+        background: #fff;
+        position: relative;
+        box-sizing: border-box;
+        font-size: 14px;
+        padding: 30px 40px;
+        border-radius: 10px;
+        font-size: 28px;
+        color: #333333;
+      }
+    }
+    .leftSide {
+      img {
+        margin-right: 32px;
+      }
+      .msgCell:before {
+        position: absolute;
+        content: "";
+        border: 20px solid;
+        left: -35px;
+        top: 25px;
+        border-color: transparent #fff transparent transparent;
+      }
+    }
+    .rightSide {
+      flex-direction: row-reverse;
+      img {
+        margin-left: 32px;
+      }
+      .msgCell:after {
+        position: absolute;
+        content: "";
+        border: 20px solid;
+        border-color: transparent transparent transparent #fff;
+        right: -35px;
+        top: 25px;
+      }
+    }
+  }
   .inputMsg {
     position: fixed;
     bottom: 0;
