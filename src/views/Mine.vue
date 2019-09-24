@@ -23,6 +23,24 @@
         <img slot="icon" src="@/assets/img/我 的.png" />
       </mt-cell>
     </div>
+    <div class="others">
+      <div class="item">
+        <img src="@/assets/img/组 28.png" alt />
+        <span>我的报告</span>
+      </div>
+      <div class="item">
+        <img src="@/assets/img/组 28(1).png" alt />
+        <span>就医反馈</span>
+      </div>
+      <div class="item">
+        <img src="@/assets/img/组 28(2).png" alt />
+        <span>随访问卷</span>
+      </div>
+      <div class="item">
+        <img src="@/assets/img/组 28(3).png" alt />
+        <span>友情链接</span>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -67,6 +85,29 @@ export default {
       display: flex;
       justify-content: flex-start;
       align-items: center;
+    }
+  }
+  .others{
+    background: #fff;
+    margin-top:45px;
+    margin-bottom: 98px;
+    padding: 30px 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    .item{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      img{
+        margin-bottom: 16px;
+        width: 80px;
+        height: 80px;
+      }
+      span{
+        font-size: 24px;
+        color: #666666;
+      }
     }
   }
 }

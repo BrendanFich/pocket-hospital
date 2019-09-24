@@ -29,6 +29,10 @@ import Inquiry from '@/views/Inquiry'
 import Evaluate from '@/views/Evaluate'
 import LiveHosOrder from '@/views/LiveHosOrder'
 import RegOrder from '@/views/RegOrder'
+import CardManage from '@/views/CardManage'
+import BindCard from '@/views/BindCard'
+import BuildCard from '@/views/BuildCard'
+import CardInfo from '@/views/CardInfo'
 
 Vue.use(Router)
 
@@ -172,6 +176,26 @@ export default new Router({
       path: '/regOrder',
       name: 'regOrder',
       component: RegOrder
+    },
+    {
+      path: '/cardManage',
+      name: 'cardManage',
+      component: CardManage
+    },
+    {
+      path: '/bindCard',
+      name: 'bindCard',
+      component: BindCard
+    },
+    {
+      path: '/buildCard',
+      name: 'buildCard',
+      component: BuildCard
+    },
+    {
+      path: '/cardInfo',
+      name: 'cardInfo',
+      component: CardInfo
     }
   ]
 })
