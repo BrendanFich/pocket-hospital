@@ -4,15 +4,15 @@
       <img src="@/assets/img/组 20.png" alt />
       <div class="btns">
         <router-link to="/selectDept">
-          <img src="@/assets/img/组 20(1).png" />
+          <img src="@/assets/img/在线问诊.png" />
           <p>在线问诊</p>
         </router-link>
         <router-link to="/internetHospital">
-          <img src="@/assets/img/组 20(2).png" />
+          <img src="@/assets/img/在线复诊.png" />
           <p>在线复诊</p>
         </router-link>
         <router-link to="/internetHospital">
-          <img src="@/assets/img/组 20(3).png" />
+          <img src="@/assets/img/药物配送.png" />
           <p>药物配送</p>
         </router-link>
       </div>

@@ -2,22 +2,22 @@
   <div class="tabbar">
     <router-link to="/index">
       <div class="tab" :class="{active: activeNum===1}" @click="changeTab(1)">
-        <img src="@/assets/img/首页-选中.png" v-show="activeNum===1" />
-        <!-- <img src="@/assets/img/.png" v-show="activeNum!=1" /> -->
+        <img src="@/assets/img/首页选中.png" v-show="activeNum===1" />
+        <img src="@/assets/img/首页未选中.png" v-show="activeNum!=1" />
         <span>首页</span>
       </div>
     </router-link>
     <router-link to="/internetHospital">
       <div class="tab" :class="{active: activeNum===2}" @click="changeTab(2)">
-        <img src="@/assets/img/医院 (4).png" v-show="activeNum===2" />
-        <!-- <img src="@/assets/img/.png" v-show="activeNum!=2" /> -->
+        <img src="@/assets/img/医院选中.png" v-show="activeNum===2" />
+        <img src="@/assets/img/医院未选中.png" v-show="activeNum!=2" />
         <span>互联网医院</span>
       </div>
     </router-link>
     <router-link to="/mine">
       <div class="tab" :class="{active: activeNum===3}" @click="changeTab(3)">
-        <img src="@/assets/img/个人中心 选中.png" v-show="activeNum===3" />
-        <!-- <img src="@/assets/img/.png" v-show="activeNum!=3" /> -->
+        <img src="@/assets/img/个人中心选中.png" v-show="activeNum===3" />
+        <img src="@/assets/img/个人中心未选中.png" v-show="activeNum!=3" />
         <span>个人中心</span>
       </div>
     </router-link>

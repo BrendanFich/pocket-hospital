@@ -32,6 +32,7 @@ export default {
     padding: 50px 0;
     color: #333333;
     font-size: 24px;
+    line-height: 36px;
     word-wrap: break-word;
     overflow: hidden;
     text-overflow: ellipsis;

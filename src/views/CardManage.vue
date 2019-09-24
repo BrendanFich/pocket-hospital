@@ -24,15 +24,15 @@
     <div class="orderList">
       <mt-cell class="cell" is-link to="/bindCard">
         <div slot="title" class="content">绑定就诊卡</div>
-        <img slot="icon" src="@/assets/img/绑定.png" />
+        <img  class="icon" slot="icon" src="@/assets/img/绑定.png" />
       </mt-cell>
       <mt-cell class="cell" is-link to="/buildCard">
         <div slot="title" class="content">初诊建卡</div>
-        <img slot="icon" src="@/assets/img/新建.png" />
+        <img class="icon" slot="icon" src="@/assets/img/新建.png" />
       </mt-cell>
       <mt-cell class="cell" is-link>
         <div slot="title" class="content">绑定医保卡</div>
-        <img slot="icon" src="@/assets/img/绑定 (1).png" />
+        <img class="icon" slot="icon" src="@/assets/img/绑定 (1).png" />
       </mt-cell>
     </div>
   </div>
@@ -57,6 +57,7 @@ export default {
     padding: 25px 30px;
   }
   .customerInfoCard {
+    border-bottom: 1px solid #F2F2F2;
     padding: 47px 50px 46px 31px;
     background: #fff;
     display: flex;
@@ -104,15 +105,15 @@ export default {
   .orderList {
     margin-top: 33px;
     .cell {
-      border-bottom: 1px solid #f2f2f2;
       .content {
         padding: 38px 0px 38px 24px;
         font-size: 24px;
         color: #666666;
       }
-      img {
+      .icon {
         width: 30px;
         height: 30px;
+        margin-left: 36px;
       }
       /deep/ .mint-cell-allow-right::after {
         width: 15px;
@@ -120,7 +121,7 @@ export default {
         margin-right: 40px;
       }
       /deep/ .mint-cell-wrapper {
-        padding: 0 60px;
+        padding: 0;
       }
     }
     /deep/ .mint-cell-title {
