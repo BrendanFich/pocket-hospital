@@ -13,6 +13,7 @@
         activeBgColor="#09CF74"
         todayBgColor="#eee"
       ></week-slider>
+
       <div class="doctorItems">
         <router-link class="item" to="/reserve3" v-for="(item,index) in doctorItems" :key="index">
           <div class="doctorInfo">
@@ -31,6 +32,7 @@
           </div>
         </router-link>
       </div>
+
     </div>
   </div>
 </template>
@@ -54,39 +56,11 @@ export default {
           remaining: 10
         },
         {
-          name: '杨辉',
+          name: '陈辉',
           title: '主任医师',
           workTime: '下午',
           avatarUrl: '',
           remaining: 2
-        },
-        {
-          name: '杨辉',
-          title: '主任医师',
-          workTime: '上午',
-          avatarUrl: '',
-          remaining: 0
-        },
-        {
-          name: '杨辉',
-          title: '主任医师',
-          workTime: '上午',
-          avatarUrl: '',
-          remaining: 0
-        },
-        {
-          name: '杨辉',
-          title: '主任医师',
-          workTime: '下午',
-          avatarUrl: '',
-          remaining: 2
-        },
-        {
-          name: '杨辉',
-          title: '主任医师',
-          workTime: '上午',
-          avatarUrl: '',
-          remaining: 0
         },
         {
           name: '杨辉',

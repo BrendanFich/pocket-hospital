@@ -12,15 +12,17 @@
           <ul style="background: #fff;">
             <li class="doctorIntroCard" v-for="(doctor,dindex) in item.doctors" :key="dindex">
               <div class="baseInfo">
-                <img class="avatar" src="@/assets/img/图层 826 拷贝 5.png" />
-                <div>
-                  <p class="doctorName">{{doctor.name}}</p>
-                  <p class="doctorTitle">{{item.name}} {{doctor.title}}</p>
-                  <div class="star">
-                    <img v-for="n in doctor.star" :key="n" src="@/assets/img/星星 拷贝 8.png" />
+                <div class="left">
+                  <img class="avatar" src="@/assets/img/图层 826 拷贝 5.png" />
+                  <div>
+                    <p class="doctorName">{{doctor.name}}</p>
+                    <p class="doctorTitle">{{item.name}} {{doctor.title}}</p>
+                    <div class="star">
+                      <img v-for="n in doctor.star" :key="n" src="@/assets/img/星星 拷贝 8.png" />
+                    </div>
                   </div>
                 </div>
-                <div class="price">
+                <div class="right price">
                   <img src="@/assets/img/沟通.png" />
                   <span>{{doctor.price}}元</span>
                 </div>
@@ -69,7 +71,7 @@ export default {
             },
             {
               avatarUrl: '',
-              name: '杨辉',
+              name: '刘玉明',
               title: '主任医师',
               star: 4,
               price: 30,
@@ -79,7 +81,7 @@ export default {
             {
               avatarUrl: '',
               name: '杨辉',
-              title: '主任医师',
+              title: '教授',
               star: 3,
               price: 50,
               intro:
@@ -183,42 +185,47 @@ export default {
 
     .baseInfo {
       display: flex;
-      justify-content: flex-start;
+      justify-content: space-between;
       align-items: center;
-      .avatar {
-        width: 100px;
-        height: 100px;
-        margin-right: 24px;
-      }
-      div {
-        .doctorName {
-          font-size: 30px;
-          color: #333333;
-          font-weight: bold;
-          line-height: 42px;
+      .left {
+        display: flex;
+        .avatar {
+          width: 100px;
+          height: 100px;
+          margin-right: 24px;
         }
-        .doctorTitle {
-          font-size: 24px;
-          color: #333333;
-          line-height: 34px;
-        }
-        .star {
-          padding: 5px 0 10px 0;
-          img {
-            width: 20px;
-            height: 20px;
+        div {
+          .doctorName {
+            font-size: 30px;
+            color: #333333;
+            font-weight: bold;
+            line-height: 42px;
+          }
+          .doctorTitle {
+            font-size: 24px;
+            color: #333333;
+            line-height: 34px;
+          }
+          .star {
+            padding: 5px 0 10px 0;
+            img {
+              width: 20px;
+              height: 20px;
+            }
           }
         }
       }
+
       .price {
+        margin-right: 20px;
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        margin-left: 240px;
         img {
           width: 38px;
           height: 35px;
+          margin-bottom: 15px;
         }
         span {
           color: #333333;

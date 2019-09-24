@@ -2,11 +2,11 @@
   <div class="cardInfo">
     <h2>就诊卡信息</h2>
     <mt-field label="卡类型" v-model="cardInfo.cardStyle" :disableClear="true" :readonly="true"></mt-field>
-    <mt-field label="姓名" v-model="cardInfo.name" :readonly="true"></mt-field>
-    <mt-field label="卡号" v-model="cardInfo.cardNum" :readonly="true"></mt-field>
-    <mt-field label="证件号码" type="password" v-model="cardInfo.IDnumber" :readonly="true"></mt-field>
-    <mt-field label="性别" v-model="cardInfo.gender" :readonly="true"></mt-field>
-    <mt-field label="生日" v-model="cardInfo.birthday" :readonly="true"></mt-field>
+    <mt-field label="姓名" v-model="cardInfo.name" :readonly="true" :disableClear="true"></mt-field>
+    <mt-field label="卡号" v-model="cardInfo.cardNum" :readonly="true" :disableClear="true"></mt-field>
+    <mt-field label="证件号码" type="password" v-model="cardInfo.IDnumber" :readonly="true" :disableClear="true"></mt-field>
+    <mt-field label="性别" v-model="cardInfo.gender" :readonly="true" :disableClear="true"></mt-field>
+    <mt-field label="生日" v-model="cardInfo.birthday" :readonly="true" :disableClear="true"></mt-field>
   </div>
 </template>
 
