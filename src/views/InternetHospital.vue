@@ -32,10 +32,12 @@ export default {
 
 <style lang="scss" scoped>
 .internetHospital {
+  height: 100vh;
+  background: #fff;
   > img {
     display: block;
     margin: 0 auto;
-    margin-top: 32px;
+    padding-top: 32px;
     width: 680px;
     height: 282px;
   }

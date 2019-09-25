@@ -94,6 +94,7 @@ export default {
 
 <style lang="scss" scoped>
 .home {
+  background: #fff;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -115,17 +116,19 @@ export default {
       position: relative;
       > img {
         width: 358px;
-        position: absolute;
-        z-index: -1;
       }
       h2 {
         font-size: 30px;
-        font-weight:bold;
-        margin: 46px 0 10px 125px;
+        font-weight: bold;
+        position: absolute;
+        top: 46px;
+        left: 125px;
       }
       p {
-        margin-left: 125px;
         font-size: 20px;
+        position: absolute;
+        top: 85px;
+        left: 125px;
       }
     }
   }
@@ -144,7 +147,7 @@ export default {
       h2 {
         font-size: 30px;
         color: #666666;
-        font-weight:bold;
+        font-weight: bold;
       }
       p {
         margin-top: 10px;
@@ -177,7 +180,7 @@ export default {
         h2 {
           font-size: 30px;
           color: #666666;
-          font-weight:bold;
+          font-weight: bold;
         }
         p {
           margin-top: 10px;

@@ -63,6 +63,7 @@ export default {
     img {
       width: 33px;
       height: 34px;
+      margin-bottom: 12px;
     }
   }
   .active {
