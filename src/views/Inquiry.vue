@@ -67,7 +67,7 @@ export default {
     li {
       display: flex;
       margin: 15px 0;
-      img {
+      .avatar {
         width: 80px;
         height: 80px;
       }

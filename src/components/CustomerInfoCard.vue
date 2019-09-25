@@ -35,7 +35,6 @@ export default {
     align-items: center;
     img {
       width: 104px;
-      height: 104px;
       margin-right: 30px;
     }
     .textInfo {

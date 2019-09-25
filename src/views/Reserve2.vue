@@ -39,7 +39,6 @@
 <script>
 import moment from 'moment'
 import weekSlider from '../components/weekSlider'
-//
 export default {
   name: 'Reserve2',
   data () {
@@ -220,7 +219,6 @@ export default {
           align-items: center;
           img {
             width: 102px;
-            height: 102px;
           }
           .textInfo {
             margin-left: 24px;

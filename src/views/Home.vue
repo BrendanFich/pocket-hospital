@@ -224,7 +224,6 @@ export default {
         }
         > img {
           width: 45px;
-          height: 45px;
         }
       }
     }

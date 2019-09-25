@@ -161,7 +161,6 @@ export default {
       align-items: center;
       .avatar {
         width: 100px;
-        height: 100px;
         margin-right: 24px;
       }
       div {
@@ -180,7 +179,6 @@ export default {
           padding: 5px 0 10px 0;
           img {
             width: 20px;
-            height: 20px;
           }
         }
       }
@@ -192,7 +190,6 @@ export default {
         margin-left: 240px;
         img {
           width: 38px;
-          height: 35px;
         }
         span {
           color: #333333;

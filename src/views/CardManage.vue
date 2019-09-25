@@ -68,7 +68,6 @@ export default {
       align-items: center;
       img {
         width: 104px;
-        height: 104px;
         margin-right: 30px;
       }
       .textInfo {
@@ -112,7 +111,6 @@ export default {
       }
       .icon {
         width: 30px;
-        height: 30px;
         margin-left: 36px;
       }
       /deep/ .mint-cell-allow-right::after {

@@ -48,10 +48,6 @@ export default {
   },
   components: { Searchbar },
   methods: {
-    dateClickhandler (e) {
-      this.date = e
-      console.log(this.date)
-    }
   }
 }
 </script>
@@ -69,7 +65,6 @@ export default {
     padding: 30px 70px 18px;
     img {
       width: 150px;
-      height: 150px;
       margin-right: 53px;
     }
     .title {
@@ -121,7 +116,6 @@ export default {
     }
   }
   .cell {
-    // border-bottom: 1px solid #f2f2f2;
     .fakePicture {
       width: 123px;
       height: 123px;

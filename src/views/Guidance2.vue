@@ -95,11 +95,11 @@ export default {
         padding: 5px 0 10px 0;
         img {
           width: 20px;
-          height: 20px;
         }
       }
       .textIntro {
         font-size: 24px;
+        line-height: 36px;
         color: #999999;
       }
     }
@@ -127,7 +127,6 @@ export default {
           font-size: 30px;
           img {
             width: 24px;
-            height: 24px;
             margin-right: 16px;
           }
         }

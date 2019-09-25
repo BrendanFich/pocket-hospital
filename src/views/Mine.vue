@@ -70,7 +70,6 @@ export default {
       }
       img {
         width: 24px;
-        height: 24px;
       }
       /deep/ .mint-cell-allow-right::after {
         width: 15px;
@@ -102,7 +101,6 @@ export default {
       img{
         margin-bottom: 16px;
         width: 80px;
-        height: 80px;
       }
       span{
         font-size: 24px;

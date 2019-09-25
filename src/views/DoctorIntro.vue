@@ -216,7 +216,6 @@ export default {
         padding: 5px 0 10px 0;
         img {
           width: 20px;
-          height: 20px;
         }
       }
       .textIntro {

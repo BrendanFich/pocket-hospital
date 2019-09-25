@@ -67,7 +67,6 @@ export default {
       align-items: center;
       img {
         width: 102px;
-        height: 102px;
         margin-right: 23px;
       }
       div {
@@ -112,7 +111,6 @@ export default {
           font-size: 30px;
           img {
             width: 24px;
-            height: 24px;
             margin-right: 16px;
           }
         }

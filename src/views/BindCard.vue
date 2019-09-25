@@ -73,17 +73,18 @@ export default {
       this.paperwork = this.actions2[1].name
     },
     handleClick () {
-      const duration = 2000
+      const duration = 1500
+      const className = 'toast'
       const p = /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
       if (this.CardNum && this.name && this.IDNum) {
         if (!p.test(this.IDNum) && this.paperwork === '身份证') {
-          this.$toast({ message: '身份证号有误', duration })
+          this.$toast({ message: '身份证号有误', duration, className })
         } else {
-          this.$toast({ message: '操作成功', duration })
+          this.$toast({ message: '操作成功', duration, className })
           this.$router.push({ path: '/cardManage' })
         }
       } else {
-        this.$toast({ message: '请完整填写所有信息', duration })
+        this.$toast({ message: '请完整填写所有信息', duration, className })
       }
     }
   }

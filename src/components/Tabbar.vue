@@ -65,8 +65,7 @@ export default {
     justify-content: center;
     align-items: center;
     img {
-      width: 33px;
-      height: 34px;
+      width: 34px;
       margin-bottom: 12px;
     }
   }

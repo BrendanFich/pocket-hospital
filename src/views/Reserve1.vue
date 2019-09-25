@@ -1,6 +1,6 @@
 <template>
   <div class="reserve1">
-    <Searchbar placeholder="搜索科室" @getSearchContent="showSearchContent"></Searchbar>
+    <Searchbar placeholder="搜索科室"></Searchbar>
     <div class="content">
       <mt-navbar v-model="selected" class="left_navbar">
         <mt-tab-item :id="index" v-for="(item,index) in searchData" :key="index">{{item.block}}</mt-tab-item>
@@ -75,11 +75,6 @@ export default {
       $this.selected = 0
       return this.fakeData
     }
-  },
-  methods: {
-    showSearchContent (data) {
-      this.searchContent = data
-    }
   }
 }
 </script>
@@ -145,7 +140,6 @@ export default {
             left: 32px;
             top: 30px;
             width: 20px;
-            height: 28px;
           }
         }
       }

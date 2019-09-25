@@ -63,7 +63,6 @@ export default {
       align-items: center;
       img {
         width: 47px;
-        height: 47px;
         margin-right: 30px;
       }
       .baseInfo {

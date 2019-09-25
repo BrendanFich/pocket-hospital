@@ -65,7 +65,6 @@ export default {
     .stars{
       >img{
         width: 39px;
-        height: 37px;
         margin: 0 20px;
       }
     }
@@ -86,7 +85,6 @@ export default {
         color: #333333;
         img {
           width: 55px;
-          height: 54px;
           margin-right: 17px;
         }
       }

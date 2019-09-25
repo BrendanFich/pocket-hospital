@@ -57,7 +57,6 @@ export default {
     }
     img{
       width: 70px;
-      height: 83px;
     }
     /deep/ .mint-cell-allow-right::after {
       width: 15px;

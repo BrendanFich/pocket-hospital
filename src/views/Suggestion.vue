@@ -3,7 +3,7 @@
     <div class="textarea">
       <mt-field placeholder="请输入意见..." type="textarea" rows="12" v-model="introduction"></mt-field>
     </div>
-    <mt-button type="primary" class="btn">提交意见</mt-button>
+    <mt-button type="primary" class="btn" @click.native="handleClick">提交意见</mt-button>
   </div>
 </template>
 
@@ -13,6 +13,17 @@ export default {
   data () {
     return {
       introduction: ''
+    }
+  },
+  methods: {
+    handleClick () {
+      const duration = 1500
+      const className = 'toast'
+      if (this.introduction) {
+        // axios
+        this.$toast({ message: '提交成功', duration, className })
+        this.introduction = ''
+      }
     }
   }
 }

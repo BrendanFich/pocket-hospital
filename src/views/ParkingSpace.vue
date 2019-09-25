@@ -23,7 +23,6 @@ export default {
   height: 100vh;
   img {
     width: 750px;
-    height: 500px;
   }
   .btns{
     margin: 0 auto;

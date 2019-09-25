@@ -24,7 +24,6 @@ export default {
   height: 100vh;
   img {
     width: 750px;
-    height: 290px;
   }
   article {
     width: 750px;

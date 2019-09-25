@@ -145,7 +145,6 @@ export default {
             left: 32px;
             top: 30px;
             width: 20px;
-            height: 28px;
           }
         }
       }

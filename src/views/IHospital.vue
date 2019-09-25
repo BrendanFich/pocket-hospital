@@ -37,7 +37,6 @@ export default {
     margin: 0 auto;
     padding-top: 32px;
     width: 680px;
-    height: 282px;
   }
   .btns {
     margin-top: 40px;
@@ -47,7 +46,6 @@ export default {
     text-align: center;
     img {
       width: 170px;
-      height: 170px;
     }
     p {
       color: #999999;

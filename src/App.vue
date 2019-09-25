@@ -15,6 +15,12 @@ export default {
   font-family: "Microsoft YaHei", "Avenir", Helvetica, Arial, sans-serif;
   width: 750px;
 }
+.toast {
+  line-height: 60px;
+  .mint-toast-text {
+    font-size: 30px;
+  }
+}
 body {
   .mint-msgbox {
     border-radius: 10px;
