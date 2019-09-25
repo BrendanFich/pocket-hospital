@@ -6,13 +6,7 @@
       <div class="isLink">></div>
     </div>
     <mt-field label="姓名" placeholder="请输入姓名" v-model="name" :disableClear="true"></mt-field>
-    <mt-field
-      label="身份证号"
-      placeholder="请输入身份证号"
-      type="number"
-      v-model="IDnumber"
-      :disableClear="true"
-    ></mt-field>
+    <mt-field label="身份证号" placeholder="请输入身份证号" type="number" v-model="IDNum" :disableClear="true"></mt-field>
     <mt-field
       label="联系电话"
       placeholder="请输入联系电话"
@@ -33,7 +27,7 @@
       </p>
     </div>
 
-    <mt-button type="primary" class="btn">确定</mt-button>
+    <mt-button type="primary" class="btn" @click.native="handleClick">确定</mt-button>
   </div>
 </template>
 
@@ -70,6 +64,20 @@ export default {
     },
     sPaperwork2 () {
       this.paperwork = this.actions2[1].name
+    },
+    handleClick () {
+      const duration = 2000
+      const p = /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
+      if (this.IDNum && this.name && this.phoneNum && this.address) {
+        if (!p.test(this.IDNum)) {
+          this.$toast({ message: '身份证号有误', duration })
+        } else {
+          this.$toast({ message: '操作成功', duration })
+          this.$router.push({ path: '/cardManage' })
+        }
+      } else {
+        this.$toast({ message: '请完整填写所有信息', duration })
+      }
     }
   }
 }

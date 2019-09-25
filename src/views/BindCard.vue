@@ -5,20 +5,14 @@
       <mt-field label="卡类型" v-model="cardStyle" :disableClear="true" :readonly="true"></mt-field>
       <div class="isLink">></div>
     </div>
-    <mt-field label="卡号" placeholder="请输入卡号" type="number" v-model="number" :disableClear="true"></mt-field>
+    <mt-field label="卡号" placeholder="请输入卡号" type="number" v-model="CardNum" :disableClear="true"></mt-field>
     <mt-field label="姓名" placeholder="请输入姓名" v-model="name" :disableClear="true"></mt-field>
 
     <div @click="showOption(1)" class="selectItem">
       <mt-field label="证件类型" v-model="paperwork" :disableClear="true" :readonly="true"></mt-field>
       <div class="isLink">></div>
     </div>
-    <mt-field
-      label="证件号码"
-      placeholder="请输入证件号码"
-      type="number"
-      v-model="number"
-      :disableClear="true"
-    ></mt-field>
+    <mt-field label="证件号码" placeholder="请输入证件号码" type="number" v-model="IDNum" :disableClear="true"></mt-field>
     <mt-actionsheet :actions="actions1" v-model="sheet1Visible" cancelText></mt-actionsheet>
     <mt-actionsheet :actions="actions2" v-model="sheet2Visible" cancelText></mt-actionsheet>
     <div class="attention">
@@ -31,7 +25,7 @@
       </p>
     </div>
 
-    <mt-button type="primary" class="btn">确定</mt-button>
+    <mt-button type="primary" class="btn" @click.native="handleClick">确定</mt-button>
   </div>
 </template>
 
@@ -44,7 +38,8 @@ export default {
       sheet2Visible: false,
       cardStyle: '诊疗卡',
       paperwork: '身份证',
-      number: null,
+      CardNum: null,
+      IDNum: null,
       name: '',
       actions1: [
         { name: '诊疗卡', method: this.sCardStyle1 },
@@ -76,6 +71,20 @@ export default {
     },
     sPaperwork2 () {
       this.paperwork = this.actions2[1].name
+    },
+    handleClick () {
+      const duration = 2000
+      const p = /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
+      if (this.CardNum && this.name && this.IDNum) {
+        if (!p.test(this.IDNum) && this.paperwork === '身份证') {
+          this.$toast({ message: '身份证号有误', duration })
+        } else {
+          this.$toast({ message: '操作成功', duration })
+          this.$router.push({ path: '/cardManage' })
+        }
+      } else {
+        this.$toast({ message: '请完整填写所有信息', duration })
+      }
     }
   }
 }

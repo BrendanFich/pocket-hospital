@@ -15,14 +15,14 @@
       ></week-slider>
 
       <div class="doctorItems">
-        <router-link class="item" to="/reserve3" v-for="(item,index) in doctorItems" :key="index">
+        <router-link class="item" to="/reserve3" v-for="(item,index) in showDoctors" :key="index">
           <div class="doctorInfo">
             <img slot="icon" src="@/assets/img/图层 826 拷贝 2.png" />
             <div class="textInfo">
               <span class="name">{{item.name}}</span>
               <span class="title">{{item.title}}</span>
               <br />
-              <span class="workTime">{{item.workTime}}</span>
+              <span class="workTime" :class="{ pm: item.workTime === '下午'}">{{item.workTime}}</span>
             </div>
           </div>
           <div class="remaining">
@@ -32,7 +32,6 @@
           </div>
         </router-link>
       </div>
-
     </div>
   </div>
 </template>
@@ -40,36 +39,137 @@
 <script>
 import moment from 'moment'
 import weekSlider from '../components/weekSlider'
-
+//
 export default {
   name: 'Reserve2',
   data () {
     return {
       tbSelected: '',
       date: moment(new Date()).format('YYYY-MM-DD'),
-      doctorItems: [
+      changdaoDoctors: [
         {
-          name: '杨辉',
+          name: '杨辉1',
           title: '主任医师',
-          workTime: '上午',
+          workTime: '下午',
           avatarUrl: '',
           remaining: 10
         },
         {
-          name: '陈辉',
+          name: '陈辉2',
           title: '主任医师',
           workTime: '下午',
           avatarUrl: '',
           remaining: 2
         },
         {
-          name: '杨辉',
+          name: '杨辉3',
+          title: '主任医师',
+          workTime: '上午',
+          avatarUrl: '',
+          remaining: 0
+        }
+      ],
+      guDoctors: [
+        {
+          name: '张三1',
+          title: '主任医师',
+          workTime: '上午',
+          avatarUrl: '',
+          remaining: 10
+        },
+        {
+          name: '张三2',
+          title: '主任医师',
+          workTime: '下午',
+          avatarUrl: '',
+          remaining: 2
+        },
+        {
+          name: '张三3',
+          title: '主任医师',
+          workTime: '上午',
+          avatarUrl: '',
+          remaining: 0
+        }
+      ],
+      pifuDoctors: [
+        {
+          name: '李四1',
+          title: '主任医师',
+          workTime: '上午',
+          avatarUrl: '',
+          remaining: 10
+        },
+        {
+          name: '李四2',
+          title: '主任医师',
+          workTime: '下午',
+          avatarUrl: '',
+          remaining: 2
+        },
+        {
+          name: '李四3',
+          title: '主任医师',
+          workTime: '上午',
+          avatarUrl: '',
+          remaining: 0
+        }
+      ],
+      erhoubiDoctors: [
+        {
+          name: '王五1',
+          title: '主任医师',
+          workTime: '上午',
+          avatarUrl: '',
+          remaining: 10
+        },
+        {
+          name: '王五2',
+          title: '主任医师',
+          workTime: '下午',
+          avatarUrl: '',
+          remaining: 2
+        },
+        {
+          name: '王五3',
+          title: '主任医师',
+          workTime: '上午',
+          avatarUrl: '',
+          remaining: 0
+        }
+      ],
+      neifenmiDoctors: [
+        {
+          name: '陈六1',
+          title: '主任医师',
+          workTime: '上午',
+          avatarUrl: '',
+          remaining: 10
+        },
+        {
+          name: '陈六2',
+          title: '主任医师',
+          workTime: '下午',
+          avatarUrl: '',
+          remaining: 2
+        },
+        {
+          name: '陈六3',
           title: '主任医师',
           workTime: '上午',
           avatarUrl: '',
           remaining: 0
         }
       ]
+    }
+  },
+  computed: {
+    showDoctors () {
+      if (this.$route.params.dname === '肠道专科') return this.changdaoDoctors
+      if (this.$route.params.dname === '骨内科') return this.guDoctors
+      if (this.$route.params.dname === '皮肤科') return this.pifuDoctors
+      if (this.$route.params.dname === '内分泌科') return this.neifenmiDoctors
+      if (this.$route.params.dname === '耳鼻喉科') return this.erhoubiDoctors
     }
   },
   components: { weekSlider },
@@ -84,6 +184,8 @@ export default {
 
 <style lang="scss" scoped>
 .reserve2 {
+  background: #fff;
+  height: 100vh;
   .container {
     .selectedInfo {
       height: 100px;
@@ -140,6 +242,9 @@ export default {
               border-radius: 5px;
               font-size: 24px;
               margin-top: 8px;
+            }
+            .pm{
+              background: #F5B252;
             }
           }
         }

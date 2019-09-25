@@ -1,23 +1,23 @@
 <template>
   <div class="tabbar">
     <router-link to="/index">
-      <div class="tab" :class="{active: activeNum===1}" @click="changeTab(1)">
-        <img src="@/assets/img/首页选中.png" v-show="activeNum===1" />
-        <img src="@/assets/img/首页未选中.png" v-show="activeNum!=1" />
+      <div class="tab" :class="{active: isShow1}">
+        <img src="@/assets/img/首页选中.png" v-show="isShow1" />
+        <img src="@/assets/img/首页未选中.png" v-show="!isShow1" />
         <span>首页</span>
       </div>
     </router-link>
-    <router-link to="/internetHospital">
-      <div class="tab" :class="{active: activeNum===2}" @click="changeTab(2)">
-        <img src="@/assets/img/医院选中.png" v-show="activeNum===2" />
-        <img src="@/assets/img/医院未选中.png" v-show="activeNum!=2" />
+    <router-link to="/iHospital">
+      <div class="tab" :class="{active: isShow2}">
+        <img src="@/assets/img/医院选中.png" v-show="isShow2" />
+        <img src="@/assets/img/医院未选中.png" v-show="!isShow2" />
         <span>互联网医院</span>
       </div>
     </router-link>
     <router-link to="/mine">
-      <div class="tab" :class="{active: activeNum===3}" @click="changeTab(3)">
-        <img src="@/assets/img/个人中心选中.png" v-show="activeNum===3" />
-        <img src="@/assets/img/个人中心未选中.png" v-show="activeNum!=3" />
+      <div class="tab" :class="{active: isShow3}">
+        <img src="@/assets/img/个人中心选中.png" v-show="isShow3" />
+        <img src="@/assets/img/个人中心未选中.png" v-show="!isShow3" />
         <span>个人中心</span>
       </div>
     </router-link>
@@ -28,13 +28,17 @@
 export default {
   name: 'Tabbar',
   data () {
-    return {
-      activeNum: 1
-    }
+    return {}
   },
-  methods: {
-    changeTab (index) {
-      this.activeNum = index
+  computed: {
+    isShow1 () {
+      return this.$route.path === '/index'
+    },
+    isShow2 () {
+      return this.$route.path === '/iHospital'
+    },
+    isShow3 () {
+      return this.$route.path === '/mine'
     }
   }
 }

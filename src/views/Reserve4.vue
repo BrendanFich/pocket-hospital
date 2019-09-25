@@ -43,7 +43,8 @@ export default {
   },
   methods: {
     confirm () {
-      this.$router.push({ path: '/payOnline', name: 'payOnline' })
+      this.$toast({ message: '操作成功', duration: 1000 })
+      this.$router.push({ path: '/index' })
     }
   }
 }

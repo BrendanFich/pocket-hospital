@@ -4,11 +4,9 @@
       <mt-tab-item id="1">未付款</mt-tab-item>
       <mt-tab-item id="2">已付款</mt-tab-item>
     </mt-navbar>
-
-    <!-- tab-container -->
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
-        <router-link to="/checkIn" v-for="(item,index) in unpaid" :key="index">
+        <router-link to="/payOnline" v-for="(item,index) in unpaid" :key="index">
           <mt-cell>
             <div class="leftInfo">
               <div class="name">{{item.name}}</div>
@@ -69,73 +67,9 @@ export default {
           department: '内分泌科(门)',
           date: '2019-08-28 11:30',
           price: '113.21元'
-        },
-        {
-          name: '张家辉',
-          medical_card: '3567901',
-          serial_number: '2019082854321',
-          department: '内分泌科(门)',
-          date: '2019-08-28 11:30',
-          price: '113.21元'
-        },
-        {
-          name: '张家辉',
-          medical_card: '3567901',
-          serial_number: '2019082854321',
-          department: '内分泌科(门)',
-          date: '2019-08-28 11:30',
-          price: '113.21元'
-        },
-        {
-          name: '张家辉',
-          medical_card: '3567901',
-          serial_number: '2019082854321',
-          department: '内分泌科(门)',
-          date: '2019-08-28 11:30',
-          price: '113.21元'
-        },
-        {
-          name: '张家辉',
-          medical_card: '3567901',
-          serial_number: '2019082854321',
-          department: '内分泌科(门)',
-          date: '2019-08-28 11:30',
-          price: '113.21元'
         }
       ],
       paid: [
-        {
-          name: '陈小春',
-          medical_card: '3567901',
-          serial_number: '2019082854321',
-          department: '内分泌科(门)',
-          date: '2019-08-28 11:30',
-          price: '113.21元'
-        },
-        {
-          name: '陈小春',
-          medical_card: '3567901',
-          serial_number: '2019082854321',
-          department: '内分泌科(门)',
-          date: '2019-08-28 11:30',
-          price: '113.21元'
-        },
-        {
-          name: '陈小春',
-          medical_card: '3567901',
-          serial_number: '2019082854321',
-          department: '内分泌科(门)',
-          date: '2019-08-28 11:30',
-          price: '113.21元'
-        },
-        {
-          name: '陈小春',
-          medical_card: '3567901',
-          serial_number: '2019082854321',
-          department: '内分泌科(门)',
-          date: '2019-08-28 11:30',
-          price: '113.21元'
-        },
         {
           name: '陈小春',
           medical_card: '3567901',
