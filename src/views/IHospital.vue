@@ -2,11 +2,11 @@
   <div class="iHospital">
     <img src="@/assets/img/组 20.png" alt />
     <div class="btns">
-      <router-link to="/selectDept">
+      <router-link to="/iHospital/selectDept">
         <img src="@/assets/img/在线问诊.png" />
         <p>在线问诊</p>
       </router-link>
-      <router-link to="/internetHospital">
+      <router-link :to="{ name: 'review'}">
         <img src="@/assets/img/在线复诊.png" />
         <p>在线复诊</p>
       </router-link>

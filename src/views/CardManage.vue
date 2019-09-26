@@ -1,30 +1,27 @@
 <template>
   <div class="cardManage">
     <h2>就诊卡管理</h2>
-    <router-link class="customerInfoCard" to="/cardInfo">
+    <NoData :data="cardList"></NoData>
+    <router-link
+      class="customerInfoCard"
+      to="/cardInfo"
+      v-for="(item,index) in cardList"
+      :key="index"
+    >
       <div>
-        <img src="@/assets/img/组 27.png" />
+        <img :src="item.imgUrl" />
         <div class="textInfo">
-          <span class="name">张家辉</span>
-          <p class="cardNumber">诊疗卡号：66424801</p>
+          <span class="name">{{item.name}}</span>
+          <p class="cardNumber">诊疗卡号：{{item.cardNum}}</p>
         </div>
       </div>
-      <span class="status">默认</span>
-    </router-link>
-    <router-link class="customerInfoCard"  to="/cardInfo">
-      <div>
-        <img src="@/assets/img/组 27.png" />
-        <div class="textInfo">
-          <span class="name">古天乐</span>
-          <p class="cardNumber">诊疗卡号：55324801</p>
-        </div>
-      </div>
-      <span class="isLink"></span>
+      <span class="status" v-if="item.default">默认</span>
+      <span class="isLink" v-else>></span>
     </router-link>
     <div class="orderList">
       <mt-cell class="cell" is-link to="/bindCard">
         <div slot="title" class="content">绑定就诊卡</div>
-        <img  class="icon" slot="icon" src="@/assets/img/绑定.png" />
+        <img class="icon" slot="icon" src="@/assets/img/绑定.png" />
       </mt-cell>
       <mt-cell class="cell" is-link to="/buildCard">
         <div slot="title" class="content">初诊建卡</div>
@@ -39,10 +36,27 @@
 </template>
 
 <script>
+import NoData from '../components/NoData'
 export default {
   name: 'CardManage',
+  components: { NoData },
   data () {
-    return {}
+    return {
+      cardList: [
+        {
+          imgUrl: require('@/assets/img/组 27.png'),
+          name: '张家辉',
+          cardNum: '66424801',
+          default: true
+        },
+        {
+          imgUrl: require('@/assets/img/组 27.png'),
+          name: '古天乐',
+          cardNum: '55324801',
+          default: false
+        }
+      ]
+    }
   }
 }
 </script>
@@ -57,7 +71,7 @@ export default {
     padding: 25px 30px;
   }
   .customerInfoCard {
-    border-bottom: 1px solid #F2F2F2;
+    border-bottom: 1px solid #f2f2f2;
     padding: 47px 50px 46px 31px;
     background: #fff;
     display: flex;
@@ -99,6 +113,7 @@ export default {
     }
     .isLink {
       color: #5adba3;
+      font-size: 24px;
     }
   }
   .orderList {

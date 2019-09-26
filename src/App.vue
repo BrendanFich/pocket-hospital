@@ -17,8 +17,10 @@ export default {
 }
 .toast {
   line-height: 60px;
+  border-radius: 10px;
   .mint-toast-text {
     font-size: 30px;
+    margin: 0 30px;
   }
 }
 body {

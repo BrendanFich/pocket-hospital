@@ -33,6 +33,8 @@ import CardManage from '@/views/CardManage'
 import BindCard from '@/views/BindCard'
 import BuildCard from '@/views/BuildCard'
 import CardInfo from '@/views/CardInfo'
+import Review from '@/views/Review'
+import Content from '@/components/Content'
 
 Vue.use(Router)
 
@@ -45,10 +47,18 @@ export default new Router({
       children: [
         { path: '', component: Home },
         { path: '/home', name: 'home', component: Home },
-        { path: '/iHospital', name: 'iHospital', component: IHospital },
+        { path: '/IHospital',
+          name: 'iHospital',
+          component: Content,
+          children: [
+            { path: '', component: IHospital },
+            { path: 'selectDept', name: 'selectDept', component: SelectDept },
+            { path: 'review', name: 'review', component: Review }
+          ] },
         { path: '/mine', name: 'mine', component: Mine }
       ]
     },
+
     { path: '/reserve1', name: 'reserve1', component: Reserve1 },
     { path: '/reserve2/:dname', name: 'reserve2', component: Reserve2 },
     { path: '/reserve3', name: 'reserve3', component: Reserve3 },
@@ -67,7 +77,7 @@ export default new Router({
     { path: '/drugSearch', name: 'drugSearch', component: DrugSearch },
     { path: '/parkingSpace', name: 'parkingSpace', component: ParkingSpace },
     { path: '/suggestion', name: 'suggestion', component: Suggestion },
-    { path: '/selectDept', name: 'selectDept', component: SelectDept },
+    // { path: '/selectDept', name: 'selectDept', component: SelectDept },
     { path: '/selectDoc', name: 'selectDoc', component: SelectDoc },
     { path: '/docIntro', name: 'docIntro', component: DocIntro },
     { path: '/inquiry', name: 'inquiry', component: Inquiry },
@@ -78,5 +88,6 @@ export default new Router({
     { path: '/bindCard', name: 'bindCard', component: BindCard },
     { path: '/buildCard', name: 'buildCard', component: BuildCard },
     { path: '/cardInfo', name: 'cardInfo', component: CardInfo }
+
   ]
 })

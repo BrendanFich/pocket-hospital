@@ -13,8 +13,8 @@
         activeBgColor="#09CF74"
         todayBgColor="#eee"
       ></week-slider>
-
       <div class="doctorItems">
+        <NoData :data="showDoctors"></NoData>
         <router-link class="item" to="/reserve3" v-for="(item,index) in showDoctors" :key="index">
           <div class="doctorInfo">
             <img slot="icon" src="@/assets/img/图层 826 拷贝 2.png" />
@@ -39,6 +39,7 @@
 <script>
 import moment from 'moment'
 import weekSlider from '../components/weekSlider'
+import NoData from '../components/NoData'
 export default {
   name: 'Reserve2',
   data () {
@@ -138,27 +139,27 @@ export default {
         }
       ],
       neifenmiDoctors: [
-        {
-          name: '陈六1',
-          title: '主任医师',
-          workTime: '上午',
-          avatarUrl: '',
-          remaining: 10
-        },
-        {
-          name: '陈六2',
-          title: '主任医师',
-          workTime: '下午',
-          avatarUrl: '',
-          remaining: 2
-        },
-        {
-          name: '陈六3',
-          title: '主任医师',
-          workTime: '上午',
-          avatarUrl: '',
-          remaining: 0
-        }
+        // {
+        //   name: '陈六1',
+        //   title: '主任医师',
+        //   workTime: '上午',
+        //   avatarUrl: '',
+        //   remaining: 10
+        // },
+        // {
+        //   name: '陈六2',
+        //   title: '主任医师',
+        //   workTime: '下午',
+        //   avatarUrl: '',
+        //   remaining: 2
+        // },
+        // {
+        //   name: '陈六3',
+        //   title: '主任医师',
+        //   workTime: '上午',
+        //   avatarUrl: '',
+        //   remaining: 0
+        // }
       ]
     }
   },
@@ -171,7 +172,7 @@ export default {
       if (this.$route.params.dname === '耳鼻喉科') return this.erhoubiDoctors
     }
   },
-  components: { weekSlider },
+  components: { weekSlider, NoData },
   methods: {
     dateClickhandler (e) {
       this.date = e
@@ -241,8 +242,8 @@ export default {
               font-size: 24px;
               margin-top: 8px;
             }
-            .pm{
-              background: #F5B252;
+            .pm {
+              background: #f5b252;
             }
           }
         }

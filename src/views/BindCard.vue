@@ -80,7 +80,7 @@ export default {
         if (!p.test(this.IDNum) && this.paperwork === '身份证') {
           this.$toast({ message: '身份证号有误', duration, className })
         } else {
-          this.$toast({ message: '操作成功', duration, className })
+          this.$toast({ message: '绑定成功', duration, className })
           this.$router.push({ path: '/cardManage' })
         }
       } else {

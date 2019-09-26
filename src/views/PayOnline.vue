@@ -6,6 +6,7 @@
     </mt-navbar>
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
+        <NoData :data="unpaid"></NoData>
         <router-link to="/payOnline" v-for="(item,index) in unpaid" :key="index">
           <mt-cell>
             <div class="leftInfo">
@@ -28,6 +29,7 @@
         </router-link>
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
+        <NoData :data="paid"></NoData>
         <div v-for="(item,index) in paid" :key="index">
           <mt-cell>
             <div class="leftInfo">
@@ -54,8 +56,10 @@
 </template>
 
 <script>
+import NoData from '../components/NoData'
 export default {
   name: 'PayOnline',
+  components: { NoData },
   data () {
     return {
       selected: '1',

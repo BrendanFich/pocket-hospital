@@ -73,7 +73,7 @@
           <img src="@/assets/img/意见.png" />
           <h3>意见提交</h3>
         </router-link>
-        <router-link class="item" to="/addrNav">
+        <router-link class="item" to="/evaluate">
           <img src="@/assets/img/导航.png" />
           <h3>来院导航</h3>
         </router-link>

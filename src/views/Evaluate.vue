@@ -2,11 +2,11 @@
   <div class="evaluate">
     <ul class="inquiryInfo">
       <li>
-        <span class="key">诊断</span>
+        <span class="key">诊断结果</span>
         <span class="value">发烧感冒</span>
       </li>
       <li>
-        <span class="key">诊断</span>
+        <span class="key">诊断专家</span>
         <div class="value">
           <img src="@/assets/img/图层 826 拷贝 6.png" />
           <span>杨辉</span>
@@ -17,15 +17,17 @@
     <div class="score">
       <h3>请您对本次就诊服务评价</h3>
       <div class="stars">
-        <img v-for="n in 4" :key="n" src="@/assets/img/星星 拷贝 8.png" alt />
-        <img v-for="n in 5-4" :key="n" src="@/assets/img/星星 拷贝 8(1).png" alt />
+        <div class="star" @click="changeStar(n)" v-for="n in 5" :key="n">
+          <img src="@/assets/img/星星 拷贝 8.png" alt v-if="n<=star" />
+          <img src="@/assets/img/星星 拷贝 8(1).png" alt v-else />
+        </div>
       </div>
     </div>
     <h2>评价建议</h2>
     <div class="textarea">
-      <mt-field placeholder="请输入意见..." type="textarea" rows="12" v-model="introduction"></mt-field>
+      <mt-field placeholder="请输入意见..." type="textarea" rows="6" v-model="introduction"></mt-field>
     </div>
-    <mt-button type="primary" class="btn">提交意见</mt-button>
+    <mt-button type="primary" class="btn" @click="handleClick">提交意见</mt-button>
   </div>
 </template>
 
@@ -34,7 +36,25 @@ export default {
   name: 'Evaluate',
   data () {
     return {
-      introduction: ''
+      introduction: '',
+      star: 1
+    }
+  },
+  methods: {
+    changeStar (index) {
+      this.star = index
+    },
+    handleClick () {
+      this.$indicator.open()
+      setTimeout(() => {
+        this.$indicator.close()
+        this.$toast({
+          message: '提交成功',
+          duration: 1000,
+          className: 'toast'
+        })
+        this.$router.push('/index')
+      }, 500)
     }
   }
 }
@@ -50,22 +70,26 @@ export default {
     line-height: 82px;
     margin-left: 42px;
   }
-  .score{
+  .score {
     height: 233px;
     background: #fff;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    h3{
+    h3 {
       color: #999999;
       font-size: 24px;
       margin-bottom: 56px;
     }
-    .stars{
-      >img{
-        width: 39px;
+    .stars {
+      .star {
+        display: inline-block;
         margin: 0 20px;
+        > img {
+          width: 39px;
+          height: 37px;
+        }
       }
     }
   }
@@ -99,7 +123,10 @@ export default {
     > .mint-cell {
       border: 1px solid #dddddd;
       border-radius: 5px;
-      font-size: 24px;
+      /deep/ .mint-field-core {
+        font-size: 28px;
+        padding: 10px;
+      }
     }
   }
   .btn {

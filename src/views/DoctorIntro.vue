@@ -9,9 +9,10 @@
       </swiper>
     </div>
     <div class="title">医生简介</div>
+
     <mt-tab-container v-model="selected">
       <mt-tab-container-item v-for="(item,index) in departments" :key="index" :id="index">
-        <div class="hiddenMsg" :class="{notFound: item.doctors.length <= 0}" v-if="departments">暂无数据</div>
+        <NoData :data="item.doctors"></NoData>
         <ul style="background: #fff;">
           <li class="doctorIntroCard" v-for="(doctor,dindex) in item.doctors" :key="dindex">
             <img class="avatar" src="@/assets/img/图层 826 拷贝 5.png" />
@@ -31,9 +32,11 @@
 </template>
 
 <script>
+import NoData from '../components/NoData'
 let vm = null
 export default {
   name: 'DoctorIntro',
+  components: { NoData },
   data () {
     return {
       selected: 0,
@@ -178,16 +181,6 @@ export default {
     color: #999999;
     line-height: 88px;
     margin-left: 30px;
-  }
-  .hiddenMsg {
-    display: none;
-  }
-  .notFound {
-    display: block;
-    text-align: center;
-    font-size: 26px;
-    color: #333333;
-    margin-top: 30px;
   }
   .doctorIntroCard {
     height: 195px;

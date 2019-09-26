@@ -43,8 +43,16 @@ export default {
   },
   methods: {
     confirm () {
-      this.$toast({ message: '操作成功', duration: 1000 })
-      this.$router.push({ path: '/index' })
+      this.$indicator.open()
+      setTimeout(() => {
+        this.$indicator.close()
+        this.$toast({
+          message: '提交成功',
+          duration: 1000,
+          className: 'toast'
+        })
+        this.$router.push('/index')
+      }, 500)
     }
   }
 }
