@@ -6,25 +6,27 @@
         <img src="@/assets/img/在线问诊.png" />
         <p>在线问诊</p>
       </router-link>
-      <router-link :to="{ name: 'review'}">
+      <router-link to="/iHospital/review">
         <img src="@/assets/img/在线复诊.png" />
         <p>在线复诊</p>
       </router-link>
-      <router-link to="/internetHospital">
+      <router-link to="/iHospital">
         <img src="@/assets/img/药物配送.png" />
         <p>药物配送</p>
       </router-link>
     </div>
+    <Tabbar></Tabbar>
   </div>
 </template>
 
 <script>
+import Tabbar from '@/components/Tabbar'
 export default {
   name: 'IHospital',
+  components: { Tabbar },
   data () {
     return {}
-  },
-  components: {}
+  }
 }
 </script>
 

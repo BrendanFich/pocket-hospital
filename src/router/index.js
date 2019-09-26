@@ -1,9 +1,14 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/views/Index'
-import Home from '@/views/Home'
-import IHospital from '@/views/IHospital'
+
+import IHospitalView from '@/views/IHospital/IHospitalView'
+import IHospital from '@/views/IHospital/IHospital'
+import SelectDept from '@/views/IHospital/SelectDept'
+import Review from '@/views/IHospital/Review'
+
 import Mine from '@/views/Mine'
+
 import Reserve1 from '@/views/Reserve1'
 import Reserve2 from '@/views/Reserve2'
 import Reserve3 from '@/views/Reserve3'
@@ -22,7 +27,6 @@ import OtherReport from '@/views/OtherReport'
 import DrugSearch from '@/views/DrugSearch'
 import ParkingSpace from '@/views/ParkingSpace'
 import Suggestion from '@/views/Suggestion'
-import SelectDept from '@/views/SelectDept'
 import SelectDoc from '@/views/SelectDoc'
 import DocIntro from '@/views/DocIntro'
 import Inquiry from '@/views/Inquiry'
@@ -33,31 +37,21 @@ import CardManage from '@/views/CardManage'
 import BindCard from '@/views/BindCard'
 import BuildCard from '@/views/BuildCard'
 import CardInfo from '@/views/CardInfo'
-import Review from '@/views/Review'
-import Content from '@/components/Content'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     { path: '/', redirect: '/index' },
-    {
-      path: '/index',
-      component: Index,
+    { path: '/index', component: Index },
+    { path: '/iHospital',
+      component: IHospitalView,
       children: [
-        { path: '', component: Home },
-        { path: '/home', name: 'home', component: Home },
-        { path: '/IHospital',
-          name: 'iHospital',
-          component: Content,
-          children: [
-            { path: '', component: IHospital },
-            { path: 'selectDept', name: 'selectDept', component: SelectDept },
-            { path: 'review', name: 'review', component: Review }
-          ] },
-        { path: '/mine', name: 'mine', component: Mine }
-      ]
-    },
+        { path: '', component: IHospital },
+        { path: 'selectDept', component: SelectDept },
+        { path: 'review', component: Review }
+      ] },
+    { path: '/mine', component: Mine },
 
     { path: '/reserve1', name: 'reserve1', component: Reserve1 },
     { path: '/reserve2/:dname', name: 'reserve2', component: Reserve2 },
@@ -77,7 +71,6 @@ export default new Router({
     { path: '/drugSearch', name: 'drugSearch', component: DrugSearch },
     { path: '/parkingSpace', name: 'parkingSpace', component: ParkingSpace },
     { path: '/suggestion', name: 'suggestion', component: Suggestion },
-    // { path: '/selectDept', name: 'selectDept', component: SelectDept },
     { path: '/selectDoc', name: 'selectDoc', component: SelectDoc },
     { path: '/docIntro', name: 'docIntro', component: DocIntro },
     { path: '/inquiry', name: 'inquiry', component: Inquiry },

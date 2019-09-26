@@ -1,16 +1,18 @@
 <template>
-  <div class="content">
+  <div class="iHospitalView">
     <router-view></router-view>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Content',
+  name: 'IHospitalView',
   data () {
     return {}
   }
 }
 </script>
+
 <style lang="scss" scoped>
+
 </style>

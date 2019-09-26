@@ -41,17 +41,19 @@
         <span>友情链接</span>
       </div>
     </div>
+    <Tabbar></Tabbar>
   </div>
 </template>
 
 <script>
 import CustomerInfoCard from '../components/CustomerInfoCard'
+import Tabbar from '@/components/Tabbar'
 export default {
   name: 'Mine',
   data () {
     return {}
   },
-  components: { CustomerInfoCard }
+  components: { CustomerInfoCard, Tabbar }
 }
 </script>
 

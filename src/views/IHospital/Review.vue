@@ -17,12 +17,15 @@
         </div>
       </li>
     </ul>
+    <Tabbar></Tabbar>
   </div>
 </template>
 
 <script>
+import Tabbar from '@/components/Tabbar'
 export default {
   name: 'LiveHosOrder',
+  components: { Tabbar },
   data () {
     return {
       selected: 0
