@@ -145,7 +145,7 @@ export default {
   created () {},
   methods: {
     enter () {
-      this.$router.push({ path: '/inquiry', name: 'inquiry' })
+      this.$router.push('/iHospital/inquiry')
     }
   }
 }
