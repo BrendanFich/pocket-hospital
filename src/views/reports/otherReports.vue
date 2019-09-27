@@ -1,5 +1,5 @@
 <template>
-  <div class="examination">
+  <div class="otherReports">
     <mt-cell class="cell" is-link>
       <div slot="title" class="content">
         <div class="date">
@@ -15,14 +15,14 @@
           <span class="value highlight">肩部异物切片</span>
         </div>
       </div>
-      <img slot="icon" src="@/assets/img/报告1 拷贝.png" />
+      <img slot="icon" src="@/assets/img/报告 (2) 拷贝.png" />
     </mt-cell>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Examination',
+  name: 'otherReports',
   data () {
     return {}
   }
@@ -30,7 +30,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.examination {
+.otherReports {
   background: #f2f2f2;
   height: 100vh;
   .cell {

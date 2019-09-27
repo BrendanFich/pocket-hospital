@@ -4,7 +4,7 @@
       <img src="@/assets/img/图层 1.png" />
     </div>
     <div class="navs1">
-      <router-link class="nav1" to="/reserve1">
+      <router-link class="nav1" to="/reserve">
         <img src="@/assets/img/组 26(1).png" />
         <h2>预约、挂号</h2>
         <p>当天挂号、预约挂号</p>
@@ -33,7 +33,7 @@
           </div>
           <img src="@/assets/img/组 27(2).png" />
         </router-link>
-        <router-link class="nav2" to="/liveHospital">
+        <router-link class="nav2" to="/index">
           <div>
             <h2>住院服务</h2>
             <p>住院手续一条龙服务</p>
@@ -53,7 +53,7 @@
           <img src="@/assets/img/医生 (1).png" />
           <h3>医生介绍</h3>
         </router-link>
-        <router-link class="item" to="/report">
+        <router-link class="item" to="/reports">
           <img src="@/assets/img/报告 (1).png" />
           <h3>报告查询</h3>
         </router-link>
@@ -61,7 +61,7 @@
           <img src="@/assets/img/药.png" />
           <h3>药品查询</h3>
         </router-link>
-        <router-link class="item" to="/servePrice">
+        <router-link class="item" to="/index">
           <img src="@/assets/img/医疗.png" />
           <h3>医疗服务价格</h3>
         </router-link>
@@ -73,7 +73,7 @@
           <img src="@/assets/img/意见.png" />
           <h3>意见提交</h3>
         </router-link>
-        <router-link class="item" to="/evaluate">
+        <router-link class="item" to="/index">
           <img src="@/assets/img/导航.png" />
           <h3>来院导航</h3>
         </router-link>

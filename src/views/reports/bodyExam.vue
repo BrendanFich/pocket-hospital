@@ -22,7 +22,7 @@
 
 <script>
 export default {
-  name: 'BodyExam',
+  name: 'bodyExam',
   data () {
     return {}
   }

@@ -1,20 +1,20 @@
 <template>
-  <div class="report">
-      <mt-cell class="cell" is-link to="/bodyExam">
+  <div class="reportsKind">
+      <mt-cell class="cell" is-link to="/reports/bodyExam">
         <div slot="title" class="content">
           <div class="title">检验报告</div>
           <div class="description">查看最近或历史检验报告</div>
         </div>
         <img slot="icon" src="@/assets/img/报告 (1) 拷贝.png" />
       </mt-cell>
-      <mt-cell class="cell" is-link to='/examination'>
+      <mt-cell class="cell" is-link to='/reports/examination'>
         <div slot="title" class="content">
           <div class="title">检查报告</div>
           <div class="description">查看最近或历史检查报告</div>
         </div>
         <img slot="icon" src="@/assets/img/报告1 拷贝.png" />
       </mt-cell>
-      <mt-cell class="cell" is-link to='/otherReport'>
+      <mt-cell class="cell" is-link to='/reports/otherReports'>
         <div slot="title" class="content">
           <div class="title">其他报告</div>
           <div class="description">查看其他报告</div>
@@ -26,7 +26,7 @@
 
 <script>
 export default {
-  name: 'Report',
+  name: 'reportsKind',
   data () {
     return {
     }
@@ -37,7 +37,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.report {
+.reportsKind {
   background: #f2f2f2;
   height: 100vh;
   .cell {

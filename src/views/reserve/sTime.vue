@@ -1,5 +1,5 @@
 <template>
-  <div class="reserve3">
+  <div class="sTime">
     <div class="doctorInfo">
       <div class="baseInfo">
         <img src="@/assets/img/图层 826 拷贝 2.png" alt />
@@ -16,7 +16,7 @@
     <div class="workTime">
       <ul>
         <li v-for="(item,index) in workTimeList" :key="index">
-          <router-link to="/reserve4" class="itemContent">
+          <router-link to="/reserve/confirm" class="itemContent">
             <div class="time">
               <img src="@/assets/img/时间.png" />
               <span>{{item.time}}</span>
@@ -35,7 +35,7 @@
 
 <script>
 export default {
-  name: 'Reserve3',
+  name: 'sTime',
   data () {
     return {
       workTimeList: [
@@ -50,7 +50,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.reserve3 {
+.sTime {
   background: #f2f2f2;
   height: 100vh;
   .doctorInfo {

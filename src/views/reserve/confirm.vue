@@ -1,5 +1,5 @@
 <template>
-  <div class="queueInfo">
+  <div class="confirm">
     <CustomerInfoCard></CustomerInfoCard>
     <div class="orderInfo">
       <ul>
@@ -27,63 +27,69 @@
           <span class="key">诊查费</span>
           <span class="value">20</span>
         </li>
-        <li>
-          <span class="key">报到时间</span>
-          <span class="value">2019-08-31 08:48</span>
-        </li>
       </ul>
     </div>
-    <div class="queueBefore">
-      <span class="key">前方还有</span>
-      <span class="value">10 人</span>
-    </div>
+    <mt-button class="confirmBtn" type="primary" @click="confirm">确认挂号</mt-button>
   </div>
 </template>
 
 <script>
-import CustomerInfoCard from '../components/CustomerInfoCard'
+import CustomerInfoCard from '@/components/CustomerInfoCard'
 export default {
-  name: 'QueueInfo',
+  name: 'confirm',
   components: { CustomerInfoCard },
   data () {
     return {}
   },
   methods: {
     confirm () {
-      this.$router.push({ path: '/payOnline', name: 'payOnline' })
+      this.$indicator.open()
+      setTimeout(() => {
+        this.$indicator.close()
+        this.$toast({
+          message: '提交成功',
+          duration: 1000,
+          className: 'toast'
+        })
+        this.$router.push('/index')
+      }, 500)
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.queueInfo {
+.confirm {
   background: #f2f2f2;
   height: 100vh;
   .orderInfo {
     margin-top: 22px;
     background: #fff;
-  }
-  .orderInfo ul > li ,.queueBefore{
-    height: 88px;
-    padding: 0 54px 0 43px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #ededed;
-    .key {
-      color: #333333;
-      font-size: 30px;
-      font-weight: bold;
+    ul > li {
+      height: 88px;
+      padding: 0 54px 0 43px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ededed;
+      .key {
+        color: #333333;
+        font-size: 30px;
+        font-weight: bold;
+      }
+      .value {
+        color: #666666;
+        font-size: 30px;
+      }
     }
-    .value {
-      color: #666666;
-      font-size: 30px;
-    }
   }
-  .queueBefore{
-    margin-top: 85px;
-    background: #fff;
+  .confirmBtn {
+    margin: 0 12.5px;
+    margin-top: 92px;
+    width: 725px;
+    height: 80px;
+    background: #09cf74;
+    font-size: 30px;
   }
 }
 </style>

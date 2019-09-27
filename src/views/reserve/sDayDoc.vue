@@ -1,5 +1,5 @@
 <template>
-  <div class="reserve2">
+  <div class="sDayDoc">
     <div class="container">
       <div class="selectedInfo">
         <span class="department">{{$route.params.dname}}</span>
@@ -15,7 +15,7 @@
       ></week-slider>
       <div class="doctorItems">
         <NoData :data="showDoctors"></NoData>
-        <router-link class="item" to="/reserve3" v-for="(item,index) in showDoctors" :key="index">
+        <router-link class="item" to="/reserve/sTime" v-for="(item,index) in showDoctors" :key="index">
           <div class="doctorInfo">
             <img slot="icon" src="@/assets/img/图层 826 拷贝 2.png" />
             <div class="textInfo">
@@ -38,10 +38,10 @@
 
 <script>
 import moment from 'moment'
-import weekSlider from '../components/weekSlider'
-import NoData from '../components/NoData'
+import weekSlider from '@/components/weekSlider'
+import NoData from '@/components/NoData'
 export default {
-  name: 'Reserve2',
+  name: 'sDayDoc',
   data () {
     return {
       tbSelected: '',
@@ -183,7 +183,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.reserve2 {
+.sDayDoc {
   background: #fff;
   height: 100vh;
   .container {

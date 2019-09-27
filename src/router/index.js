@@ -1,29 +1,42 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Index from '@/views/Index'
 
-import IHospitalView from '@/views/IHospital/IHospitalView'
-import IHospital from '@/views/IHospital/IHospital'
-import SelectDept from '@/views/IHospital/SelectDept'
-import Review from '@/views/IHospital/Review'
+import container from '@/components/container'
+
+import index from '@/views/index'
+
+import reserve from '@/views/reserve/reserve'
+import sDept from '@/views/reserve/sDept'
+import sDayDoc from '@/views/reserve/sDayDoc'
+import sTime from '@/views/reserve/sTime'
+import confirm from '@/views/reserve/confirm'
+
+import payOnline from '@/views/payOnline'
+
+import guidance from '@/views/guidance/guidance'
+import sSymptom from '@/views/guidance/sSymptom'
+import gSTime from '@/views/guidance/gSTime'
+
+import checkIn from '@/views/checkIn/checkIn'
+import cQueue from '@/views/checkIn/cQueue'
+import cConfirm from '@/views/checkIn/cConfirm'
+
+import iHospital from '@/views/iHospital/iHospital'
+import selectDept from '@/views/iHospital/selectDept'
+import review from '@/views/iHospital/review'
+import drugDelivery from '@/views/iHospital/drugDelivery'
 
 import Mine from '@/views/Mine'
 
-import Reserve1 from '@/views/Reserve1'
-import Reserve2 from '@/views/Reserve2'
-import Reserve3 from '@/views/Reserve3'
-import Reserve4 from '@/views/Reserve4'
-import PayOnline from '@/views/PayOnline'
-import CheckIn from '@/views/CheckIn'
-import QueueInfo from '@/views/QueueInfo'
-import HospitalInfo from '@/views/HospitalInfo'
-import DoctorIntro from '@/views/DoctorIntro'
-import Guidance from '@/views/Guidance'
-import Guidance2 from '@/views/Guidance2'
-import Report from '@/views/Report'
-import BodyExam from '@/views/BodyExam'
-import Examination from '@/views/Examination'
-import OtherReport from '@/views/OtherReport'
+import hospitalInfo from '@/views/hospitalInfo'
+import doctorIntro from '@/views/doctorIntro'
+
+import reports from '@/views/reports/reports'
+import reportsKind from '@/views/reports/reportsKind'
+import bodyExam from '@/views/reports/bodyExam'
+import examination from '@/views/reports/examination'
+import otherReports from '@/views/reports/otherReports'
+
 import DrugSearch from '@/views/DrugSearch'
 import ParkingSpace from '@/views/ParkingSpace'
 import Suggestion from '@/views/Suggestion'
@@ -43,31 +56,57 @@ Vue.use(Router)
 export default new Router({
   routes: [
     { path: '/', redirect: '/index' },
-    { path: '/index', component: Index },
-    { path: '/iHospital',
-      component: IHospitalView,
+    { path: '/index', component: index },
+    { path: '/reserve',
+      redirect: '/reserve/sDept',
+      component: reserve,
       children: [
-        { path: '', component: IHospital },
-        { path: 'selectDept', component: SelectDept },
-        { path: 'review', component: Review }
+        { path: 'sDept', component: sDept },
+        { path: 'sDayDoc/:dname', name: 'sDayDoc', component: sDayDoc },
+        { path: 'sTime', component: sTime },
+        { path: 'confirm', component: confirm }
+      ]
+    },
+    { path: '/payOnline', name: 'payOnline', component: payOnline },
+    { path: '/guidance',
+      redirect: '/guidance/sSymptom',
+      component: guidance,
+      children: [
+        { path: 'sSymptom', component: sSymptom },
+        { path: 'gSTime', component: gSTime }
+      ]
+    },
+    { path: '/checkIn',
+      redirect: '/checkIn/cConfirm',
+      component: checkIn,
+      children: [
+        { path: 'cConfirm', component: cConfirm },
+        { path: 'cQueue', component: cQueue }
+      ]
+    },
+    { path: '/hospitalInfo', component: hospitalInfo },
+    { path: '/doctorIntro', component: doctorIntro },
+    { path: '/reports',
+      redirect: '/reports/reportsKind',
+      component: reports,
+      children: [
+        { path: 'reportsKind', component: reportsKind },
+        { path: 'examination', component: examination },
+        { path: 'otherReports', component: otherReports },
+        { path: 'bodyExam', component: bodyExam }
+
       ] },
+    { path: '/iHospital',
+      component: container,
+      children: [
+        { path: '', component: iHospital },
+        { path: 'selectDept', component: selectDept },
+        { path: 'review', component: review },
+        { path: 'drugDelivery', component: drugDelivery }
+      ]
+    },
     { path: '/mine', component: Mine },
 
-    { path: '/reserve1', name: 'reserve1', component: Reserve1 },
-    { path: '/reserve2/:dname', name: 'reserve2', component: Reserve2 },
-    { path: '/reserve3', name: 'reserve3', component: Reserve3 },
-    { path: '/reserve4', name: 'reserve4', component: Reserve4 },
-    { path: '/payOnline', name: 'payOnline', component: PayOnline },
-    { path: '/checkIn', name: 'checkIn', component: CheckIn },
-    { path: '/queueInfo', name: 'queueInfo', component: QueueInfo },
-    { path: '/hospitalInfo', name: 'hospitalInfo', component: HospitalInfo },
-    { path: '/doctorIntro', name: 'doctorIntro', component: DoctorIntro },
-    { path: '/guidance', name: 'guidance', component: Guidance },
-    { path: '/guidance2', name: 'guidance2', component: Guidance2 },
-    { path: '/report', name: 'report', component: Report },
-    { path: '/bodyExam', name: 'bodyExam', component: BodyExam },
-    { path: '/examination', name: 'examination', component: Examination },
-    { path: '/otherReport', name: 'otherReport', component: OtherReport },
     { path: '/drugSearch', name: 'drugSearch', component: DrugSearch },
     { path: '/parkingSpace', name: 'parkingSpace', component: ParkingSpace },
     { path: '/suggestion', name: 'suggestion', component: Suggestion },

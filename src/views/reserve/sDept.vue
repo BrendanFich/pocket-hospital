@@ -1,5 +1,5 @@
 <template>
-  <div class="reserve1">
+  <div class="sDept">
     <Searchbar placeholder="搜索科室" @getSearchContent="setSearchContent"></Searchbar>
     <div class="content">
       <mt-navbar v-model="selected" class="left_navbar">
@@ -10,7 +10,7 @@
           <NoData :data="item.division"></NoData>
           <router-link
             :to="{
-          name: 'reserve2',
+          name: 'sDayDoc',
           params:{
             dname: ditem.name
           }}"
@@ -29,9 +29,9 @@
 
 <script>
 import Searchbar from '@/components/Searchbar'
-import NoData from '../components/NoData'
+import NoData from '@/components/NoData'
 export default {
-  name: 'Reserve1',
+  name: 'sDept',
   components: { Searchbar, NoData },
   data () {
     return {
@@ -86,7 +86,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.reserve1 {
+.sDept {
   background: #f2f2f2;
   height: 100vh;
   .content {

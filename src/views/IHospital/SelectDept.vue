@@ -30,7 +30,6 @@
 <script>
 import Searchbar from '@/components/Searchbar'
 export default {
-  name: 'SelectDept',
   components: { Searchbar },
   data () {
     return {

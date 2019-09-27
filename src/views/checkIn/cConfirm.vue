@@ -1,14 +1,14 @@
 <template>
-  <div class="checkIn">
+  <div class="cConfirm">
     <CustomerInfoCard></CustomerInfoCard>
     <mt-button class="confirmBtn" type="primary" @click="confirm">就诊报到</mt-button>
   </div>
 </template>
 
 <script>
-import CustomerInfoCard from '../components/CustomerInfoCard'
+import CustomerInfoCard from '@/components/CustomerInfoCard'
 export default {
-  name: 'CheckIn',
+  name: 'cConfirm',
   components: { CustomerInfoCard },
   data () {
     return {}
@@ -24,7 +24,7 @@ export default {
       </div>
       `
       this.$messagebox.confirm(text).then(action => {
-        this.$router.push({ path: '/queueInfo', name: 'queueInfo' })
+        this.$router.push('/checkIn/cQueue')
       })
     }
   }
@@ -32,7 +32,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.checkIn {
+.cConfirm {
   background: #f2f2f2;
   height: 100vh;
   .orderInfo {

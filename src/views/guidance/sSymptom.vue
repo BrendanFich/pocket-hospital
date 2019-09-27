@@ -1,14 +1,14 @@
 <template>
-  <div class="guidance">
+  <div class="sSymptom">
     <div class="search">
-      <Searchbar placeholder="搜索科室或医生"></Searchbar>
+      <Searchbar placeholder="请输入您的症状"></Searchbar>
       <div class="searchTags">
         <span class="tag" v-for="(tag,index) in searchTags" :key="index">{{tag}}</span>
       </div>
     </div>
     <mt-tab-container v-model="selected">
       <mt-tab-container-item v-for="(item,index) in departments" :key="index" :id="index">
-        <router-link class="item" to="/guidance2">
+        <router-link class="item" to="/guidance/gSTime">
           <ul style="background: #fff;">
             <li class="doctorIntroCard" v-for="(doctor,dindex) in item.doctors" :key="dindex">
               <div class="baseInfo">
@@ -39,7 +39,7 @@
 <script>
 import Searchbar from '@/components/Searchbar'
 export default {
-  name: 'Guidance',
+  name: 'sSymptom',
   components: { Searchbar },
   data () {
     return {
@@ -153,7 +153,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.guidance {
+.sSymptom {
   background: #f2f2f2;
   height: 100vh;
   .search {

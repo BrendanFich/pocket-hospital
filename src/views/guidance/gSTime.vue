@@ -1,5 +1,5 @@
 <template>
-  <div class="guidance2">
+  <div class="gSTime">
     <div class="doctorIntroCard">
       <img class="avatar" src="@/assets/img/图层 826 拷贝 5.png" />
       <div class="doctorInfo">
@@ -21,7 +21,7 @@
     <div class="workTime">
       <ul>
         <li v-for="(item,index) in workTimeList" :key="index">
-          <router-link to="/reserve4" class="itemContent">
+          <router-link to="/reserve/confirm" class="itemContent">
             <div class="time">
               <img src="@/assets/img/时间.png" />
               <span>{{item.time}}</span>
@@ -40,9 +40,9 @@
 
 <script>
 import moment from 'moment'
-import weekSlider from '../components/weekSlider'
+import weekSlider from '@/components/weekSlider'
 export default {
-  name: 'Guidance2',
+  name: 'gSTime',
   data () {
     return {
       date: moment(new Date()).format('YYYY-MM-DD'),
@@ -64,7 +64,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.guidance2 {
+.gSTime {
   background: #f2f2f2;
   height: 100vh;
   .doctorIntroCard {

@@ -10,7 +10,7 @@
         <img src="@/assets/img/在线复诊.png" />
         <p>在线复诊</p>
       </router-link>
-      <router-link to="/iHospital">
+      <router-link to="/iHospital/drugDelivery">
         <img src="@/assets/img/药物配送.png" />
         <p>药物配送</p>
       </router-link>
@@ -22,7 +22,6 @@
 <script>
 import Tabbar from '@/components/Tabbar'
 export default {
-  name: 'IHospital',
   components: { Tabbar },
   data () {
     return {}
