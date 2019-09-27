@@ -4,7 +4,7 @@
     <NoData :data="cardList"></NoData>
     <router-link
       class="customerInfoCard"
-      to="/cardInfo"
+      to="/mine/cardManage/cardInfo"
       v-for="(item,index) in cardList"
       :key="index"
     >
@@ -19,11 +19,11 @@
       <span class="isLink" v-else>></span>
     </router-link>
     <div class="orderList">
-      <mt-cell class="cell" is-link to="/bindCard">
+      <mt-cell class="cell" is-link to="/mine/cardManage/bindCard">
         <div slot="title" class="content">绑定就诊卡</div>
         <img class="icon" slot="icon" src="@/assets/img/绑定.png" />
       </mt-cell>
-      <mt-cell class="cell" is-link to="/buildCard">
+      <mt-cell class="cell" is-link to="/mine/cardManage/buildCard">
         <div slot="title" class="content">初诊建卡</div>
         <img class="icon" slot="icon" src="@/assets/img/新建.png" />
       </mt-cell>
@@ -36,9 +36,9 @@
 </template>
 
 <script>
-import NoData from '../components/NoData'
+import NoData from '@/components/NoData'
 export default {
-  name: 'CardManage',
+  name: 'cardManage',
   components: { NoData },
   data () {
     return {

@@ -32,10 +32,10 @@
 </template>
 
 <script>
-import NoData from '../components/NoData'
+import NoData from '@/components/NoData'
 let vm = null
 export default {
-  name: 'DoctorIntro',
+  name: 'doctorIntro',
   components: { NoData },
   data () {
     return {

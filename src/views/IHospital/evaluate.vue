@@ -33,7 +33,7 @@
 
 <script>
 export default {
-  name: 'Evaluate',
+  name: 'evaluate',
   data () {
     return {
       introduction: '',

@@ -8,7 +8,7 @@
         <p class="cardNumber">诊疗卡号：66424801</p>
       </div>
     </div>
-    <router-link to="/cardManage">
+    <router-link to="/mine/cardManage">
       <span class="changeCard">切换诊疗卡></span>
     </router-link>
   </div>

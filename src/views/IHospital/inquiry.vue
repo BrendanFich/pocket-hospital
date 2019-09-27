@@ -11,6 +11,7 @@
         <div class="msgCell">{{msg.content}}</div>
       </li>
     </ul>
+    <div class="finished" @click="enterEva">结束问诊，点击评价</div>
     <div class="inputMsg">
       <mt-field v-model="msg" placeholder="请输入内容..." :disableClear="true" @keydown="commit"></mt-field>
       <button class="moreBtn">+</button>
@@ -21,7 +22,7 @@
 <script>
 import moment from 'moment'
 export default {
-  name: 'Inquiry',
+  name: 'inquiry',
   components: {},
   data () {
     return {
@@ -36,7 +37,12 @@ export default {
         {
           identity: 'patient',
           avatarUrl: require('@/assets/img/图层 826 拷贝 4.png'),
-          content: '我也是陈辉'
+          content: '医生我头痛'
+        },
+        {
+          identity: 'doctor',
+          avatarUrl: require('@/assets/img/图层 826 拷贝 4.png'),
+          content: '多喝开水'
         }
       ]
     }
@@ -45,6 +51,9 @@ export default {
   methods: {
     commit (e) {
       console.log(e)
+    },
+    enterEva () {
+      this.$router.push('/iHospital/evaluate')
     }
   }
 }
@@ -53,7 +62,8 @@ export default {
 <style lang="scss" scoped>
 .inquiry {
   background: #f2f2f2;
-  height: 100vh;
+  min-height: calc(100vh - 98px);
+  padding-bottom: 98px;
   .nowTime {
     color: #999999;
     font-size: 24px;
@@ -62,8 +72,8 @@ export default {
     text-align: center;
   }
   .msgList {
-    width: 650px;
-    margin: 0 auto;
+    background: #f2f2f2;
+    padding: 0 50px;
     li {
       display: flex;
       margin: 15px 0;
@@ -110,7 +120,18 @@ export default {
       }
     }
   }
+  .finished {
+    font-size: 30px;
+    text-align: center;
+    width: 400px;
+    margin: 100px auto;
+    padding: 20px 0;
+    border: 1px solid #000;
+    border-radius: 10px;
+    background: #fff;
+  }
   .inputMsg {
+    background: #e0e0e0;
     position: fixed;
     bottom: 0;
     width: 100%;

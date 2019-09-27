@@ -32,7 +32,7 @@
 
 <script>
 export default {
-  name: 'LiveHosOrder',
+  name: 'liveHosOrder',
   data () {
     return {
       selected: 0

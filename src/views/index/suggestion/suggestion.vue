@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  name: 'Suggestion',
+  name: 'suggestion',
   data () {
     return {
       introduction: ''

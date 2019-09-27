@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     to () {
-      this.$router.push('/docIntro')
+      this.$router.push('/iHospital/docIntro')
     }
   }
 }

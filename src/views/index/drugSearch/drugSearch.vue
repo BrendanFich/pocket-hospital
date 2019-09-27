@@ -40,7 +40,7 @@
 <script>
 import Searchbar from '@/components/Searchbar'
 export default {
-  name: 'DrugSearch',
+  name: 'drugSearch',
   data () {
     return {
       value: ''

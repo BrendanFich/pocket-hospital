@@ -2,7 +2,7 @@
   <div class="iHospital">
     <img src="@/assets/img/组 20.png" alt />
     <div class="btns">
-      <router-link to="/iHospital/selectDept">
+      <router-link to="/iHospital/iSDept">
         <img src="@/assets/img/在线问诊.png" />
         <p>在线问诊</p>
       </router-link>
@@ -10,7 +10,7 @@
         <img src="@/assets/img/在线复诊.png" />
         <p>在线复诊</p>
       </router-link>
-      <router-link to="/iHospital/drugDelivery">
+      <router-link to="/iHospital">
         <img src="@/assets/img/药物配送.png" />
         <p>药物配送</p>
       </router-link>

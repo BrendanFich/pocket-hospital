@@ -41,7 +41,7 @@
 
 <script>
 export default {
-  name: 'RegOrder',
+  name: 'regOrder',
   data () {
     return {
       selected: 0

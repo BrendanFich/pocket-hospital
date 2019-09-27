@@ -1,5 +1,5 @@
 <template>
-  <div class="parkingSpace">
+  <div class="parking">
     <img src="@/assets/img/组 28(5).png" />
     <div class="btns">
       <mt-button type="primary" class="btn">查看医院车位</mt-button>
@@ -10,7 +10,7 @@
 
 <script>
 export default {
-  name: 'ParkingSpace',
+  name: 'parking',
   data () {
     return {}
   }
@@ -18,7 +18,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.parkingSpace {
+.parking {
   background: #f2f2f2;
   height: 100vh;
   img {

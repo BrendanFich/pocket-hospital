@@ -1,22 +1,20 @@
 <template>
-  <div class="buildCard">
+  <div class="bindCard">
     <h2>就诊卡信息</h2>
-    <div @click="showOption" class="selectItem">
-      <mt-field label="院区" v-model="block" :disableClear="true" :readonly="true"></mt-field>
+    <div @click="showOption(0)" class="selectItem">
+      <mt-field label="卡类型" v-model="cardStyle" :disableClear="true" :readonly="true"></mt-field>
       <div class="isLink">></div>
     </div>
+    <mt-field label="卡号" placeholder="请输入卡号" type="number" v-model="CardNum" :disableClear="true"></mt-field>
     <mt-field label="姓名" placeholder="请输入姓名" v-model="name" :disableClear="true"></mt-field>
-    <mt-field label="身份证号" placeholder="请输入身份证号" type="number" v-model="IDNum" :disableClear="true"></mt-field>
-    <mt-field
-      label="联系电话"
-      placeholder="请输入联系电话"
-      type="number"
-      v-model="phoneNum"
-      :disableClear="true"
-    ></mt-field>
-    <mt-field label="联系地址" placeholder="请输入联系地址" v-model="address" :disableClear="true"></mt-field>
 
-    <mt-actionsheet :actions="actions" v-model="sheetVisible" cancelText></mt-actionsheet>
+    <div @click="showOption(1)" class="selectItem">
+      <mt-field label="证件类型" v-model="paperwork" :disableClear="true" :readonly="true"></mt-field>
+      <div class="isLink">></div>
+    </div>
+    <mt-field label="证件号码" placeholder="请输入证件号码" type="number" v-model="IDNum" :disableClear="true"></mt-field>
+    <mt-actionsheet :actions="actions1" v-model="sheet1Visible" cancelText></mt-actionsheet>
+    <mt-actionsheet :actions="actions2" v-model="sheet2Visible" cancelText></mt-actionsheet>
     <div class="attention">
       <h2>注意事项</h2>
       <p>
@@ -33,31 +31,40 @@
 
 <script>
 export default {
-  name: 'BuildCard',
+  name: 'bindCard',
   data () {
     return {
-      sheetVisible: false,
-      block: '南海院区',
+      sheet1Visible: false,
+      sheet2Visible: false,
+      cardStyle: '诊疗卡',
       paperwork: '身份证',
+      CardNum: null,
       IDNum: null,
-      phoneNum: null,
-      address: '',
       name: '',
-      actions: [
-        { name: '南海院区', method: this.sblock1 },
-        { name: '西院区', method: this.sblock2 }
+      actions1: [
+        { name: '诊疗卡', method: this.sCardStyle1 },
+        { name: '社保卡', method: this.sCardStyle2 }
+      ],
+      actions2: [
+        { name: '身份证', method: this.sPaperwork1 },
+        { name: '护照', method: this.sPaperwork2 }
       ]
     }
   },
   methods: {
-    showOption () {
-      this.sheetVisible = true
+    showOption (index) {
+      if (index === 0) {
+        this.sheet1Visible = true
+      }
+      if (index === 1) {
+        this.sheet2Visible = true
+      }
     },
-    sblock1 () {
-      this.block = this.actions[0].name
+    sCardStyle1 () {
+      this.cardStyle = this.actions1[0].name
     },
-    sblock2 () {
-      this.block = this.actions[1].name
+    sCardStyle2 () {
+      this.cardStyle = this.actions1[1].name
     },
     sPaperwork1 () {
       this.paperwork = this.actions2[0].name
@@ -69,11 +76,11 @@ export default {
       const duration = 1500
       const className = 'toast'
       const p = /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
-      if (this.IDNum && this.name && this.phoneNum && this.address) {
-        if (!p.test(this.IDNum)) {
+      if (this.CardNum && this.name && this.IDNum) {
+        if (!p.test(this.IDNum) && this.paperwork === '身份证') {
           this.$toast({ message: '身份证号有误', duration, className })
         } else {
-          this.$toast({ message: '操作成功', duration, className })
+          this.$toast({ message: '绑定成功', duration, className })
           this.$router.push({ path: '/cardManage' })
         }
       } else {
@@ -85,7 +92,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.buildCard {
+.bindCard {
   background: #f2f2f2;
   height: 100vh;
   h2 {

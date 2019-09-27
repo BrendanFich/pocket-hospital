@@ -2,54 +2,47 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import container from '@/components/container'
-
-import index from '@/views/index'
-
-import reserve from '@/views/reserve/reserve'
-import sDept from '@/views/reserve/sDept'
-import sDayDoc from '@/views/reserve/sDayDoc'
-import sTime from '@/views/reserve/sTime'
-import confirm from '@/views/reserve/confirm'
-
-import payOnline from '@/views/payOnline'
-
-import guidance from '@/views/guidance/guidance'
-import sSymptom from '@/views/guidance/sSymptom'
-import gSTime from '@/views/guidance/gSTime'
-
-import checkIn from '@/views/checkIn/checkIn'
-import cQueue from '@/views/checkIn/cQueue'
-import cConfirm from '@/views/checkIn/cConfirm'
-
+// index
+import index from '@/views/index/index'
+import reserve from '@/views/index/reserve/reserve'
+import sDept from '@/views/index/reserve/sDept'
+import sDayDoc from '@/views/index/reserve/sDayDoc'
+import sTime from '@/views/index/reserve/sTime'
+import confirm from '@/views/index/reserve/confirm'
+import payOnline from '@/views/index/payOnline/payOnline'
+import guidance from '@/views/index/guidance/guidance'
+import sSymptom from '@/views/index/guidance/sSymptom'
+import gSTime from '@/views/index/guidance/gSTime'
+import checkIn from '@/views/index/checkIn/checkIn'
+import cQueue from '@/views/index/checkIn/cQueue'
+import cConfirm from '@/views/index/checkIn/cConfirm'
+import hospitalInfo from '@/views/index/hospitalInfo/hospitalInfo'
+import doctorIntro from '@/views/index/doctorIntro/doctorIntro'
+import reports from '@/views/index/reports/reports'
+import reportsKind from '@/views/index/reports/reportsKind'
+import bodyExam from '@/views/index/reports/bodyExam'
+import examination from '@/views/index/reports/examination'
+import otherReports from '@/views/index/reports/otherReports'
+import drugSearch from '@/views/index/drugSearch/drugSearch'
+import parking from '@/views/index/parking/parking'
+import suggestion from '@/views/index/suggestion/suggestion'
+// iHospital
 import iHospital from '@/views/iHospital/iHospital'
-import selectDept from '@/views/iHospital/selectDept'
 import review from '@/views/iHospital/review'
-import drugDelivery from '@/views/iHospital/drugDelivery'
+import selectDoc from '@/views/iHospital/selectDoc'
+import iSDept from '@/views/iHospital/iSDept'
+import docIntro from '@/views/iHospital/docIntro'
+import inquiry from '@/views/iHospital/inquiry'
+import evaluate from '@/views/iHospital/evaluate'
 
-import Mine from '@/views/Mine'
-
-import hospitalInfo from '@/views/hospitalInfo'
-import doctorIntro from '@/views/doctorIntro'
-
-import reports from '@/views/reports/reports'
-import reportsKind from '@/views/reports/reportsKind'
-import bodyExam from '@/views/reports/bodyExam'
-import examination from '@/views/reports/examination'
-import otherReports from '@/views/reports/otherReports'
-
-import DrugSearch from '@/views/DrugSearch'
-import ParkingSpace from '@/views/ParkingSpace'
-import Suggestion from '@/views/Suggestion'
-import SelectDoc from '@/views/SelectDoc'
-import DocIntro from '@/views/DocIntro'
-import Inquiry from '@/views/Inquiry'
-import Evaluate from '@/views/Evaluate'
-import LiveHosOrder from '@/views/LiveHosOrder'
-import RegOrder from '@/views/RegOrder'
-import CardManage from '@/views/CardManage'
-import BindCard from '@/views/BindCard'
-import BuildCard from '@/views/BuildCard'
-import CardInfo from '@/views/CardInfo'
+// mine
+import mine from '@/views/mine/mine'
+import liveHosOrder from '@/views/mine/liveHosOrder'
+import regOrder from '@/views/mine/regOrder'
+import cardManage from '@/views/mine/cardManage/cardManage'
+import bindCard from '@/views/mine/cardManage/bindCard'
+import buildCard from '@/views/mine/cardManage/buildCard'
+import cardInfo from '@/views/mine/cardManage/cardInfo'
 
 Vue.use(Router)
 
@@ -57,7 +50,8 @@ export default new Router({
   routes: [
     { path: '/', redirect: '/index' },
     { path: '/index', component: index },
-    { path: '/reserve',
+    {
+      path: '/reserve',
       redirect: '/reserve/sDept',
       component: reserve,
       children: [
@@ -67,8 +61,9 @@ export default new Router({
         { path: 'confirm', component: confirm }
       ]
     },
-    { path: '/payOnline', name: 'payOnline', component: payOnline },
-    { path: '/guidance',
+    { path: '/payOnline', component: payOnline },
+    {
+      path: '/guidance',
       redirect: '/guidance/sSymptom',
       component: guidance,
       children: [
@@ -76,7 +71,8 @@ export default new Router({
         { path: 'gSTime', component: gSTime }
       ]
     },
-    { path: '/checkIn',
+    {
+      path: '/checkIn',
       redirect: '/checkIn/cConfirm',
       component: checkIn,
       children: [
@@ -86,7 +82,8 @@ export default new Router({
     },
     { path: '/hospitalInfo', component: hospitalInfo },
     { path: '/doctorIntro', component: doctorIntro },
-    { path: '/reports',
+    {
+      path: '/reports',
       redirect: '/reports/reportsKind',
       component: reports,
       children: [
@@ -95,31 +92,43 @@ export default new Router({
         { path: 'otherReports', component: otherReports },
         { path: 'bodyExam', component: bodyExam }
 
-      ] },
-    { path: '/iHospital',
+      ]
+    },
+    { path: '/drugSearch', component: drugSearch },
+    { path: '/parking', component: parking },
+    { path: '/suggestion', component: suggestion },
+    {
+      path: '/iHospital',
       component: container,
       children: [
         { path: '', component: iHospital },
-        { path: 'selectDept', component: selectDept },
-        { path: 'review', component: review },
-        { path: 'drugDelivery', component: drugDelivery }
+        { path: 'iSDept', component: iSDept },
+        { path: 'selectDoc', component: selectDoc },
+        { path: 'docIntro', component: docIntro },
+        { path: 'inquiry', component: inquiry },
+        { path: 'evaluate', component: evaluate },
+
+        { path: 'review', component: review }
       ]
     },
-    { path: '/mine', component: Mine },
-
-    { path: '/drugSearch', name: 'drugSearch', component: DrugSearch },
-    { path: '/parkingSpace', name: 'parkingSpace', component: ParkingSpace },
-    { path: '/suggestion', name: 'suggestion', component: Suggestion },
-    { path: '/selectDoc', name: 'selectDoc', component: SelectDoc },
-    { path: '/docIntro', name: 'docIntro', component: DocIntro },
-    { path: '/inquiry', name: 'inquiry', component: Inquiry },
-    { path: '/evaluate', name: 'evaluate', component: Evaluate },
-    { path: '/liveHosOrder', name: 'liveHosOrder', component: LiveHosOrder },
-    { path: '/regOrder', name: 'regOrder', component: RegOrder },
-    { path: '/cardManage', name: 'cardManage', component: CardManage },
-    { path: '/bindCard', name: 'bindCard', component: BindCard },
-    { path: '/buildCard', name: 'buildCard', component: BuildCard },
-    { path: '/cardInfo', name: 'cardInfo', component: CardInfo }
-
+    {
+      path: '/mine',
+      component: container,
+      children: [
+        { path: '', component: mine },
+        {
+          path: 'cardManage',
+          component: container,
+          children: [
+            { path: '', component: cardManage },
+            { path: 'bindCard', component: bindCard },
+            { path: 'buildCard', component: buildCard },
+            { path: 'cardInfo', component: cardInfo }
+          ]
+        },
+        { path: 'liveHosOrder', component: liveHosOrder },
+        { path: 'regOrder', component: regOrder }
+      ]
+    }
   ]
 })

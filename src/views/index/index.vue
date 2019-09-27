@@ -65,7 +65,7 @@
           <img src="@/assets/img/医疗.png" />
           <h3>医疗服务价格</h3>
         </router-link>
-        <router-link class="item" to="/parkingSpace">
+        <router-link class="item" to="/parking">
           <img src="@/assets/img/车位.png" />
           <h3>车位查询</h3>
         </router-link>
@@ -86,7 +86,7 @@
 <script>
 import Tabbar from '@/components/Tabbar'
 export default {
-  name: 'Index',
+  name: 'index',
   data () {
     return {}
   },

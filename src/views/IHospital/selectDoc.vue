@@ -3,7 +3,7 @@
     <Searchbar placeholder="搜索科室或医生"></Searchbar>
     <mt-tab-container v-model="selected">
       <mt-tab-container-item v-for="(item,index) in departments" :key="index" :id="index">
-        <router-link class="item" to="/docIntro">
+        <router-link class="item" to="/iHospital/docIntro">
           <ul style="background: #fff;">
             <li class="doctorIntroCard" v-for="(doctor,dindex) in item.doctors" :key="dindex">
               <div class="baseInfo">
@@ -32,7 +32,7 @@
 <script>
 import Searchbar from '@/components/Searchbar'
 export default {
-  name: 'SelectDoc',
+  name: 'selectDoc',
   components: { Searchbar },
   data () {
     return {

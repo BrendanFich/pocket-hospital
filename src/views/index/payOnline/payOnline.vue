@@ -56,9 +56,9 @@
 </template>
 
 <script>
-import NoData from '../components/NoData'
+import NoData from '@/components/NoData'
 export default {
-  name: 'PayOnline',
+  name: 'payOnline',
   components: { NoData },
   data () {
     return {

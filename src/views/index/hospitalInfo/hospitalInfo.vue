@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: 'HospitalInfo',
+  name: 'hospitalInfo',
   data () {
     return {}
   }

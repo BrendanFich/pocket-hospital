@@ -1,13 +1,13 @@
 <template>
-  <div class="selectDept">
-    <Searchbar placeholder="搜索科室" @getSearchContent="showSearchContent"></Searchbar>
+  <div class="iSDept">
+    <Searchbar placeholder="搜索科室" @getSearchContent="setSearchContent"></Searchbar>
     <div class="content">
       <mt-navbar v-model="selected" class="left_navbar">
         <mt-tab-item :id="index" v-for="(item,index) in searchData" :key="index">{{item.block}}</mt-tab-item>
       </mt-navbar>
       <mt-tab-container v-model="selected" class="right_container">
         <mt-tab-container-item :id="index" v-for="(item,index) in searchData" :key="index">
-          <div class="hiddenMsg" :class="{notFound: !item.division.length}">无相关科室</div>
+          <NoData :data="item.division"></NoData>
           <router-link
             :to="{
           name: 'selectDoc',
@@ -29,8 +29,10 @@
 
 <script>
 import Searchbar from '@/components/Searchbar'
+import NoData from '@/components/NoData'
 export default {
-  components: { Searchbar },
+  name: 'iSDept',
+  components: { Searchbar, NoData },
   data () {
     return {
       selected: 0,
@@ -76,7 +78,7 @@ export default {
     }
   },
   methods: {
-    showSearchContent (data) {
+    setSearchContent (data) {
       this.searchContent = data
     }
   }
@@ -84,7 +86,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.selectDept {
+.iSDept {
   background: #f2f2f2;
   height: 100vh;
   .content {
@@ -119,16 +121,6 @@ export default {
     .right_container {
       width: 589px;
       background: #fff;
-      .hiddenMsg {
-        display: none;
-      }
-      .notFound {
-        display: block;
-        text-align: center;
-        font-size: 26px;
-        color: #333333;
-        margin-top: 30px;
-      }
       /deep/ .mint-cell-wrapper {
         height: 80px;
         padding: 0 25px;
@@ -142,7 +134,7 @@ export default {
           .icon {
             position: absolute;
             left: 32px;
-            top: 30px;
+            top: 27px;
             width: 20px;
           }
         }

@@ -2,7 +2,7 @@
   <div class="mine">
     <CustomerInfoCard></CustomerInfoCard>
     <div class="orderList">
-      <mt-cell class="cell" is-link to="/regOrder">
+      <mt-cell class="cell" is-link to="/mine/regOrder">
         <div slot="title" class="content">挂号订单</div>
         <img slot="icon" src="@/assets/img/挂号 (1).png" />
       </mt-cell>
@@ -10,7 +10,7 @@
         <div slot="title" class="content">缴费订单</div>
         <img slot="icon" src="@/assets/img/缴费.png" />
       </mt-cell>
-      <mt-cell class="cell" is-link to="/liveHosOrder">
+      <mt-cell class="cell" is-link to="/mine/liveHosOrder">
         <div slot="title" class="content">住院预交金订单</div>
         <img slot="icon" src="@/assets/img/住院2.png" />
       </mt-cell>
@@ -46,10 +46,10 @@
 </template>
 
 <script>
-import CustomerInfoCard from '../components/CustomerInfoCard'
+import CustomerInfoCard from '@/components/CustomerInfoCard'
 import Tabbar from '@/components/Tabbar'
 export default {
-  name: 'Mine',
+  name: 'mine',
   data () {
     return {}
   },
