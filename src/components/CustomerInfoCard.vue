@@ -18,8 +18,22 @@
 export default {
   name: 'customerInfoCard',
   data () {
-    return {}
+    return {
+      customerInfo: {}
+    }
   }
+  // created () {
+  //   this.$axios
+  //     .get(
+  //       ' https://www.easy-mock.com/mock/5d8c0d14f97c2b7214e12ce6/example2/example2'
+  //     )
+  //     .then(res => {
+  //       console.log(res.data)
+  //     })
+  //     .catch(error => {
+  //       console.log(error)
+  //     })
+  // }
 }
 </script>
 

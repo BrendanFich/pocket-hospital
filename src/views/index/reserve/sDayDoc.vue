@@ -15,7 +15,7 @@
       ></week-slider>
       <div class="doctorItems">
         <NoData :data="showDoctors"></NoData>
-        <router-link class="item" to="/reserve/sTime" v-for="(item,index) in showDoctors" :key="index">
+        <router-link class="item" :to="linkTo(item.remaining)" v-for="(item,index) in showDoctors" :key="index">
           <div class="doctorInfo">
             <img slot="icon" src="@/assets/img/图层 826 拷贝 2.png" />
             <div class="textInfo">
@@ -138,29 +138,7 @@ export default {
           remaining: 0
         }
       ],
-      neifenmiDoctors: [
-        // {
-        //   name: '陈六1',
-        //   title: '主任医师',
-        //   workTime: '上午',
-        //   avatarUrl: '',
-        //   remaining: 10
-        // },
-        // {
-        //   name: '陈六2',
-        //   title: '主任医师',
-        //   workTime: '下午',
-        //   avatarUrl: '',
-        //   remaining: 2
-        // },
-        // {
-        //   name: '陈六3',
-        //   title: '主任医师',
-        //   workTime: '上午',
-        //   avatarUrl: '',
-        //   remaining: 0
-        // }
-      ]
+      neifenmiDoctors: []
     }
   },
   computed: {
@@ -177,6 +155,13 @@ export default {
     dateClickhandler (e) {
       this.date = e
       console.log(this.date)
+    },
+    linkTo (remaining) {
+      if (remaining <= 0) {
+        return ''
+      } else {
+        return '/reserve/sTime'
+      }
     }
   }
 }

@@ -7,14 +7,14 @@
       </mt-navbar>
       <mt-tab-container v-model="selected" class="right_container">
         <mt-tab-container-item :id="index" v-for="(item,index) in searchData" :key="index">
-          <NoData :data="item.division"></NoData>
+          <NoData :data="item.dept"></NoData>
           <router-link
             :to="{
           name: 'sDayDoc',
           params:{
             dname: ditem.name
           }}"
-            v-for="(ditem,dindex) in item.division"
+            v-for="(ditem,dindex) in item.dept"
             :key="dindex"
           >
             <mt-cell :title="ditem.name">
@@ -40,7 +40,7 @@ export default {
       fakeData: [
         {
           block: '南海院区',
-          division: [
+          dept: [
             { name: '内分泌科', id: '001' },
             { name: '骨内科', id: '002' },
             { name: '肠道专科', id: '003' }
@@ -48,7 +48,7 @@ export default {
         },
         {
           block: '西院区',
-          division: [
+          dept: [
             { name: '皮肤科', id: '004' },
             { name: '耳鼻喉科', id: '005' }
           ]
@@ -64,7 +64,7 @@ export default {
         return this.fakeData.map((item, index) => {
           return {
             block: item.block,
-            division: item.division.filter(ditem => {
+            dept: item.dept.filter(ditem => {
               if (ditem.name.includes(searchContent)) {
                 $this.selected = index
                 return ditem

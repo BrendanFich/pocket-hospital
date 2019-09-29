@@ -16,7 +16,7 @@
     <div class="workTime">
       <ul>
         <li v-for="(item,index) in workTimeList" :key="index">
-          <router-link to="/reserve/confirm" class="itemContent">
+          <router-link :to="linkTo(item.remaining)" class="itemContent">
             <div class="time">
               <img src="@/assets/img/时间.png" />
               <span>{{item.time}}</span>
@@ -45,7 +45,18 @@ export default {
       ]
     }
   },
-  methods: {}
+  computed: {
+
+  },
+  methods: {
+    linkTo (remaining) {
+      if (remaining <= 0) {
+        return ''
+      } else {
+        return '/reserve/confirm'
+      }
+    }
+  }
 }
 </script>
 

@@ -8,6 +8,10 @@ import router from './router'
 import './utils/rem'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
+import axios from 'axios'
+
+process.env.MOCK && require('@/mock')
+Vue.prototype.$axios = axios
 
 Vue.use(VueAwesomeSwiper)
 

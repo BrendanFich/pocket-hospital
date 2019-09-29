@@ -8,30 +8,14 @@
         <div class="icon"></div>
       </div>
     </div>
-    <Searchbar placeholder="搜索科室或医生"></Searchbar>
+    <Searchbar placeholder="搜索药品名称"></Searchbar>
 
-    <mt-cell class="cell" is-link>
+    <mt-cell class="cell" is-link v-for="(item,index) in drugList" :key="index" >
       <div slot="icon" class="fakePicture"></div>
       <div slot="title" class="content">
-        <div>药品名称：复方阿胶浆</div>
-        <div>药品规格：20ml/瓶</div>
-        <div>药品价格：30元</div>
-      </div>
-    </mt-cell>
-    <mt-cell class="cell" is-link>
-      <div slot="icon" class="fakePicture"></div>
-      <div slot="title" class="content">
-        <div>药品名称：复方阿胶浆</div>
-        <div>药品规格：20ml/瓶</div>
-        <div>药品价格：30元</div>
-      </div>
-    </mt-cell>
-    <mt-cell class="cell" is-link>
-      <div slot="icon" class="fakePicture"></div>
-      <div slot="title" class="content">
-        <div>药品名称：复方阿胶浆</div>
-        <div>药品规格：20ml/瓶</div>
-        <div>药品价格：30元</div>
+        <div>药品名称：{{item.name}}</div>
+        <div>药品规格：{{item.size}}</div>
+        <div>药品价格：{{item.price}}元</div>
       </div>
     </mt-cell>
   </div>
@@ -43,12 +27,16 @@ export default {
   name: 'drugSearch',
   data () {
     return {
-      value: ''
+      value: '',
+      drugList: [
+        { name: '牛黄解毒片', size: '100片/瓶', price: 30 },
+        { name: '复方阿胶浆', size: '20ml/瓶', price: 30 },
+        { name: '阿司匹林片', size: '100片/瓶', price: 30 }
+      ]
     }
   },
   components: { Searchbar },
-  methods: {
-  }
+  methods: {}
 }
 </script>
 
