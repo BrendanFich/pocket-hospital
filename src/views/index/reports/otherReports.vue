@@ -49,6 +49,7 @@ export default {
     }
     img{
       width: 70px;
+      margin-left: 60px;
     }
     /deep/ .mint-cell-allow-right::after {
       width: 15px;
@@ -56,7 +57,7 @@ export default {
       margin-right: 60px;
     }
     /deep/ .mint-cell-wrapper {
-      padding: 0 60px;
+      padding: 0;
     }
   }
   /deep/ .mint-cell-title {

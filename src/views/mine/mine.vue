@@ -1,6 +1,35 @@
 <template>
   <div class="mine">
     <CustomerInfoCard></CustomerInfoCard>
+    <!-- <div class="orderList">
+      <ul>
+        <li>
+          <img src="@/assets/img/挂号 (1).png" />
+          <span class="key">挂号订单</span>
+          <span class="value">></span>
+        </li>
+        <li>
+          <img src="@/assets/img/缴费.png" />
+          <span class="key">缴费订单</span>
+          <span class="value">></span>
+        </li>
+        <li>
+          <img src="@/assets/img/住院2.png" />
+          <span class="key">住院预交金订单</span>
+          <span class="value">></span>
+        </li>
+        <li>
+          <img src="@/assets/img/住院2.png" />
+          <span class="key">点餐订单</span>
+          <span class="value">></span>
+        </li>
+        <li>
+          <img src="@/assets/img/我 的.png" />
+          <span class="key">我的就诊</span>
+          <span class="value">></span>
+        </li>
+      </ul>
+    </div> -->
     <div class="orderList">
       <mt-cell class="cell" is-link to="/mine/regOrder">
         <div slot="title" class="content">挂号订单</div>
@@ -61,6 +90,28 @@ export default {
 .mine {
   background: #f2f2f2;
   height: 100vh;
+  // .orderList {
+  //   margin-top: 22px;
+  //   background: #fff;
+  // }
+  // .orderList ul > li {
+  //   height: 88px;
+  //   padding: 0 54px 0 43px;
+  //   display: flex;
+  //   justify-content: space-between;
+  //   align-items: center;
+  //   border-bottom: 1px solid #ededed;
+  //   .key {
+  //     color: #333333;
+  //     font-size: 30px;
+  //     font-weight: bold;
+  //   }
+  //   .value {
+  //     color: #666666;
+  //     font-size: 30px;
+  //   }
+  // }
+
   .orderList {
     margin-top: 33px;
     .cell {
@@ -79,8 +130,7 @@ export default {
         margin-right: 40px;
       }
       /deep/ .mint-cell-wrapper {
-        border-bottom: 1px solid #f2f2f2;
-        padding: 0 ;
+        padding: 0;
       }
     }
     /deep/ .mint-cell-title {
