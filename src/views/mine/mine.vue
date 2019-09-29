@@ -64,7 +64,6 @@ export default {
   .orderList {
     margin-top: 33px;
     .cell {
-      border-bottom: 1px solid #f2f2f2;
       .content {
         padding: 38px 0px 38px 24px;
         font-size: 24px;
@@ -72,6 +71,7 @@ export default {
       }
       img {
         width: 24px;
+        margin-left: 60px;
       }
       /deep/ .mint-cell-allow-right::after {
         width: 15px;
@@ -79,7 +79,7 @@ export default {
         margin-right: 40px;
       }
       /deep/ .mint-cell-wrapper {
-        padding: 0 60px;
+        padding: 0 ;
       }
     }
     /deep/ .mint-cell-title {
@@ -88,23 +88,23 @@ export default {
       align-items: center;
     }
   }
-  .others{
+  .others {
     background: #fff;
-    margin-top:45px;
+    margin-top: 45px;
     margin-bottom: 98px;
     padding: 30px 10px;
     display: flex;
     justify-content: space-around;
     align-items: center;
-    .item{
+    .item {
       display: flex;
       flex-direction: column;
       align-items: center;
-      img{
+      img {
         margin-bottom: 16px;
         width: 80px;
       }
-      span{
+      span {
         font-size: 24px;
         color: #666666;
       }
