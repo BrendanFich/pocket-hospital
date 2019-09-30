@@ -18,7 +18,7 @@
       <span class="status" v-if="item.default">默认</span>
       <span class="isLink" v-else>></span>
     </router-link>
-    <div class="orderList">
+    <!-- <div class="orderList">
       <mt-cell class="cell" is-link to="/mine/cardManage/bindCard">
         <div slot="title" class="content">绑定就诊卡</div>
         <img class="icon" slot="icon" src="@/assets/img/绑定.png" />
@@ -31,7 +31,30 @@
         <div slot="title" class="content">绑定医保卡</div>
         <img class="icon" slot="icon" src="@/assets/img/绑定 (1).png" />
       </mt-cell>
-    </div>
+    </div>-->
+    <ul class="orderList">
+      <li @click="linkTo('/mine/cardManage/bindCard')">
+        <div>
+          <img src="@/assets/img/绑定.png" />
+          <span class="title">绑定就诊卡</span>
+        </div>
+        <span class="linkIcon">></span>
+      </li>
+      <li @click="linkTo('/mine/cardManage/buildCard')">
+        <div>
+          <img src="@/assets/img/新建.png" />
+          <span class="title">初诊建卡</span>
+        </div>
+        <span class="linkIcon">></span>
+      </li>
+      <li>
+        <div>
+          <img src="@/assets/img/绑定 (1).png" />
+          <span class="title">绑定医保卡</span>
+        </div>
+        <span class="linkIcon">></span>
+      </li>
+    </ul>
   </div>
 </template>
 
@@ -57,6 +80,11 @@ export default {
         }
       ]
     }
+  },
+  methods: {
+    linkTo (url) {
+      this.$router.push(url)
+    }
   }
 }
 </script>
@@ -65,6 +93,7 @@ export default {
 .cardManage {
   background: #f2f2f2;
   height: 100vh;
+
   h2 {
     color: #999999;
     font-size: 24px;
@@ -117,30 +146,31 @@ export default {
     }
   }
   .orderList {
-    margin-top: 33px;
-    .cell {
-      .content {
-        padding: 38px 0px 38px 24px;
-        font-size: 24px;
-        color: #666666;
-      }
-      .icon {
+    background: #fff;
+    margin-top: 40px;
+  }
+  .orderList > li {
+    height: 100px;
+    padding: 0 54px 0 43px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ededed;
+    > div {
+      display: flex;
+      align-items: center;
+      > img {
         width: 30px;
-        margin-left: 36px;
-      }
-      /deep/ .mint-cell-allow-right::after {
-        width: 15px;
-        height: 15px;
-        margin-right: 40px;
-      }
-      /deep/ .mint-cell-wrapper {
-        padding: 0;
+        margin-right: 30px;
       }
     }
-    /deep/ .mint-cell-title {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
+    .title {
+      color: #666666;
+      font-size: 24px;
+    }
+    .linkIcon {
+      color: #cccccc;
+      font-size: 24px;
     }
   }
 }

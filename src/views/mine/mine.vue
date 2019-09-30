@@ -1,36 +1,44 @@
 <template>
   <div class="mine">
     <CustomerInfoCard></CustomerInfoCard>
-    <!-- <div class="orderList">
-      <ul>
-        <li>
+    <ul class="orderList">
+      <li @click="linkTo('/mine/regOrder')">
+        <div>
           <img src="@/assets/img/挂号 (1).png" />
-          <span class="key">挂号订单</span>
-          <span class="value">></span>
-        </li>
-        <li>
+          <span class="title">挂号订单</span>
+        </div>
+        <span class="linkIcon">></span>
+      </li>
+      <li>
+        <div>
           <img src="@/assets/img/缴费.png" />
-          <span class="key">缴费订单</span>
-          <span class="value">></span>
-        </li>
-        <li>
+          <span class="title">缴费订单</span>
+        </div>
+        <span class="linkIcon">></span>
+      </li>
+      <li @click="linkTo('/mine/liveHosOrder')">
+        <div>
           <img src="@/assets/img/住院2.png" />
-          <span class="key">住院预交金订单</span>
-          <span class="value">></span>
-        </li>
-        <li>
+          <span class="title">住院预交金订单</span>
+        </div>
+        <span class="linkIcon">></span>
+      </li>
+      <li>
+        <div>
           <img src="@/assets/img/住院2.png" />
-          <span class="key">点餐订单</span>
-          <span class="value">></span>
-        </li>
-        <li>
+          <span class="title">点餐订单</span>
+        </div>
+        <span class="linkIcon">></span>
+      </li>
+      <li>
+        <div>
           <img src="@/assets/img/我 的.png" />
-          <span class="key">我的就诊</span>
-          <span class="value">></span>
-        </li>
-      </ul>
-    </div> -->
-    <div class="orderList">
+          <span class="title">我的就诊</span>
+        </div>
+        <span class="linkIcon">></span>
+      </li>
+    </ul>
+    <!-- <div class="orderList">
       <mt-cell class="cell" is-link to="/mine/regOrder">
         <div slot="title" class="content">挂号订单</div>
         <img slot="icon" src="@/assets/img/挂号 (1).png" />
@@ -51,7 +59,7 @@
         <div slot="title" class="content">我的就诊</div>
         <img slot="icon" src="@/assets/img/我 的.png" />
       </mt-cell>
-    </div>
+    </div>-->
     <div class="others">
       <div class="item">
         <img src="@/assets/img/组 28.png" alt />
@@ -82,7 +90,12 @@ export default {
   data () {
     return {}
   },
-  components: { CustomerInfoCard, Tabbar }
+  components: { CustomerInfoCard, Tabbar },
+  methods: {
+    linkTo (url) {
+      this.$router.push(url)
+    }
+  }
 }
 </script>
 
@@ -90,55 +103,62 @@ export default {
 .mine {
   background: #f2f2f2;
   height: 100vh;
-  // .orderList {
-  //   margin-top: 22px;
-  //   background: #fff;
-  // }
-  // .orderList ul > li {
-  //   height: 88px;
-  //   padding: 0 54px 0 43px;
-  //   display: flex;
-  //   justify-content: space-between;
-  //   align-items: center;
-  //   border-bottom: 1px solid #ededed;
-  //   .key {
-  //     color: #333333;
-  //     font-size: 30px;
-  //     font-weight: bold;
-  //   }
-  //   .value {
-  //     color: #666666;
-  //     font-size: 30px;
-  //   }
-  // }
-
   .orderList {
-    margin-top: 33px;
-    .cell {
-      .content {
-        padding: 38px 0px 38px 24px;
-        font-size: 24px;
-        color: #666666;
-      }
-      img {
-        width: 24px;
-        margin-left: 60px;
-      }
-      /deep/ .mint-cell-allow-right::after {
-        width: 15px;
-        height: 15px;
-        margin-right: 40px;
-      }
-      /deep/ .mint-cell-wrapper {
-        padding: 0;
+    margin-top: 22px;
+    background: #fff;
+  }
+  .orderList > li {
+    height: 100px;
+    padding: 0 54px 0 43px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ededed;
+    > div {
+      display: flex;
+      align-items: center;
+      > img {
+        width: 30px;
+        margin-right: 30px;
       }
     }
-    /deep/ .mint-cell-title {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
+    .title {
+      color: #666666;
+      font-size: 24px;
+    }
+    .linkIcon {
+      color: #cccccc;
+      font-size: 24px;
     }
   }
+
+  // .orderList {
+  //   margin-top: 33px;
+  //   .cell {
+  //     .content {
+  //       padding: 38px 0px 38px 24px;
+  //       font-size: 24px;
+  //       color: #666666;
+  //     }
+  //     img {
+  //       width: 24px;
+  //       margin-left: 60px;
+  //     }
+  //     /deep/ .mint-cell-allow-right::after {
+  //       width: 15px;
+  //       height: 15px;
+  //       margin-right: 40px;
+  //     }
+  //     /deep/ .mint-cell-wrapper {
+  //       padding: 0;
+  //     }
+  //   }
+  //   /deep/ .mint-cell-title {
+  //     display: flex;
+  //     justify-content: flex-start;
+  //     align-items: center;
+  //   }
+  // }
   .others {
     background: #fff;
     margin-top: 45px;
