@@ -1,6 +1,6 @@
 <template>
   <div class="drugSearch">
-    <div class="displayCard">
+    <div class="displayCard" :class="{hidden: searching}">
       <img src="@/assets/img/ecbdfe95978b0.png" />
       <div class="title">
         <h1>掌上医院</h1>
@@ -8,9 +8,9 @@
         <div class="icon"></div>
       </div>
     </div>
-    <Searchbar placeholder="搜索药品名称"></Searchbar>
+    <Searchbar placeholder="搜索药品名称" @getSearchStatus="setSearchStatus"></Searchbar>
 
-    <mt-cell class="cell" is-link v-for="(item,index) in drugList" :key="index" >
+    <mt-cell class="cell" is-link v-for="(item,index) in drugList" :key="index" :class="{hidden: searching}">
       <div slot="icon" class="fakePicture"></div>
       <div slot="title" class="content">
         <div>药品名称：{{item.name}}</div>
@@ -28,6 +28,7 @@ export default {
   data () {
     return {
       value: '',
+      searching: false,
       drugList: [
         { name: '牛黄解毒片', size: '100片/瓶', price: 30 },
         { name: '复方阿胶浆', size: '20ml/瓶', price: 30 },
@@ -36,7 +37,11 @@ export default {
     }
   },
   components: { Searchbar },
-  methods: {}
+  methods: {
+    setSearchStatus (data) {
+      this.searching = data
+    }
+  }
 }
 </script>
 
@@ -51,7 +56,7 @@ export default {
     justify-content: flex-start;
     align-items: center;
     padding: 30px 70px 18px;
-    img {
+    >img {
       width: 150px;
       margin-right: 53px;
     }
@@ -129,6 +134,9 @@ export default {
     display: flex;
     justify-content: flex-start;
     align-items: center;
+  }
+  .hidden{
+    display: none!important;
   }
 }
 </style>

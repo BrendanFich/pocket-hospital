@@ -1,7 +1,7 @@
 <template>
   <div class="selectDoc">
-    <Searchbar placeholder="搜索科室或医生"></Searchbar>
-    <mt-tab-container v-model="selected">
+    <Searchbar placeholder="搜索科室或医生" @getSearchStatus="setSearchStatus"></Searchbar>
+    <mt-tab-container v-model="selected" :class="{hidden: searching}">
       <mt-tab-container-item v-for="(item,index) in departments" :key="index" :id="index">
         <router-link class="item" to="/iHospital/docIntro">
           <ul style="background: #fff;">
@@ -37,6 +37,7 @@ export default {
   data () {
     return {
       selected: 0,
+      searching: false,
       searchTags: [
         '头痛',
         '消化不良',
@@ -141,7 +142,11 @@ export default {
       ]
     }
   },
-  methods: {}
+  methods: {
+    setSearchStatus (data) {
+      this.searching = data
+    }
+  }
 }
 </script>
 
@@ -202,6 +207,9 @@ export default {
       color: #999999;
       margin-left: 124px;
     }
+  }
+  .hidden{
+    display: none;
   }
 }
 </style>

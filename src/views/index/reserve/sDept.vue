@@ -1,7 +1,7 @@
 <template>
   <div class="sDept">
-    <Searchbar placeholder="搜索科室" @getSearchContent="setSearchContent"></Searchbar>
-    <div class="content">
+    <Searchbar placeholder="搜索科室或医生" @getSearchStatus="setSearchStatus"></Searchbar>
+    <div class="content" :class="{hidden: searching}">
       <mt-navbar v-model="selected" class="left_navbar">
         <mt-tab-item :id="index" v-for="(item,index) in searchData" :key="index">{{item.block}}</mt-tab-item>
       </mt-navbar>
@@ -36,7 +36,7 @@ export default {
   data () {
     return {
       selected: 0,
-      searchContent: '',
+      searching: false,
       fakeData: [
         {
           block: '南海院区',
@@ -78,8 +78,8 @@ export default {
     }
   },
   methods: {
-    setSearchContent (data) {
-      this.searchContent = data
+    setSearchStatus (data) {
+      this.searching = data
     }
   }
 }
@@ -90,7 +90,7 @@ export default {
   background: #f2f2f2;
   height: 100vh;
   .content {
-    min-height: calc(100vh - 126px);
+    min-height: calc(100vh - 128px);
     width: 100%;
     display: flex;
     justify-content: center;
@@ -140,6 +140,9 @@ export default {
         }
       }
     }
+  }
+  .hidden{
+    display: none;
   }
 }
 </style>
