@@ -9,4 +9,7 @@ Mock.setup({
   timeout: 0 - 300
 })
 
-Mock.mock('/user/userInfo', 'get', require('./json/userInfo'))
+Mock.mock('/api/user/register', 'post', require('./json/userInfo'))
+Mock.mock('/api/user/login', 'post', require('./json/userInfo'))
+Mock.mock('/api/user/user_info', 'post', require('./json/userInfo'))
+Mock.mock('/api/user/logout', 'post', require('./json/userInfo'))

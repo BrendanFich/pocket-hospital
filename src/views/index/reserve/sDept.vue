@@ -8,7 +8,12 @@
       <mt-tab-container v-model="selected" class="right_container">
         <mt-tab-container-item :id="index" v-for="(item,index) in searchData" :key="index">
           <NoData :data="item.dept"></NoData>
-          <router-link
+          <div v-for="(ditem,dindex) in item.dept" :key="dindex" @click="select(ditem.name)">
+            <mt-cell :title="ditem.name">
+              <img class="icon" src="@/assets/img/科室.png" />&gt;
+            </mt-cell>
+          </div>
+          <!-- <router-link
             :to="{
           name: 'sDayDoc',
           params:{
@@ -20,7 +25,7 @@
             <mt-cell :title="ditem.name">
               <img class="icon" src="@/assets/img/科室.png" />&gt;
             </mt-cell>
-          </router-link>
+          </router-link>-->
         </mt-tab-container-item>
       </mt-tab-container>
     </div>
@@ -48,10 +53,7 @@ export default {
         },
         {
           block: '西院区',
-          dept: [
-            { name: '皮肤科', id: '004' },
-            { name: '耳鼻喉科', id: '005' }
-          ]
+          dept: [{ name: '皮肤科', id: '004' }, { name: '耳鼻喉科', id: '005' }]
         }
       ]
     }
@@ -80,6 +82,12 @@ export default {
   methods: {
     setSearchStatus (data) {
       this.searching = data
+    },
+    select (dept) {
+      this.$store.commit('changeDept', dept)
+      this.$router.push({
+        name: 'sDayDoc'
+      })
     }
   }
 }
@@ -141,7 +149,7 @@ export default {
       }
     }
   }
-  .hidden{
+  .hidden {
     display: none;
   }
 }

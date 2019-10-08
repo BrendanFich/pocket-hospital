@@ -9,6 +9,7 @@ import './utils/rem'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 import axios from 'axios'
+import store from './vuex'
 
 process.env.MOCK && require('@/mock')
 Vue.prototype.$axios = axios
@@ -22,6 +23,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,
   components: {
     App
   },

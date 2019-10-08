@@ -2,7 +2,7 @@
   <div class="sDayDoc">
     <div class="container">
       <div class="selectedInfo">
-        <span class="department">{{$route.params.dname}}</span>
+        <span class="department">{{$store.state.selectedDept}}</span>
         <span class="selectedDate">已选:{{date}}</span>
       </div>
       <week-slider
@@ -15,7 +15,12 @@
       ></week-slider>
       <div class="doctorItems">
         <NoData :data="showDoctors"></NoData>
-        <router-link class="item" :to="linkTo(item.remaining)" v-for="(item,index) in showDoctors" :key="index">
+        <div
+          class="item"
+          @click="select(item.remaining, item.name)"
+          v-for="(item,index) in showDoctors"
+          :key="index"
+        >
           <div class="doctorInfo">
             <img slot="icon" src="@/assets/img/图层 826 拷贝 2.png" />
             <div class="textInfo">
@@ -30,7 +35,23 @@
             <span :class="{over: item.remaining<=0}" class="icon">&gt;</span>
             <span :class="{overShow: item.remaining<=0}" class="overMsg">已约满</span>
           </div>
-        </router-link>
+        </div>
+        <!-- <router-link class="item" :to="linkTo(item.remaining)" v-for="(item,index) in showDoctors" :key="index">
+          <div class="doctorInfo">
+            <img slot="icon" src="@/assets/img/图层 826 拷贝 2.png" />
+            <div class="textInfo">
+              <span class="name">{{item.name}}</span>
+              <span class="title">{{item.title}}</span>
+              <br />
+              <span class="workTime" :class="{ pm: item.workTime === '下午'}">{{item.workTime}}</span>
+            </div>
+          </div>
+          <div class="remaining">
+            <span :class="{over: item.remaining<=0}">剩余 {{item.remaining}}</span>
+            <span :class="{over: item.remaining<=0}" class="icon">&gt;</span>
+            <span :class="{overShow: item.remaining<=0}" class="overMsg">已约满</span>
+          </div>
+        </router-link>-->
       </div>
     </div>
   </div>
@@ -143,11 +164,11 @@ export default {
   },
   computed: {
     showDoctors () {
-      if (this.$route.params.dname === '肠道专科') return this.changdaoDoctors
-      if (this.$route.params.dname === '骨内科') return this.guDoctors
-      if (this.$route.params.dname === '皮肤科') return this.pifuDoctors
-      if (this.$route.params.dname === '内分泌科') return this.neifenmiDoctors
-      if (this.$route.params.dname === '耳鼻喉科') return this.erhoubiDoctors
+      if (this.$store.state.selectedDept === '肠道专科') return this.changdaoDoctors
+      if (this.$store.state.selectedDept === '骨内科') return this.guDoctors
+      if (this.$store.state.selectedDept === '皮肤科') return this.pifuDoctors
+      if (this.$store.state.selectedDept === '内分泌科') return this.neifenmiDoctors
+      if (this.$store.state.selectedDept === '耳鼻喉科') return this.erhoubiDoctors
     }
   },
   components: { weekSlider, NoData },
@@ -156,11 +177,17 @@ export default {
       this.date = e
       console.log(this.date)
     },
-    linkTo (remaining) {
-      if (remaining <= 0) {
-        return ''
-      } else {
-        return '/reserve/sTime'
+    // linkTo (remaining) {
+    //   if (remaining <= 0) {
+    //     return ''
+    //   } else {
+    //     return '/reserve/sTime'
+    //   }
+    // },
+    select (remaining, name) {
+      this.$store.commit('changeDoc', name)
+      if (remaining > 0) {
+        this.$router.push('/reserve/sTime')
       }
     }
   }

@@ -90,14 +90,15 @@ export default {
   data () {
     return {}
   },
-  components: { Tabbar }
-  // created () {
-  //   this.$axios.get('https://mockapi.eolinker.com/Dwn2M4N2b2b4946c180b6b4d26aeb0503058101e881991d/deptList').then(function (res) {
-  //     console.log(res.data)
-  //   })
-  // }
+  components: { Tabbar },
+  created () {
+    this.$axios.post('/api/user/register').then(function (res) {
+      console.log(res.data)
+    })
+  }
 }
 </script>
+
 <style lang="scss" scoped>
 .index {
   background: #fff;
