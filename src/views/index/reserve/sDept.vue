@@ -85,9 +85,7 @@ export default {
     },
     select (dept) {
       this.$store.commit('changeDept', dept)
-      this.$router.push({
-        name: 'sDayDoc'
-      })
+      this.$router.push('/reserve/sDayDoc')
     }
   }
 }

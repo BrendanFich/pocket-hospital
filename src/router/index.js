@@ -56,7 +56,7 @@ export default new Router({
       component: reserve,
       children: [
         { path: 'sDept', component: sDept },
-        { path: 'sDayDoc/:dname', name: 'sDayDoc', component: sDayDoc },
+        { path: 'sDayDoc', component: sDayDoc },
         { path: 'sTime', component: sTime },
         { path: 'confirm', component: confirm }
       ]

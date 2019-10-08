@@ -9,19 +9,19 @@
         </li>
         <li>
           <span class="key">科室</span>
-          <span class="value">内分泌科(门)</span>
+          <span class="value">{{$store.state.selectedDept}}</span>
         </li>
         <li>
           <span class="key">医生</span>
-          <span class="value">杨辉</span>
+          <span class="value">{{$store.state.selectedDoc}}</span>
         </li>
         <li>
           <span class="key">就诊日期</span>
-          <span class="value">2019-08-31</span>
+          <span class="value">{{$store.state.selectedDate}}</span>
         </li>
         <li>
           <span class="key">时间段</span>
-          <span class="value">09:00 - 10:00</span>
+          <span class="value">{{$store.state.selectedTime}}</span>
         </li>
         <li>
           <span class="key">诊查费</span>
