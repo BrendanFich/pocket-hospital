@@ -1,6 +1,7 @@
 
 // 将所有的mock文件引入
 require('@/mock/json/userInfo')
+require('@/mock/json/deptList')
 // 在这里可以做一些通用的配置
 
 const Mock = require('mockjs')
@@ -13,3 +14,4 @@ Mock.mock('/api/user/register', 'post', require('./json/userInfo'))
 Mock.mock('/api/user/login', 'post', require('./json/userInfo'))
 Mock.mock('/api/user/user_info', 'post', require('./json/userInfo'))
 Mock.mock('/api/user/logout', 'post', require('./json/userInfo'))
+Mock.mock('/api/deptList', 'get', require('./json/deptList'))

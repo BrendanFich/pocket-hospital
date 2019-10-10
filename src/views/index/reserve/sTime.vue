@@ -16,7 +16,7 @@
     <div class="workTime">
       <ul>
         <li v-for="(item,index) in workTimeList" :key="index">
-          <router-link :to="linkTo(item.remaining)" class="itemContent">
+          <div class="itemContent" @click="select(item.remaining,item.time)">
             <div class="time">
               <img src="@/assets/img/时间.png" />
               <span>{{item.time}}</span>
@@ -26,7 +26,7 @@
               <span :class="{over: item.remaining<=0}" class="icon">&gt;</span>
               <span :class="{overShow: item.remaining<=0}" class="overMsg">已约满</span>
             </div>
-          </router-link>
+          </div>
         </li>
       </ul>
     </div>
@@ -45,15 +45,19 @@ export default {
       ]
     }
   },
-  computed: {
-
-  },
+  computed: {},
   methods: {
     linkTo (remaining) {
       if (remaining <= 0) {
         return ''
       } else {
         return '/reserve/confirm'
+      }
+    },
+    select (remaining, time) {
+      if (remaining > 0) {
+        this.$store.commit('changeTime', time)
+        this.$router.push('/reserve/confirm')
       }
     }
   }

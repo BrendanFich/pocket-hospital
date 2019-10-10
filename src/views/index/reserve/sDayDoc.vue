@@ -36,22 +36,6 @@
             <span :class="{overShow: item.remaining<=0}" class="overMsg">已约满</span>
           </div>
         </div>
-        <!-- <router-link class="item" :to="linkTo(item.remaining)" v-for="(item,index) in showDoctors" :key="index">
-          <div class="doctorInfo">
-            <img slot="icon" src="@/assets/img/图层 826 拷贝 2.png" />
-            <div class="textInfo">
-              <span class="name">{{item.name}}</span>
-              <span class="title">{{item.title}}</span>
-              <br />
-              <span class="workTime" :class="{ pm: item.workTime === '下午'}">{{item.workTime}}</span>
-            </div>
-          </div>
-          <div class="remaining">
-            <span :class="{over: item.remaining<=0}">剩余 {{item.remaining}}</span>
-            <span :class="{over: item.remaining<=0}" class="icon">&gt;</span>
-            <span :class="{overShow: item.remaining<=0}" class="overMsg">已约满</span>
-          </div>
-        </router-link>-->
       </div>
     </div>
   </div>
@@ -177,18 +161,19 @@ export default {
       this.date = e
       console.log(this.date)
     },
-    // linkTo (remaining) {
-    //   if (remaining <= 0) {
-    //     return ''
-    //   } else {
-    //     return '/reserve/sTime'
-    //   }
-    // },
     select (remaining, name) {
       this.$store.commit('changeDoc', name)
       if (remaining > 0) {
         this.$router.push('/reserve/sTime')
       }
+    }
+  },
+  created () {
+    this.$store.commit('changeDate', this.date)
+  },
+  watch: {
+    date (newDate, oldDate) {
+      this.$store.commit('changeDate', newDate)
     }
   }
 }

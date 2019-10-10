@@ -18,20 +18,6 @@
       <span class="status" v-if="item.default">默认</span>
       <span class="isLink" v-else>></span>
     </router-link>
-    <!-- <div class="orderList">
-      <mt-cell class="cell" is-link to="/mine/cardManage/bindCard">
-        <div slot="title" class="content">绑定就诊卡</div>
-        <img class="icon" slot="icon" src="@/assets/img/绑定.png" />
-      </mt-cell>
-      <mt-cell class="cell" is-link to="/mine/cardManage/buildCard">
-        <div slot="title" class="content">初诊建卡</div>
-        <img class="icon" slot="icon" src="@/assets/img/新建.png" />
-      </mt-cell>
-      <mt-cell class="cell" is-link>
-        <div slot="title" class="content">绑定医保卡</div>
-        <img class="icon" slot="icon" src="@/assets/img/绑定 (1).png" />
-      </mt-cell>
-    </div>-->
     <ul class="orderList">
       <li @click="linkTo('/mine/cardManage/bindCard')">
         <div>
