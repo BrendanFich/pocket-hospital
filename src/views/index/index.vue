@@ -92,9 +92,9 @@ export default {
   },
   components: { Tabbar },
   created () {
-    this.$axios.post('/api/user/register').then(function (res) {
-      console.log(res.data)
-    })
+    // this.$axios.post('/api/user/register').then(function (res) {
+    //   console.log(res.data)
+    // })
   }
 }
 </script>

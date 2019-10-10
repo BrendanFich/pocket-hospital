@@ -29,14 +29,27 @@ export default {
     return {
       selected: 0,
       searching: false,
-      fakeData: {}
+      fakeData: [
+        {
+          block: '南海院区',
+          dept: [
+            { name: '内分泌科', id: '001' },
+            { name: '骨内科', id: '002' },
+            { name: '肠道专科', id: '003' }
+          ]
+        },
+        {
+          block: '西院区',
+          dept: [{ name: '皮肤科', id: '004' }, { name: '耳鼻喉科', id: '005' }]
+        }
+      ]
     }
   },
   created () {
-    this.$axios.get('/api/deptList').then((res) => {
-      this.fakeData = res.data.deptList
-      console.log(res.data.deptList)
-    })
+    // this.$axios.get('/api/deptList').then((res) => {
+    //   this.fakeData = res.data.deptList
+    //   console.log(res.data.deptList)
+    // })
   },
   computed: {
     searchData () {
