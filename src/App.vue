@@ -8,6 +8,18 @@
 export default {
   name: 'App',
   created () {
+    // 用户登录，将用户信息存至store
+    if (this.getUrlParam('token')) {
+      window.localStorage.setItem('token', this.getUrlParam('token'))
+    }
+    this.$store.commit('updateUserInfo')
+
+    window.addEventListener('pageshow', function (e) {
+      // 通过persisted属性判断是否存在 BF Cache
+      if (/iPhone|mac|iPod|iPad/i.test(navigator.userAgent) && e.persisted) {
+        location.reload()
+      }
+    })
     // 在页面加载时读取sessionStorage里的状态信息
     if (sessionStorage.getItem('store')) {
       this.$store.replaceState(

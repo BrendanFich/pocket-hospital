@@ -1,16 +1,24 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import util from '../utils/util'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    userInfo: {},
     selectedDept: '',
     selectedDoc: '',
     selectedDate: '',
     selectedTime: ''
   },
   mutations: {
+    updateUserInfo (state) {
+      util.http.post('/api/user/user_info').then(res => {
+        state.userInfo = res.data
+        console.log(res)
+      })
+    },
     changeDept (state, dept) {
       state.selectedDept = dept
     },

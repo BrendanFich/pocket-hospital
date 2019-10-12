@@ -1,7 +1,7 @@
 <template>
   <div class="index">
     <div class="slogan">
-      <img src="@/assets/img/图层 1.png" />
+      <img src="@/assets/img/图层 1.png" @click="test" />
     </div>
     <div class="navs1">
       <router-link class="nav1" to="/reserve">
@@ -92,9 +92,11 @@ export default {
   },
   components: { Tabbar },
   created () {
-    // this.$axios.post('/api/user/register').then(function (res) {
-    //   console.log(res.data)
-    // })
+  },
+  methods: {
+    test () {
+
+    }
   }
 }
 </script>

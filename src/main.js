@@ -6,61 +6,31 @@ import 'mint-ui/lib/style.css'
 import App from './App'
 import router from './router'
 import './utils/rem'
+import wxsdk from './utils/wxsdk'
+import util from './utils/util'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
-import axios from 'axios'
 import store from './vuex'
 
 process.env.MOCK && require('@/mock')
-Vue.prototype.$axios = axios
 
 Vue.use(VueAwesomeSwiper)
-
 Vue.use(MintUI)
+
+Vue.prototype.http = util.http
+Vue.prototype.getUrlParam = util.getUrlParam
+Vue.prototype.wxsdk = wxsdk
+// 等接口，获取js-sdk
+// wxsdk.initConfig('http://qlyt.vicp.net:8197')
+// wxsdk.initConfig(location.href.split('#')[0])
 Vue.config.productionTip = false
 
-/*
 router.beforeEach((to, from, next) => {
-  // // 网页授权之获取code
-  // const code = getUrlParam("code"),
-  //   openId = window.localStorage.getItem("openId");
-  // if (!openId && !code) {
-  //   const appid = "wxd8de5e3e19b318ee",
-  //     url = encodeURIComponent(location.href.split('#')[0]);
-  //   window.location.href = 'http://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + url + '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
-  // }
-  // //获取url中参数
-  // function getUrlParam(name) {
-  //   var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-  //   var r = window.location.search.substr(1).match(reg);
-  //   if (r != null) return decodeURI(r[2]);
-  //   return null;
-  function getUrlParam (name) {
-    var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)')
-    var r = window.location.search.substr(1).match(reg)
-    if (r != null) return decodeURI(r[2])
-    return null
-  }
-  let code = getUrlParam('code')
-
-  if (sessionStorage.getItem('store')) {
-    this.$store.replaceState(
-      Object.assign(
-        {},
-        this.$store.state,
-        JSON.parse(sessionStorage.getItem('store'))
-      )
-    )
-  }
-  console.log(code)
-  // 获取url中参数
-  const appid = 'wxd8de5e3e19b318ee'
-  const url = encodeURIComponent('http://qlyt.vicp.net:8197/api/user/vx_login')
-  if (!sessionStorage.getItem('code')) {
-    window.location.href = 'http://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + url + '&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect'
-  }
+  // 进入每个页面时都需要判断是否为微信浏览器
+  console.log('嘿嘿')
+  next()
 })
-*/
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
