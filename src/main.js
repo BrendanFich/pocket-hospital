@@ -25,11 +25,11 @@ Vue.prototype.wxsdk = wxsdk
 // wxsdk.initConfig(location.href.split('#')[0])
 Vue.config.productionTip = false
 
-router.beforeEach((to, from, next) => {
-  // 进入每个页面时都需要判断是否为微信浏览器
-  console.log('嘿嘿')
-  next()
-})
+// router.beforeEach((to, from, next) => {
+//   // 进入每个页面时都需要判断是否为微信浏览器
+//   console.log('嘿嘿')
+//   next()
+// })
 
 /* eslint-disable no-new */
 new Vue({

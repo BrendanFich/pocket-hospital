@@ -32,6 +32,8 @@
 </template>
 
 <script>
+import util from '@/utils/util'
+import getInfoFromId from '@/utils/getInfoFromId'
 export default {
   name: 'buildCard',
   data () {
@@ -70,11 +72,31 @@ export default {
       const className = 'toast'
       const p = /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
       if (this.IDNum && this.name && this.phoneNum && this.address) {
-        if (!p.test(this.IDNum)) {
-          this.$toast({ message: '身份证号有误', duration, className })
+        if (p.test(this.IDNum)) {
+          this.$indicator.open()
+          util.http
+            .post('/api/pat/register', {
+              patSex: getInfoFromId.getSex(this.IDNum),
+              patAge: getInfoFromId.getAge(this.IDNum),
+              patBirth: getInfoFromId.getBirth(this.IDNum),
+              patIdType: getInfoFromId.getIdType(this.IDNum),
+              patName: this.name,
+              patAddress: this.address,
+              patMobile: this.phoneNum,
+              patIdNo: this.IDNum
+            })
+            .then(res => {
+              this.$indicator.close()
+              if (res.code === 0) {
+                this.$toast({ message: '操作成功', duration, className })
+                this.$router.push({ path: '/mine/cardManage' })
+              } else {
+                console.log(res)
+              }
+              console.log(res)
+            })
         } else {
-          this.$toast({ message: '操作成功', duration, className })
-          this.$router.push({ path: '/cardManage' })
+          this.$toast({ message: '身份证号有误', duration, className })
         }
       } else {
         this.$toast({ message: '请完整填写所有信息', duration, className })
