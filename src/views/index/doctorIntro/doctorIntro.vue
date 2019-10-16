@@ -12,7 +12,7 @@
 
     <mt-tab-container v-model="selected">
       <mt-tab-container-item v-for="(item,index) in departments" :key="index" :id="index">
-        <NoData :data="item.doctors"></NoData>
+        <img class="noData" v-if="!item.doctors" src="@/assets/img/暂无数据.png" />
         <ul style="background: #fff;">
           <li class="doctorIntroCard" v-for="(doctor,dindex) in item.doctors" :key="dindex">
             <img class="avatar" src="@/assets/img/图层 826 拷贝 5.png" />
@@ -32,11 +32,9 @@
 </template>
 
 <script>
-import NoData from '@/components/NoData'
 let vm = null
 export default {
   name: 'doctorIntro',
-  components: { NoData },
   data () {
     return {
       selected: 0,
@@ -152,6 +150,11 @@ export default {
 .doctorIntro {
   background: #f2f2f2;
   height: 100vh;
+  text-align: center;
+      .noData {
+        width: 366px;
+        margin-top: 50px;
+      }
   /deep/ .swiper-wrapper {
     padding: 0 20px;
   }

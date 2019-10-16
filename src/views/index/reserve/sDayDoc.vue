@@ -2,7 +2,7 @@
   <div class="sDayDoc">
     <div class="container">
       <div class="selectedInfo">
-        <span class="department">{{$store.state.selectedDept}}</span>
+        <span class="department">{{deptInfo.deptName}}</span>
         <span class="selectedDate">已选:{{date}}</span>
       </div>
       <week-slider
@@ -14,7 +14,7 @@
         todayBgColor="#eee"
       ></week-slider>
       <div class="doctorItems">
-        <NoData :data="showDoctors"></NoData>
+        <img class="noData" v-if="!showDoctors" src="@/assets/img/暂无数据.png" />
         <div
           class="item"
           @click="select(item.remaining, item.name)"
@@ -44,13 +44,16 @@
 <script>
 import moment from 'moment'
 import weekSlider from '@/components/weekSlider'
-import NoData from '@/components/NoData'
+import util from '@/utils/util'
+
 export default {
   name: 'sDayDoc',
   data () {
     return {
       tbSelected: '',
+      deptInfo: '',
       date: moment(new Date()).format('YYYY-MM-DD'),
+      showDoctors: '',
       changdaoDoctors: [
         {
           name: '杨辉1',
@@ -147,15 +150,17 @@ export default {
     }
   },
   computed: {
-    showDoctors () {
-      if (this.$store.state.selectedDept === '肠道专科') return this.changdaoDoctors
-      if (this.$store.state.selectedDept === '骨内科') return this.guDoctors
-      if (this.$store.state.selectedDept === '皮肤科') return this.pifuDoctors
-      if (this.$store.state.selectedDept === '内分泌科') return this.neifenmiDoctors
-      if (this.$store.state.selectedDept === '耳鼻喉科') return this.erhoubiDoctors
-    }
+    // 当天医生上班列表
+    // showDoctors () {
+    //   if (this.$store.state.selectedDept === '肠道专科') return this.changdaoDoctors
+    //   if (this.$store.state.selectedDept === '骨内科') return this.guDoctors
+    //   if (this.$store.state.selectedDept === '皮肤科') return this.pifuDoctors
+    //   if (this.$store.state.selectedDept === '内分泌科') return this.neifenmiDoctors
+    //   if (this.$store.state.selectedDept === '耳鼻喉科') return this.erhoubiDoctors
+    //   return {}
+    // }
   },
-  components: { weekSlider, NoData },
+  components: { weekSlider },
   methods: {
     dateClickhandler (e) {
       this.date = e
@@ -169,6 +174,26 @@ export default {
     }
   },
   created () {
+    util.http
+      .post('/api/doctor/dept_info', {
+        deptCode: '00' + this.$store.state.selectedDept
+      })
+      .then(res => {
+        this.deptInfo = res.data.Records[0]
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    util.http
+      .post('/api/doctor/getRegSource', { deptCode: '16' })
+      .then(res => {
+        this.showDoctors = res.data.Records
+        console.log(res.data.Records)
+        // this.deptName = res.data.Records[0].deptName
+      })
+      .catch(error => {
+        console.log(error)
+      })
     this.$store.commit('changeDate', this.date)
   },
   watch: {
@@ -204,6 +229,11 @@ export default {
     }
     .doctorItems {
       width: 100%;
+      text-align: center;
+      .noData {
+        width: 366px;
+        margin-top: 50px;
+      }
       .item {
         height: 120px;
         display: flex;

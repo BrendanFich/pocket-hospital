@@ -7,7 +7,7 @@
       </mt-navbar>
       <mt-tab-container v-model="selected" class="right_container">
         <mt-tab-container-item :id="index" v-for="(item,index) in searchData" :key="index">
-          <NoData :data="item.division"></NoData>
+          <img class="noData" v-if="!item.division" src="@/assets/img/暂无数据.png" />
           <router-link
             :to="{
           name: 'selectDoc',
@@ -29,10 +29,9 @@
 
 <script>
 import Searchbar from '@/components/Searchbar'
-import NoData from '@/components/NoData'
 export default {
   name: 'iSDept',
-  components: { Searchbar, NoData },
+  components: { Searchbar },
   data () {
     return {
       selected: 0,
@@ -121,6 +120,11 @@ export default {
     .right_container {
       width: 589px;
       background: #fff;
+      text-align: center;
+      .noData {
+        width: 366px;
+        margin-top: 50px;
+      }
       /deep/ .mint-cell-wrapper {
         height: 80px;
         padding: 0 25px;

@@ -17,6 +17,8 @@ export default new Vuex.Store({
       util.http.post('/api/user/user_info').then(res => {
         state.userInfo = res.data
         console.log(res)
+      }).catch((error) => {
+        console.log(error)
       })
     },
     changeDept (state, dept) {

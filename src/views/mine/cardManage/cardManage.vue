@@ -1,7 +1,7 @@
 <template>
   <div class="cardManage">
     <h2>就诊卡管理</h2>
-    <NoData :data="cardList"></NoData>
+    <img class="noData" v-if="!cardList" src="@/assets/img/暂无数据.png" />
     <router-link
       class="customerInfoCard"
       to="/mine/cardManage/cardInfo"
@@ -45,10 +45,8 @@
 </template>
 
 <script>
-import NoData from '@/components/NoData'
 export default {
   name: 'cardManage',
-  components: { NoData },
   data () {
     return {
       cardList: [
@@ -79,7 +77,11 @@ export default {
 .cardManage {
   background: #f2f2f2;
   height: 100vh;
-
+  text-align: center;
+  .noData {
+    width: 366px;
+    margin-top: 50px;
+  }
   h2 {
     color: #999999;
     font-size: 24px;

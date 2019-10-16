@@ -35,6 +35,7 @@
 
 <script>
 import CustomerInfoCard from '@/components/CustomerInfoCard'
+import util from '@/utils/util'
 export default {
   name: 'confirm',
   components: { CustomerInfoCard },
@@ -44,7 +45,29 @@ export default {
   methods: {
     confirm () {
       this.$indicator.open()
-      setTimeout(() => {
+      util.http.post('/api/doctor/currentDayRegister', {
+        psOrdNum: '',
+        deptCode: '',
+        doctorCode: '',
+        scheduleDate: '',
+        timeFlag: '',
+        beginTime: '',
+        endTime: '',
+        regFee: '',
+        patType: '',
+        patName: '',
+        patSex: '',
+        patAge: '',
+        patIdType: '',
+        patIdNo: '',
+        patCardType: '',
+        patCardNo: '',
+        patMobile: '',
+        patAddress: '',
+        guardName: '',
+        guardIdType: '',
+        guardIdNo: ''
+      }).then(res => {
         this.$indicator.close()
         this.$toast({
           message: '提交成功',
@@ -52,7 +75,16 @@ export default {
           className: 'toast'
         })
         this.$router.push('/index')
-      }, 500)
+        console.log(res)
+      }).catch((error) => {
+        this.$indicator.close()
+        this.$toast({
+          message: '提交失败',
+          duration: 1000,
+          className: 'toast'
+        })
+        console.log(error)
+      })
     }
   }
 }
