@@ -63,6 +63,8 @@
 <script>
 import CustomerInfoCard from '@/components/CustomerInfoCard'
 import Tabbar from '@/components/Tabbar'
+import util from '@/utils/util'
+
 export default {
   name: 'mine',
   data () {
@@ -73,6 +75,16 @@ export default {
     linkTo (url) {
       this.$router.push(url)
     }
+  },
+  created () {
+    util.http
+      .post('/api/pat/pat_info')
+      .then(res => {
+        console.log(res)
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 }
 </script>

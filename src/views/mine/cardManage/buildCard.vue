@@ -6,7 +6,7 @@
       <div class="isLink">></div>
     </div>
     <mt-field label="姓名" placeholder="请输入姓名" v-model="name" :disableClear="true"></mt-field>
-    <mt-field label="身份证号" placeholder="请输入身份证号" type="number" v-model="IDNum" :disableClear="true"></mt-field>
+    <mt-field label="身份证号" placeholder="请输入身份证号" type="string" v-model="IDNum" :disableClear="true"></mt-field>
     <mt-field
       label="联系电话"
       placeholder="请输入联系电话"
@@ -76,12 +76,9 @@ export default {
           this.$indicator.open()
           util.http
             .post('/api/pat/register', {
-              patSex: getInfoFromId.getSex(this.IDNum),
-              patAge: getInfoFromId.getAge(this.IDNum),
-              patBirth: getInfoFromId.getBirth(this.IDNum),
               patIdType: getInfoFromId.getIdType(this.IDNum),
+              hospitalName: this.block,
               patName: this.name,
-              patAddress: this.address,
               patMobile: this.phoneNum,
               patIdNo: this.IDNum
             })

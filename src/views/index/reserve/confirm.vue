@@ -45,46 +45,58 @@ export default {
   methods: {
     confirm () {
       this.$indicator.open()
-      util.http.post('/api/doctor/currentDayRegister', {
-        psOrdNum: '',
-        deptCode: '',
-        doctorCode: '',
-        scheduleDate: '',
-        timeFlag: '',
-        beginTime: '',
-        endTime: '',
-        regFee: '',
-        patType: '',
-        patName: '',
-        patSex: '',
-        patAge: '',
-        patIdType: '',
-        patIdNo: '',
-        patCardType: '',
-        patCardNo: '',
-        patMobile: '',
-        patAddress: '',
-        guardName: '',
-        guardIdType: '',
-        guardIdNo: ''
-      }).then(res => {
-        this.$indicator.close()
-        this.$toast({
-          message: '提交成功',
-          duration: 1000,
-          className: 'toast'
+      util.http
+        .post('/api/doctor/currentDayRegister', {
+          psOrdNum: '1',
+          deptCode: '111',
+          doctorCode: '112'
+          // scheduleDate: '',
+          // timeFlag: '',
+          // beginTime: '',
+          // endTime: '',
+          // regFee: '',
+          // patType: '',
+          // patName: '',
+          // patSex: '',
+          // patAge: '',
+          // patIdType: '',
+          // patIdNo: '',
+          // patCardType: '',
+          // patCardNo: '',
+          // patMobile: '',
+          // patAddress: '',
+          // guardName: '',
+          // guardIdType: '',
+          // guardIdNo: ''
         })
-        this.$router.push('/index')
-        console.log(res)
-      }).catch((error) => {
-        this.$indicator.close()
-        this.$toast({
-          message: '提交失败',
-          duration: 1000,
-          className: 'toast'
+        .then(res => {
+          if (res.code === 0) {
+            this.$indicator.close()
+            this.$toast({
+              message: '提交成功',
+              duration: 1000,
+              className: 'toast'
+            })
+            this.$router.push('/index')
+            console.log(res)
+          } else {
+            this.$indicator.close()
+            this.$toast({
+              message: '提交失败',
+              duration: 1000,
+              className: 'toast'
+            })
+          }
         })
-        console.log(error)
-      })
+        .catch(error => {
+          this.$indicator.close()
+          this.$toast({
+            message: '提交失败',
+            duration: 1000,
+            className: 'toast'
+          })
+          console.log(error)
+        })
     }
   }
 }

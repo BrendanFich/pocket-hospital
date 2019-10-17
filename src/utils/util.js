@@ -18,6 +18,7 @@ http.ajax = axios.create()
 // }
 http.ajax.interceptors.request.use(config => {
   if (localStorage.token) { config.headers.Authorization = localStorage.token }
+  // console.log(config.headers.Authorization)
   return config
 }, error => {
   return Promise.reject(error)

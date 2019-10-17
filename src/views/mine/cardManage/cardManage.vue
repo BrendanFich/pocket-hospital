@@ -9,13 +9,13 @@
       :key="index"
     >
       <div>
-        <img :src="item.imgUrl" />
+        <img src="@/assets/img/组 27.png" />
         <div class="textInfo">
-          <span class="name">{{item.name}}</span>
-          <p class="cardNumber">诊疗卡号：{{item.cardNum}}</p>
+          <span class="name">{{item.patName}}</span>
+          <p class="cardNumber">诊疗卡号：{{item.visitCardNo}}</p>
         </div>
       </div>
-      <span class="status" v-if="item.default">默认</span>
+      <span class="status" v-if="item.visitCardNo === $store.state.userInfo.visitCardNo">默认</span>
       <span class="isLink" v-else>></span>
     </router-link>
     <ul class="orderList">
@@ -45,30 +45,27 @@
 </template>
 
 <script>
+import util from '@/utils/util'
+
 export default {
   name: 'cardManage',
   data () {
     return {
-      cardList: [
-        {
-          imgUrl: require('@/assets/img/组 27.png'),
-          name: '张家辉',
-          cardNum: '66424801',
-          default: true
-        },
-        {
-          imgUrl: require('@/assets/img/组 27.png'),
-          name: '古天乐',
-          cardNum: '55324801',
-          default: false
-        }
-      ]
+      cardList: []
     }
   },
   methods: {
     linkTo (url) {
       this.$router.push(url)
     }
+  },
+  created () {
+    util.http.post('/api/pat/pat_info').then(res => {
+      this.cardList = res.data
+      console.log(res.data)
+    }).catch((error) => {
+      console.log(error)
+    })
   }
 }
 </script>
@@ -77,7 +74,6 @@ export default {
 .cardManage {
   background: #f2f2f2;
   height: 100vh;
-  text-align: center;
   .noData {
     width: 366px;
     margin-top: 50px;

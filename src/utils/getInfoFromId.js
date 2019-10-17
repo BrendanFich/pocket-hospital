@@ -3,7 +3,7 @@ export default {
     return idNum.substring(6, 10) + '-' + idNum.substring(10, 12) + '-' + idNum.substring(12, 14)
   },
   getSex (idNum) {
-    return (parseInt(idNum.substr(16, 1)) % 2 === 1) ? 1 : 2
+    return (parseInt(idNum.substr(16, 1)) % 2 === 1) ? '1' : '2'
     // return 1
   },
   getAge (idNum) {

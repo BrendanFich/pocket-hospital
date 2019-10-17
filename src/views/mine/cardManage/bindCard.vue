@@ -5,14 +5,14 @@
       <mt-field label="卡类型" v-model="cardStyle" :disableClear="true" :readonly="true"></mt-field>
       <div class="isLink">></div>
     </div>
-    <mt-field label="卡号" placeholder="请输入卡号" type="number" v-model="CardNum" :disableClear="true"></mt-field>
+    <mt-field label="卡号" placeholder="请输入卡号" type="number" v-model="cardNum" :disableClear="true"></mt-field>
     <mt-field label="姓名" placeholder="请输入姓名" v-model="name" :disableClear="true"></mt-field>
 
     <div @click="showOption(1)" class="selectItem">
       <mt-field label="证件类型" v-model="paperwork" :disableClear="true" :readonly="true"></mt-field>
       <div class="isLink">></div>
     </div>
-    <mt-field label="证件号码" placeholder="请输入证件号码" type="number" v-model="IDNum" :disableClear="true"></mt-field>
+    <mt-field label="证件号码" placeholder="请输入证件号码" type="string" v-model="idNum" :disableClear="true"></mt-field>
     <mt-actionsheet :actions="actions1" v-model="sheet1Visible" cancelText></mt-actionsheet>
     <mt-actionsheet :actions="actions2" v-model="sheet2Visible" cancelText></mt-actionsheet>
     <div class="attention">
@@ -30,6 +30,8 @@
 </template>
 
 <script>
+import util from '@/utils/util'
+
 export default {
   name: 'bindCard',
   data () {
@@ -37,18 +39,39 @@ export default {
       sheet1Visible: false,
       sheet2Visible: false,
       cardStyle: '诊疗卡',
-      paperwork: '身份证',
-      CardNum: null,
-      IDNum: null,
+      paperwork: '二代身份证',
+      cardNum: null,
+      idNum: null,
       name: '',
       actions1: [
-        { name: '诊疗卡', method: this.sCardStyle1 },
-        { name: '社保卡', method: this.sCardStyle2 }
+        { name: '诊疗卡', method: this.sCardStyle0 },
+        { name: '医保卡', method: this.sCardStyle1 }
       ],
       actions2: [
-        { name: '身份证', method: this.sPaperwork1 },
-        { name: '护照', method: this.sPaperwork2 }
+        { name: '二代身份证', method: this.sPaperwork0 },
+        { name: '港澳居民身份证', method: this.sPaperwork1 },
+        { name: '台湾居民身份证', method: this.sPaperwork2 },
+        { name: '护照', method: this.sPaperwork3 }
       ]
+    }
+  },
+  computed: {
+    cardType () {
+      return this.cardStyle === '诊疗卡' ? '1' : '2'
+    },
+    patIdType () {
+      if (this.paperwork === this.actions2[0].name) {
+        return '1'
+      }
+      if (this.paperwork === this.actions2[1].name) {
+        return '2'
+      }
+      if (this.paperwork === this.actions2[2].name) {
+        return '3'
+      }
+      if (this.paperwork === this.actions2[3].name) {
+        return '4'
+      }
     }
   },
   methods: {
@@ -60,28 +83,52 @@ export default {
         this.sheet2Visible = true
       }
     },
-    sCardStyle1 () {
+    sCardStyle0 () {
       this.cardStyle = this.actions1[0].name
     },
-    sCardStyle2 () {
+    sCardStyle1 () {
       this.cardStyle = this.actions1[1].name
     },
-    sPaperwork1 () {
+    sPaperwork0 () {
       this.paperwork = this.actions2[0].name
     },
-    sPaperwork2 () {
+    sPaperwork1 () {
       this.paperwork = this.actions2[1].name
+    },
+    sPaperwork2 () {
+      this.paperwork = this.actions2[2].name
+    },
+    sPaperwork3 () {
+      this.paperwork = this.actions2[3].name
     },
     handleClick () {
       const duration = 1500
       const className = 'toast'
       const p = /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
-      if (this.CardNum && this.name && this.IDNum) {
-        if (!p.test(this.IDNum) && this.paperwork === '身份证') {
+      let reqData = {
+        patientId: 1007033242,
+        cardType: this.cardType,
+        patCardNo: this.cardNum,
+        patName: this.name,
+        patIdType: this.patIdType,
+        patIdNo: this.idNum
+      }
+      if (this.cardNum && this.name && this.idNum) {
+        if (!p.test(this.idNum) && this.paperwork === '身份证') {
           this.$toast({ message: '身份证号有误', duration, className })
         } else {
-          this.$toast({ message: '绑定成功', duration, className })
-          this.$router.push({ path: '/cardManage' })
+          util.http
+            .post('/api/pat/bindCard', reqData)
+            .then(res => {
+              console.log(res)
+              if (res.code === 0) {
+                this.$toast({ message: '绑定成功', duration, className })
+                this.$router.push({ path: '/mine/cardManage' })
+              }
+            })
+            .catch(error => {
+              console.log(error)
+            })
         }
       } else {
         this.$toast({ message: '请完整填写所有信息', duration, className })

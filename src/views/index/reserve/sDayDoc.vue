@@ -14,7 +14,7 @@
         todayBgColor="#eee"
       ></week-slider>
       <div class="doctorItems">
-        <img class="noData" v-if="!showDoctors" src="@/assets/img/暂无数据.png" />
+        <img class="noData" v-if="showDoctors.length === 0" src="@/assets/img/暂无数据.png" />
         <div
           class="item"
           @click="select(item.remaining, item.name)"
@@ -53,7 +53,34 @@ export default {
       tbSelected: '',
       deptInfo: '',
       date: moment(new Date()).format('YYYY-MM-DD'),
-      showDoctors: '',
+      showDoctors: [
+        {
+          'deptCode': '',
+          'doctorCode': '',
+          'scheduleDate': '',
+          'timeFlag': '',
+          'hasDetailTime': '',
+          'beginTime': '',
+          'endTime': '',
+          'workStatus': '',
+          'regFee': '',
+          'totalNum': '',
+          'leftNum': ''
+        },
+        {
+          'deptCode': '',
+          'doctorCode': '',
+          'scheduleDate': '',
+          'timeFlag': '',
+          'hasDetailTime': '',
+          'beginTime': '',
+          'endTime': '',
+          'workStatus': '',
+          'regFee': '',
+          'totalNum': '',
+          'leftNum': ''
+        }
+      ],
       changdaoDoctors: [
         {
           name: '杨辉1',
@@ -184,12 +211,20 @@ export default {
       .catch(error => {
         console.log(error)
       })
+    // util.http
+    //   .post('/api/doctor/getRegSource', {deptCode: this.deptInfo.deptCode})
+    //   .then(res => {
+    //     this.showDoctors = res.data.Records
+    //     console.log(res)
+    //   })
+    //   .catch(error => {
+    //     console.log(error)
+    //   })
     util.http
-      .post('/api/doctor/getRegSource', { deptCode: '16' })
+      .post('/api/doctor/doc_info')
       .then(res => {
-        this.showDoctors = res.data.Records
-        console.log(res.data.Records)
-        // this.deptName = res.data.Records[0].deptName
+        // this.showDoctors = res.data.Records
+        console.log(res)
       })
       .catch(error => {
         console.log(error)

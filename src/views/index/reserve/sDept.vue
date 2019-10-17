@@ -9,7 +9,7 @@
 
       <mt-tab-container v-model="selected" class="right_container">
         <mt-tab-container-item id="0">
-          <img class="noData" v-if="deptList.length === 0" src="@/assets/img/暂无数据.png" />
+          <!-- <img class="noData" v-if="deptList.length === 0" src="@/assets/img/暂无数据.png" /> -->
           <div v-for="(item,index) in deptList" :key="index" @click="select(item.deptCode)">
             <mt-cell :title="item.deptName">
               <img class="icon" src="@/assets/img/科室.png" />&gt;
@@ -43,8 +43,6 @@ export default {
     }).catch((error) => {
       console.log(error)
     })
-  },
-  computed: {
   },
   methods: {
     setSearchStatus (data) {
@@ -94,7 +92,6 @@ export default {
     .right_container {
       width: 589px;
       background: #fff;
-      text-align: center;
       .noData {
         width: 366px;
         margin-top: 50px;
