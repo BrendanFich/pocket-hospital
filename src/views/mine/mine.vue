@@ -80,6 +80,7 @@ export default {
     util.http
       .post('/api/pat/pat_info')
       .then(res => {
+        this.$store.commit('updateUserPatInfo', res.data)
         console.log(res)
       })
       .catch(error => {

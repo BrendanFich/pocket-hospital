@@ -123,7 +123,7 @@ export default new Router({
             { path: '', component: cardManage },
             { path: 'bindCard', component: bindCard },
             { path: 'buildCard', component: buildCard },
-            { path: 'cardInfo', component: cardInfo }
+            { path: 'cardInfo/:visitCardNo', name: 'cardInfo', component: cardInfo }
           ]
         },
         { path: 'liveHosOrder', component: liveHosOrder },

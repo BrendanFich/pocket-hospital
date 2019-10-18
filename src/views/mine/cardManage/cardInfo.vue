@@ -1,44 +1,55 @@
 <template>
   <div class="cardInfo">
     <h2>就诊卡信息</h2>
-    <mt-field label="卡类型" v-model="cardInfo.cardStyle" :disableClear="true" :readonly="true"></mt-field>
-    <mt-field label="姓名" v-model="cardInfo.name" :readonly="true" :disableClear="true"></mt-field>
-    <mt-field label="卡号" v-model="cardInfo.cardNum" :readonly="true" :disableClear="true"></mt-field>
+    <mt-field label="卡类型" v-model="cardInfo.PatIdType" :disableClear="true" :readonly="true"></mt-field>
+    <mt-field label="姓名" v-model="cardInfo.patName" :readonly="true" :disableClear="true"></mt-field>
+    <mt-field label="卡号" v-model="cardInfo.visitCardNo" :readonly="true" :disableClear="true"></mt-field>
     <mt-field
       label="证件号码"
-      type="password"
-      v-model="cardInfo.IDnumber"
+      type="string"
+      v-model="cardInfo.patIdNo"
       :readonly="true"
       :disableClear="true"
     ></mt-field>
-    <mt-field label="性别" v-model="cardInfo.gender" :readonly="true" :disableClear="true"></mt-field>
-    <mt-field label="生日" v-model="cardInfo.birthday" :readonly="true" :disableClear="true"></mt-field>
+    <mt-field label="性别" v-model="cardInfo.patSex" :readonly="true" :disableClear="true"></mt-field>
+    <mt-field label="生日" v-model="cardInfo.patBirth" :readonly="true" :disableClear="true"></mt-field>
     <mt-button type="primary" class="btn" @click.native="setDefault">设为默认</mt-button>
   </div>
 </template>
 
 <script>
+import util from '@/utils/util'
+
 export default {
   name: 'cardInfo',
   data () {
     return {
-      cardInfo: {
-        cardStyle: '诊疗卡',
-        cardNum: '321321321321',
-        IDnumber: '123123123123123',
-        gender: '男',
-        birthday: '1985-02-11',
-        name: '张家辉'
-      }
+    }
+  },
+  computed: {
+    cardInfo () {
+      return this.$store.state.patInfo.filter(item => item.visitCardNo === this.$route.params.visitCardNo)[0]
     }
   },
   methods: {
     setDefault () {
       const duration = 1500
       const className = 'toast'
-      // axios then
-      this.$toast({ message: '设置成功', duration, className })
-      this.$router.back(-1)
+      util.http
+        .post('/api/pat/changeCard',
+          {
+            patCardNo: this.cardInfo.visitCardNo,
+            patName: this.cardInfo.patName
+          })
+        .then(res => {
+          this.$store.commit('updateUserInfo')
+          this.$toast({ message: '设置成功', duration, className })
+          this.$router.back(-1)
+          console.log(res)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   }
 }

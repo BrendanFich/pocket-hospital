@@ -106,7 +106,7 @@ export default {
       const className = 'toast'
       const p = /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
       let reqData = {
-        patientId: 1007033242,
+        patientId: 1007033245,
         cardType: this.cardType,
         patCardNo: this.cardNum,
         patName: this.name,
@@ -122,8 +122,13 @@ export default {
             .then(res => {
               console.log(res)
               if (res.code === 0) {
-                this.$toast({ message: '绑定成功', duration, className })
-                this.$router.push({ path: '/mine/cardManage' })
+                if (res.data.Message === '卡号已存在') {
+                  this.$toast({ message: '该卡号已绑定', duration, className })
+                } else {
+                  this.$store.commit('updateUserInfo')
+                  this.$toast({ message: '绑定成功', duration, className })
+                  this.$router.push({ path: '/mine/cardManage' })
+                }
               }
             })
             .catch(error => {

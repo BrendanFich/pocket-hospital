@@ -3,9 +3,9 @@
     <div>
       <img src="@/assets/img/组 27.png" />
       <div class="textInfo">
-        <span class="name">张家辉</span>
+        <span class="name">{{customerInfo.patName}}</span>
         <span class="status">默认</span>
-        <p class="cardNumber">诊疗卡号：66424801</p>
+        <p class="cardNumber">诊疗卡号：{{customerInfo.visitCardNo}}</p>
       </div>
     </div>
     <router-link to="/mine/cardManage">
@@ -19,21 +19,13 @@ export default {
   name: 'customerInfoCard',
   data () {
     return {
-      customerInfo: {}
+    }
+  },
+  computed: {
+    customerInfo () {
+      return this.$store.state.patInfo.filter(item => item.visitCardNo === this.$store.state.userInfo.visitCardNo)[0]
     }
   }
-  // created () {
-  //   this.$axios
-  //     .get(
-  //       ' https://www.easy-mock.com/mock/5d8c0d14f97c2b7214e12ce6/example2/example2'
-  //     )
-  //     .then(res => {
-  //       console.log(res.data)
-  //     })
-  //     .catch(error => {
-  //       console.log(error)
-  //     })
-  // }
 }
 </script>
 

@@ -7,6 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     userInfo: {},
+    patInfo: [],
     selectedDept: '',
     selectedDoc: '',
     selectedDate: '',
@@ -20,6 +21,9 @@ export default new Vuex.Store({
       }).catch((error) => {
         console.log(error)
       })
+    },
+    updateUserPatInfo (state, patInfo) {
+      state.patInfo = patInfo
     },
     changeDept (state, dept) {
       state.selectedDept = dept

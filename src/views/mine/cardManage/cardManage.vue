@@ -4,8 +4,12 @@
     <img class="noData" v-if="!cardList" src="@/assets/img/暂无数据.png" />
     <router-link
       class="customerInfoCard"
-      to="/mine/cardManage/cardInfo"
       v-for="(item,index) in cardList"
+      :to="{
+            name:'cardInfo',
+            params:{
+              visitCardNo: cardList[index].visitCardNo
+            }}"
       :key="index"
     >
       <div>
@@ -60,12 +64,16 @@ export default {
     }
   },
   created () {
-    util.http.post('/api/pat/pat_info').then(res => {
-      this.cardList = res.data
-      console.log(res.data)
-    }).catch((error) => {
-      console.log(error)
-    })
+    util.http
+      .post('/api/pat/pat_info')
+      .then(res => {
+        this.cardList = res.data.filter(item => item.visitCardNo !== '')
+        this.$store.commit('updateUserPatInfo', this.cardList)
+        console.log(res)
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 }
 </script>
