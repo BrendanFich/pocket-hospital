@@ -2,7 +2,7 @@
   <div class="sDayDoc">
     <div class="container">
       <div class="selectedInfo">
-        <span class="department">{{deptInfo.deptName}}</span>
+        <span class="department">{{$route.params.deptName}}</span>
         <span class="selectedDate">已选:{{date}}</span>
       </div>
       <week-slider
@@ -17,23 +17,23 @@
         <img class="noData" v-if="showDoctors.length === 0" src="@/assets/img/暂无数据.png" />
         <div
           class="item"
-          @click="select(item.remaining, item.name)"
+          @click="select(item.leftNum, item.doctorCode)"
           v-for="(item,index) in showDoctors"
           :key="index"
         >
           <div class="doctorInfo">
             <img slot="icon" src="@/assets/img/图层 826 拷贝 2.png" />
             <div class="textInfo">
-              <span class="name">{{item.name}}</span>
-              <span class="title">{{item.title}}</span>
+              <span class="name">{{item.doctorName}}</span>
+              <span class="title">{{item.doctorTitle}}</span>
               <br />
-              <span class="workTime" :class="{ pm: item.workTime === '下午'}">{{item.workTime}}</span>
+              <span class="workTime" :class="{ pm: item.timeFlag === '2'}" >{{item.timeFlag === '2' ? '下午' : '上午'}}</span>
             </div>
           </div>
           <div class="remaining">
-            <span :class="{over: item.remaining<=0}">剩余 {{item.remaining}}</span>
-            <span :class="{over: item.remaining<=0}" class="icon">&gt;</span>
-            <span :class="{overShow: item.remaining<=0}" class="overMsg">已约满</span>
+            <span :class="{over: item.leftNum<=0}">剩余 {{item.leftNum}}</span>
+            <span :class="{over: item.leftNum<=0}" class="icon">&gt;</span>
+            <span :class="{overShow: item.leftNum<=0}" class="overMsg">已约满</span>
           </div>
         </div>
       </div>
@@ -55,180 +55,65 @@ export default {
       date: moment(new Date()).format('YYYY-MM-DD'),
       showDoctors: [
         {
-          'deptCode': '',
-          'doctorCode': '',
-          'scheduleDate': '',
-          'timeFlag': '',
-          'hasDetailTime': '',
-          'beginTime': '',
-          'endTime': '',
-          'workStatus': '',
-          'regFee': '',
-          'totalNum': '',
-          'leftNum': ''
+          deptCode: '336',
+          doctorCode: '659',
+          doctorName: '钟志峰',
+          doctorTitle: '主治医师',
+          scheduleDate: moment(new Date()).format('YYYY-MM-DD'),
+          timeFlag: '1',
+          hasDetailTime: '',
+          beginTime: '',
+          endTime: '',
+          workStatus: '1',
+          regFee: '20',
+          totalNum: '5',
+          leftNum: '3'
         },
         {
-          'deptCode': '',
-          'doctorCode': '',
-          'scheduleDate': '',
-          'timeFlag': '',
-          'hasDetailTime': '',
-          'beginTime': '',
-          'endTime': '',
-          'workStatus': '',
-          'regFee': '',
-          'totalNum': '',
-          'leftNum': ''
+          deptCode: '336',
+          doctorCode: '726',
+          doctorName: '邢荣荣',
+          doctorTitle: '治疗师',
+          scheduleDate: moment(new Date()).format('YYYY-MM-DD'),
+          timeFlag: '2',
+          hasDetailTime: '',
+          beginTime: '',
+          endTime: '',
+          workStatus: '1',
+          regFee: '30',
+          totalNum: '4',
+          leftNum: '1'
         }
-      ],
-      changdaoDoctors: [
-        {
-          name: '杨辉1',
-          title: '主任医师',
-          workTime: '下午',
-          avatarUrl: '',
-          remaining: 10
-        },
-        {
-          name: '陈辉2',
-          title: '主任医师',
-          workTime: '下午',
-          avatarUrl: '',
-          remaining: 2
-        },
-        {
-          name: '杨辉3',
-          title: '主任医师',
-          workTime: '上午',
-          avatarUrl: '',
-          remaining: 0
-        }
-      ],
-      guDoctors: [
-        {
-          name: '张三1',
-          title: '主任医师',
-          workTime: '上午',
-          avatarUrl: '',
-          remaining: 10
-        },
-        {
-          name: '张三2',
-          title: '主任医师',
-          workTime: '下午',
-          avatarUrl: '',
-          remaining: 2
-        },
-        {
-          name: '张三3',
-          title: '主任医师',
-          workTime: '上午',
-          avatarUrl: '',
-          remaining: 0
-        }
-      ],
-      pifuDoctors: [
-        {
-          name: '李四1',
-          title: '主任医师',
-          workTime: '上午',
-          avatarUrl: '',
-          remaining: 10
-        },
-        {
-          name: '李四2',
-          title: '主任医师',
-          workTime: '下午',
-          avatarUrl: '',
-          remaining: 2
-        },
-        {
-          name: '李四3',
-          title: '主任医师',
-          workTime: '上午',
-          avatarUrl: '',
-          remaining: 0
-        }
-      ],
-      erhoubiDoctors: [
-        {
-          name: '王五1',
-          title: '主任医师',
-          workTime: '上午',
-          avatarUrl: '',
-          remaining: 10
-        },
-        {
-          name: '王五2',
-          title: '主任医师',
-          workTime: '下午',
-          avatarUrl: '',
-          remaining: 2
-        },
-        {
-          name: '王五3',
-          title: '主任医师',
-          workTime: '上午',
-          avatarUrl: '',
-          remaining: 0
-        }
-      ],
-      neifenmiDoctors: []
+      ]
     }
-  },
-  computed: {
-    // 当天医生上班列表
-    // showDoctors () {
-    //   if (this.$store.state.selectedDept === '肠道专科') return this.changdaoDoctors
-    //   if (this.$store.state.selectedDept === '骨内科') return this.guDoctors
-    //   if (this.$store.state.selectedDept === '皮肤科') return this.pifuDoctors
-    //   if (this.$store.state.selectedDept === '内分泌科') return this.neifenmiDoctors
-    //   if (this.$store.state.selectedDept === '耳鼻喉科') return this.erhoubiDoctors
-    //   return {}
-    // }
   },
   components: { weekSlider },
   methods: {
     dateClickhandler (e) {
       this.date = e
+      this.getRegSource()
       console.log(this.date)
     },
-    select (remaining, name) {
-      this.$store.commit('changeDoc', name)
-      if (remaining > 0) {
-        this.$router.push('/reserve/sTime')
+    select (leftNum, doctorCode) {
+      this.$store.commit('changeDoc', doctorCode)
+      if (leftNum > 0) {
+        this.$router.push({name: 'sTime', params: { doctorCode: '00' + doctorCode, date: this.date }})
       }
+    },
+    getRegSource () {
+      util.http
+        .post('/api/doctor/getRegSource', {deptCode: this.$route.params.deptCode, endDate: this.date}) // moment(new Date()).format('YYYY-MM-DD hh:mm:ss')
+        .then(res => {
+        // this.showDoctors = res.data.Records
+        //  console.log(res)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   },
   created () {
-    util.http
-      .post('/api/doctor/dept_info', {
-        deptCode: '00' + this.$store.state.selectedDept
-      })
-      .then(res => {
-        this.deptInfo = res.data.Records[0]
-      })
-      .catch(error => {
-        console.log(error)
-      })
-    // util.http
-    //   .post('/api/doctor/getRegSource', {deptCode: this.deptInfo.deptCode})
-    //   .then(res => {
-    //     this.showDoctors = res.data.Records
-    //     console.log(res)
-    //   })
-    //   .catch(error => {
-    //     console.log(error)
-    //   })
-    util.http
-      .post('/api/doctor/doc_info')
-      .then(res => {
-        // this.showDoctors = res.data.Records
-        console.log(res)
-      })
-      .catch(error => {
-        console.log(error)
-      })
+    this.getRegSource()
     this.$store.commit('changeDate', this.date)
   },
   watch: {
@@ -264,7 +149,6 @@ export default {
     }
     .doctorItems {
       width: 100%;
-      text-align: center;
       .noData {
         width: 366px;
         margin-top: 50px;

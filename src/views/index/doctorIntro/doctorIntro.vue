@@ -71,7 +71,7 @@ export default {
         .post('/api/doctor/dept_info')
         .then(res => {
           this.deptList = res.data.Records
-          console.log(this.deptList)
+          console.log(res.data.Records)
         })
         .catch(error => {
           console.log(error)
@@ -83,10 +83,10 @@ export default {
         console.log(deptCode)
       }
       util.http
-        .post('/api/doctor/doc_info', { deptCode })
+        .post('/api/doctor/doc_info', {deptCode: '00' + deptCode})
         .then(res => {
           this.docList = res.data.Records
-          console.log(this.docList)
+          console.log(res.data.Records)
         })
         .catch(error => {
           console.log(error)

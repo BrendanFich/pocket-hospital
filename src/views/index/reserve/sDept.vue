@@ -10,7 +10,7 @@
       <mt-tab-container v-model="selected" class="right_container">
         <mt-tab-container-item id="0">
           <!-- <img class="noData" v-if="deptList.length === 0" src="@/assets/img/暂无数据.png" /> -->
-          <div v-for="(item,index) in deptList" :key="index" @click="select(item.deptCode)">
+          <div v-for="(item,index) in deptList" :key="index" @click="select(item.deptCode, item.deptName)">
             <mt-cell :title="item.deptName">
               <img class="icon" src="@/assets/img/科室.png" />&gt;
             </mt-cell>
@@ -48,9 +48,9 @@ export default {
     setSearchStatus (data) {
       this.searching = data
     },
-    select (deptCode) {
+    select (deptCode, deptName) {
       this.$store.commit('changeDept', deptCode)
-      this.$router.push('/reserve/sDayDoc')
+      this.$router.push({name: 'sDayDoc', params: { deptCode: '00' + deptCode, deptName }})
     }
   }
 }

@@ -2,7 +2,7 @@
   <div class="customerInfoCard">
     <div>
       <img src="@/assets/img/组 27.png" />
-      <div class="textInfo">
+      <div class="textInfo" v-if="isReceivedData">
         <span class="name">{{customerInfo.patName}}</span>
         <span class="status">默认</span>
         <p class="cardNumber">诊疗卡号：{{customerInfo.visitCardNo}}</p>
@@ -15,16 +15,31 @@
 </template>
 
 <script>
+import util from '@/utils/util'
+
 export default {
   name: 'customerInfoCard',
   data () {
     return {
+      isReceivedData: false
     }
   },
   computed: {
     customerInfo () {
       return this.$store.state.patInfo.filter(item => item.visitCardNo === this.$store.state.userInfo.visitCardNo)[0]
     }
+  },
+  created () {
+    util.http
+      .post('/api/pat/pat_info')
+      .then(res => {
+        this.$store.commit('updateUserPatInfo', res.data)
+        this.isReceivedData = true
+        console.log(res)
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 }
 </script>

@@ -1,12 +1,12 @@
 <template>
   <div class="sSymptom">
     <div class="search">
-      <Searchbar placeholder="请输入您的症状"></Searchbar>
-      <div class="searchTags">
-        <span class="tag" v-for="(tag,index) in searchTags" :key="index">{{tag}}</span>
+      <Searchbar placeholder="请输入您的症状" ref='searchbar' @getSearchStatus="setSearchStatus"></Searchbar>
+      <div class="searchTags" :class="{hidden: searching}">
+        <span class="tag" v-for="(tag,index) in searchTags" :key="index" @click="clickTag(tag)">{{tag}}</span>
       </div>
     </div>
-    <mt-tab-container v-model="selected">
+    <mt-tab-container v-model="selected" :class="{hidden: searching}">
       <mt-tab-container-item v-for="(item,index) in departments" :key="index" :id="index">
         <router-link class="item" to="/guidance/gSTime">
           <ul style="background: #fff;">
@@ -44,6 +44,8 @@ export default {
   data () {
     return {
       selected: 0,
+      searching: false,
+      searchContent: '',
       searchTags: [
         '头痛',
         '消化不良',
@@ -54,6 +56,7 @@ export default {
         '消化不良',
         '月经不调'
       ],
+      // 推荐医生接口数据
       departments: [
         {
           name: '内分泌专科',
@@ -148,7 +151,16 @@ export default {
       ]
     }
   },
-  methods: {}
+  methods: {
+    setSearchStatus (data) {
+      this.searching = data
+    },
+    clickTag (tagName) {
+      this.$refs.searchbar.$emit('bridge', tagName)
+      this.searchContent = tagName
+      console.log(tagName)
+    }
+  }
 }
 </script>
 
@@ -236,6 +248,9 @@ export default {
       color: #999999;
       margin-left: 124px;
     }
+  }
+  .hidden {
+    display: none;
   }
 }
 </style>

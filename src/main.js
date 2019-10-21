@@ -12,8 +12,6 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 import store from './vuex'
 
-process.env.MOCK && require('@/mock')
-
 Vue.use(VueAwesomeSwiper)
 Vue.use(MintUI)
 

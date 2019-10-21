@@ -47,9 +47,9 @@ export default {
     return {
       date: moment(new Date()).format('YYYY-MM-DD'),
       workTimeList: [
-        { time: '09:00 - 10:00', remaining: 23 },
+        { time: '09:00 - 10:00', remaining: 3 },
         { time: '10:00 - 11:00', remaining: 0 },
-        { time: '11:00 - 12:00', remaining: 23 }
+        { time: '11:00 - 12:00', remaining: 3 }
       ]
     }
   },

@@ -4,21 +4,54 @@
     <input type="text" v-model="value" :placeholder="placeholder" @focus="focus" />
     <div class="xIcon" :class="{show: value}" @click="clear">×</div>
     <button class="cancel" :class="{show : isShow}" @click="cancel">取消</button>
-    <div class="resultList" :class="{show : isShow}"></div>
+    <div class="resultList" :class="{show : isShow}">
+      <div v-if="searchResult.doctors" class="doctors">
+        <p class="resultStyle">医生</p>
+        <div class="resultItem" v-for="(item, index) in searchResult.doctors" :key="index">
+          <img class="avatar" src="@/assets/img/图层 826 拷贝 5.png" />
+          <div class="textInfo">
+            <p class="name">{{item.name}}</p>
+            <p>{{item.department}}</p>
+            <p>{{item.title}}</p>
+          </div>
+        </div>
+      </div>
+      <div v-if="searchResult.departments" class="departments">
+        <p class="resultStyle">科室</p>
+        <div class="resultItem" v-for="(item, index) in searchResult.departments" :key="index">
+          <img class="icon" src="@/assets/img/科室.png" />
+          <p class="name">{{item.name}}</p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
 export default {
   name: 'Searchbar',
-  props: ['placeholder'],
+  props: ['placeholder', 'searchContent'],
   data () {
     return {
       value: '',
       isShow: false,
-      isEmpty: true
+      isEmpty: true,
+      searchResult: {
+        doctors: [{ name: '陈外', department: '骨科门诊', title: '主治医师' },
+          { name: '陈外', department: '骨科门诊', title: '主治医师' }],
+        departments: []
+      }
     }
   },
+  mounted () {
+    this.$on('bridge', val => {
+      this.tagSearch(val)
+    })
+  },
   methods: {
+    tagSearch (tagContent) {
+      this.value = tagContent
+      this.focus()
+    },
     focus () {
       this.isShow = true
       this.$emit('getSearchStatus', true)
@@ -68,8 +101,35 @@ export default {
     color: #09cf74;
   }
   .resultList {
+    background: #fff;
     display: none;
     min-height: calc(100vh - 128px);
+    .doctors {
+      img{
+        width: 90px;
+        height: 90px;
+        margin-right: 20px;
+      }
+    }
+    .departments {
+      img{
+        width: 20px;
+        margin: 35px 45px;
+      }
+    }
+    .resultStyle{
+      font-size: 24px;
+      padding: 20px 30px;
+      border-bottom: 1px solid #dedede;
+    }
+    .resultItem {
+      display: flex;
+      align-items: center;
+      padding: 10px 30px;
+      font-size: 20px;
+      line-height: 30px;
+      border-bottom: 1px solid #dedede;
+    }
   }
 
   .xIcon {
