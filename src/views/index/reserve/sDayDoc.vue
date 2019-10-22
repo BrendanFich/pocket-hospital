@@ -102,10 +102,10 @@ export default {
     },
     getRegSource () {
       util.http
-        .post('/api/doctor/getRegSource', {deptCode: this.$route.params.deptCode, endDate: this.date}) // moment(new Date()).format('YYYY-MM-DD hh:mm:ss')
+        .post('/api/doctor/getRegSource', {deptCode: this.$route.params.deptCode, endDate: moment(new Date()).format('YYYY-MM-DD hh:mm:ss')}) // moment(new Date()).format('YYYY-MM-DD hh:mm:ss')
         .then(res => {
         // this.showDoctors = res.data.Records
-        //  console.log(res)
+          console.log(res)
         })
         .catch(error => {
           console.log(error)
