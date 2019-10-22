@@ -47,27 +47,14 @@ export default {
       this.$indicator.open()
       util.http
         .post('/api/doctor/currentDayRegister', {
-          psOrdNum: '1',
-          deptCode: '111',
-          doctorCode: '112'
-          // scheduleDate: '',
-          // timeFlag: '',
-          // beginTime: '',
-          // endTime: '',
-          // regFee: '',
-          // patType: '',
-          // patName: '',
-          // patSex: '',
-          // patAge: '',
-          // patIdType: '',
-          // patIdNo: '',
-          // patCardType: '',
-          // patCardNo: '',
-          // patMobile: '',
-          // patAddress: '',
-          // guardName: '',
-          // guardIdType: '',
-          // guardIdNo: ''
+          deptCode: '332',
+          doctorCode: '0018',
+          scheduleDate: '2019-10-22 08:00:00',
+          timeFlag: '上午',
+          regFee: '25',
+          patName: '刘能',
+          patCardNo: '1111111',
+          hostpitalName: 'nanhai'
         })
         .then(res => {
           if (res.code === 0) {

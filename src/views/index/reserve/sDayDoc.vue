@@ -34,7 +34,7 @@
               >{{item.timeFlag === '2' ? '下午' : '上午'}}</span>
             </div>
           </div>
-          <div class="remaining">
+          <div class="leftNum">
             <span :class="{over: item.leftNum<=0}">剩余 {{item.leftNum}}</span>
             <span :class="{over: item.leftNum<=0}" class="icon">&gt;</span>
             <span :class="{overShow: item.leftNum<=0}" class="overMsg">已约满</span>
@@ -57,38 +57,6 @@ export default {
       tbSelected: '',
       deptInfo: '',
       date: moment(new Date()).format('YYYY-MM-DD'),
-      // showDoctors: [
-      //   {
-      //     deptCode: '336',
-      //     doctorCode: '659',
-      //     doctorName: '钟志峰',
-      //     doctorTitle: '主治医师',
-      //     scheduleDate: moment(new Date()).format('YYYY-MM-DD'),
-      //     timeFlag: '1',
-      //     hasDetailTime: '',
-      //     beginTime: '',
-      //     endTime: '',
-      //     workStatus: '1',
-      //     regFee: '20',
-      //     totalNum: '5',
-      //     leftNum: '3'
-      //   },
-      //   {
-      //     deptCode: '336',
-      //     doctorCode: '726',
-      //     doctorName: '邢荣荣',
-      //     doctorTitle: '治疗师',
-      //     scheduleDate: moment(new Date()).format('YYYY-MM-DD'),
-      //     timeFlag: '2',
-      //     hasDetailTime: '',
-      //     beginTime: '',
-      //     endTime: '',
-      //     workStatus: '1',
-      //     regFee: '30',
-      //     totalNum: '4',
-      //     leftNum: '1'
-      //   }
-      // ],
       showDoctors: []
     }
   },
@@ -112,10 +80,10 @@ export default {
       util.http
         .post('/api/doctor/getRegSource', {
           deptCode: this.$route.params.deptCode,
-          endDate: moment(new Date()).format('YYYY-MM-DD hh:mm:ss')
-        }) // moment(new Date()).format('YYYY-MM-DD hh:mm:ss')
+          endDate: this.date + ' 08:00:00'
+        })
         .then(res => {
-          // this.showDoctors = res.data.Records
+          this.showDoctors = res.data.Records
           console.log(res)
         })
         .catch(error => {
@@ -162,7 +130,7 @@ export default {
       width: 100%;
       .noData {
         width: 366px;
-        margin-top: 50px;
+        margin: 100px 200px;
       }
       .item {
         height: 120px;
@@ -204,7 +172,7 @@ export default {
             }
           }
         }
-        .remaining {
+        .leftNum {
           width: 185px;
           font-size: 24px;
           color: #09cf74;
