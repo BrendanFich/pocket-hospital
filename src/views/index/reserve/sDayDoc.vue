@@ -2,7 +2,8 @@
   <div class="sDayDoc">
     <div class="container">
       <div class="selectedInfo">
-        <span class="department">{{$route.params.deptName}}</span>
+        <span class="department">内科门诊</span>
+        <!-- {{$route.params.deptName}} -->
         <span class="selectedDate">已选:{{date}}</span>
       </div>
       <week-slider
@@ -27,7 +28,10 @@
               <span class="name">{{item.doctorName}}</span>
               <span class="title">{{item.doctorTitle}}</span>
               <br />
-              <span class="workTime" :class="{ pm: item.timeFlag === '2'}" >{{item.timeFlag === '2' ? '下午' : '上午'}}</span>
+              <span
+                class="workTime"
+                :class="{ pm: item.timeFlag === '2'}"
+              >{{item.timeFlag === '2' ? '下午' : '上午'}}</span>
             </div>
           </div>
           <div class="remaining">
@@ -53,38 +57,39 @@ export default {
       tbSelected: '',
       deptInfo: '',
       date: moment(new Date()).format('YYYY-MM-DD'),
-      showDoctors: [
-        {
-          deptCode: '336',
-          doctorCode: '659',
-          doctorName: '钟志峰',
-          doctorTitle: '主治医师',
-          scheduleDate: moment(new Date()).format('YYYY-MM-DD'),
-          timeFlag: '1',
-          hasDetailTime: '',
-          beginTime: '',
-          endTime: '',
-          workStatus: '1',
-          regFee: '20',
-          totalNum: '5',
-          leftNum: '3'
-        },
-        {
-          deptCode: '336',
-          doctorCode: '726',
-          doctorName: '邢荣荣',
-          doctorTitle: '治疗师',
-          scheduleDate: moment(new Date()).format('YYYY-MM-DD'),
-          timeFlag: '2',
-          hasDetailTime: '',
-          beginTime: '',
-          endTime: '',
-          workStatus: '1',
-          regFee: '30',
-          totalNum: '4',
-          leftNum: '1'
-        }
-      ]
+      // showDoctors: [
+      //   {
+      //     deptCode: '336',
+      //     doctorCode: '659',
+      //     doctorName: '钟志峰',
+      //     doctorTitle: '主治医师',
+      //     scheduleDate: moment(new Date()).format('YYYY-MM-DD'),
+      //     timeFlag: '1',
+      //     hasDetailTime: '',
+      //     beginTime: '',
+      //     endTime: '',
+      //     workStatus: '1',
+      //     regFee: '20',
+      //     totalNum: '5',
+      //     leftNum: '3'
+      //   },
+      //   {
+      //     deptCode: '336',
+      //     doctorCode: '726',
+      //     doctorName: '邢荣荣',
+      //     doctorTitle: '治疗师',
+      //     scheduleDate: moment(new Date()).format('YYYY-MM-DD'),
+      //     timeFlag: '2',
+      //     hasDetailTime: '',
+      //     beginTime: '',
+      //     endTime: '',
+      //     workStatus: '1',
+      //     regFee: '30',
+      //     totalNum: '4',
+      //     leftNum: '1'
+      //   }
+      // ],
+      showDoctors: []
     }
   },
   components: { weekSlider },
@@ -97,14 +102,20 @@ export default {
     select (leftNum, doctorCode) {
       this.$store.commit('changeDoc', doctorCode)
       if (leftNum > 0) {
-        this.$router.push({name: 'sTime', params: { doctorCode: '00' + doctorCode, date: this.date }})
+        this.$router.push({
+          name: 'sTime',
+          params: { doctorCode: '00' + doctorCode, date: this.date }
+        })
       }
     },
     getRegSource () {
       util.http
-        .post('/api/doctor/getRegSource', {deptCode: this.$route.params.deptCode, endDate: moment(new Date()).format('YYYY-MM-DD hh:mm:ss')}) // moment(new Date()).format('YYYY-MM-DD hh:mm:ss')
+        .post('/api/doctor/getRegSource', {
+          deptCode: this.$route.params.deptCode,
+          endDate: moment(new Date()).format('YYYY-MM-DD hh:mm:ss')
+        }) // moment(new Date()).format('YYYY-MM-DD hh:mm:ss')
         .then(res => {
-        // this.showDoctors = res.data.Records
+          // this.showDoctors = res.data.Records
           console.log(res)
         })
         .catch(error => {
