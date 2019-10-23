@@ -8,10 +8,13 @@ export default new Vuex.Store({
   state: {
     userInfo: {},
     patInfo: [],
-    selectedDept: '',
-    selectedDoc: '',
+    selectedDeptCode: '',
+    selectedDeptName: '',
+    selectedDocCode: '',
+    selectedDocName: '',
     selectedDate: '',
-    selectedTime: ''
+    selectedTime: '',
+    price: ''
   },
   mutations: {
     updateUserInfo (state) {
@@ -25,11 +28,16 @@ export default new Vuex.Store({
     updateUserPatInfo (state, patInfo) {
       state.patInfo = patInfo
     },
+    setPrice (state, price) {
+      state.price = price
+    },
     changeDept (state, dept) {
-      state.selectedDept = dept
+      state.selectedDeptCode = dept.deptCode
+      state.selectedDeptName = dept.deptName
     },
     changeDoc (state, doc) {
-      state.selectedDoc = doc
+      state.selectedDocCode = doc.docCode
+      state.selectedDocName = doc.docName
     },
     changeDate (state, date) {
       state.selectedDate = date

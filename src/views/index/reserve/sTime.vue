@@ -15,7 +15,7 @@
     <div class="workTime">
       <ul>
         <li v-for="(item,index) in workTimeList" :key="index">
-          <div class="itemContent" @click="select(item.leftNum, item.beginTime, item.endTime)">
+          <div class="itemContent" @click="select(item)">
             <div class="time">
               <img src="@/assets/img/时间.png" />
               <span>{{resetTimeFormat(item.beginTime, item.endTime)}}</span>
@@ -57,9 +57,10 @@ export default {
     },
     getDocInfo () {
       util.http
-        .post('/api/doctor/doc_info', {deptCode: '0173', doctorCode: this.$route.params.doctorCode})
+        .post('/api/doctor/doc_info', {deptCode: this.$store.state.selectedDeptCode, doctorCode: this.$route.params.doctorCode})
         .then(res => {
           this.docInfo = res.data.Records[0]
+          this.$store.commit('changeDoc', {docCode: this.docInfo.doctorCode, docName: this.docInfo.doctorName})
           console.log(res.data.Records)
         })
         .catch(error => {
@@ -70,7 +71,7 @@ export default {
       util.http
         .post('/api/doctor/getRegSource', {
           doctorCode: this.$route.params.doctorCode,
-          deptCode: '0173',
+          deptCode: this.$store.state.selectedDeptCode,
           endDate: this.$route.params.date + ' 08:00:00'
         })
         .then(res => {
@@ -88,10 +89,11 @@ export default {
         return '/reserve/confirm'
       }
     },
-    select (leftNum, beginTime, endTime) {
-      let time = beginTime.split(' ')[1].toString() + '-' + endTime.split(' ')[1].toString()
-      if (leftNum > 0) {
+    select (item) {
+      let time = item.beginTime.split(' ')[1].toString() + '-' + item.endTime.split(' ')[1].toString()
+      if (item.leftNum > 0) {
         this.$store.commit('changeTime', time)
+        this.$store.commit('setPrice', item.Price)
         this.$router.push('/reserve/confirm')
       }
     }

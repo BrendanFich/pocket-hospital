@@ -2,8 +2,7 @@
   <div class="sDayDoc">
     <div class="container">
       <div class="selectedInfo">
-        <span class="department">内科门诊</span>
-        <!-- {{$route.params.deptName}} -->
+        <span class="department">{{$route.params.deptName}}</span>
         <span class="selectedDate">已选:{{date}}</span>
       </div>
       <week-slider
@@ -18,7 +17,7 @@
         <img class="noData" v-if="showDoctors.length === 0" src="@/assets/img/暂无数据.png" />
         <div
           class="item"
-          @click="select(item.leftNum, item.doctorCode)"
+          @click="select(item.leftNum, item.doctorCode, item.doctorName)"
           v-for="(item,index) in showDoctors"
           :key="index"
         >
@@ -67,8 +66,8 @@ export default {
       this.getRegSource()
       console.log(this.date)
     },
-    select (leftNum, doctorCode) {
-      this.$store.commit('changeDoc', doctorCode)
+    select (leftNum, doctorCode, doctorName) {
+      this.$store.commit('changeDoc', {doctorCode, doctorName: 'ss'})
       if (leftNum > 0) {
         this.$router.push({
           name: 'sTime',

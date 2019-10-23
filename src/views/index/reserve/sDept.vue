@@ -49,7 +49,8 @@ export default {
       this.searching = data
     },
     select (deptCode, deptName) {
-      this.$store.commit('changeDept', deptCode)
+      // this.$store.commit('changeDept', deptCode, deptName)
+      this.$store.commit('changeDept', { deptCode: '0173', deptName: '内科门诊' })
       this.$router.push({name: 'sDayDoc', params: { deptCode: '0173', deptName: '内科门诊' }})
     }
   }
