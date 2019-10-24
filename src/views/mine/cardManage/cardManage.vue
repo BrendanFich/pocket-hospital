@@ -67,7 +67,9 @@ export default {
     util.http
       .post('/api/pat/pat_info')
       .then(res => {
-        this.cardList = res.data.filter(item => item.visitCardNo !== '')
+        console.log('----------获取患者信息-----------')
+        console.log(res)
+        this.cardList = res.data.filter(item => item.visitCardNo !== '') // 从已建档中筛选以绑卡的
         // this.cardList = res.data
         this.$store.commit('updateUserPatInfo', this.cardList)
         console.log(res.data)

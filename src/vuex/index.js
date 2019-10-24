@@ -21,8 +21,9 @@ export default new Vuex.Store({
   mutations: {
     updateUserInfo (state) {
       util.http.post('/api/user/user_info').then(res => {
-        state.userInfo = res.data
+        console.log('-----------获取用户信息-----------')
         console.log(res)
+        state.userInfo = res.data
       }).catch((error) => {
         console.log(error)
       })
