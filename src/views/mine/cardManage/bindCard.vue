@@ -106,7 +106,7 @@ export default {
       const className = 'toast'
       const p = /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
       let reqData = {
-        patientId: 1007033245,
+        patientId: 1007033276, // 0000000 陈就
         cardType: this.cardType,
         patCardNo: this.cardNum,
         patName: this.name,

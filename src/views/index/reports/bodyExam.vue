@@ -1,4 +1,5 @@
 <template>
+  <!-- 检验报告 -->
   <div class="bodyExam">
     <mt-cell class="cell" is-link>
       <div slot="title" class="content">
@@ -21,10 +22,35 @@
 </template>
 
 <script>
+import util from '@/utils/util'
+
 export default {
   name: 'bodyExam',
   data () {
-    return {}
+    return {
+      lisList: []
+    }
+  },
+  created () {
+    this.getLisList()
+  },
+  methods: {
+    getLisList () {
+      util.http
+        .post('/api/report/getLisList', {
+          patCardType: '',
+          patCardNo: '',
+          beginDate: '',
+          endDate: ''
+        })
+        .then(res => {
+          console.log(res)
+          this.lisList = res.data
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
   }
 }
 </script>

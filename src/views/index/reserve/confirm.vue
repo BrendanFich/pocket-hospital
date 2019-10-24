@@ -50,11 +50,12 @@ export default {
           psOrdNum: '123',
           deptCode: this.$store.state.selectedDeptCode,
           doctorCode: this.$store.state.selectedDocCode.toString(),
-          scheduleDate: this.$store.state.selectedDate + ' 08:00:00',
+          scheduleDate: this.$store.state.selectedDate,
           timeFlag: '1',
           regFee: this.$store.state.price.toString(),
           patName: this.$store.state.userInfo.patName,
           patCardNo: this.$store.state.userInfo.visitCardNo,
+          // beginTime: this.
           hostpitalName: '南海',
           patCardType: '1'
         })

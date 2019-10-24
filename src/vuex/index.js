@@ -14,6 +14,8 @@ export default new Vuex.Store({
     selectedDocName: '',
     selectedDate: '',
     selectedTime: '',
+    beginTime: '',
+    endTime: '',
     price: ''
   },
   mutations: {
@@ -44,6 +46,12 @@ export default new Vuex.Store({
     },
     changeTime (state, time) {
       state.selectedTime = time
+    },
+    changeBeginTime (state, beginTime) {
+      state.beginTime = beginTime
+    },
+    changeEndTime (state, endTime) {
+      state.endTime = endTime
     }
   }
 })

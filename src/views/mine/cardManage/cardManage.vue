@@ -68,8 +68,9 @@ export default {
       .post('/api/pat/pat_info')
       .then(res => {
         this.cardList = res.data.filter(item => item.visitCardNo !== '')
+        // this.cardList = res.data
         this.$store.commit('updateUserPatInfo', this.cardList)
-        console.log(res)
+        console.log(res.data)
       })
       .catch(error => {
         console.log(error)

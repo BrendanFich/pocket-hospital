@@ -5,9 +5,20 @@
 </template>
 
 <script>
+import util from './utils/util'
+import wx from 'weixin-js-sdk'
 export default {
   name: 'App',
+  data () {
+    return {
+      timestamp: '',
+      nonceStr: '',
+      signature: ''
+    }
+  },
   created () {
+    console.log(location.href.split('#')[0])
+    this.getSign()
     // 用户登录，将用户信息存至store
     if (this.getUrlParam('token')) {
       window.localStorage.setItem('token', this.getUrlParam('token'))
@@ -35,6 +46,32 @@ export default {
     window.addEventListener('beforeunload', () => {
       sessionStorage.setItem('store', JSON.stringify(this.$store.state))
     })
+  },
+  methods: {
+    getSign () {
+      util.http
+        .post('/api/user/vx_sign', { url: location.href.split('#')[0] })
+        .then(res => {
+          console.log(res)
+          wx.config({
+            debug: true,
+            appId: 'wxd8de5e3e19b318ee',
+            timestamp: res.data.timestamp,
+            nonceStr: res.data.nonceStr,
+            signature: res.data.signtrue,
+            jsApiList: ['openLocation']
+          })
+          wx.ready(function () {
+            console.log('OK')
+          })
+          wx.error(function (res) {
+            console.log(res)
+          })
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
   }
 }
 </script>

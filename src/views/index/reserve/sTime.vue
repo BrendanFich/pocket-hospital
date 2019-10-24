@@ -72,7 +72,7 @@ export default {
         .post('/api/doctor/getRegSource', {
           doctorCode: this.$route.params.doctorCode,
           deptCode: this.$store.state.selectedDeptCode,
-          endDate: this.$route.params.date + ' 08:00:00'
+          endDate: this.$route.params.date
         })
         .then(res => {
           this.workTimeList = res.data.Records
@@ -90,9 +90,20 @@ export default {
       }
     },
     select (item) {
-      let time = item.beginTime.split(' ')[1].toString() + '-' + item.endTime.split(' ')[1].toString()
+      console.log(item.beginTime)
+      console.log(item.endTime)
+      let beginTime = item.beginTime.split(' ')[1].toString().split(':')
+      beginTime.pop()
+      let endTime = item.endTime.split(' ')[1].toString().split(':')
+      endTime.pop()
+      console.log('beginTime:' + beginTime.join(':'))
+      console.log('endTime:' + endTime.join(':'))
+      let time = beginTime + '-' + endTime
+      console.log(time)
       if (item.leftNum > 0) {
         this.$store.commit('changeTime', time)
+        this.$store.commit('changeBeginTime', beginTime.join('::'))
+        this.$store.commit('changeEndTime', endTime.join('::'))
         this.$store.commit('setPrice', item.Price)
         this.$router.push('/reserve/confirm')
       }

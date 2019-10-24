@@ -24,7 +24,7 @@
           <div class="doctorInfo">
             <img slot="icon" src="@/assets/img/图层 826 拷贝 2.png" />
             <div class="textInfo">
-              <span class="name">{{item.doctorName}}</span>
+              <span class="name">{{item.Doctor}}</span>
               <span class="title">{{item.doctorTitle}}</span>
               <br />
               <span
@@ -67,11 +67,12 @@ export default {
       console.log(this.date)
     },
     select (leftNum, doctorCode, doctorName) {
-      this.$store.commit('changeDoc', {doctorCode, doctorName: 'ss'})
+      // this.$store.commit('changeDoc', {doctorCode, doctorName: 'ss'})
       if (leftNum > 0) {
         this.$router.push({
           name: 'sTime',
           params: { doctorCode: '00' + doctorCode, date: this.date }
+          // params: { doctorCode: '020', date: this.date }
         })
       }
     },
@@ -79,11 +80,11 @@ export default {
       util.http
         .post('/api/doctor/getRegSource', {
           deptCode: this.$route.params.deptCode,
-          endDate: this.date + ' 08:00:00'
+          endDate: this.date
         })
         .then(res => {
-          this.showDoctors = res.data.Records
           console.log(res)
+          this.showDoctors = res.data.Records
         })
         .catch(error => {
           console.log(error)
