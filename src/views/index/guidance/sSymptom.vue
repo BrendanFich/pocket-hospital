@@ -38,6 +38,8 @@
 
 <script>
 import Searchbar from '@/components/Searchbar'
+// import util from '@/utils/util'
+
 export default {
   name: 'sSymptom',
   components: { Searchbar },
@@ -151,6 +153,17 @@ export default {
       ]
     }
   },
+  // created () {
+  //   util.http
+  //     .post('/api/doctor/doc_guidance', { describe: '风湿骨痛' })
+  //     .then(res => {
+  //       // this.deptList = res.data.Records
+  //       console.log(res.data)
+  //     })
+  //     .catch(error => {
+  //       console.log(error)
+  //     })
+  // },
   methods: {
     setSearchStatus (data) {
       this.searching = data

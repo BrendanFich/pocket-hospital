@@ -17,7 +17,7 @@ export default {
     }
   },
   created () {
-    console.log(location.href.split('#')[0])
+    // 获取微信SDK配置签名
     this.getSign()
     // 用户登录，将用户信息存至store
     if (this.getUrlParam('token')) {
@@ -54,18 +54,12 @@ export default {
         .then(res => {
           console.log(res)
           wx.config({
-            debug: true,
+            debug: false,
             appId: 'wxd8de5e3e19b318ee',
             timestamp: res.data.timestamp,
             nonceStr: res.data.nonceStr,
             signature: res.data.signtrue,
             jsApiList: ['openLocation']
-          })
-          wx.ready(function () {
-            console.log('OK')
-          })
-          wx.error(function (res) {
-            console.log(res)
           })
         })
         .catch(error => {

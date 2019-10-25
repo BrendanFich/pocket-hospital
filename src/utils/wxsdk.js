@@ -1,23 +1,25 @@
 // wx-js-sdk授权
-// import util from './util.js'
+import util from './util.js'
+import wx from 'weixin-js-sdk'
 
 // 获取jssdk需要的签名等参数
 export default {
   initConfig: (reqUrl, callback) => {
-    // 等接口
-    // util.http.post('/api/wx/get/sign', {
-    //   reqUrl
-    // }).then((resp) => {
-    //   if (resp.errno === 0) {
-    //     const { signature, appId, nonceStr, timestamp } = resp.data
-    //     wx.config({
-    //       signature, appId, nonceStr, timestamp, debug: false, jsApiList: ['chooseWXPay', 'chooseImage', 'onMenuShareTimeline', 'onMenuShareAppMessage', 'getLocalImgData', 'updateAppMessageShareData']
-    //     })
-    //     if (callback) {
-    //       callback()
-    //     }
-    //   }
-    // })
+    util.http.post('/api/user/vx_sign', {
+      reqUrl
+    }).then((res) => {
+      if (res.code === 0) {
+        const { nonceStr, timestamp } = res.data
+        const signature = res.data.signtrue // 字段拼写有误
+        const appId = 'wxd8de5e3e19b318ee'
+        wx.config({
+          signature, appId, nonceStr, timestamp, debug: true, jsApiList: ['getLocation']
+        })
+        if (callback) {
+          callback()
+        }
+      }
+    })
   },
   setShare: (openId) => {
   // wx报错 后续完善功能

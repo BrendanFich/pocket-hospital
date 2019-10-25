@@ -85,12 +85,13 @@ export default {
             .then(res => {
               this.$indicator.close()
               if (res.code === 0) {
-                this.$toast({ message: '操作成功', duration, className })
-                this.$router.push({ path: '/mine/cardManage' })
+                this.$toast({ message: '建档成功，请继续完成绑卡操作', duration, className })
+                this.$router.push({ name: 'bindCard', params: {patName: this.name, patIdNo: this.IDNum, patientId: res.data.Records[0].PatientId} })
               } else {
-                console.log(res)
+                this.$toast({ message: res.msg, duration, className })
               }
               console.log(res)
+              console.log(res.data.Records[0])
             })
         } else {
           this.$toast({ message: '身份证号有误', duration, className })

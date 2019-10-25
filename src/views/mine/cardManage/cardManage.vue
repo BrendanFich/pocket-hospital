@@ -23,7 +23,7 @@
       <span class="isLink" v-else>></span>
     </router-link>
     <ul class="orderList">
-      <li @click="linkTo('/mine/cardManage/bindCard')">
+      <li @click="linkTo('/mine/cardManage/bindCard/','bindCard')">
         <div>
           <img src="@/assets/img/绑定.png" />
           <span class="title">绑定就诊卡</span>
@@ -33,7 +33,7 @@
       <li @click="linkTo('/mine/cardManage/buildCard')">
         <div>
           <img src="@/assets/img/新建.png" />
-          <span class="title">初诊建卡</span>
+          <span class="title">初诊建档</span>
         </div>
         <span class="linkIcon">></span>
       </li>
@@ -59,8 +59,12 @@ export default {
     }
   },
   methods: {
-    linkTo (url) {
-      this.$router.push(url)
+    linkTo (url, name) {
+      if (name === undefined) {
+        this.$router.push(url)
+      } else {
+        this.$router.push({name})
+      }
     }
   },
   created () {

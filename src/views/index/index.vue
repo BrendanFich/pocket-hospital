@@ -1,7 +1,7 @@
 <template>
   <div class="index">
     <div class="slogan">
-      <img src="@/assets/img/图层 1.png" @click="test" />
+      <img src="@/assets/img/图层 1.png" />
     </div>
     <div class="navs1">
       <router-link class="nav1" to="/reserve">
@@ -73,10 +73,14 @@
           <img src="@/assets/img/意见.png" />
           <h3>意见提交</h3>
         </router-link>
-        <router-link class="item" to="/index">
+        <!-- <router-link class="item" to="/index">
           <img src="@/assets/img/导航.png" />
           <h3>来院导航</h3>
-        </router-link>
+        </router-link>-->
+        <div class="item" to="/index" @click="getLocation">
+          <img src="@/assets/img/导航.png" />
+          <h3>来院导航</h3>
+        </div>
       </div>
     </div>
     <Tabbar></Tabbar>
@@ -85,17 +89,26 @@
 
 <script>
 import Tabbar from '@/components/Tabbar'
+import wx from 'weixin-js-sdk'
+import localtion from '@/config'
+
 export default {
   name: 'index',
   data () {
     return {}
   },
   components: { Tabbar },
-  created () {
-  },
+  created () {},
   methods: {
-    test () {
-
+    getLocation () {
+      console.log('click')
+      wx.openLocation({
+        latitude: localtion.latitude,
+        longitude: localtion.longitude,
+        name: localtion.hospitalName,
+        address: '测试地址',
+        scale: 18
+      })
     }
   }
 }

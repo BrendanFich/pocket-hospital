@@ -7,11 +7,32 @@
 
 <script>
 import CustomerInfoCard from '@/components/CustomerInfoCard'
+import wx from 'weixin-js-sdk'
+import localtion from '@/config'
 export default {
   name: 'cConfirm',
   components: { CustomerInfoCard },
   data () {
-    return {}
+    return {
+      latitude: null,
+      longitude: null
+    }
+  },
+  computed: {
+    isArrived () {
+      return (localtion.longitude - 0.0005) < this.longitude && (localtion.longitude + 0.0005) > this.longitude &&
+      (localtion.latitude - 0.001) < this.latitude && (localtion.latitude + 0.001) > this.latitude
+    }
+  },
+  created () {
+    wx.getLocation({
+      type: 'gcj02', // 返回可以用于wx.openLocation的经纬度
+      success (res) {
+        this.latitude = res.latitude
+        this.longitude = res.longitude
+        alert(res.latitude, res.longitude)
+      }
+    })
   },
   methods: {
     confirm () {
@@ -23,9 +44,13 @@ export default {
         <p>就诊医生：杨辉</p>
       </div>
       `
-      this.$messagebox.confirm(text).then(action => {
-        this.$router.push('/checkIn/cQueue')
-      })
+      if (this.isArrived) {
+        this.$messagebox.confirm(text).then(action => {
+          this.$router.push('/checkIn/cQueue')
+        })
+      } else {
+        alert('还未到达医院')
+      }
     }
   }
 }
