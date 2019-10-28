@@ -15,10 +15,10 @@
                 <div class="left">
                   <img class="avatar" src="@/assets/img/图层 826 拷贝 5.png" />
                   <div>
-                    <p class="doctorName">{{doctor.name}}</p>
-                    <p class="doctorTitle">{{item.name}} {{doctor.title}}</p>
+                    <p class="doctorName">{{item.doctName}}</p>
+                    <p class="doctorTitle">{{item.doctTitle}}</p>
                     <div class="star">
-                      <img v-for="n in doctor.star" :key="n" src="@/assets/img/星星 拷贝 8.png" />
+                      <img v-for="n in 5" :key="n" src="@/assets/img/星星 拷贝 8.png" />
                     </div>
                   </div>
                 </div>
@@ -153,17 +153,17 @@ export default {
       ]
     }
   },
-  // created () {
-  //   util.http
-  //     .post('/api/doctor/doc_guidance', { describe: '风湿骨痛' })
-  //     .then(res => {
-  //       // this.deptList = res.data.Records
-  //       console.log(res.data)
-  //     })
-  //     .catch(error => {
-  //       console.log(error)
-  //     })
-  // },
+  created () {
+    // util.http
+    //   .post('/api/doctor/doctor_recommend')
+    //   .then(res => {
+    //     this.docRecommend = res.data.Records
+    //     console.log(res.data)
+    //   })
+    //   .catch(error => {
+    //     console.log(error)
+    //   })
+  },
   methods: {
     setSearchStatus (data) {
       this.searching = data

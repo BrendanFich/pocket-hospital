@@ -18,11 +18,29 @@ export default {
   },
   created () {
     // 获取微信SDK配置签名
-    this.getSign()
+    let wxSign = window.localStorage.getItem('wxSign')
+
+    if (wxSign) {
+      wx.config({
+        debug: false,
+        appId: 'wxd8de5e3e19b318ee',
+        timestamp: wxSign.split('&')[0],
+        nonceStr: wxSign.split('&')[1],
+        signature: wxSign.split('&')[2],
+        jsApiList: ['openLocation']
+      })
+      wx.error(function (res) {
+        console.log('--------------sdk获取返回--------------')
+        console.log(res)
+        // 如果过期，再重新获取
+        // if(res===) {
+        //  this.getSign()
+        // }
+      })
+    } else {
+      this.getSign()
+    }
     // 用户登录，将用户信息存至store
-    // if (this.getUrlParam('token')) {
-    //   window.localStorage.setItem('token', this.getUrlParam('token'))
-    // }
     this.$store.commit('updateUserInfo')
 
     window.addEventListener('pageshow', function (e) {
@@ -53,6 +71,7 @@ export default {
         .post('/api/user/vx_sign', { url: location.href.split('#')[0] })
         .then(res => {
           console.log(res)
+          window.localStorage.setItem('wxSign', [res.data.timestamp, res.data.nonceStr, res.data.signtrue].join('&'))
           wx.config({
             debug: false,
             appId: 'wxd8de5e3e19b318ee',

@@ -55,6 +55,11 @@ export default {
       docList: []
     }
   },
+  computed: {
+    // showDocList() {
+    //   return this.docList.slice()
+    // }
+  },
   created () {
     vm = this
     this.getDeptList()
@@ -68,10 +73,9 @@ export default {
     },
     getDeptList () {
       util.http
-        .post('/api/doctor/dept_info')
+        .post('/api/doctor/allDeptInfo')
         .then(res => {
-          this.deptList = res.data.Records
-          console.log(res.data.Records)
+          this.deptList = res.data.Records.slice(0, 20)
         })
         .catch(error => {
           console.log(error)

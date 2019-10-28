@@ -5,7 +5,7 @@
     <div class="xIcon" :class="{show: value}" @click="clear">×</div>
     <button class="cancel" :class="{show : isShow}" @click="cancel">取消</button>
     <div class="resultList" :class="{show : isShow}">
-      <div v-if="searchResult.doctors" class="doctors">
+      <div v-if="searchResult" class="doctors">
         <p class="resultStyle">医生</p>
         <div class="resultItem" v-for="(item, index) in searchResult.doctors" :key="index">
           <img class="avatar" src="@/assets/img/图层 826 拷贝 5.png" />
@@ -16,7 +16,7 @@
           </div>
         </div>
       </div>
-      <div v-if="searchResult.departments" class="departments">
+      <div v-if="searchResult" class="departments">
         <p class="resultStyle">科室</p>
         <div class="resultItem" v-for="(item, index) in searchResult.departments" :key="index">
           <img class="icon" src="@/assets/img/科室.png" />
@@ -29,17 +29,17 @@
 <script>
 export default {
   name: 'Searchbar',
-  props: ['placeholder', 'searchContent'],
+  props: ['placeholder', 'searchResult'],
   data () {
     return {
       value: '',
       isShow: false,
-      isEmpty: true,
-      searchResult: {
-        doctors: [{ name: '陈外', department: '骨科门诊', title: '主治医师' },
-          { name: '陈外', department: '骨科门诊', title: '主治医师' }],
-        departments: []
-      }
+      isEmpty: true
+      // searchResult: {
+      //   doctors: [{ name: '陈外', department: '骨科门诊', title: '主治医师' },
+      //     { name: '陈外', department: '骨科门诊', title: '主治医师' }],
+      //   departments: []
+      // }
     }
   },
   mounted () {
@@ -63,6 +63,11 @@ export default {
     },
     clear () {
       this.value = ''
+    }
+  },
+  watch: {
+    value () {
+      this.$emit('changeValue', this.value)
     }
   }
 }
