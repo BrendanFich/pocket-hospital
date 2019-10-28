@@ -20,9 +20,9 @@ export default {
     // 获取微信SDK配置签名
     this.getSign()
     // 用户登录，将用户信息存至store
-    if (this.getUrlParam('token')) {
-      window.localStorage.setItem('token', this.getUrlParam('token'))
-    }
+    // if (this.getUrlParam('token')) {
+    //   window.localStorage.setItem('token', this.getUrlParam('token'))
+    // }
     this.$store.commit('updateUserInfo')
 
     window.addEventListener('pageshow', function (e) {

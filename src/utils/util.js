@@ -23,6 +23,19 @@ http.ajax.interceptors.request.use(config => {
 }, error => {
   return Promise.reject(error)
 })
+http.ajax.interceptors.response.use(res => {
+  // token过期时
+  // if (res.code === 500) {
+  //   localStorage.removeItem('token')
+  //   window.location.href = 'http://localhost:8080'
+  // }
+  return res
+}, err => {
+  // 对响应错误做些什么
+  console.log('err', err.response) // 修改后
+  return Promise.reject(err)
+})
+
 http.post = function (url, data) {
   return new Promise((resolve, reject) => {
     http.ajax.post(BaseUrl + url, data).then((res) => {

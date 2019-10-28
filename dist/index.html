@@ -1,14 +1,22 @@
 <!DOCTYPE html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no"><title>掌上医院</title><link rel=stylesheet href=/static/css/reset.css><script>const token = getUrlParam("token")
-    if (!token) {
+    const localStorageToken = window.localStorage.getItem("token")
+    if (token) {
+      window.localStorage.setItem('token', this.getUrlParam('token'))
+    }
+    if(!localStorageToken){
       const appid = "wxd8de5e3e19b318ee"
       const url = encodeURIComponent('http://qlyt.vicp.net:8197/api/user/vx_login')
-      window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+ appid +'&redirect_uri='+ url +'&response_type=code&scope=snsapi_base&state=STATE&connect_redirect=1#wechat_redirect'
+      window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+ appid +'&redirect_uri='+ url +'&response_type=code&scope=snsapi_userinfo&state=STATE&connect_redirect=1#wechat_redirect'
     }
-
+    // if (!token) {
+    //   const appid = "wxd8de5e3e19b318ee"
+    //   const url = encodeURIComponent('http://qlyt.vicp.net:8197/api/user/vx_login')
+    //   window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid='+ appid +'&redirect_uri='+ url +'&response_type=code&scope=snsapi_base&state=STATE&connect_redirect=1#wechat_redirect'
+    // }
     // 获取url中参数
     function getUrlParam(name) {
       var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
       var r = window.location.search.substr(1).match(reg);
       if (r != null) return decodeURI(r[2]);
       return null;
-    }</script><link href=./static/css/app.2258b85835e0b935f7b3a01df765431d.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript src=./static/js/manifest.3ad1d5771e9b13dbdad2.js></script><script type=text/javascript src=./static/js/vendor.dbf7cb577709f53962c6.js></script><script type=text/javascript src=./static/js/app.479b941cb3ac466b0cc3.js></script></body></html>
+    }</script><link href=./static/css/app.e30ba45b0e3352c693c2967c9711e502.css rel=stylesheet></head><body><div id=app></div><script type=text/javascript src=./static/js/manifest.3ad1d5771e9b13dbdad2.js></script><script type=text/javascript src=./static/js/vendor.dbf7cb577709f53962c6.js></script><script type=text/javascript src=./static/js/app.99c0df8a94faa1326e5a.js></script></body></html>

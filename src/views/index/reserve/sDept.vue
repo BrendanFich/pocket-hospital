@@ -37,7 +37,7 @@ export default {
     }
   },
   created () {
-    util.http.post('/api/doctor/dept_info').then(res => {
+    util.http.post('/api/doctor/allDeptInfo').then(res => {
       this.deptList = res.data.Records
       console.log(res.data)
     }).catch((error) => {
