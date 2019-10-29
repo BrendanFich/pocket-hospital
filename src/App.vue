@@ -19,7 +19,7 @@ export default {
   created () {
     // 获取微信SDK配置签名
     let wxSign = window.localStorage.getItem('wxSign')
-
+    let _this = this
     if (wxSign) {
       wx.config({
         debug: false,
@@ -30,12 +30,11 @@ export default {
         jsApiList: ['openLocation']
       })
       wx.error(function (res) {
-        console.log('--------------sdk获取返回--------------')
-        console.log(res)
-        // 如果过期，再重新获取
-        // if(res===) {
-        //  this.getSign()
-        // }
+        console.log('--------------签名过期获取新签名--------------')
+        // 如果签名过期，再重新获取
+        if (res.errMsg.includes('63002')) {
+          _this.getSign()
+        }
       })
     } else {
       this.getSign()

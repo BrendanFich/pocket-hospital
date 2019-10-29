@@ -2,83 +2,56 @@
   <div class="iSDept">
     <Searchbar placeholder="搜索科室或医生" @getSearchStatus="setSearchStatus"></Searchbar>
     <div class="content" :class="{hidden: searching}">
+
       <mt-navbar v-model="selected" class="left_navbar">
-        <mt-tab-item :id="index" v-for="(item,index) in searchData" :key="index">{{item.block}}</mt-tab-item>
+        <mt-tab-item id='0'>全院科室</mt-tab-item>
       </mt-navbar>
+
       <mt-tab-container v-model="selected" class="right_container">
-        <mt-tab-container-item :id="index" v-for="(item,index) in searchData" :key="index">
-          <img class="noData" v-if="!item.division" src="@/assets/img/暂无数据.png" />
-          <router-link
-            :to="{
-          name: 'selectDoc',
-          params:{
-            dname: ditem.name
-          }}"
-            v-for="(ditem,dindex) in item.division"
-            :key="dindex"
-          >
-            <mt-cell :title="ditem.name">
+        <mt-tab-container-item id="0">
+          <!-- <img class="noData" v-if="deptList.length === 0" src="@/assets/img/暂无数据.png" /> -->
+          <div v-for="(item,index) in deptList" :key="index" @click="select(item.deptCode, item.deptName)">
+            <mt-cell :title="item.deptName">
               <img class="icon" src="@/assets/img/科室.png" />&gt;
             </mt-cell>
-          </router-link>
+          </div>
         </mt-tab-container-item>
       </mt-tab-container>
+
     </div>
   </div>
 </template>
 
 <script>
 import Searchbar from '@/components/Searchbar'
+import util from '@/utils/util'
+
 export default {
   name: 'iSDept',
   components: { Searchbar },
   data () {
     return {
-      selected: 0,
+      selected: '0',
       searching: false,
-      fakeData: [
-        {
-          block: '南海院区',
-          division: [
-            { name: '内分泌科', id: '001' },
-            { name: '骨内科', id: '002' },
-            { name: '肠道专科', id: '003' }
-          ]
-        },
-        {
-          block: '西院区',
-          division: [
-            { name: '皮肤科', id: '004' },
-            { name: '耳鼻喉科', id: '005' }
-          ]
-        }
-      ]
+      deptList: []
     }
   },
-  computed: {
-    searchData () {
-      let searchContent = this.searchContent
-      let $this = this
-      if (searchContent) {
-        return this.fakeData.map((item, index) => {
-          return {
-            block: item.block,
-            division: item.division.filter(ditem => {
-              if (ditem.name.includes(searchContent)) {
-                $this.selected = index
-                return ditem
-              }
-            })
-          }
-        })
-      }
-      $this.selected = 0
-      return this.fakeData
-    }
+  created () {
+    util.http.post('/api/doctor/allDeptInfo').then(res => {
+      this.deptList = res.data.Records
+      console.log(res.data)
+    }).catch((error) => {
+      console.log(error)
+    })
   },
   methods: {
     setSearchStatus (data) {
       this.searching = data
+    },
+    select (deptCode, deptName) {
+      // this.$store.commit('changeDept', deptCode, deptName)
+      // this.$store.commit('changeDept', { deptCode: '0173', deptName: '内科门诊' })
+      this.$router.push({name: 'selectDoc', params: { deptCode: '0173', deptName: '内科门诊' }})
     }
   }
 }
@@ -120,7 +93,6 @@ export default {
     .right_container {
       width: 589px;
       background: #fff;
-      text-align: center;
       .noData {
         width: 366px;
         margin-top: 50px;
@@ -145,7 +117,7 @@ export default {
       }
     }
   }
-  .hidden{
+  .hidden {
     display: none;
   }
 }
