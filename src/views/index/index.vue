@@ -33,7 +33,7 @@
           </div>
           <img src="@/assets/img/组 27(2).png" />
         </router-link>
-        <router-link class="nav2" to="/index">
+        <router-link class="nav2" to="/inHosp/nav">
           <div>
             <h2>住院服务</h2>
             <p>住院手续一条龙服务</p>
@@ -73,10 +73,6 @@
           <img src="@/assets/img/意见.png" />
           <h3>意见提交</h3>
         </router-link>
-        <!-- <router-link class="item" to="/index">
-          <img src="@/assets/img/导航.png" />
-          <h3>来院导航</h3>
-        </router-link>-->
         <div class="item" to="/index" @click="getLocation">
           <img src="@/assets/img/导航.png" />
           <h3>来院导航</h3>

@@ -56,14 +56,97 @@ export default {
       tbSelected: '',
       deptInfo: '',
       date: moment(new Date()).format('YYYY-MM-DD'),
-      showDoctors: []
+      doctors: [
+        // {
+        //   ChargeItemId: 244807,
+        //   Doctor: '侯发明',
+        //   Price: 110,
+        //   beginTime: '2019-10-29 14:30:00',
+        //   deptCode: 173,
+        //   doctorCode: 28,
+        //   endTime: '2019-10-29 14:59:59',
+        //   hasDetailTime: 0,
+        //   leftNum: 1,
+        //   scheduleDate: '2019-10-29 00:00:00',
+        //   timeFlag: '下午班',
+        //   totalNum: 1,
+        //   workStatus: '出诊'
+        // },
+        // {
+        //   ChargeItemId: 244807,
+        //   Doctor: '侯发明',
+        //   Price: 110,
+        //   beginTime: '2019-10-30 14:30:00',
+        //   deptCode: 173,
+        //   doctorCode: 28,
+        //   endTime: '2019-10-30 14:59:59',
+        //   hasDetailTime: 0,
+        //   leftNum: 2,
+        //   scheduleDate: '2019-10-30 00:00:00',
+        //   timeFlag: '下午班',
+        //   totalNum: 1,
+        //   workStatus: '出诊'
+        // },
+        // {
+        //   ChargeItemId: 244807,
+        //   Doctor: '侯发明',
+        //   Price: 110,
+        //   beginTime: '2019-10-31 14:30:00',
+        //   deptCode: 173,
+        //   doctorCode: 28,
+        //   endTime: '2019-10-31 14:59:59',
+        //   hasDetailTime: 0,
+        //   leftNum: 3,
+        //   scheduleDate: '2019-10-31 00:00:00',
+        //   timeFlag: '下午班',
+        //   totalNum: 1,
+        //   workStatus: '出诊'
+        // },
+        // {
+        //   ChargeItemId: 244807,
+        //   Doctor: '侯发明',
+        //   Price: 110,
+        //   beginTime: '2019-11-01 14:30:00',
+        //   deptCode: 173,
+        //   doctorCode: 28,
+        //   endTime: '2019-11-01 14:59:59',
+        //   hasDetailTime: 0,
+        //   leftNum: 4,
+        //   scheduleDate: '2019-11-01 00:00:00',
+        //   timeFlag: '下午班',
+        //   totalNum: 1,
+        //   workStatus: '出诊'
+        // },
+        // {
+        //   ChargeItemId: 244807,
+        //   Doctor: '侯发明',
+        //   Price: 110,
+        //   beginTime: '2019-11-02 14:30:00',
+        //   deptCode: 173,
+        //   doctorCode: 28,
+        //   endTime: '2019-11-02 14:59:59',
+        //   hasDetailTime: 0,
+        //   leftNum: 5,
+        //   scheduleDate: '2019-11-02 00:00:00',
+        //   timeFlag: '下午班',
+        //   totalNum: 1,
+        //   workStatus: '出诊'
+        // }
+      ]
+    }
+  },
+  computed: {
+    showDoctors () {
+      return this.doctors.filter((item) => {
+        return item.scheduleDate.indexOf(this.date) !== -1
+      })
     }
   },
   components: { weekSlider },
   methods: {
     dateClickhandler (e) {
       this.date = e
-      this.getRegSource()
+      // this.getRegSource()
       console.log(this.date)
     },
     select (leftNum, doctorCode, doctorName) {
@@ -71,7 +154,7 @@ export default {
       if (leftNum > 0) {
         this.$router.push({
           name: 'sTime',
-          params: { doctorCode: '00' + doctorCode, date: this.date }
+          params: { doctorCode: doctorCode, date: this.date }
           // params: { doctorCode: '020', date: this.date }
         })
       }
@@ -79,12 +162,12 @@ export default {
     getRegSource () {
       util.http
         .post('/api/doctor/getRegSource', {
-          deptCode: this.$route.params.deptCode,
-          endDate: this.date
+          deptCode: this.$route.params.deptCode
+          // endDate: this.date 加日期接口无响应
         })
         .then(res => {
           console.log(res)
-          this.showDoctors = res.data.Records
+          this.doctors = res.data.Records
         })
         .catch(error => {
           console.log(error)

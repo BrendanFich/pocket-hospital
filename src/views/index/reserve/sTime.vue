@@ -102,8 +102,8 @@ export default {
       console.log(time)
       if (item.leftNum > 0) {
         this.$store.commit('changeTime', time)
-        this.$store.commit('changeBeginTime', beginTime.join('::'))
-        this.$store.commit('changeEndTime', endTime.join('::'))
+        this.$store.commit('changeBeginTime', beginTime.join(':'))
+        this.$store.commit('changeEndTime', endTime.join(':'))
         this.$store.commit('setPrice', item.Price)
         this.$router.push('/reserve/confirm')
       }

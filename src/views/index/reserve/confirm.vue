@@ -21,7 +21,7 @@
         </li>
         <li>
           <span class="key">时间段</span>
-          <span class="value">{{$store.state.selectedTime}}</span>
+          <span class="value">{{$store.state.beginTime+ '-' + $store.state.endTime}}</span>
         </li>
         <li>
           <span class="key">诊查费</span>
@@ -44,24 +44,28 @@ export default {
   },
   methods: {
     confirm () {
+      let configdata = {
+        psOrdNum: '123',
+        deptCode: this.$store.state.selectedDeptCode,
+        // deptCode: '173',
+        doctorCode: '0' + (this.$store.state.selectedDocCode + 2).toString(), // 比实际医生code多2
+        scheduleDate: this.$store.state.selectedDate,
+        timeFlag: '1',
+        regFee: this.$store.state.price.toString(),
+        patName: this.$store.state.userInfo.patName,
+        patCardNo: this.$store.state.userInfo.visitCardNo,
+        beginTime: this.$store.state.beginTime,
+        endTime: this.$store.state.endTime,
+        hostpitalName: '南海',
+        patCardType: '1'
+      }
+      console.log(configdata)
       this.$indicator.open()
       util.http
-        .post('/api/doctor/currentDayRegister', {
-          psOrdNum: '123',
-          deptCode: this.$store.state.selectedDeptCode,
-          doctorCode: this.$store.state.selectedDocCode.toString(),
-          scheduleDate: this.$store.state.selectedDate,
-          timeFlag: '1',
-          regFee: this.$store.state.price.toString(),
-          patName: this.$store.state.userInfo.patName,
-          patCardNo: this.$store.state.userInfo.visitCardNo,
-          // beginTime: this.
-          hostpitalName: '南海',
-          patCardType: '1'
-        })
+        .post('/api/doctor/currentDayRegister', configdata)
         .then(res => {
           console.log(res)
-          if (res.code === 0 && res.data.Records !== null) {
+          if (res.code === 0 && res.data.Code === '0') {
             this.$indicator.close()
             this.$toast({
               message: '提交成功',

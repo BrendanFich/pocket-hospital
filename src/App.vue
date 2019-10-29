@@ -16,56 +16,57 @@ export default {
       signature: ''
     }
   },
-  created () {
-    // 获取微信SDK配置签名
-    let wxSign = window.localStorage.getItem('wxSign')
-    let _this = this
-    if (wxSign) {
-      wx.config({
-        debug: false,
-        appId: 'wxd8de5e3e19b318ee',
-        timestamp: wxSign.split('&')[0],
-        nonceStr: wxSign.split('&')[1],
-        signature: wxSign.split('&')[2],
-        jsApiList: ['openLocation']
-      })
-      wx.error(function (res) {
-        console.log('--------------签名过期获取新签名--------------')
-        // 如果签名过期，再重新获取
-        if (res.errMsg.includes('63002')) {
-          _this.getSign()
-        }
-      })
-    } else {
-      this.getSign()
-    }
-    // 用户登录，将用户信息存至store
-    this.$store.commit('updateUserInfo')
+  // created () {
+  //   // 获取微信SDK配置签名
+  //   let wxSign = window.localStorage.getItem('wxSign')
+  //   let _this = this
+  //   if (wxSign) {
+  //     wx.config({
+  //       debug: false,
+  //       appId: 'wxd8de5e3e19b318ee',
+  //       timestamp: wxSign.split('&')[0],
+  //       nonceStr: wxSign.split('&')[1],
+  //       signature: wxSign.split('&')[2],
+  //       jsApiList: ['openLocation']
+  //     })
+  //     wx.error(function (res) {
+  //       console.log('--------------签名过期获取新签名--------------')
+  //       // 如果签名过期，再重新获取
+  //       if (res.errMsg.includes('63002')) {
+  //         _this.getSign()
+  //       }
+  //     })
+  //   } else {
+  //     this.getSign()
+  //   }
+  //   // 用户登录，将用户信息存至store
+  //   this.$store.commit('updateUserInfo')
 
-    window.addEventListener('pageshow', function (e) {
-      // 通过persisted属性判断是否存在 BF Cache
-      if (/iPhone|mac|iPod|iPad/i.test(navigator.userAgent) && e.persisted) {
-        location.reload()
-      }
-    })
-    // 在页面加载时读取sessionStorage里的状态信息
-    if (sessionStorage.getItem('store')) {
-      this.$store.replaceState(
-        Object.assign(
-          {},
-          this.$store.state,
-          JSON.parse(sessionStorage.getItem('store'))
-        )
-      )
-    }
+  //   window.addEventListener('pageshow', function (e) {
+  //     // 通过persisted属性判断是否存在 BF Cache
+  //     if (/iPhone|mac|iPod|iPad/i.test(navigator.userAgent) && e.persisted) {
+  //       location.reload()
+  //     }
+  //   })
+  //   // 在页面加载时读取sessionStorage里的状态信息
+  //   if (sessionStorage.getItem('store')) {
+  //     this.$store.replaceState(
+  //       Object.assign(
+  //         {},
+  //         this.$store.state,
+  //         JSON.parse(sessionStorage.getItem('store'))
+  //       )
+  //     )
+  //   }
 
-    // 在页面刷新时将vuex里的信息保存到sessionStorage里
-    window.addEventListener('beforeunload', () => {
-      sessionStorage.setItem('store', JSON.stringify(this.$store.state))
-    })
-  },
+  //   // 在页面刷新时将vuex里的信息保存到sessionStorage里
+  //   window.addEventListener('beforeunload', () => {
+  //     sessionStorage.setItem('store', JSON.stringify(this.$store.state))
+  //   })
+  // },
   methods: {
     getSign () {
+      console.log(require('./config').appId)
       util.http
         .post('/api/user/vx_sign', { url: location.href.split('#')[0] })
         .then(res => {
@@ -73,7 +74,7 @@ export default {
           window.localStorage.setItem('wxSign', [res.data.timestamp, res.data.nonceStr, res.data.signtrue].join('&'))
           wx.config({
             debug: false,
-            appId: 'wxd8de5e3e19b318ee',
+            appId: require('./config').appId,
             timestamp: res.data.timestamp,
             nonceStr: res.data.nonceStr,
             signature: res.data.signtrue,

@@ -16,6 +16,14 @@ import gSTime from '@/views/index/guidance/gSTime'
 import checkIn from '@/views/index/checkIn/checkIn'
 import cQueue from '@/views/index/checkIn/cQueue'
 import cConfirm from '@/views/index/checkIn/cConfirm'
+import inHosp from '@/views/index/inHosp/inHosp'
+import nav from '@/views/index/inHosp/nav'
+import dailyList from '@/views/index/inHosp/dailyList'
+import inHospReg1 from '@/views/index/inHosp/inHospReg1'
+import inHospReg2 from '@/views/index/inHosp/inHospReg2'
+import outCount from '@/views/index/inHosp/outCount'
+import balance from '@/views/index/inHosp/balance'
+
 import hospitalInfo from '@/views/index/hospitalInfo/hospitalInfo'
 import doctorIntro from '@/views/index/doctorIntro/doctorIntro'
 import reports from '@/views/index/reports/reports'
@@ -78,6 +86,19 @@ export default new Router({
       children: [
         { path: 'cConfirm', component: cConfirm },
         { path: 'cQueue', component: cQueue }
+      ]
+    },
+    {
+      path: '/inHosp',
+      redirect: '/inHosp/nav',
+      component: inHosp,
+      children: [
+        { path: 'nav', component: nav },
+        { path: 'inHospReg1', component: inHospReg1 },
+        { path: 'inHospReg2', component: inHospReg2 },
+        { path: 'dailyList', component: dailyList },
+        { path: 'outCount', component: outCount },
+        { path: 'balance', component: balance }
       ]
     },
     { path: '/hospitalInfo', component: hospitalInfo },

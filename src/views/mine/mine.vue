@@ -9,7 +9,7 @@
         </div>
         <span class="linkIcon">></span>
       </li>
-      <li>
+      <li @click="linkTo('/payOnline')">
         <div>
           <img src="@/assets/img/缴费.png" />
           <span class="title">缴费订单</span>
@@ -30,7 +30,7 @@
         </div>
         <span class="linkIcon">></span>
       </li>
-      <li>
+      <li @click="linkTo('/iHospital/review')">
         <div>
           <img src="@/assets/img/我 的.png" />
           <span class="title">我的就诊</span>
@@ -39,11 +39,11 @@
       </li>
     </ul>
     <div class="others">
-      <div class="item">
+      <div class="item" @click="linkTo('/reports')">
         <img src="@/assets/img/组 28.png" alt />
         <span>我的报告</span>
       </div>
-      <div class="item">
+      <div class="item" @click="linkTo('/suggestion')">
         <img src="@/assets/img/组 28(1).png" alt />
         <span>就医反馈</span>
       </div>

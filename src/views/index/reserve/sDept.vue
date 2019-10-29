@@ -50,8 +50,8 @@ export default {
     },
     select (deptCode, deptName) {
       // this.$store.commit('changeDept', deptCode, deptName)
-      this.$store.commit('changeDept', { deptCode: '0173', deptName: '内科门诊' })
-      this.$router.push({name: 'sDayDoc', params: { deptCode: '0173', deptName: '内科门诊' }})
+      this.$store.commit('changeDept', { deptCode: '173', deptName: '内科门诊' })
+      this.$router.push({name: 'sDayDoc', params: { deptCode: '173', deptName: '内科门诊' }})
     }
   }
 }
