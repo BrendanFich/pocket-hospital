@@ -18,9 +18,12 @@ export default {
     }
   },
   created () {
-    // this.getWxLoginInfo()
+    // 获取appid，redirect_url等授权地址所需字段
+    this.getWxLoginInfo()
     // 获取微信SDK配置签名
     let wxSign = window.localStorage.getItem('wxSign')
+    console.log('------存在ls中的wxsign8888-----')
+    console.log(wxSign)
     let _this = this
     if (wxSign) {
       wx.config({
@@ -72,15 +75,19 @@ export default {
   methods: {
     getWxLoginInfo () {
       util.http
-        .post('/api/user/vx_perpare')
+        .post('/api/user/vx_perpare', {
+          getMode: 'authorize'
+        })
         .then(res => {
-          console.console.log('======/api/user/vx_perpare=======')
+          console.log('======/api/user/vx_perpare=======')
           console.log(res)
           this.wxLoginInfo = res.data
-          // const token = this.getUrlParam('token')
-          // if (!token) {
-          //   window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + this.wxLoginInfo.appid + '&redirect_uri=' + this.wxLoginInfo.redirect_uri + '&response_type=' + this.wxLoginInfo.response_type + '&scope=' + this.wxLoginInfo.scope + '&state=' + this.wxLoginInfo.state + this.wxLoginInfo.wechat_redirect
-          // }
+          const token = this.getUrlParam('token')
+          if (token) {
+            window.localStorage.setItem('token', token)
+          } else {
+            window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + res.data.appid + '&redirect_uri=' + res.data.redirect_uri + '&response_type=' + res.data.response_type + '&scope=' + res.data.scope + '&state=' + res.data.state + res.data.wechat_redirect
+          }
         })
         .catch(error => {
           console.log(error)

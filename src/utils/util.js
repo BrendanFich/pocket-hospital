@@ -15,10 +15,10 @@ http.ajax.interceptors.request.use(config => {
 // 响应拦截，判断token是否过期，过期则跳转，重新获取
 http.ajax.interceptors.response.use(res => {
   // token过期时
-  // if (res.code !== 0) {
-  //   localStorage.removeItem('token')
-  //   window.location.href = 'http://localhost:8080'
-  // }
+  if (res.code === 500 && res.msg === '无有效token,请重新授权') {
+    localStorage.removeItem('token')
+    window.location.href = 'http://localhost:8080'
+  }
   return res
 }, err => {
   // 对响应错误做些什么
