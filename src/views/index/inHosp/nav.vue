@@ -10,7 +10,7 @@
             <div class="navIntro">进行入院资料登记</div>
           </div>
         </li>
-        <li @click="linkTo('/inHosp/balance')">
+        <li @click="linkTo('/inHosp/prePay')">
           <img src="@/assets/img/住院缴费.png" alt class="icon" />
           <div class="navInfo">
             <div class="navName">预交金缴纳</div>
@@ -31,7 +31,7 @@
             <div class="navIntro">总清单查询</div>
           </div>
         </li>
-        <li>
+        <li @click="linkTo('/inHosp/outCount')">
           <img src="@/assets/img/出院结算.png" alt class="icon" />
           <div class="navInfo">
             <div class="navName">出院结算</div>

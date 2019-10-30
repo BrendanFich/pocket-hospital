@@ -23,6 +23,8 @@ import inHospReg1 from '@/views/index/inHosp/inHospReg1'
 import inHospReg2 from '@/views/index/inHosp/inHospReg2'
 import outCount from '@/views/index/inHosp/outCount'
 import balance from '@/views/index/inHosp/balance'
+import prePay from '@/views/index/inHosp/prePay'
+import feeTotal from '@/views/index/inHosp/feeTotal'
 
 import hospitalInfo from '@/views/index/hospitalInfo/hospitalInfo'
 import doctorIntro from '@/views/index/doctorIntro/doctorIntro'
@@ -98,7 +100,10 @@ export default new Router({
         { path: 'inHospReg2', component: inHospReg2 },
         { path: 'dailyList', component: dailyList },
         { path: 'outCount', component: outCount },
-        { path: 'balance', component: balance }
+        { path: 'balance', component: balance },
+        { path: 'feeTotal', component: feeTotal },
+        { path: 'prePay', component: prePay }
+
       ]
     },
     { path: '/hospitalInfo', component: hospitalInfo },
