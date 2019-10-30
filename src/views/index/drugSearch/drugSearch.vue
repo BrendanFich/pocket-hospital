@@ -18,7 +18,7 @@
           <div slot="icon" class="fakePicture"></div>
           <div slot="title" class="content">
             <div>药品名称：{{item.MedicineName}}</div>
-            <div>药品规格：{{item.Model}}</div>
+            <div>药品规格：{{item.Model}}/{{item.Unit}}</div>
             <div>药品价格：{{item.Price}}元</div>
           </div>
         </mt-cell>
@@ -34,9 +34,9 @@
     >
       <div slot="icon" class="fakePicture"></div>
       <div slot="title" class="content">
-        <div>药品名称：{{item.name}}</div>
-        <div>药品规格：{{item.size}}</div>
-        <div>药品价格：{{item.price}}元</div>
+        <div>药品名称：{{item.MedicineName}}</div>
+        <div>药品规格：{{item.Model}}/{{item.Unit}}</div>
+        <div>药品价格：{{item.Price}}元</div>
       </div>
     </mt-cell>
   </div>
@@ -55,9 +55,9 @@ export default {
       timer: null,
       searchResult: [],
       drugList: [
-        { name: '牛黄解毒片', size: '100片/瓶', price: 30 },
-        { name: '复方阿胶浆', size: '20ml/瓶', price: 30 },
-        { name: '阿司匹林片', size: '100片/瓶', price: 30 }
+        { MedicineName: '柴胡注射液', Model: '2ml*10', Price: 1, Unit: '盒' },
+        { MedicineName: '红花注射液', Model: '5ml*10', Price: 109.66, Unit: '盒' },
+        { MedicineName: '血塞通粉针', Model: '0.2g', Price: 25.39, Unit: '瓶' }
       ]
 
     }

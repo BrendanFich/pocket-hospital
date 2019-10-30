@@ -1,12 +1,45 @@
 <template>
   <div class="sSymptom">
     <div class="search">
-      <Searchbar placeholder="请输入您的症状" ref='searchbar' @getSearchStatus="setSearchStatus"></Searchbar>
-      <div class="searchTags" :class="{hidden: searching}">
-        <span class="tag" v-for="(tag,index) in searchTags" :key="index" @click="clickTag(tag)">{{tag}}</span>
+      <!-- <Searchbar placeholder="请输入您的症状" ref='searchbar' @getSearchStatus="setSearchStatus"></Searchbar> -->
+      <div class="searchbar">
+        <img class="cancelIcon" src="@/assets/img/搜索.png" alt />
+        <input type="text" v-model="value" placeholder="请输入您的症状" @focus="focus" />
+        <div class="xIcon" :class="{show: value}" @click="clear">×</div>
+        <button class="cancel" :class="{show : isShow}" @click="cancel">取消</button>
+        <div class="resultList" :class="{show : isShow}">
+          <div class="doctorIntroCard" v-for="(item,index) in searchResult" :key="index">
+            <div class="baseInfo">
+              <div class="left">
+                <img class="avatar" src="@/assets/img/图层 826 拷贝 5.png" />
+                <div>
+                  <p class="doctorName">{{item.doctorName}}</p>
+                  <p class="doctorTitle">{{item.deptName}} {{item.doctorTitle}}</p>
+                  <div class="star">
+                    <img v-for="n in item.score" :key="n" src="@/assets/img/星星 拷贝 8.png" />
+                  </div>
+                </div>
+              </div>
+              <div class="right price">
+                <img src="@/assets/img/沟通.png" />
+                <!-- <span>{{item.price}}元</span> -->
+              </div>
+            </div>
+            <p class="textIntro">{{item.doctorIntrodution}}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="searchTags" :class="{hidden: isShow}">
+        <span
+          class="tag"
+          v-for="(tag,index) in searchTags"
+          :key="index"
+          @click="clickTag(tag)"
+        >{{tag}}</span>
       </div>
     </div>
-    <mt-tab-container v-model="selected" :class="{hidden: searching}">
+    <mt-tab-container v-model="selected" :class="{hidden: isShow}">
       <mt-tab-container-item v-for="(item,index) in departments" :key="index" :id="index">
         <router-link class="item" to="/guidance/gSTime">
           <ul style="background: #fff;">
@@ -15,8 +48,8 @@
                 <div class="left">
                   <img class="avatar" src="@/assets/img/图层 826 拷贝 5.png" />
                   <div>
-                    <p class="doctorName">{{item.doctName}}</p>
-                    <p class="doctorTitle">{{item.doctTitle}}</p>
+                    <p class="doctorName">{{doctor.name}}</p>
+                    <p class="doctorTitle">{{item.name}} {{doctor.title}}</p>
                     <div class="star">
                       <img v-for="n in 5" :key="n" src="@/assets/img/星星 拷贝 8.png" />
                     </div>
@@ -38,15 +71,17 @@
 
 <script>
 import Searchbar from '@/components/Searchbar'
-// import util from '@/utils/util'
+import util from '@/utils/util'
 
 export default {
   name: 'sSymptom',
   components: { Searchbar },
   data () {
     return {
+      value: '',
+      timer: null,
+      isShow: false,
       selected: 0,
-      searching: false,
       searchContent: '',
       searchTags: [
         '头痛',
@@ -58,16 +93,15 @@ export default {
         '消化不良',
         '月经不调'
       ],
-      // 推荐医生接口数据
+      docRecommend: [],
+      searchResult: [],
       departments: [
         {
-          name: '内分泌专科',
-          bgcolor: '#E3B461',
-
           doctors: [
             {
               avatarUrl: '',
               name: '杨辉',
+              deptName: '内分泌专科',
               title: '主任医师',
               star: 5,
               price: 20,
@@ -153,25 +187,49 @@ export default {
       ]
     }
   },
-  created () {
-    // util.http
-    //   .post('/api/doctor/doctor_recommend')
-    //   .then(res => {
-    //     this.docRecommend = res.data.Records
-    //     console.log(res.data)
-    //   })
-    //   .catch(error => {
-    //     console.log(error)
-    //   })
-  },
+  created () {},
   methods: {
-    setSearchStatus (data) {
-      this.searching = data
+    focus () {
+      this.isShow = true
+    },
+    cancel () {
+      this.value = ''
+      this.isShow = false
+    },
+    clear () {
+      this.value = ''
+    },
+    getSearchResult () {
+      util.http
+        .post('/api/doctor/intelligent_guidance', { describe: this.value })
+        .then(res => {
+          console.log(res)
+          this.searchResult = res.data.Records
+        })
+        .catch(error => {
+          console.log(error)
+        })
     },
     clickTag (tagName) {
       this.$refs.searchbar.$emit('bridge', tagName)
       this.searchContent = tagName
       console.log(tagName)
+    }
+  },
+  watch: {
+    value () {
+      // 函数防抖
+      if (this.timer) {
+        clearTimeout(this.timer)
+      }
+      this.timer = setTimeout(() => {
+        // 搜索内容为空时，不发请求
+        if (this.value) {
+          this.searchResult = []
+          this.getSearchResult()
+        }
+        this.timer = null
+      }, 1000)
     }
   }
 }
@@ -181,6 +239,74 @@ export default {
 .sSymptom {
   background: #f2f2f2;
   height: 100vh;
+  .searchbar {
+    width: 750px;
+    position: relative;
+    input {
+      margin: 30px 25px;
+      border-radius: 10px;
+      padding: 20px 70px;
+      width: 560px;
+      border: none;
+      outline: none;
+      font-size: 24px;
+    }
+    .cancelIcon {
+      width: 16px;
+      position: absolute;
+      top: 55px;
+      left: 65px;
+    }
+    .cancel {
+      display: none;
+      position: absolute;
+      top: 30px;
+      right: 50px;
+      font-size: 24px;
+      border: none;
+      background: #fff;
+      outline: none;
+      height: 68px;
+      margin-left: -10px;
+      color: #09cf74;
+    }
+    .resultList {
+      background: #fff;
+      display: none;
+      min-height: calc(100vh - 128px);
+      .resultStyle {
+        font-size: 24px;
+        padding: 20px 30px;
+        border-bottom: 1px solid #dedede;
+      }
+      .resultItem {
+        display: flex;
+        align-items: center;
+        padding: 10px 30px;
+        font-size: 20px;
+        line-height: 30px;
+        border-bottom: 1px solid #dedede;
+      }
+    }
+
+    .xIcon {
+      display: none;
+      position: absolute;
+      top: 50px;
+      right: 130px;
+      font-size: 25px;
+      background: #f6f6f6;
+      border-radius: 50%;
+      width: 30px;
+      height: 25px;
+      text-align: center;
+      padding-bottom: 5px;
+      color: #333;
+    }
+    .show {
+      display: block;
+    }
+  }
   .search {
     background: #fff;
     display: flex;

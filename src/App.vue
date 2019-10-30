@@ -19,34 +19,34 @@ export default {
   },
   created () {
     // 获取appid，redirect_url等授权地址所需字段
-    this.getWxLoginInfo()
+    // this.getWxLoginInfo()
     // 获取微信SDK配置签名
-    let wxSign = window.localStorage.getItem('wxSign')
-    console.log('------存在ls中的wxsign8888-----')
-    console.log(wxSign)
-    let _this = this
-    if (wxSign) {
-      wx.config({
-        debug: false,
-        appId: 'wxd8de5e3e19b318ee',
-        timestamp: wxSign.split('&')[0],
-        nonceStr: wxSign.split('&')[1],
-        signature: wxSign.split('&')[2],
-        jsApiList: ['openLocation']
-      })
-      wx.error(function (res) {
-        // 如果签名过期，再重新获取
-        if (res.errMsg.includes('63002')) {
-          console.log('--------------签名过期获取新签名--------------')
-          if (_this.count < 5) {
-            _this.getSign()
-            _this.count++
-          }
-        }
-      })
-    } else {
-      this.getSign()
-    }
+    // let wxSign = window.localStorage.getItem('wxSign')
+    // console.log('------存在ls中的wxsign8888-----')
+    // console.log(wxSign)
+    // let _this = this
+    // if (wxSign) {
+    //   wx.config({
+    //     debug: false,
+    //     appId: 'wxd8de5e3e19b318ee',
+    //     timestamp: wxSign.split('&')[0],
+    //     nonceStr: wxSign.split('&')[1],
+    //     signature: wxSign.split('&')[2],
+    //     jsApiList: ['openLocation']
+    //   })
+    //   wx.error(function (res) {
+    //     // 如果签名过期，再重新获取
+    //     if (res.errMsg.includes('63002')) {
+    //       console.log('--------------签名过期获取新签名--------------')
+    //       if (_this.count < 5) {
+    //         _this.getSign()
+    //         _this.count++
+    //       }
+    //     }
+    //   })
+    // } else {
+    //   this.getSign()
+    // }
     // 用户登录，将用户信息存至store
     this.$store.commit('updateUserInfo')
 
