@@ -7,6 +7,7 @@
 <script>
 import util from './utils/util'
 import wx from 'weixin-js-sdk'
+import config from './config'
 export default {
   name: 'App',
   data () {
@@ -18,17 +19,15 @@ export default {
     }
   },
   created () {
-    // 获取appid，redirect_url等授权地址所需字段
-    this.getWxLoginInfo()
+    // 微信授权
+    this.wxAuth()
     // 获取微信SDK配置签名
     let wxSign = window.localStorage.getItem('wxSign')
-    console.log('------存在ls中的wxsign8888-----')
-    console.log(wxSign)
     let _this = this
     if (wxSign) {
       wx.config({
         debug: true,
-        appId: 'wxd8de5e3e19b318ee',
+        appId: config.appId,
         timestamp: wxSign.split('&')[0],
         nonceStr: wxSign.split('&')[1],
         signature: wxSign.split('&')[2],
@@ -50,12 +49,12 @@ export default {
     // 用户登录，将用户信息存至store
     this.$store.commit('updateUserInfo')
 
-    window.addEventListener('pageshow', function (e) {
-      // 通过persisted属性判断是否存在 BF Cache
-      if (/iPhone|mac|iPod|iPad/i.test(navigator.userAgent) && e.persisted) {
-        location.reload()
-      }
-    })
+    // window.addEventListener('pageshow', function (e) {
+    //   // 通过persisted属性判断是否存在 BF Cache
+    //   if (/iPhone|mac|iPod|iPad/i.test(navigator.userAgent) && e.persisted) {
+    //     location.reload()
+    //   }
+    // })
     // 在页面加载时读取sessionStorage里的状态信息
     if (sessionStorage.getItem('store')) {
       this.$store.replaceState(
@@ -66,32 +65,29 @@ export default {
         )
       )
     }
-
     // 在页面刷新时将vuex里的信息保存到sessionStorage里
     window.addEventListener('beforeunload', () => {
       sessionStorage.setItem('store', JSON.stringify(this.$store.state))
     })
   },
   methods: {
-    getWxLoginInfo () {
-      util.http
-        .post('/api/user/vx_perpare', {
-          getMode: 'authorize'
-        })
-        .then(res => {
-          console.log('======/api/user/vx_perpare=======')
-          console.log(res)
-          this.wxLoginInfo = res.data
-          const token = this.getUrlParam('token')
-          if (token) {
-            window.localStorage.setItem('token', token)
-          } else {
+    wxAuth () {
+      // 先获取appid，redirect_url等授权地址所需字段,然后跳转至授权地址
+      const token = this.getUrlParam('token')
+      if (!token) {
+        util.http
+          .post('/api/user/vx_perpare', {
+            getMode: 'authorize'
+          })
+          .then(res => {
+            console.log('======/api/user/vx_perpare=======')
+            console.log(res)
             window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + res.data.appid + '&redirect_uri=' + res.data.redirect_uri + '&response_type=' + res.data.response_type + '&scope=' + res.data.scope + '&state=' + res.data.state + res.data.wechat_redirect
-          }
-        })
-        .catch(error => {
-          console.log(error)
-        })
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      }
     },
     getSign () {
       util.http
@@ -104,7 +100,7 @@ export default {
           )
           wx.config({
             debug: true,
-            appId: 'wxd8de5e3e19b318ee',
+            appId: config.appId,
             timestamp: res.data.timestamp,
             nonceStr: res.data.nonceStr,
             signature: res.data.signtrue,
