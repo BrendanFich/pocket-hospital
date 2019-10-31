@@ -1,7 +1,7 @@
 <template>
   <div class="inHospReg2">
     <div @click="showOption(0)" class="selectItem">
-      <mt-field label="身份类型" v-model="cardStyle" :disableClear="true" :readonly="true"></mt-field>
+      <mt-field label="身份类型" v-model="identityStyle" :disableClear="true" :readonly="true"></mt-field>
       <div class="isLink">></div>
     </div>
     <div @click="showOption(1)" class="selectItem">
@@ -9,12 +9,12 @@
       <div class="isLink">></div>
     </div>
     <mt-field label="姓名" placeholder="请输入姓名" v-model="name" :disableClear="true"></mt-field>
-    <div @click="showOption(0)" class="selectItem">
+    <div @click="showOption(2)" class="selectItem">
       <mt-field label="性别" placeholder="请选择性别" v-model="sex" :disableClear="true" :readonly="true"></mt-field>
       <div class="isLink">></div>
     </div>
 
-    <div @click="showOption(1)" class="selectItem">
+    <div @click="showOption(3)" class="selectItem">
       <mt-field label="证件类型" v-model="paperwork" :disableClear="true" :readonly="true"></mt-field>
       <div class="isLink">></div>
     </div>
@@ -28,7 +28,7 @@
     ></mt-field>
     <mt-field label="国家" placeholder="请输入国家" type="string" v-model="country" :disableClear="true"></mt-field>
 
-    <div @click="showOption(1)" class="selectItem">
+    <div @click="showOption(4)" class="selectItem">
       <mt-field
         label="婚姻状态"
         placeholder="请选择婚姻状态"
@@ -55,93 +55,114 @@
     ></mt-field>
 
     <mt-button type="primary" class="btn" @click.native="submit">提交信息</mt-button>
-    <mt-actionsheet :actions="actions1" v-model="sheet1Visible" cancelText></mt-actionsheet>
-    <mt-actionsheet :actions="actions2" v-model="sheet2Visible" cancelText></mt-actionsheet>
-    <div id="qrcode"></div>
+    <mt-actionsheet :actions="actions0" v-model="sheet0Visible"></mt-actionsheet>
+    <mt-actionsheet :actions="actions1" v-model="sheet1Visible"></mt-actionsheet>
+    <mt-actionsheet :actions="actions2" v-model="sheet2Visible"></mt-actionsheet>
+    <mt-actionsheet :actions="actions3" v-model="sheet3Visible"></mt-actionsheet>
+    <mt-actionsheet :actions="actions4" v-model="sheet4Visible"></mt-actionsheet>
   </div>
 </template>
 
 <script>
+import util from '@/utils/util'
 export default {
   components: {},
   data () {
     return {
+      sheet0Visible: false,
       sheet1Visible: false,
       sheet2Visible: false,
-      cardStyle: '诊疗卡',
+      sheet3Visible: false,
+      sheet4Visible: false,
+      identityStyle: '',
       payStyle: '',
-      paperwork: '二代身份证',
-      cardNum: '',
-      idNum: '',
       name: '',
       sex: '',
+      paperwork: '',
+      idNum: '',
       phoneNum: '',
       country: '',
       maritalStatus: '',
       nation: '',
       birthPlace: '',
       registration: '',
+      actions0: [
+        { name: '类型1', method: this.sIdentityType },
+        { name: '类型2', method: this.sIdentityType }
+      ],
       actions1: [
-        { name: '诊疗卡', method: this.sCardStyle0 },
-        { name: '医保卡', method: this.sCardStyle1 }
+        { name: '支付宝', method: this.sPayStyle },
+        { name: '微信', method: this.sPayStyle }
       ],
       actions2: [
-        { name: '二代身份证', method: this.sPaperwork0 },
-        { name: '港澳居民身份证', method: this.sPaperwork1 },
-        { name: '台湾居民身份证', method: this.sPaperwork2 },
-        { name: '护照', method: this.sPaperwork3 }
+        { name: '男', method: this.sSex },
+        { name: '女', method: this.sSex }
+      ],
+      actions3: [
+        { name: '二代身份证', method: this.sPaperwork },
+        { name: '港澳居民身份证', method: this.sPaperwork },
+        { name: '台湾居民身份证', method: this.sPaperwork },
+        { name: '护照', method: this.sPaperwork }
+      ],
+      actions4: [
+        { name: '未婚', method: this.sMaritalStatus },
+        { name: '已婚', method: this.sMaritalStatus },
+        { name: '丧偶', method: this.sMaritalStatus },
+        { name: '离婚', method: this.sMaritalStatus }
       ]
     }
   },
   computed: {
-    cardType () {
-      return this.cardStyle === '诊疗卡' ? '1' : '2'
-    },
-    patIdType () {
-      if (this.paperwork === this.actions2[0].name) {
-        return '1'
-      }
-      if (this.paperwork === this.actions2[1].name) {
-        return '2'
-      }
-      if (this.paperwork === this.actions2[2].name) {
-        return '3'
-      }
-      if (this.paperwork === this.actions2[3].name) {
-        return '4'
-      }
-    }
   },
   watch: {},
   methods: {
     showOption (index) {
-      if (index === 0) {
-        this.sheet1Visible = true
+      switch (index) {
+        case 0:
+          this.sheet0Visible = true
+          break
+        case 1:
+          this.sheet1Visible = true
+          break
+        case 2:
+          this.sheet2Visible = true
+          break
+        case 3:
+          this.sheet3Visible = true
+          break
+        case 4:
+          this.sheet4Visible = true
       }
-      if (index === 1) {
-        this.sheet2Visible = true
-      }
     },
-    sCardStyle0 () {
-      this.cardStyle = this.actions1[0].name
+    sIdentityType (e) {
+      console.log(e)
+      this.identityStyle = e.name
     },
-    sCardStyle1 () {
-      this.cardStyle = this.actions1[1].name
+    sPayStyle (e) {
+      this.payStyle = e.name
     },
-    sPaperwork0 () {
-      this.paperwork = this.actions2[0].name
+    sSex (e) {
+      this.sex = e.name
     },
-    sPaperwork1 () {
-      this.paperwork = this.actions2[1].name
+    sPaperwork (e) {
+      this.paperwork = e.name
     },
-    sPaperwork2 () {
-      this.paperwork = this.actions2[2].name
-    },
-    sPaperwork3 () {
-      this.paperwork = this.actions2[3].name
+    sMaritalStatus (e) {
+      this.maritalStatus = e.name
     },
     submit () {
-
+      // if(this.paperwork && this.payStyle && this.name && )
+      this.register()
+    },
+    register () {
+      util.http
+        .post('/api/invisit/Register')
+        .then(res => {
+          console.log(res)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   },
   created () {
@@ -194,6 +215,11 @@ export default {
     background: #09cf74;
     color: #fff;
     font-size: 26px;
+  }
+  /deep/ .mint-actionsheet-listitem,/deep/ .mint-actionsheet-button {
+    height: 80px;
+    font-size: 30px;
+    line-height: 80px;
   }
 }
 </style>

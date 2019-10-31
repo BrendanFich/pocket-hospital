@@ -13,8 +13,8 @@
       <div class="isLink">></div>
     </div>
     <mt-field label="证件号码" placeholder="请输入证件号码" type="string" v-model="idNum" :disableClear="true"></mt-field>
-    <mt-actionsheet :actions="actions1" v-model="sheet1Visible" cancelText></mt-actionsheet>
-    <mt-actionsheet :actions="actions2" v-model="sheet2Visible" cancelText></mt-actionsheet>
+    <mt-actionsheet :actions="actions1" v-model="sheet1Visible"></mt-actionsheet>
+    <mt-actionsheet :actions="actions2" v-model="sheet2Visible"></mt-actionsheet>
     <div class="attention">
       <h2>注意事项</h2>
       <p>
@@ -201,7 +201,7 @@ export default {
       right: 66px;
     }
   }
-  /deep/ .mint-actionsheet-listitem {
+  /deep/ .mint-actionsheet-listitem,/deep/ .mint-actionsheet-button {
     height: 80px;
     font-size: 30px;
     line-height: 80px;

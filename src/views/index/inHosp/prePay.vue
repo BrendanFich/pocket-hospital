@@ -1,6 +1,10 @@
 <template>
   <div class='prePay'>
-    prePay
+    <h1>就诊卡管理</h1>
+    <CustomerInfoCard></CustomerInfoCard>
+    <h1>下单日期：2019-10-20 20:30:00</h1>
+    <h1>下单日期：2019-10-20 20:30:00</h1>
+
   </div>
 </template>
 

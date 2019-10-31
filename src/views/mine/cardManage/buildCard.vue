@@ -16,7 +16,7 @@
     ></mt-field>
     <mt-field label="联系地址" placeholder="请输入联系地址" v-model="address" :disableClear="true"></mt-field>
 
-    <mt-actionsheet :actions="actions" v-model="sheetVisible" cancelText></mt-actionsheet>
+    <mt-actionsheet :actions="actions" v-model="sheetVisible"></mt-actionsheet>
     <div class="attention">
       <h2>注意事项</h2>
       <p>
@@ -136,7 +136,7 @@ export default {
       right: 66px;
     }
   }
-  /deep/ .mint-actionsheet-listitem {
+  /deep/ .mint-actionsheet-listitem,/deep/ .mint-actionsheet-button {
     height: 80px;
     font-size: 30px;
     line-height: 80px;

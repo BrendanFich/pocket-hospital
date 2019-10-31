@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view />
+    <router-view v-if="this.$store.state.userInfo"/>
   </div>
 </template>
 
@@ -27,12 +27,12 @@ export default {
     let _this = this
     if (wxSign) {
       wx.config({
-        debug: false,
+        debug: true,
         appId: 'wxd8de5e3e19b318ee',
         timestamp: wxSign.split('&')[0],
         nonceStr: wxSign.split('&')[1],
         signature: wxSign.split('&')[2],
-        jsApiList: ['openLocation']
+        jsApiList: ['openLocation', 'getLocation']
       })
       wx.error(function (res) {
         // 如果签名过期，再重新获取
@@ -103,7 +103,7 @@ export default {
             [res.data.timestamp, res.data.nonceStr, res.data.signtrue].join('&')
           )
           wx.config({
-            debug: false,
+            debug: true,
             appId: 'wxd8de5e3e19b318ee',
             timestamp: res.data.timestamp,
             nonceStr: res.data.nonceStr,
