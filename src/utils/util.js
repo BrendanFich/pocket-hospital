@@ -1,10 +1,12 @@
 import axios from 'axios'
+import { Indicator } from 'mint-ui'
 const BaseUrl = 'http://qlyt.vicp.net:8197'
 let http = {}
 http.ajax = axios.create()
 
 // 请求拦截，添加token至请求头
 http.ajax.interceptors.request.use(config => {
+  Indicator.open()
   if (localStorage.token) { config.headers.Authorization = localStorage.token }
   // console.log(config.headers.Authorization)
   return config
@@ -14,6 +16,7 @@ http.ajax.interceptors.request.use(config => {
 
 // 响应拦截，判断token是否过期，过期则跳转，重新获取
 http.ajax.interceptors.response.use(res => {
+  Indicator.close()
   // token过期时
   if (res.code === 500 && res.msg === '无有效token,请重新授权') {
     localStorage.removeItem('token')

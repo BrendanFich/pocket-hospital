@@ -1,19 +1,19 @@
 <template>
   <!-- 检验报告 -->
   <div class="bodyExam">
-    <mt-cell class="cell" is-link>
+    <mt-cell class="cell" is-link v-for="(item, index) in lisList" :key="index" @click="getLisInfo">
       <div slot="title" class="content">
         <div class="date">
           <span class="key">开单日期：</span>
-          <span class="value">2019-08-28 11:30</span>
+          <span class="value">{{item.reportTime}}</span>
         </div>
         <div class="number">
           <span class="key">化验编号：</span>
-          <span class="value">2019082854321</span>
+          <span class="value">{{item.inspectId}}</span>
         </div>
         <div class="name">
           <span class="key">化验名称：</span>
-          <span class="value highlight">肩部异物切片</span>
+          <span class="value highlight">{{item.inspectName}}</span>
         </div>
       </div>
       <img slot="icon" src="@/assets/img/报告 (1) 拷贝.png" />
@@ -38,18 +38,20 @@ export default {
     getLisList () {
       util.http
         .post('/api/report/getLisList', {
-          patCardType: '',
-          patCardNo: '',
-          beginDate: '',
-          endDate: ''
+          patCardNo: '1000259326',
+          beginDate: '2016-03-01',
+          endDate: '2017-04-01',
+          patCardType: '1'
         })
         .then(res => {
           console.log(res)
-          this.lisList = res.data
+          this.lisList = res.data.Records.Records
         })
         .catch(error => {
           console.log(error)
         })
+    },
+    getLisInfo () {
     }
   }
 }

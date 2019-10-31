@@ -1,6 +1,6 @@
 <template>
   <div class="otherReports">
-    <mt-cell class="cell" is-link>
+    <!-- <mt-cell class="cell" is-link>
       <div slot="title" class="content">
         <div class="date">
           <span class="key">开单日期：</span>
@@ -16,7 +16,8 @@
         </div>
       </div>
       <img slot="icon" src="@/assets/img/报告 (2) 拷贝.png" />
-    </mt-cell>
+    </mt-cell> -->
+    <img class="noData" src="@/assets/img/暂无数据.png" />
   </div>
 </template>
 
@@ -33,6 +34,10 @@ export default {
 .otherReports {
   background: #f2f2f2;
   height: 100vh;
+  .noData {
+        width: 366px;
+        margin: 100px 200px;
+      }
   .cell {
     border-bottom: 1px solid #f2f2f2;
     .content {

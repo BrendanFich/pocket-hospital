@@ -1,11 +1,11 @@
 <template>
   <div class="inHospReg2">
     <div @click="showOption(0)" class="selectItem">
-      <mt-field label="身份类型" v-model="identityStyle" :disableClear="true" :readonly="true"></mt-field>
+      <mt-field label="身份类型" placeholder="请选择身份类型" v-model="identityStyle" :disableClear="true" :readonly="true"></mt-field>
       <div class="isLink">></div>
     </div>
     <div @click="showOption(1)" class="selectItem">
-      <mt-field label="支付类型" v-model="payStyle" :disableClear="true" :readonly="true"></mt-field>
+      <mt-field label="支付类型" placeholder="请选择支付类型" v-model="payStyle" :disableClear="true" :readonly="true"></mt-field>
       <div class="isLink">></div>
     </div>
     <mt-field label="姓名" placeholder="请输入姓名" v-model="name" :disableClear="true"></mt-field>
@@ -15,7 +15,7 @@
     </div>
 
     <div @click="showOption(3)" class="selectItem">
-      <mt-field label="证件类型" v-model="paperwork" :disableClear="true" :readonly="true"></mt-field>
+      <mt-field label="证件类型" placeholder="请选择证件类型" v-model="paperwork" :disableClear="true" :readonly="true"></mt-field>
       <div class="isLink">></div>
     </div>
     <mt-field label="证件号码" placeholder="请输入证件号码" type="string" v-model="idNum" :disableClear="true"></mt-field>
@@ -155,8 +155,15 @@ export default {
       this.register()
     },
     register () {
+      // if (this.$store.state.patInfo.length !== []) {
+      //   this.$store.state.patInfo.forEach(item => {
+      //     if (item.visitCardNo === this.$store.state.userInfo.visitCardNo) {
+      //     }
+      //   })
+      // }
+      // this.$store.state.userInfo.visitCardNo
       util.http
-        .post('/api/invisit/Register')
+        .post('/api/invisit/Register', {patientId: 1007033276, patIdType: '11', patIdNo: '441581188602104712', CardType: '1', CardNo: '0000000'})
         .then(res => {
           console.log(res)
         })

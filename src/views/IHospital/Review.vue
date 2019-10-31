@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import util from '@/utils/util'
 export default {
   name: 'LiveHosOrder',
   data () {
@@ -28,9 +29,23 @@ export default {
       selected: 0
     }
   },
+  created () {
+    this.getDocRecord()
+  },
   methods: {
     to () {
       this.$router.push('/iHospital/docIntro')
+    },
+    getDocRecord () {
+      util.http
+        .post('/api/pat/findMyDoctor')
+        .then(res => {
+          console.log(res)
+          // 没有相应内容
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   }
 }
