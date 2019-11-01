@@ -3,7 +3,7 @@
     <!-- <Searchbar placeholder="搜索科室或医生" @getSearchStatus="setSearchStatus"></Searchbar> -->
     <div class="searchbar">
       <img class="cancelIcon" src="@/assets/img/搜索.png" alt />
-      <input type="text" v-model="value" placeholder="搜索药品名称" @focus="focus" />
+      <input type="text" v-model="value" placeholder="搜索科室名称" @focus="focus" />
       <div class="xIcon" :class="{show: value}" @click="clear">×</div>
       <button class="cancel" :class="{show : isShow}" @click="cancel">取消</button>
       <div class="resultList" :class="{show : isShow}">
