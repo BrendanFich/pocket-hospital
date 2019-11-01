@@ -16,31 +16,31 @@
         <img src="@/assets/img/组 27.png" />
         <div class="textInfo">
           <span class="name">{{item.patName}}</span>
-          <p class="cardNumber">诊疗卡号：{{item.visitCardNo}}</p>
+          <p class="cardNumber">就诊卡号：{{item.visitCardNo}}</p>
         </div>
       </div>
       <span class="status" v-if="item.visitCardNo === $store.state.userInfo.visitCardNo">默认</span>
       <span class="isLink" v-else>></span>
     </router-link>
     <ul class="orderList">
-      <li @click="linkTo('/mine/cardManage/bindCard/','bindCard')">
+      <li @click="linkTo('bindCard',{cardTypeWord:'就诊卡'})">
         <div>
           <img src="@/assets/img/绑定.png" />
           <span class="title">绑定就诊卡</span>
         </div>
         <span class="linkIcon">></span>
       </li>
-      <li @click="linkTo('/mine/cardManage/buildCard')">
+      <li @click="linkTo('buildCard')">
         <div>
           <img src="@/assets/img/新建.png" />
           <span class="title">初诊建档</span>
         </div>
         <span class="linkIcon">></span>
       </li>
-      <li>
+      <li @click="linkTo('bindCard',{cardTypeWord:'社保卡'})">
         <div>
           <img src="@/assets/img/绑定 (1).png" />
-          <span class="title">绑定医保卡</span>
+          <span class="title">绑定社保卡</span>
         </div>
         <span class="linkIcon">></span>
       </li>
@@ -59,12 +59,8 @@ export default {
     }
   },
   methods: {
-    linkTo (url, name) {
-      if (name === undefined) {
-        this.$router.push(url)
-      } else {
-        this.$router.push({name})
-      }
+    linkTo (name, params) {
+      this.$router.push({name, params})
     }
   },
   created () {

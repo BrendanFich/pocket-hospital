@@ -47,16 +47,18 @@ export default {
       let configdata = {
         psOrdNum: '123',
         deptCode: this.$store.state.selectedDeptCode,
+        deptName: this.$store.state.selectedDeptName,
+        doctorName: this.$store.state.selectedDocName,
         // deptCode: '173',
         doctorCode: '0' + (this.$store.state.selectedDocCode + 2).toString(), // 比实际医生code多2
         scheduleDate: this.$store.state.selectedDate,
         timeFlag: '1',
         regFee: this.$store.state.price.toString(),
-        patName: this.$store.state.userInfo.patName,
+        patName: this.$store.state.userInfo.visitName,
         patCardNo: this.$store.state.userInfo.visitCardNo,
         beginTime: this.$store.state.beginTime,
         endTime: this.$store.state.endTime,
-        hostpitalName: '南海',
+        hostpitalName: '全院',
         patCardType: '1'
       }
       console.log(configdata)
@@ -65,7 +67,7 @@ export default {
         .post('/api/doctor/currentDayRegister', configdata)
         .then(res => {
           console.log(res)
-          if (res.code === 0 && res.data.Code === '0') {
+          if (res.code === 0) {
             this.$indicator.close()
             this.$toast({
               message: '提交成功',
@@ -76,11 +78,19 @@ export default {
             console.log(res)
           } else {
             this.$indicator.close()
-            this.$toast({
-              message: '提交失败',
-              duration: 1000,
-              className: 'toast'
-            })
+            if (res.msg === '当前有正在进行的预约挂号..') {
+              this.$toast({
+                message: '请勿重复预约',
+                duration: 1000,
+                className: 'toast'
+              })
+            } else {
+              this.$toast({
+                message: '提交失败',
+                duration: 1000,
+                className: 'toast'
+              })
+            }
           }
         })
         .catch(error => {

@@ -8,23 +8,34 @@
 <script>
 import CustomerInfoCard from '@/components/CustomerInfoCard'
 import wx from 'weixin-js-sdk'
-import localtion from '@/config'
+import util from '@/utils/util'
+// import localtion from '@/config'
 export default {
   name: 'cConfirm',
   components: { CustomerInfoCard },
   data () {
     return {
       latitude: null,
-      longitude: null
+      longitude: null,
+      registerInfo: {}
     }
   },
   computed: {
-    isArrived () {
-      return (localtion.longitude - 0.0005) < this.longitude && (localtion.longitude + 0.0005) > this.longitude &&
-      (localtion.latitude - 0.001) < this.latitude && (localtion.latitude + 0.001) > this.latitude
-    }
+    // isArrived () {
+    //   return (localtion.longitude - 0.0005) < this.longitude && (localtion.longitude + 0.0005) > this.longitude &&
+    //   (localtion.latitude - 0.001) < this.latitude && (localtion.latitude + 0.001) > this.latitude
+    // }
   },
   created () {
+    util.http
+      .post('/api/pat/findVisitingRegister')
+      .then(res => {
+        console.log(res)
+        this.registerInfo = res.data.Records
+      })
+      .catch(error => {
+        console.log(error)
+      })
     wx.getLocation({
       type: 'gcj02', // 返回可以用于wx.openLocation的经纬度
       success (res) {
@@ -38,19 +49,31 @@ export default {
     confirm () {
       let text = `
       <div>
-        <p>就诊日期：2019-08-32</p>
-        <p>就诊时间：09:00 - 10:00</p>
-        <p>就诊科室：内分泌科(门）</p>
-        <p>就诊医生：杨辉</p>
+        <p>就诊日期：${this.registerInfo.scheduleDate}</p>
+        <p>就诊时间：${this.registerInfo.beginTime} - ${this.registerInfo.beginTime}</p>
+        <p>就诊科室：${this.registerInfo.deptName}</p>
+        <p>就诊医生：${this.registerInfo.doctorName}</p>
       </div>
       `
-      if (this.isArrived) {
-        this.$messagebox.confirm(text).then(action => {
-          this.$router.push('/checkIn/cQueue')
-        })
-      } else {
-        alert('还未到达医院')
-      }
+      this.$messagebox.confirm(text).then(action => {
+        util.http
+          .post('/api/pat/findAllRegister')
+          .then(res => {
+            console.log(res)
+            this.orderList = res.data.Records
+          })
+          .catch(error => {
+            console.log(error)
+          })
+        this.$router.push('/checkIn/cQueue')
+      })
+      // if (this.isArrived) {
+      //   this.$messagebox.confirm(text).then(action => {
+      //     this.$router.push('/checkIn/cQueue')
+      //   })
+      // } else {
+      //   alert('还未到达医院')
+      // }
     }
   }
 }

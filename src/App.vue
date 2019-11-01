@@ -26,7 +26,7 @@ export default {
     let _this = this
     if (wxSign) {
       wx.config({
-        debug: true,
+        debug: false,
         appId: config.appId,
         timestamp: wxSign.split('&')[0],
         nonceStr: wxSign.split('&')[1],
@@ -99,7 +99,7 @@ export default {
             [res.data.timestamp, res.data.nonceStr, res.data.signtrue].join('&')
           )
           wx.config({
-            debug: true,
+            debug: false,
             appId: config.appId,
             timestamp: res.data.timestamp,
             nonceStr: res.data.nonceStr,

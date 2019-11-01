@@ -2,7 +2,7 @@
   <div class="payOnline">
     <mt-navbar v-model="selected">
       <mt-tab-item id="1">未付款</mt-tab-item>
-      <mt-tab-item id="2">已付款</mt-tab-item>
+      <mt-tab-item id="2" @click.native="getPaidList">已付款</mt-tab-item>
     </mt-navbar>
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
@@ -10,19 +10,19 @@
         <router-link to="/payOnline" v-for="(item,index) in unpaid" :key="index">
           <mt-cell>
             <div class="leftInfo">
-              <div class="name">{{item.name}}</div>
-              <div class="medical_card">{{item.medical_card}}</div>
+              <div class="name">{{item.patName ? item.patName : '张三'}}</div>
+              <div class="medical_card">{{item.medical_card ? item.medical_card : '1234567'}}</div>
               <div class="serial_number">
                 流水号：
-                <span class="value">{{item.serial_number}}</span>
+                <span class="value">{{item.hisOrdNum}}</span>
               </div>
               <div class="department">
                 开单科室：
-                <span class="value">{{item.department}}</span>
+                <span class="value">{{item.itemName}}</span>
               </div>
             </div>
             <div class="rightInfo">
-              <div class="price unPaid">{{item.price}}</div>
+              <div class="price unPaid">{{item.itemPrice}}</div>
               <div class="date">{{item.date}}</div>
             </div>
           </mt-cell>
@@ -33,19 +33,19 @@
         <div v-for="(item,index) in paid" :key="index">
           <mt-cell>
             <div class="leftInfo">
-              <div class="name">{{item.name}}</div>
+              <div class="name">{{item.patName}}</div>
               <div class="medical_card">{{item.medical_card}}</div>
               <div class="serial_number">
                 流水号：
-                <span class="value">{{item.serial_number}}</span>
+                <span class="value">{{item.hisOrdNum}}</span>
               </div>
               <div class="department">
                 开单科室：
-                <span class="value">{{item.department}}</span>
+                <span class="value">{{item.deptName}}</span>
               </div>
             </div>
             <div class="rightInfo">
-              <div class="price">{{item.price}}</div>
+              <div class="price">{{item.selfAmt}}</div>
               <div class="date">{{item.date}}</div>
             </div>
           </mt-cell>
@@ -56,42 +56,75 @@
 </template>
 
 <script>
+import util from '@/utils/util'
 export default {
   name: 'payOnline',
   data () {
     return {
       selected: '1',
       unpaid: [
-        {
-          name: '张家辉',
-          medical_card: '3567901',
-          serial_number: '2019082854321',
-          department: '内分泌科(门)',
-          date: '2019-08-28 11:30',
-          price: '113.21元'
-        }
+        // {
+        //   name: '张家辉',
+        //   medical_card: '3567901',
+        //   serial_number: '2019082854321',
+        //   department: '内分泌科(门)',
+        //   date: '2019-08-28 11:30',
+        //   price: '113.21元'
+        // }
       ],
       paid: [
-        {
-          name: '陈小春',
-          medical_card: '3567901',
-          serial_number: '2019082854321',
-          department: '内分泌科(门)',
-          date: '2019-08-28 11:30',
-          price: '113.21元'
-        },
-        {
-          name: '陈小春',
-          medical_card: '3567901',
-          serial_number: '2019082854321',
-          department: '内分泌科(门)',
-          date: '2019-08-28 11:30',
-          price: '113.21元'
-        }
+        // {
+        //   name: '陈小春',
+        //   medical_card: '3567901',
+        //   serial_number: '2019082854321',
+        //   department: '内分泌科(门)',
+        //   date: '2019-08-28 11:30',
+        //   price: '113.21元'
+        // },
+        // {
+        //   name: '陈小春',
+        //   medical_card: '3567901',
+        //   serial_number: '2019082854321',
+        //   department: '内分泌科(门)',
+        //   date: '2019-08-28 11:30',
+        //   price: '113.21元'
+        // }
       ]
     }
   },
-  methods: {}
+  created () {
+    this.getUnpaidList()
+  },
+  methods: {
+    getUnpaidList () {
+      util.http
+        .post('/api/doctor/getVisitPayInfo', {
+          hisOrdNum: '424177',
+          patCardNo: ''
+        })
+        .then(res => {
+          console.log(res)
+          this.unpaid = res.data.Records
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    getPaidList () {
+      util.http
+        .post('/api/doctor/payInfoList', {
+          patCardNo: '5555500288',
+          patCardType: '院内诊疗卡'
+        })
+        .then(res => {
+          console.log(res)
+          this.paid = res.data.Records
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
+  }
 }
 </script>
 
@@ -177,5 +210,9 @@ export default {
       }
     }
   }
+  .noData {
+        width: 366px;
+        margin: 100px 200px;
+      }
 }
 </style>

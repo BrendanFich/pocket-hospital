@@ -30,7 +30,6 @@ Vue.config.productionTip = false
 // })
 router.beforeEach((to, from, next) => {
   Indicator.close()
-  console.log('嘿嘿')
   next()
 })
 /* eslint-disable no-new */

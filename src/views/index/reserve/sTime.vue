@@ -57,7 +57,7 @@ export default {
     },
     getDocInfo () {
       util.http
-        .post('/api/doctor/doc_info', {deptCode: this.$store.state.selectedDeptCode, doctorCode: this.$route.params.doctorCode})
+        .post('/api/doctor/doc_info', {deptCode: this.$store.state.selectedDeptCode, doctorCode: (parseInt(this.$route.params.doctorCode) - 2).toString()})
         .then(res => {
           this.docInfo = res.data.Records[0]
           this.$store.commit('changeDoc', {docCode: this.docInfo.doctorCode, docName: this.docInfo.doctorName})

@@ -147,8 +147,8 @@ export default new Router({
           component: container,
           children: [
             { path: '', component: cardManage },
-            { path: 'bindCard/:patName&:patIdNo&:patientId', name: 'bindCard', component: bindCard },
-            { path: 'buildCard', component: buildCard },
+            { path: 'bindCard/:patName&:patIdNo&:patientId&:cardTypeWord', name: 'bindCard', component: bindCard },
+            { path: 'buildCard', name: 'buildCard', component: buildCard },
             { path: 'cardInfo/:visitCardNo', name: 'cardInfo', component: cardInfo }
           ]
         },

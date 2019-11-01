@@ -1,37 +1,37 @@
 <template>
   <div class="regOrder">
     <ul>
-      <li v-for="n in 3" :key="n">
-        <div class="paidTime">下单日期：2019-08-20 20:31:05</div>
+      <li v-for="(item, index) in orderList" :key="index">
+        <div class="paidTime">下单日期：{{item.createDate}}</div>
         <div class="orderCard">
           <div class="left">
             <img src="@/assets/img/订单.png" alt />
             <div class="baseInfo">
               <div>
-                <span class="name">张家辉</span>
-                <span class="num">3567901</span>
+                <span class="name">{{item.patName}}</span>
+                <span class="num">{{item.patCardNo}}</span>
               </div>
               <div class="item">
                 <span class="key">日期</span>
-                <span class="value">：2019-08-21</span>
+                <span class="value">：{{item.scheduleDate}}</span>
               </div>
               <div class="item">
                 <span class="key">院区</span>
-                <span class="value">：南海院区</span>
+                <span class="value">：{{item.hostpitalName}}</span>
               </div>
               <div class="item">
                 <span class="key">科室</span>
-                <span class="value">：心血管内科（门）</span>
+                <span class="value">：{{item.deptName}}</span>
               </div>
               <div class="item">
                 <span class="key">医生</span>
-                <span class="value">：罗承凤</span>
+                <span class="value">：{{item.doctorName}}</span>
               </div>
             </div>
           </div>
           <div class="right">
-            <span class="price">30元</span>
-            <span class="orderTime">10:00-11:00</span>
+            <span class="price">{{item.regFee}}元</span>
+            <span class="orderTime">{{item.beginTime}}-{{item.endTime}}</span>
           </div>
         </div>
       </li>
@@ -40,12 +40,24 @@
 </template>
 
 <script>
+import util from '@/utils/util'
 export default {
   name: 'regOrder',
   data () {
     return {
-      selected: 0
+      orderList: []
     }
+  },
+  created () {
+    util.http
+      .post('/api/pat/findAllRegister')
+      .then(res => {
+        console.log(res)
+        this.orderList = res.data.Records
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 }
 </script>

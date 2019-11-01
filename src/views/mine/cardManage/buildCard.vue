@@ -86,7 +86,7 @@ export default {
               this.$indicator.close()
               if (res.code === 0) {
                 this.$toast({ message: '建档成功，请继续完成绑卡操作', duration, className })
-                this.$router.push({ name: 'bindCard', params: {patName: this.name, patIdNo: this.IDNum, patientId: res.data.Records[0].PatientId} })
+                this.$router.push({ name: 'bindCard', params: {patName: this.name, patIdNo: this.IDNum, patientId: res.data.Records[0].PatientId, cardTypeWord: '就诊卡'} })
               } else {
                 this.$toast({ message: res.msg, duration, className })
               }

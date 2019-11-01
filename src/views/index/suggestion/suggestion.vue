@@ -1,33 +1,47 @@
 <template>
   <div class="suggestion">
     <div class="textarea">
-      <mt-field placeholder="请输入意见..." type="textarea" rows="8" v-model="introduction"></mt-field>
+      <mt-field placeholder="请输入意见..." type="textarea" rows="8" v-model="content"></mt-field>
     </div>
     <mt-button type="primary" class="btn" @click.native="handleClick">提交意见</mt-button>
   </div>
 </template>
 
 <script>
+import util from '@/utils/util'
 export default {
   name: 'suggestion',
   data () {
     return {
-      introduction: ''
+      content: ''
     }
   },
   methods: {
     handleClick () {
-      if (!this.introduction) return
-      this.$indicator.open()
-      setTimeout(() => {
-        this.$indicator.close()
-        this.introduction = ''
-        this.$toast({
-          message: '提交成功',
-          duration: 1000,
-          className: 'toast'
-        })
-      }, 500)
+      console.log(this.content)
+      if (this.content) {
+        util.http
+          .post('/api/user/submissionOfOpinions', { opinion: this.content })
+          .then(res => {
+            if (res.code === 0) {
+              this.content = ''
+              this.$toast({
+                message: '提交成功',
+                duration: 1000,
+                className: 'toast'
+              })
+            } else {
+              this.$toast({
+                message: '提交失败',
+                duration: 1000,
+                className: 'toast'
+              })
+            }
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      }
     }
   }
 }

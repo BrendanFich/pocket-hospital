@@ -2,7 +2,7 @@
   <div class="bindCard">
     <h2>就诊卡信息</h2>
     <div @click="showOption(0)" class="selectItem">
-      <mt-field label="卡类型" v-model="cardStyle" :disableClear="true" :readonly="true"></mt-field>
+      <mt-field label="卡类型" v-model="cardTypeWord" :disableClear="true" :readonly="true"></mt-field>
       <div class="isLink">></div>
     </div>
     <mt-field label="卡号" placeholder="请输入卡号" type="number" v-model="cardNum" :disableClear="true"></mt-field>
@@ -38,14 +38,14 @@ export default {
     return {
       sheet1Visible: false,
       sheet2Visible: false,
-      cardStyle: '诊疗卡',
+      cardTypeWord: this.$route.params.cardTypeWord,
       paperwork: '二代身份证',
       cardNum: '',
       idNum: '',
       name: '',
       actions1: [
-        { name: '诊疗卡', method: this.sCardStyle0 },
-        { name: '医保卡', method: this.sCardStyle1 }
+        { name: '就诊卡', method: this.sCardStyle0 },
+        { name: '社保卡', method: this.sCardStyle1 }
       ],
       actions2: [
         { name: '二代身份证', method: this.sPaperwork0 },
@@ -72,7 +72,7 @@ export default {
   },
   computed: {
     cardType () {
-      return this.cardStyle === '诊疗卡' ? '1' : '2'
+      return this.cardTypeWord === '就诊卡' ? '1' : '2'
     },
     patIdType () {
       if (this.paperwork === this.actions2[0].name) {
@@ -99,10 +99,10 @@ export default {
       }
     },
     sCardStyle0 () {
-      this.cardStyle = this.actions1[0].name
+      this.cardTypeWord = this.actions1[0].name
     },
     sCardStyle1 () {
-      this.cardStyle = this.actions1[1].name
+      this.cardTypeWord = this.actions1[1].name
     },
     sPaperwork0 () {
       this.paperwork = this.actions2[0].name
@@ -123,7 +123,6 @@ export default {
 
       if (this.cardNum && this.name && this.idNum) {
         // 通过身份证id判断其对应的patientId
-
         if (this.$store.state.patInfo.length !== 0) {
           this.$store.state.patInfo.forEach(item => {
             if (item.patIdNo === this.idNum) {
@@ -140,9 +139,16 @@ export default {
           patIdType: this.patIdType,
           patIdNo: this.idNum
         }
-        if (!p.test(this.idNum) && this.paperwork === '身份证') {
+        console.log('--------------------------请求--------------------')
+        console.log(reqData)
+        if (this.cardNum.length !== 7) {
+          // 卡号验证
+          this.$toast({ message: '就诊卡号为7位数', duration, className })
+        } else if (!p.test(this.idNum) && this.paperwork === '身份证') {
+          // 身份证号验证
           this.$toast({ message: '身份证号有误', duration, className })
         } else {
+          console.log(reqData)
           util.http
             .post('/api/pat/bindCard', reqData)
             .then(res => {
@@ -155,6 +161,9 @@ export default {
                   this.$toast({ message: '绑定成功', duration, className })
                   this.$router.push({ path: '/mine/cardManage' })
                 }
+              }
+              if (res.code === 400) {
+                this.$toast({ message: '姓名和证件号须与建档时保持一致', duration: 2000, className })
               }
             })
             .catch(error => {
