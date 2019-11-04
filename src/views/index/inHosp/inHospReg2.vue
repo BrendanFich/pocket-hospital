@@ -163,7 +163,13 @@ export default {
       // }
       // this.$store.state.userInfo.visitCardNo
       util.http
-        .post('/api/invisit/Register', {patientId: 1007033276, patIdType: '11', patIdNo: '441581188602104712', CardType: '1', CardNo: '0000000'})
+        .post('/api/invisit/Register', {
+          patientId: 1007033276, // 必要
+          patIdType: '1', // 必要
+          patIdNo: '441581188602104712', // 必要
+          CardType: '1', // 必要
+          CardNo: '2612612' // 必要
+        })
         .then(res => {
           console.log(res)
         })

@@ -7,6 +7,7 @@
       <div class="xIcon" :class="{show: value}" @click="clear">×</div>
       <button class="cancel" :class="{show : isShow}" @click="cancel">取消</button>
       <div class="resultList" :class="{show : isShow}">
+        <div v-if="searchResult.length===0 && value !== ''" class="noInfo">无相关科室信息</div>
         <div v-for="(item,index) in searchResult" :key="index" @click="select(item.deptCode, item.deptName)">
           <mt-cell :title="item.deptName">
             <img class="icon" src="@/assets/img/科室.png" />&gt;
@@ -177,6 +178,9 @@ export default {
     }
     .show {
       display: block;
+    }
+    .noInfo {
+      padding: 20px;
     }
   }
   .content {

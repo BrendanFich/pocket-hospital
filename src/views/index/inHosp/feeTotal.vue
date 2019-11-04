@@ -26,7 +26,7 @@ export default {
   watch: {},
   methods: {
     recharge () {
-      console.log('充值')
+      this.$router.push('/inHosp/balance')
     }
   },
   created () {}

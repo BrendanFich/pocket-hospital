@@ -10,7 +10,7 @@
             <div class="navIntro">进行入院资料登记</div>
           </div>
         </li>
-        <li @click="linkTo('/inHosp/prePay')">
+        <li @click="linkTo('/mine/liveHosOrder')">
           <img src="@/assets/img/住院缴费.png" alt class="icon" />
           <div class="navInfo">
             <div class="navName">预交金缴纳</div>
