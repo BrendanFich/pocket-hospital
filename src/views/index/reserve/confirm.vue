@@ -50,7 +50,7 @@ export default {
         deptName: this.$store.state.selectedDeptName,
         doctorName: this.$store.state.selectedDocName,
         // deptCode: '173',
-        doctorCode: '0' + (this.$store.state.selectedDocCode + 2).toString(), // 比实际医生code多2
+        doctorCode: '0' + this.$store.state.selectedDocCode.toString(), // 比实际医生code多2
         scheduleDate: this.$store.state.selectedDate,
         timeFlag: '1',
         regFee: this.$store.state.price.toString(),
@@ -80,7 +80,7 @@ export default {
             this.$indicator.close()
             if (res.msg === '当前有正在进行的预约挂号..') {
               this.$toast({
-                message: '请勿重复预约',
+                message: '当前有正在进行的预约挂号..',
                 duration: 1000,
                 className: 'toast'
               })

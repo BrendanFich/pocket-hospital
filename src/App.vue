@@ -26,12 +26,12 @@ export default {
     let _this = this
     if (wxSign) {
       wx.config({
-        debug: false,
+        debug: true,
         appId: config.appId,
         timestamp: wxSign.split('&')[0],
         nonceStr: wxSign.split('&')[1],
         signature: wxSign.split('&')[2],
-        jsApiList: ['openLocation', 'getLocation']
+        jsApiList: ['openLocation', 'getLocation', 'updateAppMessageShareData']
       })
       wx.error(function (res) {
         // 如果签名过期，再重新获取
@@ -99,12 +99,12 @@ export default {
             [res.data.timestamp, res.data.nonceStr, res.data.signtrue].join('&')
           )
           wx.config({
-            debug: false,
+            debug: true,
             appId: config.appId,
             timestamp: res.data.timestamp,
             nonceStr: res.data.nonceStr,
             signature: res.data.signtrue,
-            jsApiList: ['openLocation']
+            jsApiList: ['openLocation', 'getLocation', 'updateAppMessageShareData']
           })
         })
         .catch(error => {

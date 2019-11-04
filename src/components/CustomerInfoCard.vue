@@ -5,7 +5,8 @@
       <div class="textInfo" v-if="isReceivedData">
         <span class="name">{{customerInfo.patName}}</span>
         <span class="status">默认</span>
-        <p class="cardNumber">诊疗卡号：{{customerInfo.visitCardNo}}</p>
+        <p class="cardNumber" v-if="customerInfo.visitCardNo === defaultCardNo">就诊卡号：{{showNo}}</p>
+        <p class="cardNumber" v-if="customerInfo.socialHosCardNO === defaultCardNo">社保卡号：{{showNo}}</p>
       </div>
     </div>
     <router-link to="/mine/cardManage">
@@ -21,12 +22,16 @@ export default {
   name: 'customerInfoCard',
   data () {
     return {
-      isReceivedData: false
+      isReceivedData: false,
+      defaultCardNo: this.$store.state.userInfo.visitCardNo
     }
   },
   computed: {
     customerInfo () {
-      return this.$store.state.patInfo.filter(item => item.visitCardNo === this.$store.state.userInfo.visitCardNo)[0]
+      return this.$store.state.patInfo.filter(item => (item.visitCardNo === this.defaultCardNo) || (item.socialHosCardNO === this.defaultCardNo))[0]
+    },
+    showNo () {
+      return this.customerInfo.visitCardNo === this.defaultCardNo ? this.customerInfo.visitCardNo : this.customerInfo.socialHosCardNO
     }
   },
   created () {
@@ -34,12 +39,16 @@ export default {
       .post('/api/pat/pat_info')
       .then(res => {
         this.$store.commit('updateUserPatInfo', res.data)
+        this.$store.commit('updateUserInfo')
         this.isReceivedData = true
         console.log(res)
       })
       .catch(error => {
         console.log(error)
       })
+  },
+  mounted () {
+    console.log(this.defaultCardNo)
   }
 }
 </script>

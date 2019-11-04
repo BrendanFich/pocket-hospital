@@ -62,7 +62,7 @@
           <h3>药品查询</h3>
         </router-link>
         <router-link class="item" to="/index">
-          <img src="@/assets/img/医疗.png" />
+          <img src="@/assets/img/医疗.png"/>
           <h3>医疗服务价格</h3>
         </router-link>
         <router-link class="item" to="/parking">
@@ -98,12 +98,14 @@ export default {
   methods: {
     getLocation () {
       console.log('click')
-      wx.openLocation({
-        latitude: localtion.latitude,
-        longitude: localtion.longitude,
-        name: localtion.hospitalName,
-        address: '测试地址',
-        scale: 18
+      wx.ready(function () {
+        wx.openLocation({
+          latitude: localtion.latitude,
+          longitude: localtion.longitude,
+          name: localtion.hospitalName,
+          address: '测试地址',
+          scale: 18
+        })
       })
     }
   }

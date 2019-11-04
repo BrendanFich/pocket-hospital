@@ -1,14 +1,14 @@
 <template>
   <div class="cardManage">
     <h2>就诊卡管理</h2>
-    <img class="noData" v-if="!cardList" src="@/assets/img/暂无数据.png" />
+    <img class="noData" v-if="!dealedCardList" src="@/assets/img/暂无数据.png" />
     <router-link
       class="customerInfoCard"
-      v-for="(item,index) in cardList"
+      v-for="(item,index) in dealedCardList"
       :to="{
             name:'cardInfo',
             params:{
-              visitCardNo: cardList[index].visitCardNo
+              visitCardNo: dealedCardList[index].visitCardNo
             }}"
       :key="index"
     >
@@ -16,10 +16,10 @@
         <img src="@/assets/img/组 27.png" />
         <div class="textInfo">
           <span class="name">{{item.patName}}</span>
-          <p class="cardNumber">就诊卡号：{{item.visitCardNo}}</p>
+          <p class="cardNumber">{{item.showText}}</p>
         </div>
       </div>
-      <span class="status" v-if="item.visitCardNo === $store.state.userInfo.visitCardNo">默认</span>
+      <span class="status" v-if="(item.visitCardNo === defaultCardNo) || (item.socialHosCardNO === defaultCardNo)">默认</span>
       <span class="isLink" v-else>></span>
     </router-link>
     <ul class="orderList">
@@ -55,7 +55,32 @@ export default {
   name: 'cardManage',
   data () {
     return {
-      cardList: []
+      cardList: [],
+      defaultCardNo: this.$store.state.userInfo.visitCardNo
+    }
+  },
+  computed: {
+    dealedCardList () {
+      let newCardList = []
+      this.cardList.forEach((item) => {
+        if (item.visitCardNo && !item.socialHosCardNO) {
+          newCardList.push(item)
+        }
+        if (!item.visitCardNo && item.socialHosCardNO) {
+          newCardList.push(item)
+        }
+        if (item.visitCardNo && item.socialHosCardNO) {
+          let temp = item.socialHosCardNO
+          item.socialHosCardNO = ''
+          newCardList.push(item)
+          console.log(newCardList)
+          item.socialHosCardNO = temp
+          item.visitCardNo = ''
+          newCardList.push(item)
+          console.log(newCardList)
+        }
+      })
+      return newCardList
     }
   },
   methods: {
@@ -69,7 +94,7 @@ export default {
       .then(res => {
         console.log('----------获取患者信息-----------')
         console.log(res)
-        this.cardList = res.data.filter(item => item.visitCardNo !== '') // 从已建档中筛选以绑卡的
+        this.cardList = res.data.filter(item => (item.visitCardNo !== '') || (item.socialCardNo !== '')) // 从已建档中筛选以绑卡的
         // this.cardList = res.data
         this.$store.commit('updateUserPatInfo', this.cardList)
         console.log(res.data)
