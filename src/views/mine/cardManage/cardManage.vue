@@ -55,8 +55,12 @@ export default {
   name: 'cardManage',
   data () {
     return {
-      cardList: this.$store.state.patInfo,
-      defaultCardNo: this.$store.state.userInfo.visitCardNo ? this.$store.state.userInfo.visitCardNo : this.$store.state.userInfo.socialCardNo
+      cardList: this.$store.state.patInfo
+    }
+  },
+  computed: {
+    defaultCardNo () {
+      return this.$store.state.userInfo.visitCardNo ? this.$store.state.userInfo.visitCardNo : this.$store.state.userInfo.socialCardNo
     }
   },
   methods: {
