@@ -2,7 +2,7 @@
   <div class="customerInfoCard">
     <div>
       <img src="@/assets/img/组 27.png" />
-      <div class="textInfo" v-if="customerInfo.patName">
+      <div class="textInfo" v-if="customerInfo">
         <span class="name">{{customerInfo.patName}}</span>
         <span class="status">默认</span>
         <p class="cardNumber" v-if="customerInfo.visitCardNo === defaultCardNo">就诊卡号：{{customerInfo.visitCardNo}}</p>
@@ -32,6 +32,7 @@ export default {
   created () {
     this.$store.commit('updateUserPatInfo')
   }
+
 }
 </script>
 

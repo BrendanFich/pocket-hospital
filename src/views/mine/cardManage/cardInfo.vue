@@ -1,5 +1,5 @@
 <template>
-  <div class="cardInfo">
+  <div class="cardInfo" v-if="cardInfo">
     <h2>就诊卡信息</h2>
     <mt-field label="卡类型" v-model="cardInfo.PatIdType" :disableClear="true" :readonly="true"></mt-field>
     <mt-field label="姓名" v-model="cardInfo.patName" :readonly="true" :disableClear="true"></mt-field>
@@ -28,7 +28,7 @@ export default {
   },
   computed: {
     cardInfo () {
-      return this.$store.state.patInfo.filter(item => (item.visitCardNo === this.$route.params.cardNo) || (item.socialHosCardNO === this.$route.params.cardNO))[0]
+      return this.$store.state.patInfo.filter(item => (item.visitCardNo === this.$route.params.cardNo) || (item.socialHosCardNO === this.$route.params.cardNo))[0]
     }
   },
   methods: {
@@ -38,13 +38,14 @@ export default {
       util.http
         .post('/api/pat/changeCard',
           {
-            patCardNo: this.cardInfo.visitCardNo,
+            patCardNo: this.$route.params.cardNo,
             patName: this.cardInfo.patName
           })
         .then(res => {
           this.$store.commit('updateUserInfo')
           this.$toast({ message: '设置成功', duration, className })
-          this.$router.back(-1)
+          // this.$router.back(-1)
+          this.$router.push('/mine/cardManage')
           console.log(res)
         })
         .catch(error => {

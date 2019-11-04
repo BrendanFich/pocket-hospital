@@ -29,29 +29,30 @@ export default new Vuex.Store({
       })
     },
     updateUserPatInfo (state) {
-      state.patInfo = []
       util.http
         .post('/api/pat/pat_info')
         .then(res => {
           console.log('----------获取患者信息-----------')
           console.log(res)
+          let patInfoContent = []
           res.data.filter(item => (item.visitCardNo !== '') || (item.socialCardNo !== '')).forEach((item) => {
             if (item.visitCardNo && !item.socialHosCardNO) {
-              state.patInfo.push(item)
+              patInfoContent.push(item)
             }
             if (!item.visitCardNo && item.socialHosCardNO) {
-              state.patInfo.push(item)
+              patInfoContent.push(item)
             }
             if (item.visitCardNo && item.socialHosCardNO) {
               let temp = item.socialHosCardNO
               item.socialHosCardNO = ''
-              state.patInfo.push(item)
+              patInfoContent.push(item)
               let newItem = Object.assign({}, item)
               newItem.socialHosCardNO = temp
               newItem.visitCardNo = ''
-              state.patInfo.push(newItem)
+              patInfoContent.push(newItem)
             }
           })
+          state.patInfo = patInfoContent
           util.http.post('/api/user/vx_info').then(res => {
             console.log('-----------获取用户信息/api/user/vx_info-----------')
             console.log(res)

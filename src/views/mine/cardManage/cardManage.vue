@@ -1,14 +1,14 @@
 <template>
   <div class="cardManage">
     <h2>就诊卡管理</h2>
-    <img class="noData" v-if="!cardList" src="@/assets/img/暂无数据.png" />
+    <img class="noData" v-if="cardList.length === 0" src="@/assets/img/暂无数据.png" />
     <router-link
       class="customerInfoCard"
       v-for="(item,index) in cardList"
       :to="{
             name:'cardInfo',
             params:{
-              cardNo: item.visitCardNo === defaultCardNo ? item.visitCardNo : item.socialHosCardNO
+              cardNo: (item.visitCardNo || item.socialHosCardNO)
             }}"
       :key="index"
     >
@@ -58,8 +58,6 @@ export default {
       cardList: this.$store.state.patInfo,
       defaultCardNo: this.$store.state.userInfo.visitCardNo ? this.$store.state.userInfo.visitCardNo : this.$store.state.userInfo.socialCardNo
     }
-  },
-  computed: {
   },
   methods: {
     linkTo (name, params) {
