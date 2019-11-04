@@ -28,8 +28,41 @@ export default new Vuex.Store({
         console.log(error)
       })
     },
-    updateUserPatInfo (state, patInfo) {
-      state.patInfo = patInfo
+    updateUserPatInfo (state) {
+      state.patInfo = []
+      util.http
+        .post('/api/pat/pat_info')
+        .then(res => {
+          console.log('----------获取患者信息-----------')
+          console.log(res)
+          res.data.filter(item => (item.visitCardNo !== '') || (item.socialCardNo !== '')).forEach((item) => {
+            if (item.visitCardNo && !item.socialHosCardNO) {
+              state.patInfo.push(item)
+            }
+            if (!item.visitCardNo && item.socialHosCardNO) {
+              state.patInfo.push(item)
+            }
+            if (item.visitCardNo && item.socialHosCardNO) {
+              let temp = item.socialHosCardNO
+              item.socialHosCardNO = ''
+              state.patInfo.push(item)
+              let newItem = Object.assign({}, item)
+              newItem.socialHosCardNO = temp
+              newItem.visitCardNo = ''
+              state.patInfo.push(newItem)
+            }
+          })
+          util.http.post('/api/user/vx_info').then(res => {
+            console.log('-----------获取用户信息/api/user/vx_info-----------')
+            console.log(res)
+            state.userInfo = res.data.info
+          }).catch((error) => {
+            console.log(error)
+          })
+        })
+        .catch(error => {
+          console.log(error)
+        })
     },
     setPrice (state, price) {
       state.price = price

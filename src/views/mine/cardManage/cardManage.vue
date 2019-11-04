@@ -1,14 +1,14 @@
 <template>
   <div class="cardManage">
     <h2>就诊卡管理</h2>
-    <img class="noData" v-if="!dealedCardList" src="@/assets/img/暂无数据.png" />
+    <img class="noData" v-if="!cardList" src="@/assets/img/暂无数据.png" />
     <router-link
       class="customerInfoCard"
-      v-for="(item,index) in dealedCardList"
+      v-for="(item,index) in cardList"
       :to="{
             name:'cardInfo',
             params:{
-              visitCardNo: dealedCardList[index].visitCardNo
+              cardNo: item.visitCardNo === defaultCardNo ? item.visitCardNo : item.socialHosCardNO
             }}"
       :key="index"
     >
@@ -16,7 +16,8 @@
         <img src="@/assets/img/组 27.png" />
         <div class="textInfo">
           <span class="name">{{item.patName}}</span>
-          <p class="cardNumber">{{item.showText}}</p>
+          <p class="cardNumber" v-if="item.visitCardNo">就诊卡：{{item.visitCardNo}}</p>
+          <p class="cardNumber" v-if="item.socialHosCardNO">社保卡：{{item.socialHosCardNO}}</p>
         </div>
       </div>
       <span class="status" v-if="(item.visitCardNo === defaultCardNo) || (item.socialHosCardNO === defaultCardNo)">默认</span>
@@ -49,39 +50,16 @@
 </template>
 
 <script>
-import util from '@/utils/util'
 
 export default {
   name: 'cardManage',
   data () {
     return {
-      cardList: [],
-      defaultCardNo: this.$store.state.userInfo.visitCardNo
+      cardList: this.$store.state.patInfo,
+      defaultCardNo: this.$store.state.userInfo.visitCardNo ? this.$store.state.userInfo.visitCardNo : this.$store.state.userInfo.socialCardNo
     }
   },
   computed: {
-    dealedCardList () {
-      let newCardList = []
-      this.cardList.forEach((item) => {
-        if (item.visitCardNo && !item.socialHosCardNO) {
-          newCardList.push(item)
-        }
-        if (!item.visitCardNo && item.socialHosCardNO) {
-          newCardList.push(item)
-        }
-        if (item.visitCardNo && item.socialHosCardNO) {
-          let temp = item.socialHosCardNO
-          item.socialHosCardNO = ''
-          newCardList.push(item)
-          console.log(newCardList)
-          item.socialHosCardNO = temp
-          item.visitCardNo = ''
-          newCardList.push(item)
-          console.log(newCardList)
-        }
-      })
-      return newCardList
-    }
   },
   methods: {
     linkTo (name, params) {
@@ -89,19 +67,7 @@ export default {
     }
   },
   created () {
-    util.http
-      .post('/api/pat/pat_info')
-      .then(res => {
-        console.log('----------获取患者信息-----------')
-        console.log(res)
-        this.cardList = res.data.filter(item => (item.visitCardNo !== '') || (item.socialCardNo !== '')) // 从已建档中筛选以绑卡的
-        // this.cardList = res.data
-        this.$store.commit('updateUserPatInfo', this.cardList)
-        console.log(res.data)
-      })
-      .catch(error => {
-        console.log(error)
-      })
+    this.$store.commit('updateUserPatInfo')
   }
 }
 </script>

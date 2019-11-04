@@ -149,7 +149,7 @@ export default new Router({
             { path: '', component: cardManage },
             { path: 'bindCard/:patName&:patIdNo&:patientId&:cardTypeWord', name: 'bindCard', component: bindCard },
             { path: 'buildCard', name: 'buildCard', component: buildCard },
-            { path: 'cardInfo/:visitCardNo', name: 'cardInfo', component: cardInfo }
+            { path: 'cardInfo/:cardNo', name: 'cardInfo', component: cardInfo }
           ]
         },
         { path: 'liveHosOrder', component: liveHosOrder },

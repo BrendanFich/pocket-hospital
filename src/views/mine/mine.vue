@@ -63,7 +63,7 @@
 <script>
 import CustomerInfoCard from '@/components/CustomerInfoCard'
 import Tabbar from '@/components/Tabbar'
-import util from '@/utils/util'
+// import util from '@/utils/util'
 
 export default {
   name: 'mine',
@@ -72,17 +72,17 @@ export default {
     }
   },
   created () {
-    util.http
-      .post('/api/pat/pat_info')
-      .then(res => {
-        console.log('----------获取患者信息/api/pat/pat_info-----------')
-        console.log(res)
-        this.$store.commit('updateUserPatInfo', res.data.filter(item => item.visitCardNo !== ''))
-        console.log(res.data)
-      })
-      .catch(error => {
-        console.log(error)
-      })
+    // util.http
+    //   .post('/api/pat/pat_info')
+    //   .then(res => {
+    //     console.log('----------获取患者信息/api/pat/pat_info-----------')
+    //     console.log(res)
+    //     this.$store.commit('updateUserPatInfo', res.data.filter(item => item.visitCardNo !== ''))
+    //     console.log(res.data)
+    //   })
+    //   .catch(error => {
+    //     console.log(error)
+    //   })
   },
   components: { CustomerInfoCard, Tabbar },
   methods: {

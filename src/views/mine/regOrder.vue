@@ -32,6 +32,7 @@
           <div class="right">
             <span class="price">{{item.regFee}}元</span>
             <span class="orderTime">{{item.beginTime}}-{{item.endTime}}</span>
+            <span class="status">{{status(item.visitFlag)}}</span>
           </div>
         </div>
       </li>
@@ -58,6 +59,22 @@ export default {
       .catch(error => {
         console.log(error)
       })
+  },
+  methods: {
+    status (code) {
+      let text = ''
+      switch (code) {
+        case '0':
+          text = '未报到'
+          break
+        case '1':
+          text = '已报到'
+          break
+        case '-1':
+          text = '已就诊'
+      }
+      return text
+    }
   }
 }
 </script>
@@ -123,6 +140,10 @@ export default {
         background: #f69343;
       }
       .orderTime {
+        margin-top: 10px;
+        background: #5adba3;
+      }
+      .status{
         margin-top: 10px;
         background: #5adba3;
       }

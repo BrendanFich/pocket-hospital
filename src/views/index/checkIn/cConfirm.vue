@@ -28,7 +28,7 @@ export default {
   },
   created () {
     util.http
-      .post('/api/pat/findVisitingRegister')
+      .post('/api/pat/findVisitingRegister', {patCardNo: this.$store.state.userInfo.visitCardNo ? this.$store.state.userInfo.visitCardNo : this.$store.state.userInfo.socialCardNo})
       .then(res => {
         console.log(res)
         this.registerInfo = res.data.Records
