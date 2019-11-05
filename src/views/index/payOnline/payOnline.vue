@@ -10,11 +10,11 @@
         <router-link to="/payOnline" v-for="(item,index) in unpaid" :key="index">
           <mt-cell>
             <div class="leftInfo">
-              <div class="name">{{item.patName ? item.patName : '张三'}}</div>
+              <div class="name">{{item.patName ? item.patName : '肖雄全'}}</div>
               <div class="medical_card">{{item.medical_card ? item.medical_card : '1234567'}}</div>
               <div class="serial_number">
                 流水号：
-                <span class="value">{{item.hisOrdNum}}</span>
+                <span class="value">{{item.hisOrdNum ? item.hisOrdNum : '8608360'}}</span>
               </div>
               <div class="department">
                 开单科室：
@@ -34,7 +34,7 @@
           <mt-cell>
             <div class="leftInfo">
               <div class="name">{{item.patName}}</div>
-              <div class="medical_card">{{item.medical_card}}</div>
+              <div class="medical_card">{{item.medical_card ? item.medical_card : '1234567'}}</div>
               <div class="serial_number">
                 流水号：
                 <span class="value">{{item.hisOrdNum}}</span>
@@ -62,6 +62,8 @@ export default {
   data () {
     return {
       selected: '1',
+      clickedPaid: false,
+      clickedUnPaid: false,
       unpaid: [
         // {
         //   name: '张家辉',
@@ -97,32 +99,38 @@ export default {
   },
   methods: {
     getUnpaidList () {
-      util.http
-        .post('/api/doctor/getVisitPayInfo', {
-          hisOrdNum: '424177',
-          patCardNo: ''
-        })
-        .then(res => {
-          console.log(res)
-          this.unpaid = res.data.Records
-        })
-        .catch(error => {
-          console.log(error)
-        })
+      if (!this.clickedUnPaid) {
+        util.http
+          .post('/api/doctor/getVisitPayInfo', {
+            hisOrdNum: '424177',
+            patCardNo: ''
+          })
+          .then(res => {
+            console.log(res)
+            this.unpaid = res.data.Records
+            this.clickedUnPaid = true
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      }
     },
     getPaidList () {
-      util.http
-        .post('/api/doctor/payInfoList', {
-          patCardNo: '5555500288',
-          patCardType: '院内诊疗卡'
-        })
-        .then(res => {
-          console.log(res)
-          this.paid = res.data.Records
-        })
-        .catch(error => {
-          console.log(error)
-        })
+      if (!this.clickedPaid) {
+        util.http
+          .post('/api/doctor/payInfoList', {
+            patCardNo: '5555500288',
+            patCardType: '院内诊疗卡'
+          })
+          .then(res => {
+            console.log(res)
+            this.paid = res.data.Records
+            this.clickedPaid = true
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      }
     }
   }
 }
@@ -193,6 +201,7 @@ export default {
         text-align: center;
         .price {
           display: inline-block;
+          width: 80px;
           padding: 12px 10px;
           background: #f69343;
           color: #fff;

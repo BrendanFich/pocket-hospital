@@ -1,5 +1,6 @@
 <template>
   <div class="regOrder">
+    <img class="noData" v-if="orderList.length === 0" src="@/assets/img/暂无数据.png" />
     <ul>
       <li v-for="(item, index) in orderList" :key="index">
         <div class="paidTime">下单日期：{{item.createDate}}</div>
@@ -32,7 +33,7 @@
           <div class="right">
             <span class="price">{{item.regFee}}元</span>
             <span class="orderTime">{{item.beginTime}}-{{item.endTime}}</span>
-            <span class="status">{{status(item.visitFlag)}}</span>
+            <span :class="{noArrival: item.visitFlag ==='0',arrivaled: item.visitFlag ==='1'}">{{status(item.visitFlag)}}</span>
           </div>
         </div>
       </li>
@@ -83,6 +84,11 @@ export default {
 .regOrder {
   background: #f2f2f2;
   height: 100vh;
+  .noData {
+    width: 366px;
+    margin-top: 50px;
+    margin-left: 200px;
+  }
   .paidTime {
     color: #999999;
     font-size: 24px;
@@ -143,7 +149,11 @@ export default {
         margin-top: 10px;
         background: #5adba3;
       }
-      .status{
+      .noArrival{
+        margin-top: 10px;
+        background: #f69343;
+      }
+      .arrival {
         margin-top: 10px;
         background: #5adba3;
       }

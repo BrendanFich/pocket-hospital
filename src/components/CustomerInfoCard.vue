@@ -26,7 +26,7 @@ export default {
   },
   computed: {
     customerInfo () {
-      return this.$store.state.patInfo.filter(item => (item.visitCardNo === this.defaultCardNo) || (item.socialHosCardNO === this.defaultCardNo))[0]
+      return this.$store.state.patInfoBinded.filter(item => (item.visitCardNo === this.defaultCardNo) || (item.socialHosCardNO === this.defaultCardNo))[0]
     }
   },
   created () {

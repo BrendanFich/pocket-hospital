@@ -28,7 +28,7 @@ export default {
   },
   computed: {
     cardInfo () {
-      return this.$store.state.patInfo.filter(item => (item.visitCardNo === this.$route.params.cardNo) || (item.socialHosCardNO === this.$route.params.cardNo))[0]
+      return this.$store.state.patInfoBinded.filter(item => (item.visitCardNo === this.$route.params.cardNo) || (item.socialHosCardNO === this.$route.params.cardNo))[0]
     }
   },
   methods: {

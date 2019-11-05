@@ -58,17 +58,18 @@ export default {
   created () {
     this.idNum = this.$route.params.patIdNo ? this.$route.params.patIdNo : ''
     this.name = this.$route.params.patName ? this.$route.params.patName : ''
-    util.http
-      .post('/api/pat/pat_info')
-      .then(res => {
-        console.log('----------获取患者信息-----------')
-        // this.cardList = res.data
-        this.$store.commit('updateUserPatInfo', res.data)
-        console.log(res.data)
-      })
-      .catch(error => {
-        console.log(error)
-      })
+    // util.http
+    //   .post('/api/pat/pat_info')
+    //   .then(res => {
+    //     console.log('----------获取患者信息-----------')
+    //     // this.cardList = res.data
+    //     this.$store.commit('updateUserPatInfo', res.data)
+    //     console.log(res.data)
+    //   })
+    //   .catch(error => {
+    //     console.log(error)
+    //   })
+    this.$store.commit('updateUserPatInfo')
   },
   computed: {
     cardType () {
@@ -120,14 +121,19 @@ export default {
       const duration = 1500
       const className = 'toast'
       const p = /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
-
+      let allPatInfo = this.$store.state.patInfoBinded.concat(this.$store.state.patInfoNobind)
       if (this.cardNum && this.name && this.idNum) {
         // 通过身份证id判断其对应的patientId
-        if (this.$store.state.patInfo.length !== 0) {
-          this.$store.state.patInfo.forEach(item => {
+        console.log('ssssssssssssssssssssssssssssssss')
+
+        if (allPatInfo !== []) {
+          console.log('ssssssssssssssssssssssssssssssss')
+          allPatInfo.forEach(item => {
             if (item.patIdNo === this.idNum) {
-              this.patientId = item.mPIId
+              console.log('patentID==================================')
+
               console.log(item.mPIId)
+              this.patientId = item.mPIId
             }
           })
         }
@@ -154,16 +160,13 @@ export default {
             .then(res => {
               console.log(res)
               if (res.code === 0) {
-                if (res.data.Message === '卡号已存在') {
-                  this.$toast({ message: '该卡号已绑定', duration, className })
-                } else {
-                  this.$store.commit('updateUserInfo')
-                  this.$toast({ message: '绑定成功', duration, className })
-                  this.$router.push({ path: '/mine/cardManage' })
-                }
-              }
-              if (res.code === 400) {
-                this.$toast({ message: '姓名和证件号须与建档时保持一致', duration: 2000, className })
+                this.$store.commit('updateUserInfo')
+                this.$toast({ message: '绑定成功', duration, className })
+                this.$router.push({ path: '/mine/cardManage' })
+              } else if (res.msg === '卡号已绑定') {
+                this.$toast({ message: '该卡号已绑定', duration, className })
+              } else {
+                this.$toast({ message: res.msg, duration: 2000, className })
               }
             })
             .catch(error => {

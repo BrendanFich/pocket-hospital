@@ -7,7 +7,8 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     userInfo: {},
-    patInfo: [],
+    patInfoBinded: [],
+    patInfoNobind: [],
     selectedDeptCode: '',
     selectedDeptName: '',
     selectedDocCode: '',
@@ -34,8 +35,9 @@ export default new Vuex.Store({
         .then(res => {
           console.log('----------获取患者信息-----------')
           console.log(res)
+          state.patInfoNobind = res.data.filter(item => (item.visitCardNo === '') && (item.socialHosCardNO === ''))
           let patInfoContent = []
-          res.data.filter(item => (item.visitCardNo !== '') || (item.socialCardNo !== '')).forEach((item) => {
+          res.data.filter(item => (item.visitCardNo !== '') || (item.socialHosCardNO !== '')).forEach((item) => {
             if (item.visitCardNo && !item.socialHosCardNO) {
               patInfoContent.push(item)
             }
@@ -52,7 +54,7 @@ export default new Vuex.Store({
               patInfoContent.push(newItem)
             }
           })
-          state.patInfo = patInfoContent
+          state.patInfoBinded = patInfoContent
           util.http.post('/api/user/vx_info').then(res => {
             console.log('-----------获取用户信息/api/user/vx_info-----------')
             console.log(res)

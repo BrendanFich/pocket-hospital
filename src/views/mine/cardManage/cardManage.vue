@@ -55,7 +55,7 @@ export default {
   name: 'cardManage',
   data () {
     return {
-      cardList: this.$store.state.patInfo
+      cardList: this.$store.state.patInfoBinded
     }
   },
   computed: {
@@ -81,6 +81,7 @@ export default {
   .noData {
     width: 366px;
     margin-top: 50px;
+    margin-left: 200px;
   }
   h2 {
     color: #999999;

@@ -48,9 +48,10 @@ export default {
         psOrdNum: '123',
         deptCode: this.$store.state.selectedDeptCode,
         deptName: this.$store.state.selectedDeptName,
-        doctorName: this.$store.state.selectedDocName,
-        // deptCode: '173',
-        doctorCode: '0' + this.$store.state.selectedDocCode.toString(), // 比实际医生code多2
+        // doctorName: this.$store.state.selectedDocName,
+        // doctorCode: '0' + this.$store.state.selectedDocCode.toString(), // 比实际医生code多2
+        doctorName: '劳绍祥',
+        doctorCode: '020',
         scheduleDate: this.$store.state.selectedDate,
         timeFlag: '1',
         regFee: this.$store.state.price.toString(),

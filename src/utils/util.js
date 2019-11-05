@@ -21,7 +21,7 @@ http.ajax.interceptors.response.use(res => {
   // token过期时
   if (res.code === 500 && res.msg === '无有效token,请重新授权') {
     localStorage.removeItem('token')
-    window.location.href = 'http://yun.gdqlyt.com.cn:8197'
+    window.location.href = 'http://yun.gdqlyt.com.cn:84'
   }
   return res
 }, err => {
