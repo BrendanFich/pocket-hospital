@@ -34,6 +34,7 @@ import bodyExam from '@/views/index/reports/bodyExam'
 import examination from '@/views/index/reports/examination'
 import otherReports from '@/views/index/reports/otherReports'
 import drugSearch from '@/views/index/drugSearch/drugSearch'
+import serverPrice from '@/views/index/serverPrice/serverPrice'
 import parking from '@/views/index/parking/parking'
 import suggestion from '@/views/index/suggestion/suggestion'
 // iHospital
@@ -121,6 +122,7 @@ export default new Router({
       ]
     },
     { path: '/drugSearch', component: drugSearch },
+    { path: '/serverPrice', component: serverPrice },
     { path: '/parking', component: parking },
     { path: '/suggestion', component: suggestion },
     {

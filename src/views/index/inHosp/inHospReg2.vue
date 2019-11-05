@@ -168,7 +168,25 @@ export default {
           patIdType: '1', // 必要
           patIdNo: '441581188602104712', // 必要
           CardType: '1', // 必要
-          CardNo: '2612612' // 必要
+          CardNo: '2612612', // 必要
+          patName: '陈就',
+          patMobile: '1234567890',
+          country: '中国',
+          registration: '广东',
+          birthPlace: '广东',
+          sex: '男',
+          nation: '汉族',
+          maritalStatus: '未婚'
+          // CardType: this.$store.state.userInfo.visitCardNo ? '1' : '2', // 必要
+          // CardNo: this.$store.state.userInfo.visitCardNo || this.$store.state.userInfo.socialHosCardNO, // 必要
+          // patName: this.name,
+          // patMobile: this.phoneNum,
+          // country: this.country,
+          // registration: this.registration,
+          // birthPlace: this.birthPlace,
+          // sex: this.sex,
+          // nation: this.nation,
+          // maritalStatus: this.maritalStatus
         })
         .then(res => {
           console.log(res)

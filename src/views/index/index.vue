@@ -61,7 +61,7 @@
           <img src="@/assets/img/药.png" />
           <h3>药品查询</h3>
         </router-link>
-        <router-link class="item" to="/index">
+        <router-link class="item" to="/serverPrice">
           <img src="@/assets/img/医疗.png"/>
           <h3>医疗服务价格</h3>
         </router-link>
@@ -86,7 +86,7 @@
 <script>
 import Tabbar from '@/components/Tabbar'
 import wx from 'weixin-js-sdk'
-import localtion from '@/config'
+import config from '@/config'
 
 export default {
   name: 'index',
@@ -100,10 +100,10 @@ export default {
       console.log('click')
       wx.ready(function () {
         wx.openLocation({
-          latitude: localtion.latitude,
-          longitude: localtion.longitude,
-          name: localtion.hospitalName,
-          address: '测试地址',
+          latitude: config.latitude,
+          longitude: config.longitude,
+          name: config.hospitalName,
+          address: config.address,
           scale: 18
         })
       })

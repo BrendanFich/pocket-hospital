@@ -52,6 +52,8 @@ export default {
     confirm () {
       this.$router.push({ path: '/payOnline', name: 'payOnline' })
     }
+  },
+  created () {
   }
 }
 </script>

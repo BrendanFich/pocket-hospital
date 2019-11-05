@@ -12,7 +12,7 @@ export default {
     return {}
   },
   created () {
-    if (!this.$store.state.userInfo.visitCardNo) {
+    if (!this.$store.state.userInfo.visitCardNo && !this.$store.state.userInfo.socialHosCardNO) {
       this.bindCardNotice()
     }
   },

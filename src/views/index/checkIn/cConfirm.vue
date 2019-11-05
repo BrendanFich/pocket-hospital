@@ -28,7 +28,7 @@ export default {
   },
   created () {
     util.http
-      .post('/api/pat/findVisitingRegister', {patCardNo: this.$store.state.userInfo.visitCardNo ? this.$store.state.userInfo.visitCardNo : this.$store.state.userInfo.socialCardNo})
+      .post('/api/pat/findVisitingRegister')
       .then(res => {
         console.log(res)
         this.registerInfo = res.data.Records
@@ -41,13 +41,15 @@ export default {
       success (res) {
         this.latitude = res.latitude
         this.longitude = res.longitude
-        alert(res.latitude, res.longitude)
+        // alert(res.latitude, res.longitude)
       }
     })
   },
   methods: {
     confirm () {
-      let text = `
+      let text
+      if (this.registerInfo.hisOrdNum) {
+        text = `
       <div>
         <p>就诊日期：${this.registerInfo.scheduleDate}</p>
         <p>就诊时间：${this.registerInfo.beginTime} - ${this.registerInfo.beginTime}</p>
@@ -55,17 +57,22 @@ export default {
         <p>就诊医生：${this.registerInfo.doctorName}</p>
       </div>
       `
+      } else {
+        text = `<div>请先预约挂号</div>`
+      }
       this.$messagebox.confirm(text).then(action => {
         util.http
-          .post('/api/pat/findAllRegister')
+          .post('/api/pat/visitingReport', {patCardNo: this.$store.state.userInfo.visitCardNo ? this.$store.state.userInfo.visitCardNo : this.$store.state.userInfo.socialCardNo})
           .then(res => {
             console.log(res)
-            this.orderList = res.data.Records
+            // this.orderList = res.data.Records
           })
           .catch(error => {
             console.log(error)
           })
-        this.$router.push('/checkIn/cQueue')
+        if (this.registerInfo.hisOrdNum) {
+          this.$router.push('/checkIn/cQueue')
+        }
       })
       // if (this.isArrived) {
       //   this.$messagebox.confirm(text).then(action => {
