@@ -85,7 +85,6 @@ export default {
           })
           .then(res => {
             console.log('======/api/user/vx_perpare=======')
-            console.log(res)
             window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + res.data.appid + '&redirect_uri=' + res.data.redirect_uri + '&response_type=' + res.data.response_type + '&scope=' + res.data.scope + '&state=' + res.data.state + res.data.wechat_redirect
           })
           .catch(error => {

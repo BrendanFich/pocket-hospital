@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { Indicator } from 'mint-ui'
-const BaseUrl = 'http://qlyt.vicp.net:8197'
+// const BaseUrl = 'http://qlyt.vicp.net:8197'
+const BaseUrl = 'http://yun.gdqlyt.com.cn:8197'
 let http = {}
 http.ajax = axios.create()
 
@@ -20,7 +21,7 @@ http.ajax.interceptors.response.use(res => {
   // token过期时
   if (res.code === 500 && res.msg === '无有效token,请重新授权') {
     localStorage.removeItem('token')
-    window.location.href = 'http://localhost:8080'
+    window.location.href = 'http://yun.gdqlyt.com.cn:8197'
   }
   return res
 }, err => {
