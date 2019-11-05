@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view v-if="this.$store.state.userInfo"/>
+    <router-view />
   </div>
 </template>
 
@@ -26,7 +26,7 @@ export default {
     let _this = this
     if (wxSign) {
       wx.config({
-        debug: true,
+        debug: false,
         appId: config.appId,
         timestamp: wxSign.split('&')[0],
         nonceStr: wxSign.split('&')[1],
@@ -34,8 +34,12 @@ export default {
         jsApiList: ['openLocation', 'getLocation', 'updateAppMessageShareData']
       })
       wx.error(function (res) {
+        console.log('wxerror')
+        console.log(res)
         // 如果签名过期，再重新获取
-        if (res.errMsg.includes('63002')) {
+        // 有个坑：微信开发者工具返回的errMsg,与真机测试时返回的errMsg存在区别
+        // 微信开发者工具的返回有错误码63002，真机测试时没有错误码
+        if (res.errMsg.includes('invalid signature')) {
           console.log('--------------签名过期获取新签名--------------')
           if (_this.count < 5) {
             _this.getSign()
@@ -94,12 +98,13 @@ export default {
         .post('/api/user/vx_sign', { url: location.href.split('#')[0] })
         .then(res => {
           console.log(res)
+
           window.localStorage.setItem(
             'wxSign',
             [res.data.timestamp, res.data.nonceStr, res.data.signtrue].join('&')
           )
           wx.config({
-            debug: true,
+            debug: false,
             appId: config.appId,
             timestamp: res.data.timestamp,
             nonceStr: res.data.nonceStr,
