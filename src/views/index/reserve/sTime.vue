@@ -4,12 +4,15 @@
       <div class="baseInfo">
         <img src="@/assets/img/图层 826 拷贝 2.png" alt />
         <div>
-          <div class="name">{{docInfo.doctorName}}</div>
-          <div class="department">{{docInfo.deptName}}</div>
+          <!-- <div class="name">{{docInfo.doctorName}}</div>
+          <div class="department">{{docInfo.deptName}}</div> -->
+          <div class="name">劳绍祥</div>
+          <div class="department">内科门诊</div>
         </div>
       </div>
       <div class="intro">
-        {{(docInfo.doctorIntrodution === "" || docInfo.doctorIntrodution === null) ? '暂无简介' : docInfo.doctorIntrodution}}
+        <!-- {{(docInfo.doctorIntrodution === "" || docInfo.doctorIntrodution === null) ? '暂无简介' : docInfo.doctorIntrodution}} -->
+        暂无简介
       </div>
     </div>
     <div class="workTime">

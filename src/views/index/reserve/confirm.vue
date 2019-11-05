@@ -13,7 +13,8 @@
         </li>
         <li>
           <span class="key">医生</span>
-          <span class="value">{{$store.state.selectedDocName}}</span>
+          <!-- <span class="value">{{$store.state.selectedDocName}}</span> -->
+          <span class="value">劳绍祥</span>
         </li>
         <li>
           <span class="key">就诊日期</span>

@@ -153,7 +153,7 @@ export default {
         margin-top: 10px;
         background: #f69343;
       }
-      .arrival {
+      .arrivaled {
         margin-top: 10px;
         background: #5adba3;
       }
