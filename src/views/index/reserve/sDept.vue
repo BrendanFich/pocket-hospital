@@ -1,8 +1,7 @@
 <template>
   <div class="sDept">
-    <!-- <Searchbar placeholder="搜索科室或医生" @getSearchStatus="setSearchStatus"></Searchbar> -->
     <div class="searchbar">
-      <img class="cancelIcon" src="@/assets/img/搜索.png" alt />
+      <img class="cancelIcon" src="@/assets/img/search.png" alt />
       <input type="text" v-model="value" placeholder="搜索科室名称" @focus="focus" />
       <div class="xIcon" :class="{show: value}" @click="clear">×</div>
       <button class="cancel" :class="{show : isShow}" @click="cancel">取消</button>
@@ -10,7 +9,7 @@
         <div v-if="searchResult.length===0 && value !== ''" class="noInfo">无相关科室信息</div>
         <div v-for="(item,index) in searchResult" :key="index" @click="select(item.deptCode, item.deptName)">
           <mt-cell :title="item.deptName">
-            <img class="icon" src="@/assets/img/科室.png" />&gt;
+            <img class="icon" src="@/assets/img/deptIcon.png" />&gt;
           </mt-cell>
         </div>
       </div>
@@ -27,7 +26,7 @@
           <!-- <img class="noData" v-if="deptList.length === 0" src="@/assets/img/暂无数据.png" /> -->
           <div v-for="(item,index) in deptList" :key="index" @click="select(item.deptCode, item.deptName)">
             <mt-cell :title="item.deptName">
-              <img class="icon" src="@/assets/img/科室.png" />&gt;
+              <img class="icon" src="@/assets/img/deptIcon.png" />&gt;
             </mt-cell>
           </div>
         </mt-tab-container-item>
@@ -38,12 +37,10 @@
 </template>
 
 <script>
-import Searchbar from '@/components/Searchbar'
 import util from '@/assets/js/util'
 
 export default {
   name: 'sDept',
-  components: { Searchbar },
   data () {
     return {
       value: '',

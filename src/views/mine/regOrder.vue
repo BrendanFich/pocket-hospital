@@ -1,12 +1,12 @@
 <template>
   <div class="regOrder">
-    <img class="noData" v-if="orderList.length === 0" src="@/assets/img/暂无数据.png" />
+    <img class="noData" v-if="orderList.length === 0" src="@/assets/img/noData.png" />
     <ul>
       <li v-for="(item, index) in orderList" :key="index">
         <div class="paidTime">下单日期：{{item.createDate}}</div>
         <div class="orderCard">
           <div class="left">
-            <img src="@/assets/img/订单.png" alt />
+            <img src="@/assets/img/orderIcon.png" alt />
             <div class="baseInfo">
               <div>
                 <span class="name">{{item.patName}}</span>

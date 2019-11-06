@@ -4,35 +4,35 @@
     <ul class="orderList">
       <li @click="linkTo('/mine/regOrder')">
         <div>
-          <img src="@/assets/img/挂号 (1).png" />
+          <img src="@/assets/img/regOrderIcon.png" />
           <span class="title">挂号订单</span>
         </div>
         <span class="linkIcon">></span>
       </li>
       <li @click="linkTo('/payOnline')">
         <div>
-          <img src="@/assets/img/缴费.png" />
+          <img src="@/assets/img/payOnlineIcon.png" />
           <span class="title">缴费订单</span>
         </div>
         <span class="linkIcon">></span>
       </li>
       <li @click="linkTo('/mine/liveHosOrder')">
         <div>
-          <img src="@/assets/img/住院2.png" />
+          <img src="@/assets/img/liveHosOrderIcon.png" />
           <span class="title">住院预交金订单</span>
         </div>
         <span class="linkIcon">></span>
       </li>
       <li>
         <div>
-          <img src="@/assets/img/住院2.png" />
+          <img src="@/assets/img/mealIcon.png" />
           <span class="title">点餐订单</span>
         </div>
         <span class="linkIcon">></span>
       </li>
       <li @click="linkTo('/iHospital/review')">
         <div>
-          <img src="@/assets/img/我 的.png" />
+          <img src="@/assets/img/mineIcon.png" />
           <span class="title">我的就诊</span>
         </div>
         <span class="linkIcon">></span>
@@ -40,19 +40,19 @@
     </ul>
     <div class="others">
       <div class="item" @click="linkTo('/reports')">
-        <img src="@/assets/img/组 28.png" alt />
+        <img src="@/assets/img/myReportIcon.png" alt />
         <span>我的报告</span>
       </div>
       <div class="item" @click="linkTo('/suggestion')">
-        <img src="@/assets/img/组 28(1).png" alt />
+        <img src="@/assets/img/suggestionIcon.png" alt />
         <span>就医反馈</span>
       </div>
       <div class="item">
-        <img src="@/assets/img/组 28(2).png" alt />
+        <img src="@/assets/img/questionIcon.png" alt />
         <span>随访问卷</span>
       </div>
       <div class="item">
-        <img src="@/assets/img/组 28(3).png" alt />
+        <img src="@/assets/img/linkIcon.png" alt />
         <span>友情链接</span>
       </div>
     </div>

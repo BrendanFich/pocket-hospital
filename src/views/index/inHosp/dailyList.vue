@@ -1,7 +1,7 @@
 <template>
   <div class="dailyList">
     <div class="list">
-      <img class="noData" v-if="unpaid.length === 0" src="@/assets/img/暂无数据.png" />
+      <img class="noData" v-if="unpaid.length === 0" src="@/assets/img/noData.png" />
       <mt-cell v-for="(item,index) in unpaid" :key="index">
         <div class="leftInfo">
           <div class="name">{{item.name}}</div>

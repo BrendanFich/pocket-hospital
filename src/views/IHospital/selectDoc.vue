@@ -7,16 +7,16 @@
           <ul style="background: #fff;">
             <li class="doctorIntroCard" v-for="(doctor,dindex) in item.doctors" :key="dindex">
               <div class="baseInfo">
-                <img class="avatar" src="@/assets/img/图层 826 拷贝 5.png" />
+                <img class="avatar" src="@/assets/img/avatar100x101.png" />
                 <div>
                   <p class="doctorName">{{doctor.name}}</p>
                   <p class="doctorTitle">{{item.name}} {{doctor.title}}</p>
                   <div class="star">
-                    <img v-for="n in doctor.star" :key="n" src="@/assets/img/星星 拷贝 8.png" />
+                    <img v-for="n in doctor.star" :key="n" src="@/assets/img/starOn.png" />
                   </div>
                 </div>
                 <div class="price">
-                  <img src="@/assets/img/沟通.png" />
+                  <img src="@/assets/img/communication.png" />
                   <span>{{doctor.price}}元</span>
                 </div>
               </div>

@@ -1,7 +1,7 @@
 <template>
   <div class="customerInfoCard">
     <div>
-      <img src="@/assets/img/组 27.png" />
+      <img src="@/assets/img/greenAvatar.png" />
       <div class="textInfo" v-if="customerInfo">
         <span class="name">{{customerInfo.patName}}</span>
         <span class="status">默认</span>

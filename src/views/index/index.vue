@@ -1,17 +1,17 @@
 <template>
   <div class="index">
     <div class="slogan">
-      <img src="@/assets/img/图层 1.png" />
+      <img src="@/assets/img/indexBg.png" />
     </div>
     <div class="navs1">
       <router-link class="nav1" to="/reserve">
-        <img src="@/assets/img/组 26(1).png" />
+        <img src="@/assets/img/reserveBg.png" />
         <h2>预约、挂号</h2>
         <p>当天挂号、预约挂号</p>
       </router-link>
       <div class="navs1">
         <router-link class="nav1" to="/payOnline">
-          <img src="@/assets/img/组 26.png" />
+          <img src="@/assets/img/payOnlineBg.png" />
           <h2>缴费</h2>
           <p>在线缴检查费、药费</p>
         </router-link>
@@ -23,7 +23,7 @@
           <h2>智能导诊</h2>
           <p>精准，安全，快捷</p>
         </div>
-        <img src="@/assets/img/f51a82f794ecc.png" />
+        <img src="@/assets/img/woman.png" />
       </router-link>
       <div class="right">
         <router-link class="nav2" to="/checkIn">
@@ -31,14 +31,14 @@
             <h2>就诊报到</h2>
             <p>报到后获取排队信息</p>
           </div>
-          <img src="@/assets/img/组 27(2).png" />
+          <img src="@/assets/img/checkIn.png" />
         </router-link>
         <router-link class="nav2" to="/inHosp/nav">
           <div>
             <h2>住院服务</h2>
             <p>住院手续一条龙服务</p>
           </div>
-          <img src="@/assets/img/住院服务.png" />
+          <img src="@/assets/img/inHospital.png" />
         </router-link>
       </div>
     </div>
@@ -46,35 +46,35 @@
       <h2>其他服务</h2>
       <div class="otherItems">
         <router-link class="item" to="/hospitalInfo">
-          <img src="@/assets/img/医院 (2).png" />
+          <img src="@/assets/img/hospitalIcon.png" />
           <h3>医院信息</h3>
         </router-link>
         <router-link class="item" to="/doctorIntro">
-          <img src="@/assets/img/医生 (1).png" />
+          <img src="@/assets/img/dortorIcon.png" />
           <h3>医生介绍</h3>
         </router-link>
         <router-link class="item" to="/reports">
-          <img src="@/assets/img/报告 (1).png" />
+          <img src="@/assets/img/reports.png" />
           <h3>报告查询</h3>
         </router-link>
         <router-link class="item" to="/drugSearch">
-          <img src="@/assets/img/药.png" />
+          <img src="@/assets/img/drugIcon.png" />
           <h3>药品查询</h3>
         </router-link>
         <router-link class="item" to="/serverPrice">
-          <img src="@/assets/img/医疗.png"/>
+          <img src="@/assets/img/serverIcon.png"/>
           <h3>医疗服务价格</h3>
         </router-link>
         <router-link class="item" to="/parking">
-          <img src="@/assets/img/车位.png" />
+          <img src="@/assets/img/parkIcon.png" />
           <h3>车位查询</h3>
         </router-link>
         <router-link class="item" to="/suggestion">
-          <img src="@/assets/img/意见.png" />
+          <img src="@/assets/img/suggestion.png" />
           <h3>意见提交</h3>
         </router-link>
         <div class="item" to="/index" @click="getLocation">
-          <img src="@/assets/img/导航.png" />
+          <img src="@/assets/img/guidance.png" />
           <h3>来院导航</h3>
         </div>
       </div>

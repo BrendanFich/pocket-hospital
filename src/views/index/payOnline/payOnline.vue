@@ -6,7 +6,7 @@
     </mt-navbar>
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
-        <img class="noData" v-if="unpaid.length === 0" src="@/assets/img/暂无数据.png" />
+        <img class="noData" v-if="unpaid.length === 0" src="@/assets/img/noData.png" />
         <router-link to="/payOnline" v-for="(item,index) in unpaid" :key="index">
           <mt-cell>
             <div class="leftInfo">
@@ -29,7 +29,7 @@
         </router-link>
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
-        <img class="noData" v-if="paid.length === 0" src="@/assets/img/暂无数据.png" />
+        <img class="noData" v-if="paid.length === 0" src="@/assets/img/noData.png" />
         <div v-for="(item,index) in paid" :key="index">
           <mt-cell>
             <div class="leftInfo">

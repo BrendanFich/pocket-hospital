@@ -4,7 +4,7 @@
       <li v-for="n in 3" :key="n" @click="to()">
         <div class="orderCard">
           <div class="left">
-            <img src="@/assets/img/图层 826.png" alt />
+            <img src="@/assets/img/avatar88x88.png" alt />
             <div class="baseInfo">
               <div>
                 <span class="name">张家辉</span>

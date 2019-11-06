@@ -1,38 +1,38 @@
 <template>
   <div class="nav">
-    <img src="@/assets/img/医院背景.png" class="hospBg" />
+    <img src="@/assets/img/hosptalBg.png" class="hospBg" />
     <div class="content">
       <ul>
         <li @click="linkTo('/inHosp/inHospReg1')">
-          <img src="@/assets/img/入院登记.png" alt class="icon" />
+          <img src="@/assets/img/enter.png" alt class="icon" />
           <div class="navInfo">
             <div class="navName">入院登记</div>
             <div class="navIntro">进行入院资料登记</div>
           </div>
         </li>
         <li @click="linkTo('/mine/liveHosOrder')">
-          <img src="@/assets/img/住院缴费.png" alt class="icon" />
+          <img src="@/assets/img/hosptalPay.png" alt class="icon" />
           <div class="navInfo">
             <div class="navName">预交金缴纳</div>
             <div class="navIntro">在线预交金缴纳</div>
           </div>
         </li>
         <li @click="linkTo('/inHosp/dailyList')">
-          <img src="@/assets/img/每日清单.png" alt class="icon" />
+          <img src="@/assets/img/dailyList.png" alt class="icon" />
           <div class="navInfo">
             <div class="navName">每日清单</div>
             <div class="navIntro">住院每日清单查询</div>
           </div>
         </li>
         <li @click="linkTo('/inHosp/feeTotal')">
-          <img src="@/assets/img/总汇清单.png" alt class="icon" />
+          <img src="@/assets/img/totalList.png" alt class="icon" />
           <div class="navInfo">
             <div class="navName">汇总清单</div>
             <div class="navIntro">总清单查询</div>
           </div>
         </li>
         <li @click="linkTo('/inHosp/outCount')">
-          <img src="@/assets/img/出院结算.png" alt class="icon" />
+          <img src="@/assets/img/outPay.png" alt class="icon" />
           <div class="navInfo">
             <div class="navName">出院结算</div>
             <div class="navIntro">出院金额结算</div>

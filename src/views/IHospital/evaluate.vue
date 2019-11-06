@@ -8,7 +8,7 @@
       <li>
         <span class="key">诊断专家</span>
         <div class="value">
-          <img src="@/assets/img/图层 826 拷贝 6.png" />
+          <img src="@/assets/img/avatar55x54.png" />
           <span>杨辉</span>
         </div>
       </li>
@@ -18,8 +18,8 @@
       <h3>请您对本次就诊服务评价</h3>
       <div class="stars">
         <div class="star" @click="changeStar(n)" v-for="n in 5" :key="n">
-          <img src="@/assets/img/星星 拷贝 8.png" alt v-if="n<=star" />
-          <img src="@/assets/img/星星 拷贝 8(1).png" alt v-else />
+          <img src="@/assets/img/starOn.png" alt v-if="n<=star" />
+          <img src="@/assets/img/starOff.png" alt v-else />
         </div>
       </div>
     </div>

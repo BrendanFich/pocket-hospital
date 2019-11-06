@@ -1,10 +1,10 @@
 <template>
   <div class="serverPrice">
     <div class="displayCard" :class="{hidden: isShow}">
-      <img src="@/assets/img/医疗服务价格.png" />
+      <img src="@/assets/img/serverPriceBg.png" />
     </div>
     <div class="searchbar">
-      <img class="cancelIcon" src="@/assets/img/搜索.png" alt />
+      <img class="cancelIcon" src="@/assets/img/search.png" alt />
       <input type="text" v-model="value" placeholder="搜索医疗服务" @focus="focus" />
       <div class="xIcon" :class="{show: value}" @click="clear">×</div>
       <button class="cancel" :class="{show : isShow}" @click="cancel">取消</button>
@@ -38,7 +38,6 @@
 </template>
 
 <script>
-import Searchbar from '@/components/Searchbar'
 import util from '@/assets/js/util'
 
 export default {
@@ -56,7 +55,6 @@ export default {
 
     }
   },
-  components: { Searchbar },
   methods: {
     focus () {
       this.isShow = true

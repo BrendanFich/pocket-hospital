@@ -72,7 +72,7 @@ export default {
           if (res.code === 0) {
             this.$indicator.close()
             this.$toast({
-              message: '提交成功',
+              message: '挂号成功',
               duration: 1000,
               className: 'toast'
             })

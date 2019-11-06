@@ -12,15 +12,15 @@
 
     <mt-tab-container v-model="selected">
       <mt-tab-container-item v-for="(item,index) in deptList" :key="index" :id="index">
-        <img class="noData" v-if="docList.length === 0"  src="@/assets/img/暂无数据.png" />
+        <img class="noData" v-if="docList.length === 0"  src="@/assets/img/noData.png" />
         <ul style="background: #fff;">
           <li class="doctorIntroCard" v-for="(doctor,dindex) in docList" :key="dindex">
-            <img class="avatar" src="@/assets/img/图层 826 拷贝 5.png" />
+            <img class="avatar" src="@/assets/img/avatar100x101.png" />
             <div class="doctorInfo">
               <p class="doctorName">{{doctor.doctorName}}</p>
               <p class="doctorTitle">{{doctor.doctorTitle}} {{doctor.title}}</p>
               <div class="star">
-                <img v-for="n in doctor.star" :key="n" src="@/assets/img/星星 拷贝 8.png" />
+                <img v-for="n in doctor.star" :key="n" src="@/assets/img/starOn.png" />
               </div>
               <p class="textIntro">{{doctor.doctorIntrodution === null ? '暂无介绍' :doctor.doctorIntrodution }}</p>
             </div>

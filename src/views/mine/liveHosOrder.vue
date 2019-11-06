@@ -5,7 +5,7 @@
         <div class="paidTime">下单日期：2019-08-20 20:31:05</div>
         <div class="orderCard">
           <div class="left">
-            <img src="@/assets/img/钱.png" alt />
+            <img src="@/assets/img/money.png" alt />
             <div class="baseInfo">
               <div>
                 <span class="name">张家辉</span>

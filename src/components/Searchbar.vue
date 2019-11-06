@@ -1,6 +1,6 @@
 <template>
   <div class="searchbar">
-    <img class="cancelIcon" src="@/assets/img/搜索.png" alt />
+    <img class="cancelIcon" src="@/assets/img/search.png" alt />
     <input type="text" v-model="value" :placeholder="placeholder" @focus="focus" />
     <div class="xIcon" :class="{show: value}" @click="clear">×</div>
     <button class="cancel" :class="{show : isShow}" @click="cancel">取消</button>
@@ -8,7 +8,7 @@
       <div v-if="searchResult" class="doctors">
         <p class="resultStyle">医生</p>
         <div class="resultItem" v-for="(item, index) in searchResult.doctors" :key="index">
-          <img class="avatar" src="@/assets/img/图层 826 拷贝 5.png" />
+          <img class="avatar" src="@/assets/img/avatar100x101.png" />
           <div class="textInfo">
             <p class="name">{{item.name}}</p>
             <p>{{item.department}}</p>
@@ -19,7 +19,7 @@
       <div v-if="searchResult" class="departments">
         <p class="resultStyle">科室</p>
         <div class="resultItem" v-for="(item, index) in searchResult.departments" :key="index">
-          <img class="icon" src="@/assets/img/科室.png" />
+          <img class="icon" src="@/assets/img/deptIcon.png" />
           <p class="name">{{item.name}}</p>
         </div>
       </div>

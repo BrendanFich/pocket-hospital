@@ -1,7 +1,7 @@
 <template>
   <div class="cardManage">
     <h2>就诊卡管理</h2>
-    <img class="noData" v-if="cardList.length === 0" src="@/assets/img/暂无数据.png" />
+    <img class="noData" v-if="cardList.length === 0" src="@/assets/img/noData.png" />
     <router-link
       class="customerInfoCard"
       v-for="(item,index) in cardList"
@@ -13,7 +13,7 @@
       :key="index"
     >
       <div>
-        <img src="@/assets/img/组 27.png" />
+        <img src="@/assets/img/greenAvatar.png" />
         <div class="textInfo">
           <span class="name">{{item.patName}}</span>
           <p class="cardNumber" v-if="item.visitCardNo">就诊卡：{{item.visitCardNo}}</p>
@@ -26,21 +26,21 @@
     <ul class="orderList">
       <li @click="linkTo('bindCard',{cardTypeWord:'就诊卡'})">
         <div>
-          <img src="@/assets/img/绑定.png" />
+          <img src="@/assets/img/bindJiuzhen.png" />
           <span class="title">绑定就诊卡</span>
         </div>
         <span class="linkIcon">></span>
       </li>
       <li @click="linkTo('buildCard')">
         <div>
-          <img src="@/assets/img/新建.png" />
+          <img src="@/assets/img/build.png" />
           <span class="title">初诊建档</span>
         </div>
         <span class="linkIcon">></span>
       </li>
       <li @click="linkTo('bindCard',{cardTypeWord:'社保卡'})">
         <div>
-          <img src="@/assets/img/绑定 (1).png" />
+          <img src="@/assets/img/bindShebao.png" />
           <span class="title">绑定社保卡</span>
         </div>
         <span class="linkIcon">></span>

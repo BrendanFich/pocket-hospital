@@ -15,7 +15,7 @@
           <span class="value highlight">{{item.checkName}}</span>
         </div>
       </div>
-      <img slot="icon" src="@/assets/img/报告1 拷贝.png" />
+      <img slot="icon" src="@/assets/img/pacsList.png" />
     </mt-cell>
   </div>
 </template>

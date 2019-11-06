@@ -28,7 +28,7 @@ export default {
   padding-top: 20px;
   .showBalance {
     margin: 0 auto;
-    background: url("../../../assets/img/余额.png") no-repeat;
+    background: url("../../../assets/img/balanceBg.png") no-repeat;
     background-size: 100% 100%;
     width: 694px;
     height: 284px;

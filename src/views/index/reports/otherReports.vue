@@ -17,7 +17,7 @@
       </div>
       <img slot="icon" src="@/assets/img/报告 (2) 拷贝.png" />
     </mt-cell> -->
-    <img class="noData" src="@/assets/img/暂无数据.png" />
+    <img class="noData" src="@/assets/img/noData.png" />
   </div>
 </template>
 

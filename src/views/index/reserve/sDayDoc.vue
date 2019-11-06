@@ -14,7 +14,7 @@
         todayBgColor="#eee"
       ></week-slider>
       <div class="doctorItems">
-        <img class="noData" v-if="showDoctors.length === 0" src="@/assets/img/暂无数据.png" />
+        <img class="noData" v-if="showDoctors.length === 0" src="@/assets/img/noData.png" />
         <div
           class="item"
           @click="select(item.leftNum, item.doctorCode, item.doctorName)"
@@ -22,7 +22,7 @@
           :key="index"
         >
           <div class="doctorInfo">
-            <img slot="icon" src="@/assets/img/图层 826 拷贝 2.png" />
+            <img slot="icon" src="@/assets/img/avatar100x101.png" />
             <div class="textInfo">
               <span class="name">{{item.Doctor}}</span>
               <span class="title">{{item.doctorTitle}}</span>

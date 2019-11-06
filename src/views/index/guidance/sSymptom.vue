@@ -3,7 +3,7 @@
     <div class="search">
       <!-- <Searchbar placeholder="请输入您的症状" ref='searchbar' @getSearchStatus="setSearchStatus"></Searchbar> -->
       <div class="searchbar">
-        <img class="cancelIcon" src="@/assets/img/搜索.png" alt />
+        <img class="cancelIcon" src="@/assets/img/search.png" alt />
         <input type="text" v-model="value" placeholder="请输入您的症状" @focus="focus" />
         <div class="xIcon" :class="{show: value}" @click="clear">×</div>
         <button class="cancel" :class="{show : isShow}" @click="cancel">取消</button>
@@ -11,17 +11,17 @@
           <div class="doctorIntroCard" v-for="(item,index) in searchResult" :key="index">
             <div class="baseInfo">
               <div class="left">
-                <img class="avatar" src="@/assets/img/图层 826 拷贝 5.png" />
+                <img class="avatar" src="@/assets/img/avatar100x101.png" />
                 <div>
                   <p class="doctorName">{{item.doctorName}}</p>
                   <p class="doctorTitle">{{item.deptName}} {{item.doctorTitle}}</p>
                   <div class="star">
-                    <img v-for="n in item.score" :key="n" src="@/assets/img/星星 拷贝 8.png" />
+                    <img v-for="n in item.score" :key="n" src="@/assets/img/starOn.png" />
                   </div>
                 </div>
               </div>
               <div class="right price">
-                <img src="@/assets/img/沟通.png" />
+                <img src="@/assets/img/communication.png" />
                 <!-- <span>{{item.price}}元</span> -->
               </div>
             </div>
@@ -46,17 +46,17 @@
             <li class="doctorIntroCard" v-for="(doctor,dindex) in item.doctors" :key="dindex">
               <div class="baseInfo">
                 <div class="left">
-                  <img class="avatar" src="@/assets/img/图层 826 拷贝 5.png" />
+                  <img class="avatar" src="@/assets/img/avatar100x101.png" />
                   <div>
                     <p class="doctorName">{{doctor.name}}</p>
                     <p class="doctorTitle">{{item.name}} {{doctor.title}}</p>
                     <div class="star">
-                      <img v-for="n in 5" :key="n" src="@/assets/img/星星 拷贝 8.png" />
+                      <img v-for="n in 5" :key="n" src="@/assets/img/starOn.png" />
                     </div>
                   </div>
                 </div>
                 <div class="right price">
-                  <img src="@/assets/img/沟通.png" />
+                  <img src="@/assets/img/communication.png" />
                   <span>{{doctor.price}}元</span>
                 </div>
               </div>

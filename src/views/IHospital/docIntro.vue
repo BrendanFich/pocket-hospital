@@ -1,12 +1,12 @@
 <template>
   <div class="docIntro">
     <div class="doctorIntroCard">
-      <img class="avatar" src="@/assets/img/图层 826 拷贝 5.png" />
+      <img class="avatar" src="@/assets/img/avatar100x101.png" />
       <div class="doctorInfo">
         <p class="doctorName">杨辉</p>
         <p class="doctorTitle">内分泌科 主任医师</p>
         <div class="star">
-          <img v-for="n in 5" :key="n" src="@/assets/img/星星 拷贝 8.png" />
+          <img v-for="n in 5" :key="n" src="@/assets/img/starOn.png" />
         </div>
         <p class="textIntro">擅长免疫性皮肤病，男性内分泌不平衡，由内分泌 引起的各种疾病。</p>
       </div>

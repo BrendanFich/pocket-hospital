@@ -31,17 +31,17 @@ export default {
       msgList: [
         {
           identity: 'doctor',
-          avatarUrl: require('@/assets/img/图层 826 拷贝 4.png'),
+          avatarUrl: require('@/assets/img/avatar80x80.png'),
           content: '我是主任医师陈辉'
         },
         {
           identity: 'patient',
-          avatarUrl: require('@/assets/img/图层 826 拷贝 4.png'),
+          avatarUrl: require('@/assets/img/avatar80x80.png'),
           content: '医生我头痛'
         },
         {
           identity: 'doctor',
-          avatarUrl: require('@/assets/img/图层 826 拷贝 4.png'),
+          avatarUrl: require('@/assets/img/avatar80x80.png'),
           content: '多喝开水'
         }
       ]

@@ -9,7 +9,7 @@
       </div>
     </div>
     <div class="searchbar">
-      <img class="cancelIcon" src="@/assets/img/搜索.png" alt />
+      <img class="cancelIcon" src="@/assets/img/search.png" alt />
       <input type="text" v-model="value" placeholder="搜索药品名称" @focus="focus" />
       <div class="xIcon" :class="{show: value}" @click="clear">×</div>
       <button class="cancel" :class="{show : isShow}" @click="cancel">取消</button>

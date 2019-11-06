@@ -16,7 +16,7 @@
           <span class="value highlight">{{item.inspectName}}</span>
         </div>
       </div>
-      <img slot="icon" src="@/assets/img/报告 (1) 拷贝.png" />
+      <img slot="icon" src="@/assets/img/lisList.png" />
     </mt-cell>
   </div>
 </template>

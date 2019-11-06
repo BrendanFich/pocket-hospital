@@ -38,7 +38,7 @@ export default {
   background: #f2f2f2;
   height: 100vh;
   .summary {
-    background: url("../../../assets/img/总费用汇总.png") no-repeat;
+    background: url("../../../assets/img/allTotalBg.png") no-repeat;
     width: 750px;
     height: 269px;
     background-size: 100% 100%;

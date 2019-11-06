@@ -2,22 +2,22 @@
   <div class="tabbar">
     <router-link to="/index">
       <div class="tab" :class="{active: isShow1}">
-        <img src="@/assets/img/首页选中.png" v-show="isShow1" />
-        <img src="@/assets/img/首页未选中.png" v-show="!isShow1" />
+        <img src="@/assets/img/indexOn.png" v-show="isShow1" />
+        <img src="@/assets/img/indexOff.png" v-show="!isShow1" />
         <span>首页</span>
       </div>
     </router-link>
     <router-link to="/iHospital">
       <div class="tab" :class="{active: isShow2}">
-        <img src="@/assets/img/医院选中.png" v-show="isShow2" />
-        <img src="@/assets/img/医院未选中.png" v-show="!isShow2" />
+        <img src="@/assets/img/hospitalOn.png" v-show="isShow2" />
+        <img src="@/assets/img/hospitalOff.png" v-show="!isShow2" />
         <span>互联网医院</span>
       </div>
     </router-link>
     <router-link to="/mine">
       <div class="tab" :class="{active: isShow3}">
-        <img src="@/assets/img/个人中心选中.png" v-show="isShow3" />
-        <img src="@/assets/img/个人中心未选中.png" v-show="!isShow3" />
+        <img src="@/assets/img/mineOn.png" v-show="isShow3" />
+        <img src="@/assets/img/mineOff.png" v-show="!isShow3" />
         <span>个人中心</span>
       </div>
     </router-link>

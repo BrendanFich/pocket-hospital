@@ -1,6 +1,6 @@
 <template>
   <div class="parking">
-    <img src="@/assets/img/组 28(5).png" />
+    <img src="@/assets/img/parkBg.png" />
     <div class="btns">
       <mt-button type="primary" class="btn">查看医院车位</mt-button>
       <mt-button type="primary" class="btn">停车缴费</mt-button>
