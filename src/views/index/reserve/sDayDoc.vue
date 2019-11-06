@@ -47,7 +47,7 @@
 <script>
 import moment from 'moment'
 import weekSlider from '@/components/weekSlider'
-import util from '@/utils/util'
+import util from '@/assets/js/util'
 
 export default {
   name: 'sDayDoc',

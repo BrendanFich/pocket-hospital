@@ -36,7 +36,7 @@
 
 <script>
 import CustomerInfoCard from '@/components/CustomerInfoCard'
-import util from '@/utils/util'
+import util from '@/assets/js/util'
 export default {
   name: 'confirm',
   components: { CustomerInfoCard },

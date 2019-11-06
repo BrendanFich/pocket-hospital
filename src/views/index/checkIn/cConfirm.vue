@@ -8,8 +8,7 @@
 <script>
 import CustomerInfoCard from '@/components/CustomerInfoCard'
 import wx from 'weixin-js-sdk'
-import util from '@/utils/util'
-// import localtion from '@/config'
+import util from '@/assets/js/util'
 export default {
   name: 'cConfirm',
   components: { CustomerInfoCard },

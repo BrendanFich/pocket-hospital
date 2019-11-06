@@ -32,8 +32,7 @@
 </template>
 
 <script>
-import util from '@/utils/util'
-
+import util from '@/assets/js/util'
 let vm = null
 export default {
   name: 'doctorIntro',
@@ -87,7 +86,7 @@ export default {
         console.log(deptCode)
       }
       util.http
-        .post('/api/doctor/doc_info', {deptCode: '00' + deptCode})
+        .post('/api/doctor/doc_info', {deptCode: deptCode})
         .then(res => {
           this.docList = res.data.Records
           console.log(res.data.Records)

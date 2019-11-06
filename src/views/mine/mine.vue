@@ -63,7 +63,7 @@
 <script>
 import CustomerInfoCard from '@/components/CustomerInfoCard'
 import Tabbar from '@/components/Tabbar'
-// import util from '@/utils/util'
+// import util from '@/assets/js/util'
 
 export default {
   name: 'mine',

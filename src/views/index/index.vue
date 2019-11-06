@@ -86,7 +86,7 @@
 <script>
 import Tabbar from '@/components/Tabbar'
 import wx from 'weixin-js-sdk'
-import config from '@/config'
+import config from '@/assets/js/config'
 
 export default {
   name: 'index',

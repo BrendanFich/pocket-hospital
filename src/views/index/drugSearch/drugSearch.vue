@@ -43,8 +43,8 @@
 </template>
 
 <script>
-import Searchbar from '@/components/Searchbar'
-import util from '@/utils/util'
+// import Searchbar from '@/components/Searchbar'
+import util from '@/assets/js/util'
 
 export default {
   name: 'drugSearch',
@@ -62,7 +62,7 @@ export default {
 
     }
   },
-  components: { Searchbar },
+  // components: { Searchbar },
   methods: {
     focus () {
       this.isShow = true

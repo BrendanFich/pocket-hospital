@@ -5,9 +5,10 @@
 </template>
 
 <script>
-import util from './utils/util'
+import util from '@/assets/js/util'
+import config from '@/assets/js/config'
 import wx from 'weixin-js-sdk'
-import config from './config'
+
 export default {
   name: 'App',
   data () {

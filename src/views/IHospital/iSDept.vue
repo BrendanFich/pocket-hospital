@@ -24,7 +24,7 @@
 
 <script>
 import Searchbar from '@/components/Searchbar'
-import util from '@/utils/util'
+import util from '@/assets/js/util'
 
 export default {
   name: 'iSDept',

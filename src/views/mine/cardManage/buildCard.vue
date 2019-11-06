@@ -32,8 +32,8 @@
 </template>
 
 <script>
-import util from '@/utils/util'
-import getInfoFromId from '@/utils/getInfoFromId'
+import util from '@/assets/js/util'
+import getInfoFromId from '@/assets/js/getInfoFromId'
 export default {
   name: 'buildCard',
   data () {

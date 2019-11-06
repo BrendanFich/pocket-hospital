@@ -4,7 +4,7 @@
   </div>
 </template>
 <script>
-// import util from '@/utils/util'
+// import util from '@/assets/js/util'
 
 export default {
   name: 'reserve',
