@@ -5,7 +5,7 @@
       <mt-field label="卡类型" v-model="cardTypeWord" :disableClear="true" :readonly="true"></mt-field>
       <div class="isLink">></div>
     </div>
-    <mt-field label="卡号" placeholder="请输入卡号" type="number" v-model="cardNum" :disableClear="true"></mt-field>
+    <mt-field label="卡号" placeholder="请输入7位数卡号" type="number" v-model="cardNum" :disableClear="true"></mt-field>
     <mt-field label="姓名" placeholder="请输入姓名" v-model="name" :disableClear="true"></mt-field>
 
     <div @click="showOption(1)" class="selectItem">
@@ -26,10 +26,12 @@
     </div>
 
     <mt-button type="primary" class="btn" @click.native="handleClick">确定</mt-button>
+    <Tabbar></Tabbar>
   </div>
 </template>
 
 <script>
+import Tabbar from '@/components/Tabbar'
 import util from '@/assets/js/util'
 
 export default {
@@ -55,6 +57,7 @@ export default {
       ]
     }
   },
+  components: { Tabbar },
   created () {
     this.idNum = this.$route.params.patIdNo ? this.$route.params.patIdNo : ''
     this.name = this.$route.params.patName ? this.$route.params.patName : ''

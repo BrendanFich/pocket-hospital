@@ -88,7 +88,7 @@ export default new Router({
       component: checkIn,
       children: [
         { path: 'cConfirm', component: cConfirm },
-        { path: 'cQueue', component: cQueue }
+        { path: 'cQueue/:hisOrdNum', name: 'cQueue', component: cQueue }
       ]
     },
     {

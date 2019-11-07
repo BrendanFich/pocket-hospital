@@ -1,6 +1,6 @@
 <template>
   <div class="reserve">
-    <router-view v-if="$store.state.userInfo.visitCardNo"></router-view>
+    <router-view v-if="$store.state.userInfo !== {}"></router-view>
   </div>
 </template>
 <script>
@@ -12,7 +12,8 @@ export default {
     return {}
   },
   created () {
-    if (!this.$store.state.userInfo.visitCardNo && !this.$store.state.userInfo.socialHosCardNO) {
+    this.$store.commit('updateUserInfo')
+    if (this.$store.state.userInfo.visitCardNo === '' && this.$store.state.userInfo.socialCardNo === '') {
       this.bindCardNotice()
     }
   },

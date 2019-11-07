@@ -33,12 +33,13 @@
       </mt-tab-container>
 
     </div>
+    <Tabbar></Tabbar>
   </div>
 </template>
 
 <script>
 import util from '@/assets/js/util'
-
+import Tabbar from '@/components/Tabbar'
 export default {
   name: 'sDept',
   data () {
@@ -50,6 +51,7 @@ export default {
       // searchResult: []
     }
   },
+  components: { Tabbar },
   computed: {
     searchResult () {
       if (this.value === '') {

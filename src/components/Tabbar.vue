@@ -38,7 +38,7 @@ export default {
       return this.$route.path === '/iHospital' || this.$route.path === '/iHospital/review'
     },
     isShow3 () {
-      return this.$route.path === '/mine'
+      return this.$route.path.includes('/mine')
     }
   }
 }

@@ -61,7 +61,7 @@ export default {
       }
       this.$messagebox.confirm(text).then(action => {
         util.http
-          .post('/api/pat/visitingReport', {patCardNo: this.$store.state.userInfo.visitCardNo ? this.$store.state.userInfo.visitCardNo : this.$store.state.userInfo.socialCardNo})
+          .post('/api/pat/visitingReport')
           .then(res => {
             console.log(res)
             // this.orderList = res.data.Records
@@ -70,7 +70,7 @@ export default {
             console.log(error)
           })
         if (this.registerInfo.hisOrdNum) {
-          this.$router.push('/checkIn/cQueue')
+          this.$router.push({name: 'cQueue', params: this.registerInfo.hisOrdNum})
         }
       })
       // if (this.isArrived) {

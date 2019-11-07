@@ -23,8 +23,8 @@ export default new Vuex.Store({
     updateUserInfo (state) {
       util.http.post('/api/user/vx_info').then(res => {
         console.log('-----------获取用户信息/api/user/vx_info-----------')
-        console.log(res)
         state.userInfo = res.data.info
+        console.log(state.userInfo)
       }).catch((error) => {
         console.log(error)
       })

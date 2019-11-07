@@ -42,6 +42,7 @@
 
 <script>
 import CustomerInfoCard from '@/components/CustomerInfoCard'
+import util from '@/assets/js/util'
 export default {
   name: 'cQueue',
   components: { CustomerInfoCard },
@@ -54,6 +55,12 @@ export default {
     }
   },
   created () {
+    util.http.post('/api/pat/findRegisterInfo', {hisOrdNum: this.$route.params.hisOrdNum}).then(res => {
+      this.registerInfo = res.data
+      console.log(res)
+    }).catch((error) => {
+      console.log(error)
+    })
   }
 }
 </script>

@@ -72,7 +72,7 @@ export default {
     }
   },
   created () {
-    this.$store.commit('updateUserPatInfo')
+    // this.$store.commit('updateUserPatInfo')
   },
   components: { CustomerInfoCard, Tabbar },
   methods: {

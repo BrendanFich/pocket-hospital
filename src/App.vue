@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view />
+    <router-view v-if="$store.state.userInfo !== {}"/>
   </div>
 </template>
 
@@ -41,8 +41,8 @@ export default {
         // 有个坑：微信开发者工具返回的errMsg,与真机测试时返回的errMsg存在区别
         // 微信开发者工具的返回有错误码63002，真机测试时没有错误码
         if (res.errMsg.includes('invalid signature')) {
-          console.log('--------------签名过期获取新签名--------------')
-          if (_this.count < 5) {
+          if (_this.count < 1) {
+            console.log('--------------签名过期获取新签名--------------')
             _this.getSign()
             _this.count++
           }

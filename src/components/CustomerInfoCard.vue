@@ -2,11 +2,11 @@
   <div class="customerInfoCard">
     <div>
       <img src="@/assets/img/greenAvatar.png" />
-      <div class="textInfo" v-if="customerInfo">
-        <span class="name">{{customerInfo.patName}}</span>
+      <div class="textInfo">
+        <span class="name">{{$store.state.userInfo.visitName}}</span>
         <span class="status">默认</span>
-        <p class="cardNumber" v-if="customerInfo.visitCardNo === defaultCardNo">就诊卡号：{{customerInfo.visitCardNo}}</p>
-        <p class="cardNumber" v-if="customerInfo.socialHosCardNO === defaultCardNo">社保卡号：{{customerInfo.socialHosCardNO}}</p>
+        <p class="cardNumber" v-if="$store.state.userInfo.visitCardNo !== ''">就诊卡号：{{$store.state.userInfo.visitCardNo}}</p>
+        <p class="cardNumber" v-if="$store.state.userInfo.socialCardNo !== ''">社保卡号：{{$store.state.userInfo.socialCardNo}}</p>
       </div>
     </div>
     <router-link to="/mine/cardManage">
@@ -16,23 +16,16 @@
 </template>
 
 <script>
-
+// import util from '@/assets/js/util'
 export default {
   name: 'customerInfoCard',
   data () {
     return {
-      defaultCardNo: this.$store.state.userInfo.visitCardNo ? this.$store.state.userInfo.visitCardNo : this.$store.state.userInfo.socialCardNo
-    }
-  },
-  computed: {
-    customerInfo () {
-      return this.$store.state.patInfoBinded.filter(item => (item.visitCardNo === this.defaultCardNo) || (item.socialHosCardNO === this.defaultCardNo))[0]
     }
   },
   created () {
-    this.$store.commit('updateUserPatInfo')
+    this.$store.commit('updateUserInfo')
   }
-
 }
 </script>
 
