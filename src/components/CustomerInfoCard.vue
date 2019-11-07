@@ -3,10 +3,10 @@
     <div>
       <img src="@/assets/img/greenAvatar.png" />
       <div class="textInfo">
-        <span class="name">{{$store.state.userInfo.visitName}}</span>
+        <span class="name">{{$store.state.visitName}}</span>
         <span class="status">默认</span>
-        <p class="cardNumber" v-if="$store.state.userInfo.visitCardNo !== ''">就诊卡号：{{$store.state.userInfo.visitCardNo}}</p>
-        <p class="cardNumber" v-if="$store.state.userInfo.socialCardNo !== ''">社保卡号：{{$store.state.userInfo.socialCardNo}}</p>
+        <p class="cardNumber" v-if="$store.state.visitCardNo !== ''">就诊卡号：{{$store.state.userInfo.visitCardNo}}</p>
+        <p class="cardNumber" v-if="$store.state.socialCardNo !== ''">社保卡号：{{$store.state.userInfo.socialCardNo}}</p>
       </div>
     </div>
     <router-link to="/mine/cardManage">
@@ -24,7 +24,7 @@ export default {
     }
   },
   created () {
-    this.$store.commit('updateUserInfo')
+    // this.$store.commit('updateUserInfo')
   }
 }
 </script>

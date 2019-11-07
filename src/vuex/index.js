@@ -7,6 +7,9 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     userInfo: {},
+    visitCardNo: '',
+    visitName: '',
+    socialCardNo: '',
     patInfoBinded: [],
     patInfoNobind: [],
     selectedDeptCode: '',
@@ -24,6 +27,9 @@ export default new Vuex.Store({
       util.http.post('/api/user/vx_info').then(res => {
         console.log('-----------获取用户信息/api/user/vx_info-----------')
         state.userInfo = res.data.info
+        state.visitCardNo = res.data.info.visitCardNo
+        state.visitName = res.data.info.visitName
+        state.socialCardNo = res.data.info.socialCardNo
         console.log(state.userInfo)
       }).catch((error) => {
         console.log(error)

@@ -14,7 +14,6 @@
         <li>
           <span class="key">医生</span>
           <span class="value">{{$store.state.selectedDocName}}</span>
-          <!-- <span class="value">劳绍祥</span> -->
         </li>
         <li>
           <span class="key">就诊日期</span>
@@ -49,19 +48,17 @@ export default {
         psOrdNum: '123',
         deptCode: this.$store.state.selectedDeptCode,
         deptName: this.$store.state.selectedDeptName,
-        // doctorName: this.$store.state.selectedDocName,
-        // doctorCode: '0' + this.$store.state.selectedDocCode.toString(), // 比实际医生code多2
-        doctorName: '劳绍祥',
-        doctorCode: '020',
+        doctorName: this.$store.state.selectedDocName,
+        doctorCode: '0' + this.$store.state.selectedDocCode.toString(), // 比实际医生code多2
         scheduleDate: this.$store.state.selectedDate,
         timeFlag: '1',
         regFee: this.$store.state.price.toString(),
-        patName: this.$store.state.userInfo.visitName,
-        patCardNo: this.$store.state.userInfo.visitCardNo,
+        patName: this.$store.state.visitName,
+        patCardNo: this.$store.state.visitCardNo || this.$store.state.socialCardNo,
         beginTime: this.$store.state.beginTime,
         endTime: this.$store.state.endTime,
         hostpitalName: '全院',
-        patCardType: '1'
+        patCardType: (this.$store.state.visitCardNo === '') ? '2' : '1'
       }
       console.log(configdata)
       this.$indicator.open()

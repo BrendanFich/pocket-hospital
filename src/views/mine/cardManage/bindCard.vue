@@ -26,12 +26,12 @@
     </div>
 
     <mt-button type="primary" class="btn" @click.native="handleClick">确定</mt-button>
-    <Tabbar></Tabbar>
+    <!-- <Tabbar></Tabbar> -->
   </div>
 </template>
 
 <script>
-import Tabbar from '@/components/Tabbar'
+// import Tabbar from '@/components/Tabbar'
 import util from '@/assets/js/util'
 
 export default {
@@ -57,7 +57,7 @@ export default {
       ]
     }
   },
-  components: { Tabbar },
+  // components: { Tabbar },
   created () {
     this.idNum = this.$route.params.patIdNo ? this.$route.params.patIdNo : ''
     this.name = this.$route.params.patName ? this.$route.params.patName : ''

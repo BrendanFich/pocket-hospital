@@ -46,12 +46,12 @@
         <span class="linkIcon">></span>
       </li>
     </ul>
-    <Tabbar></Tabbar>
+    <!-- <Tabbar></Tabbar> -->
   </div>
 </template>
 
 <script>
-import Tabbar from '@/components/Tabbar'
+// import Tabbar from '@/components/Tabbar'
 export default {
   name: 'cardManage',
   data () {
@@ -59,10 +59,10 @@ export default {
 
     }
   },
-  components: { Tabbar },
+  // components: { Tabbar },
   computed: {
     defaultCardNo () {
-      return this.$store.state.userInfo.visitCardNo ? this.$store.state.userInfo.visitCardNo : this.$store.state.userInfo.socialCardNo
+      return this.$store.state.visitCardNo ? this.$store.state.visitCardNo : this.$store.state.socialCardNo
     },
     cardList () {
       return this.$store.state.patInfoBinded

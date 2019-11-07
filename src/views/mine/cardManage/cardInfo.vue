@@ -45,7 +45,7 @@ export default {
           this.$store.commit('updateUserInfo')
           this.$toast({ message: '设置成功', duration, className })
           // this.$router.back(-1)
-          this.$router.push('/mine/cardManage')
+          this.$router.push('/mine')
           console.log(res)
         })
         .catch(error => {
