@@ -19,7 +19,9 @@ http.ajax.interceptors.request.use(config => {
 http.ajax.interceptors.response.use(res => {
   Indicator.close()
   // token过期时
-  if (res.code === 500 && res.msg.indexOf('请重新授权') !== -1) {
+  // if ((res.code === 500 && res.msg.includes('读取用户数据失败')) || (res.code === 401 && res.msg.includes('没有相应内容'))) {
+
+  if (res.code === 500) {
     localStorage.removeItem('token')
     window.location.href = 'http://yun.gdqlyt.com.cn:84'
   }
@@ -27,6 +29,7 @@ http.ajax.interceptors.response.use(res => {
 }, err => {
   // 对响应错误做些什么
   console.log('err', err.response) // 修改后
+  console.log('跳转条件')
   return Promise.reject(err)
 })
 

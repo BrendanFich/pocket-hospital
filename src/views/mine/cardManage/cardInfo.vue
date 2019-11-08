@@ -24,14 +24,48 @@ export default {
   name: 'cardInfo',
   data () {
     return {
+      patInfoNobind: [],
+      patInfoBinded: []
     }
+  },
+  created () {
+    this.updateUserPatInfo()
   },
   computed: {
     cardInfo () {
-      return this.$store.state.patInfoBinded.filter(item => (item.visitCardNo === this.$route.params.cardNo) || (item.socialHosCardNO === this.$route.params.cardNo))[0]
+      return this.patInfoBinded.filter(item => (item.visitCardNo === this.$route.params.cardNo) || (item.socialHosCardNO === this.$route.params.cardNo))[0]
     }
   },
   methods: {
+    updateUserPatInfo () {
+      util.http
+        .post('/api/pat/pat_info')
+        .then(res => {
+          this.patInfoNobind = res.data.filter(item => (item.visitCardNo === '') && (item.socialHosCardNO === ''))
+          let patInfoContent = []
+          res.data.filter(item => (item.visitCardNo !== '') || (item.socialHosCardNO !== '')).forEach((item) => {
+            if (item.visitCardNo && !item.socialHosCardNO) {
+              patInfoContent.push(item)
+            }
+            if (!item.visitCardNo && item.socialHosCardNO) {
+              patInfoContent.push(item)
+            }
+            if (item.visitCardNo && item.socialHosCardNO) {
+              let temp = item.socialHosCardNO
+              item.socialHosCardNO = ''
+              patInfoContent.push(item)
+              let newItem = Object.assign({}, item)
+              newItem.socialHosCardNO = temp
+              newItem.visitCardNo = ''
+              patInfoContent.push(newItem)
+            }
+          })
+          this.patInfoBinded = patInfoContent
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
     setDefault () {
       const duration = 1500
       const className = 'toast'
