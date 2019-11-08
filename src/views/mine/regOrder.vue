@@ -2,7 +2,7 @@
   <div class="regOrder">
     <img class="noData" v-if="orderList.length === 0" src="@/assets/img/noData.png" />
     <ul>
-      <li v-for="(item, index) in orderList" :key="index">
+      <li v-for="(item, index) in orderList" :key="index" @click="detail(item.hisOrdNum)">
         <div class="paidTime">下单日期：{{item.createDate}}</div>
         <div class="orderCard">
           <div class="left">
@@ -75,6 +75,40 @@ export default {
           text = '已就诊'
       }
       return text
+    },
+    detail (hisOrdNum) {
+      util.http
+        .post('/api/pat/findRegisterInfo', {hisOrdNum})
+        .then(res => {
+          console.log(res)
+          let status
+          if (res.data.Records.visitFlag === '0') {
+            status = '未报到'
+          } else if (res.data.Records.visitFlag === '1') {
+            status = '已报道'
+          } else {
+            status = '已就诊'
+          }
+          let text = `
+      <div>
+        <p>订单流水号: ${res.data.Records.hisOrdNum}</p>
+        <p>创建时间: ${res.data.Records.createDate}</p>
+        <p>就诊科室：${res.data.Records.deptName}</p>
+        <p>就诊医生：${res.data.Records.doctorName}</p>
+        <p>就诊日期：${res.data.Records.scheduleDate}</p>
+        <p>就诊时间：${res.data.Records.beginTime}-${res.data.Records.endTime}</p>
+        <p>病人姓名：${res.data.Records.patName}</p>
+        <p>病人卡号：${res.data.Records.patCardNo}</p>
+        <p>卡号类型：${res.data.Records.patCardType === '1' ? '就诊卡' : '社保卡'}</p>
+        <p>挂号费用：${res.data.Records.regFee}</p>
+        <p>当前状态：${status}</p>
+      </div>
+      `
+          this.$messagebox('提示', text)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   }
 }
