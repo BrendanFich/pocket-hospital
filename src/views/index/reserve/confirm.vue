@@ -1,6 +1,6 @@
 <template>
   <div class="confirm">
-    <CustomerInfoCard></CustomerInfoCard>
+    <CustomerInfoCard v-on:sendCardNo='getPatCardNo'></CustomerInfoCard>
     <div class="orderInfo">
       <ul>
         <li>
@@ -40,9 +40,14 @@ export default {
   name: 'confirm',
   components: { CustomerInfoCard },
   data () {
-    return {}
+    return {
+      patCardNo: ''
+    }
   },
   methods: {
+    getPatCardNo (patCardNo) {
+      this.patCardNo = patCardNo
+    },
     confirm () {
       let configdata = {
         psOrdNum: '123',
@@ -54,7 +59,7 @@ export default {
         timeFlag: '1',
         regFee: this.$store.state.price.toString(),
         patName: this.$store.state.visitName,
-        patCardNo: this.$store.state.visitCardNo || this.$store.state.socialCardNo,
+        patCardNo: this.patCardNo,
         beginTime: this.$store.state.beginTime,
         endTime: this.$store.state.endTime,
         hostpitalName: '全院',

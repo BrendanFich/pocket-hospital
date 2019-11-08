@@ -34,6 +34,11 @@ export default {
       this.socialCardNo = res.data.info.socialCardNo
       this.$store.commit('updateDefaultCard', res.data.info.visitName, res.data.info.visitCardNo, res.data.info.socialCardNo)
       console.log(res.data.info.visitName)
+      if (res.data.info.visitCardNo !== '') {
+        this.$emit('sendCardNo', res.data.info.visitCardNo)
+      } else {
+        this.$emit('sendCardNo', res.data.info.socialCardNo)
+      }
     }).catch((error) => {
       console.log(error)
     })
