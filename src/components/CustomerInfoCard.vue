@@ -3,10 +3,10 @@
     <div>
       <img src="@/assets/img/greenAvatar.png" />
       <div class="textInfo">
-        <span class="name">{{$store.state.visitName}}</span>
+        <span class="name">{{visitName}}</span>
         <span class="status">默认</span>
-        <p class="cardNumber" v-if="$store.state.visitCardNo !== ''">就诊卡号：{{$store.state.userInfo.visitCardNo}}</p>
-        <p class="cardNumber" v-if="$store.state.socialCardNo !== ''">社保卡号：{{$store.state.userInfo.socialCardNo}}</p>
+        <p class="cardNumber" v-if="visitCardNo !== ''">就诊卡号：{{visitCardNo}}</p>
+        <p class="cardNumber" v-if="socialCardNo !== ''">社保卡号：{{socialCardNo}}</p>
       </div>
     </div>
     <router-link to="/mine/cardManage">
@@ -16,15 +16,27 @@
 </template>
 
 <script>
-// import util from '@/assets/js/util'
+import util from '@/assets/js/util'
 export default {
   name: 'customerInfoCard',
   data () {
     return {
+      visitName: '',
+      visitCardNo: '',
+      socialCardNo: ''
     }
   },
   created () {
-    // this.$store.commit('updateUserInfo')
+    util.http.post('/api/user/vx_info').then(res => {
+      console.log('-----------获取用户信息/api/user/vx_info-----------')
+      this.visitName = res.data.info.visitName
+      this.visitCardNo = res.data.info.visitCardNo
+      this.socialCardNo = res.data.info.socialCardNo
+      this.$store.commit('updateDefaultCard', res.data.info.visitName, res.data.info.visitCardNo, res.data.info.socialCardNo)
+      console.log(res.data.info.visitName)
+    }).catch((error) => {
+      console.log(error)
+    })
   }
 }
 </script>

@@ -1,10 +1,10 @@
 <template>
   <div class="cardManage">
     <h2>就诊卡管理</h2>
-    <img class="noData" v-if="cardList.length === 0" src="@/assets/img/noData.png" />
+    <img class="noData" v-if="patInfoBinded.length === 0" src="@/assets/img/noData.png" />
     <router-link
       class="customerInfoCard"
-      v-for="(item,index) in cardList"
+      v-for="(item,index) in patInfoBinded"
       :to="{
             name:'cardInfo',
             params:{
@@ -52,21 +52,26 @@
 
 <script>
 // import Tabbar from '@/components/Tabbar'
+import util from '@/assets/js/util'
+
 export default {
   name: 'cardManage',
   data () {
     return {
-
+      patInfoNobind: [],
+      patInfoBinded: [],
+      visitCardNo: '',
+      socialCardNo: ''
     }
   },
   // components: { Tabbar },
   computed: {
     defaultCardNo () {
-      return this.$store.state.visitCardNo ? this.$store.state.visitCardNo : this.$store.state.socialCardNo
-    },
-    cardList () {
-      return this.$store.state.patInfoBinded
+      return this.visitCardNo ? this.visitCardNo : this.socialCardNo
     }
+    // cardList () {
+    //   return this.$store.state.patInfoBinded
+    // }
   },
   methods: {
     linkTo (name, params) {
@@ -74,7 +79,47 @@ export default {
     }
   },
   created () {
-    this.$store.commit('updateUserPatInfo')
+    // this.$store.commit('updateUserPatInfo')
+    util.http
+      .post('/api/pat/pat_info')
+      .then(res => {
+        console.log('----------获取患者信息-----------')
+        console.log(res)
+        this.patInfoNobind = res.data.filter(item => (item.visitCardNo === '') && (item.socialHosCardNO === ''))
+        let patInfoContent = []
+        res.data.filter(item => (item.visitCardNo !== '') || (item.socialHosCardNO !== '')).forEach((item) => {
+          if (item.visitCardNo && !item.socialHosCardNO) {
+            patInfoContent.push(item)
+          }
+          if (!item.visitCardNo && item.socialHosCardNO) {
+            patInfoContent.push(item)
+          }
+          if (item.visitCardNo && item.socialHosCardNO) {
+            let temp = item.socialHosCardNO
+            item.socialHosCardNO = ''
+            patInfoContent.push(item)
+            let newItem = Object.assign({}, item)
+            newItem.socialHosCardNO = temp
+            newItem.visitCardNo = ''
+            patInfoContent.push(newItem)
+          }
+        })
+        this.patInfoBinded = patInfoContent
+        console.log(this.patInfoBinded)
+        util.http.post('/api/user/vx_info').then(res => {
+          console.log('-----------获取用户信息/api/user/vx_info-----------')
+          this.visitName = res.data.info.visitName
+          this.visitCardNo = res.data.info.visitCardNo
+          this.socialCardNo = res.data.info.socialCardNo
+          this.$store.commit('updateDefaultCard', res.data.info.visitName, res.data.info.visitCardNo, res.data.info.socialCardNo)
+          console.log(res.data.info.visitName)
+        }).catch((error) => {
+          console.log(error)
+        })
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 }
 </script>

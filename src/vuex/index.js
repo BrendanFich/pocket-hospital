@@ -30,10 +30,15 @@ export default new Vuex.Store({
         state.visitCardNo = res.data.info.visitCardNo
         state.visitName = res.data.info.visitName
         state.socialCardNo = res.data.info.socialCardNo
-        console.log(state.userInfo)
+        console.log(state.visitName)
       }).catch((error) => {
         console.log(error)
       })
+    },
+    updateDefaultCard (state, visitName, visitCardNo, socialCardNo) {
+      state.visitName = visitName
+      state.visitCardNo = visitCardNo
+      state.socialCardNo = socialCardNo
     },
     updateUserPatInfo (state) {
       util.http

@@ -163,11 +163,15 @@ export default {
             .then(res => {
               console.log(res)
               if (res.code === 0) {
-                this.$store.commit('updateUserInfo')
-                this.$toast({ message: '绑定成功', duration, className })
-                this.$router.push({ path: '/mine/cardManage' })
-              } else if (res.msg === '卡号已绑定') {
-                this.$toast({ message: '该卡号已绑定', duration, className })
+                if (res.data.Code === '-1' && res.data.Message === '卡号已存在') {
+                  this.$toast({ message: res.data.Message, duration, className })
+                } else {
+                  this.$store.commit('updateUserInfo')
+                  this.$toast({ message: '绑定成功', duration, className })
+                  this.$router.push({ path: '/mine/cardManage' })
+                }
+              } else if (res.code === 500 && res.msg === '卡号已绑定') {
+                this.$toast({ message: res.msg, duration, className })
               } else {
                 this.$toast({ message: res.msg, duration: 2000, className })
               }
