@@ -10,20 +10,20 @@
         <router-link to="/payOnline" v-for="(item,index) in unpaid" :key="index">
           <mt-cell>
             <div class="leftInfo">
-              <div class="name">{{item.patName ? item.patName : '肖雄全'}}</div>
-              <div class="medical_card">{{item.medical_card ? item.medical_card : '1234567'}}</div>
+              <div class="name">{{item.patName}}</div>
+              <div class="medical_card">{{item.medical_card}}</div>
               <div class="serial_number">
                 流水号：
-                <span class="value">{{item.hisOrdNum ? item.hisOrdNum : '8608360'}}</span>
+                <span class="value">{{item.outPatId}}</span>
               </div>
               <div class="department">
                 开单科室：
-                <span class="value">{{item.itemName}}</span>
+                <span class="value">{{item.paymentDept}}</span>
               </div>
             </div>
             <div class="rightInfo">
-              <div class="price unPaid">{{item.itemPrice}}</div>
-              <div class="date">{{item.date}}</div>
+              <div class="price unPaid">{{item.paymentFee}}</div>
+              <div class="date">{{item.paymentDate}}</div>
             </div>
           </mt-cell>
         </router-link>
@@ -34,19 +34,19 @@
           <mt-cell>
             <div class="leftInfo">
               <div class="name">{{item.patName}}</div>
-              <div class="medical_card">{{item.medical_card ? item.medical_card : '1234567'}}</div>
+              <div class="medical_card">{{item.medical_card}}</div>
               <div class="serial_number">
                 流水号：
-                <span class="value">{{item.hisOrdNum}}</span>
+                <span class="value">{{item.outPatId}}</span>
               </div>
               <div class="department">
                 开单科室：
-                <span class="value">{{item.deptName}}</span>
+                <span class="value">{{item.paymentDept}}</span>
               </div>
             </div>
             <div class="rightInfo">
               <div class="price">{{item.selfAmt}}</div>
-              <div class="date">{{item.date}}</div>
+              <div class="date">{{item.paymentDate}}</div>
             </div>
           </mt-cell>
         </div>
@@ -101,10 +101,7 @@ export default {
     getUnpaidList () {
       if (!this.clickedUnPaid) {
         util.http
-          .post('/api/doctor/getVisitPayInfo', {
-            hisOrdNum: '424177',
-            patCardNo: ''
-          })
+          .post('/api/doctor/getVisitPayInfo')
           .then(res => {
             console.log(res)
             this.unpaid = res.data.Records
@@ -118,10 +115,7 @@ export default {
     getPaidList () {
       if (!this.clickedPaid) {
         util.http
-          .post('/api/doctor/payInfoList', {
-            patCardNo: '5555500288',
-            patCardType: '院内诊疗卡'
-          })
+          .post('/api/doctor/payInfoList')
           .then(res => {
             console.log(res)
             this.paid = res.data.Records
