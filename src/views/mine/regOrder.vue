@@ -91,6 +91,7 @@ export default {
           }
           let text = `
       <div>
+        <p style="color: #5adba3;">订单详情</p>
         <p>订单流水号: ${res.data.Records.hisOrdNum}</p>
         <p>创建时间: ${res.data.Records.createDate}</p>
         <p>就诊科室：${res.data.Records.deptName}</p>

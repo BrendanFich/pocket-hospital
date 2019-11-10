@@ -22,7 +22,7 @@
               </div>
             </div>
             <div class="rightInfo">
-              <div class="price unPaid">{{item.paymentFee}}</div>
+              <div class="price unPaid">{{item.paymentFee}}元</div>
               <div class="date">{{item.paymentDate}}</div>
             </div>
           </mt-cell>
@@ -45,7 +45,7 @@
               </div>
             </div>
             <div class="rightInfo">
-              <div class="price">{{item.selfAmt}}</div>
+              <div class="price">{{item.paymentFee}}元</div>
               <div class="date">{{item.paymentDate}}</div>
             </div>
           </mt-cell>
@@ -194,7 +194,7 @@ export default {
       .rightInfo {
         text-align: center;
         .price {
-          display: inline-block;
+          float: right;
           width: 80px;
           padding: 12px 10px;
           background: #f69343;
@@ -207,6 +207,7 @@ export default {
           background: #d8d8d8;
         }
         .date {
+          clear: both;
           color: #999999;
           font-size: 24px;
         }
