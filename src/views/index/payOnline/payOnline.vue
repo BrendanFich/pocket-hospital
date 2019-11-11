@@ -11,14 +11,14 @@
           <mt-cell>
             <div class="leftInfo">
               <div class="name">{{item.patName}}</div>
-              <div class="medical_card">{{item.medical_card}}</div>
+              <div class="patCardNo">{{item.PatCardNo}}</div>
               <div class="serial_number">
                 流水号：
                 <span class="value">{{item.outPatId}}</span>
               </div>
               <div class="department">
                 开单科室：
-                <span class="value">{{item.paymentDept}}</span>
+                <span class="value">{{item.paymentDeptName}}</span>
               </div>
             </div>
             <div class="rightInfo">
@@ -34,14 +34,14 @@
           <mt-cell>
             <div class="leftInfo">
               <div class="name">{{item.patName}}</div>
-              <div class="medical_card">{{item.medical_card}}</div>
+              <div class="patCardNo">{{item.PatCardNo}}</div>
               <div class="serial_number">
                 流水号：
                 <span class="value">{{item.outPatId}}</span>
               </div>
               <div class="department">
                 开单科室：
-                <span class="value">{{item.paymentDept}}</span>
+                <span class="value">{{item.paymentDeptName}}</span>
               </div>
             </div>
             <div class="rightInfo">
@@ -67,7 +67,7 @@ export default {
       unpaid: [
         // {
         //   name: '张家辉',
-        //   medical_card: '3567901',
+        //   patCardNo: '3567901',
         //   serial_number: '2019082854321',
         //   department: '内分泌科(门)',
         //   date: '2019-08-28 11:30',
@@ -77,7 +77,7 @@ export default {
       paid: [
         // {
         //   name: '陈小春',
-        //   medical_card: '3567901',
+        //   patCardNo: '3567901',
         //   serial_number: '2019082854321',
         //   department: '内分泌科(门)',
         //   date: '2019-08-28 11:30',
@@ -85,7 +85,7 @@ export default {
         // },
         // {
         //   name: '陈小春',
-        //   medical_card: '3567901',
+        //   patCardNo: '3567901',
         //   serial_number: '2019082854321',
         //   department: '内分泌科(门)',
         //   date: '2019-08-28 11:30',
@@ -172,7 +172,7 @@ export default {
           color: #09cf74;
           font-weight: bold;
         }
-        .medical_card {
+        .patCardNo {
           display: inline-block;
           font-size: 24px;
           color: #666666;
