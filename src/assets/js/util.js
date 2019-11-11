@@ -4,7 +4,7 @@ import { Indicator } from 'mint-ui'
 const BaseUrl = 'http://yun.gdqlyt.com.cn:8197'
 let http = {}
 http.ajax = axios.create()
-// http.ajax.defaults.timeout = 30000
+// http.ajax.defaults.timeout = 10000
 // 请求拦截，添加token至请求头
 http.ajax.interceptors.request.use(config => {
   Indicator.open()

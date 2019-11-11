@@ -49,8 +49,12 @@ export default {
       timer: null,
       searchResult: [],
       drugList: [
-        { Name: '全身体检（常规）', Model: '1次', Price: 800 },
-        { Name: '入职体检', Model: '1次', Price: 200 }
+        { Name: '全身显像', Model: '1次', Price: 300 },
+        { Name: '一般健康体检', Model: '1次', Price: 25 },
+        { Name: 'TT病毒抗体检测', Model: '1次', Price: 60 },
+        { Name: '放射受体显象', Model: '1次', Price: 250 },
+        { Name: '血块收缩试验', Model: '1次', Price: 4 },
+        { Name: '90锶贴敷治疗', Model: '1次', Price: 50 }
       ]
 
     }

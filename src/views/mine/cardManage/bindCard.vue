@@ -127,14 +127,10 @@ export default {
       let allPatInfo = this.$store.state.patInfoBinded.concat(this.$store.state.patInfoNobind)
       if (this.cardNum && this.name && this.idNum) {
         // 通过身份证id判断其对应的patientId
-        console.log('ssssssssssssssssssssssssssssssss')
 
         if (allPatInfo !== []) {
-          console.log('ssssssssssssssssssssssssssssssss')
           allPatInfo.forEach(item => {
             if (item.patIdNo === this.idNum) {
-              console.log('patentID==================================')
-
               console.log(item.mPIId)
               this.patientId = item.mPIId
             }

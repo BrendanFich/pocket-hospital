@@ -1,7 +1,6 @@
 <template>
   <div class="sSymptom">
     <div class="search">
-      <!-- <Searchbar placeholder="请输入您的症状" ref='searchbar' @getSearchStatus="setSearchStatus"></Searchbar> -->
       <div class="searchbar">
         <img class="cancelIcon" src="@/assets/img/search.png" alt />
         <input type="text" v-model="value" placeholder="请输入您的症状" @focus="focus" />
@@ -82,14 +81,13 @@ export default {
       timer: null,
       isShow: false,
       selected: 0,
-      searchContent: '',
       searchTags: [
-        '头痛',
+        '风湿',
         '消化不良',
         '月经不调',
         '妇科炎症',
         '过敏',
-        '头痛',
+        '风湿',
         '消化不良',
         '月经不调'
       ],
@@ -195,9 +193,11 @@ export default {
     cancel () {
       this.value = ''
       this.isShow = false
+      this.searchResult = []
     },
     clear () {
       this.value = ''
+      this.searchResult = []
     },
     getSearchResult () {
       util.http
@@ -211,9 +211,8 @@ export default {
         })
     },
     clickTag (tagName) {
-      this.$refs.searchbar.$emit('bridge', tagName)
-      this.searchContent = tagName
-      console.log(tagName)
+      this.focus()
+      this.value = tagName
     }
   },
   watch: {

@@ -29,7 +29,9 @@ export default {
       this.$router.push('/inHosp/inHospReg2')
     }
   },
-  created () {}
+  created () {
+    this.$store.commit('updateUserPatInfo')
+  }
 }
 </script>
 

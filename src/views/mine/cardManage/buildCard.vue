@@ -80,7 +80,8 @@ export default {
               hospitalName: this.block,
               patName: this.name,
               patMobile: this.phoneNum,
-              patIdNo: this.IDNum
+              patIdNo: this.IDNum,
+              addressDetail: this.address
             })
             .then(res => {
               this.$indicator.close()

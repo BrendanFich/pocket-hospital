@@ -57,7 +57,10 @@ export default {
       drugList: [
         { MedicineName: '柴胡注射液', Model: '2ml*10', Price: 1, Unit: '盒' },
         { MedicineName: '红花注射液', Model: '5ml*10', Price: 109.66, Unit: '盒' },
-        { MedicineName: '血塞通粉针', Model: '0.2g', Price: 25.39, Unit: '瓶' }
+        { MedicineName: '血塞通粉针', Model: '0.2g', Price: 25.39, Unit: '瓶' },
+        { MedicineName: '参芪扶正注射液', Model: '250ml', Price: 1, Unit: '瓶' },
+        { MedicineName: '参麦注射液', Model: '50ml', Price: 60, Unit: '瓶' },
+        { MedicineName: '丹参针', Model: '10ml*5', Price: 0.84, Unit: '支' }
       ]
 
     }

@@ -3,7 +3,7 @@
     <img src="@/assets/img/hosptalBg.png" class="hospBg" />
     <div class="content">
       <ul>
-        <li @click="linkTo('/inHosp/inHospReg1')">
+        <li @click="register">
           <img src="@/assets/img/enter.png" alt class="icon" />
           <div class="navInfo">
             <div class="navName">入院登记</div>
@@ -44,6 +44,8 @@
 </template>
 
 <script>
+import util from '@/assets/js/util'
+
 export default {
   components: {},
   data () {
@@ -54,6 +56,20 @@ export default {
   methods: {
     linkTo (url) {
       this.$router.push(url)
+    },
+    register () {
+      util.http
+        .post('/api/invisit/getInPatInfo')
+        .then(res => {
+          if (res.data.hisOrdNum === '') {
+            this.$router.push('/inHosp/inHospReg1')
+          } else {
+            this.$router.push('/inHosp/regInfo')
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   },
   created () {}
@@ -63,7 +79,7 @@ export default {
 <style lang='scss' scoped>
 .nav {
   background: #f2f2f2;
-  height: 100vh;
+  min-height: 100vh;
   position: relative;
   .hospBg {
     width: 750px;
@@ -76,7 +92,7 @@ export default {
     margin: 0 auto;
     background: #fff;
     border-radius: 10px;
-    ul{
+    ul {
       margin-left: 40px;
       margin-right: 40px;
       padding-bottom: 110px;
@@ -96,10 +112,10 @@ export default {
         .navName {
           font-size: 30px;
           color: #333333;
-          font-weight:bold;
+          font-weight: bold;
           margin-bottom: 14px;
         }
-        .navIntro{
+        .navIntro {
           font-size: 24px;
           color: #999999;
         }

@@ -1,33 +1,22 @@
 <template>
   <div class="inHospReg2">
-    <div @click="showOption(0)" class="selectItem">
-      <mt-field label="身份类型" placeholder="请选择身份类型" v-model="identityStyle" :disableClear="true" :readonly="true"></mt-field>
-      <div class="isLink">></div>
-    </div>
-    <div @click="showOption(1)" class="selectItem">
-      <mt-field label="支付类型" placeholder="请选择支付类型" v-model="payStyle" :disableClear="true" :readonly="true"></mt-field>
-      <div class="isLink">></div>
-    </div>
-    <mt-field label="姓名" placeholder="请输入姓名" v-model="name" :disableClear="true"></mt-field>
+    <h1>默认信息</h1>
+    <mt-field label="卡号" type="number" v-model="CardNo" :disableClear="true" :readonly="true"></mt-field>
+    <mt-field label="姓名" v-model="patName" :disableClear="true" :readonly="true"></mt-field>
+    <mt-field label="证件号码" type="string" v-model="patIdNo" :disableClear="true" :readonly="true"></mt-field>
+    <mt-field
+      label="电话号码"
+      type="string"
+      v-model="patMobile"
+      :disableClear="true"
+      :readonly="true"
+    ></mt-field>
+    <mt-field label="联系地址" type="string" v-model="addressDetail" :disableClear="true" :readonly="true"></mt-field>
+    <h1>待完善信息</h1>
     <div @click="showOption(2)" class="selectItem">
       <mt-field label="性别" placeholder="请选择性别" v-model="sex" :disableClear="true" :readonly="true"></mt-field>
       <div class="isLink">></div>
     </div>
-
-    <div @click="showOption(3)" class="selectItem">
-      <mt-field label="证件类型" placeholder="请选择证件类型" v-model="paperwork" :disableClear="true" :readonly="true"></mt-field>
-      <div class="isLink">></div>
-    </div>
-    <mt-field label="证件号码" placeholder="请输入证件号码" type="string" v-model="idNum" :disableClear="true"></mt-field>
-    <mt-field
-      label="电话号码"
-      placeholder="请输入电话号码"
-      type="string"
-      v-model="phoneNum"
-      :disableClear="true"
-    ></mt-field>
-    <mt-field label="国家" placeholder="请输入国家" type="string" v-model="country" :disableClear="true"></mt-field>
-
     <div @click="showOption(4)" class="selectItem">
       <mt-field
         label="婚姻状态"
@@ -38,6 +27,7 @@
       ></mt-field>
       <div class="isLink">></div>
     </div>
+    <mt-field label="国家" placeholder="请输入国家" type="string" v-model="country" :disableClear="true"></mt-field>
     <mt-field label="民族" placeholder="请输入民族" type="string" v-model="nation" :disableClear="true"></mt-field>
     <mt-field
       label="出生地址"
@@ -55,10 +45,7 @@
     ></mt-field>
 
     <mt-button type="primary" class="btn" @click.native="submit">提交信息</mt-button>
-    <mt-actionsheet :actions="actions0" v-model="sheet0Visible"></mt-actionsheet>
-    <mt-actionsheet :actions="actions1" v-model="sheet1Visible"></mt-actionsheet>
     <mt-actionsheet :actions="actions2" v-model="sheet2Visible"></mt-actionsheet>
-    <mt-actionsheet :actions="actions3" v-model="sheet3Visible"></mt-actionsheet>
     <mt-actionsheet :actions="actions4" v-model="sheet4Visible"></mt-actionsheet>
   </div>
 </template>
@@ -74,35 +61,22 @@ export default {
       sheet2Visible: false,
       sheet3Visible: false,
       sheet4Visible: false,
-      identityStyle: '',
-      payStyle: '',
-      name: '',
+      CardNo: '',
+      patientId: '',
+      patName: '',
+      addressDetail: '',
       sex: '',
-      paperwork: '',
-      idNum: '',
-      phoneNum: '',
+      patIdType: '',
+      patIdNo: '',
+      patMobile: '',
       country: '',
       maritalStatus: '',
       nation: '',
       birthPlace: '',
       registration: '',
-      actions0: [
-        { name: '类型1', method: this.sIdentityType },
-        { name: '类型2', method: this.sIdentityType }
-      ],
-      actions1: [
-        { name: '支付宝', method: this.sPayStyle },
-        { name: '微信', method: this.sPayStyle }
-      ],
       actions2: [
         { name: '男', method: this.sSex },
         { name: '女', method: this.sSex }
-      ],
-      actions3: [
-        { name: '二代身份证', method: this.sPaperwork },
-        { name: '港澳居民身份证', method: this.sPaperwork },
-        { name: '台湾居民身份证', method: this.sPaperwork },
-        { name: '护照', method: this.sPaperwork }
       ],
       actions4: [
         { name: '未婚', method: this.sMaritalStatus },
@@ -118,25 +92,12 @@ export default {
   methods: {
     showOption (index) {
       switch (index) {
-        case 0:
-          this.sheet0Visible = true
-          break
-        case 1:
-          this.sheet1Visible = true
-          break
         case 2:
           this.sheet2Visible = true
-          break
-        case 3:
-          this.sheet3Visible = true
           break
         case 4:
           this.sheet4Visible = true
       }
-    },
-    sIdentityType (e) {
-      console.log(e)
-      this.identityStyle = e.name
     },
     sPayStyle (e) {
       this.payStyle = e.name
@@ -144,52 +105,36 @@ export default {
     sSex (e) {
       this.sex = e.name
     },
-    sPaperwork (e) {
-      this.paperwork = e.name
+    sPatIdType (e) {
+      this.patIdType = e.name
     },
     sMaritalStatus (e) {
       this.maritalStatus = e.name
     },
     submit () {
-      // if(this.paperwork && this.payStyle && this.name && )
       this.register()
     },
     register () {
-      // if (this.$store.state.patInfo.length !== []) {
-      //   this.$store.state.patInfo.forEach(item => {
-      //     if (item.visitCardNo === this.$store.state.userInfo.visitCardNo) {
-      //     }
-      //   })
-      // }
-      // this.$store.state.userInfo.visitCardNo
+      const duration = 1500
+      const className = 'toast'
       util.http
-        .post('/api/invisit/Register', {
-          patientId: 1007033276, // 必要
-          patIdType: '1', // 必要
-          patIdNo: '441581188602104712', // 必要
-          CardType: '1', // 必要
-          CardNo: '2612612', // 必要
-          patName: '陈就',
-          patMobile: '1234567890',
-          country: '中国',
-          registration: '广东',
-          birthPlace: '广东',
-          sex: '男',
-          nation: '汉族',
-          maritalStatus: '未婚'
-          // CardType: this.$store.state.userInfo.visitCardNo ? '1' : '2', // 必要
-          // CardNo: this.$store.state.userInfo.visitCardNo || this.$store.state.userInfo.socialHosCardNO, // 必要
-          // patName: this.name,
-          // patMobile: this.phoneNum,
-          // country: this.country,
-          // registration: this.registration,
-          // birthPlace: this.birthPlace,
-          // sex: this.sex,
-          // nation: this.nation,
-          // maritalStatus: this.maritalStatus
+        .post('/api/invisit/register', {
+          patName: this.patName, // 必要
+          patMobile: this.patMobile,
+          country: this.country,
+          registration: this.registration,
+          birthPlace: this.birthPlace,
+          sex: this.sex,
+          nation: this.nation,
+          maritalStatus: this.maritalStatus
         })
         .then(res => {
-          console.log(res)
+          if (res.code === 0 && res.data.Code === '0') {
+            this.$toast({ message: '登记成功', duration, className })
+            this.$router.push('/inHosp/nav')
+          } else if (res.code === 500) {
+            this.$toast({ message: res.msg, duration, className })
+          }
         })
         .catch(error => {
           console.log(error)
@@ -197,8 +142,19 @@ export default {
     }
   },
   created () {
-    this.idNum = this.$route.params.patIdNo ? this.$route.params.patIdNo : ''
-    this.name = this.$route.params.patName ? this.$route.params.patName : ''
+    this.CardNo = this.$store.state.userInfo.visitCardNo || this.$store.state.userInfo.socialHosCardNO
+    let self = this
+    if (this.$store.state.patInfoBinded !== []) {
+      this.$store.state.patInfoBinded.forEach(item => {
+        if (item.patName === this.$store.state.userInfo.visitName) {
+          self.patIdNo = item.patIdNo
+          self.patName = item.patName
+          self.patMobile = item.patMobile
+          self.patIdType = item.PatIdType
+          self.addressDetail = item.addressDetail
+        }
+      })
+    }
   }
 }
 </script>
@@ -206,7 +162,6 @@ export default {
 <style lang='scss' scoped>
 .inHospReg2 {
   background: #f2f2f2;
-  height: 100vh;
   .mint-field {
     /deep/ .mint-cell-wrapper {
       padding: 0;
@@ -237,9 +192,9 @@ export default {
     line-height: 80px;
   }
   .btn {
-    margin: 0 auto;
     margin-top: 54px;
     margin-left: 12.5px;
+    margin-bottom: 50px;
     width: 725px;
     height: 80px;
     border-radius: 10px;
@@ -251,6 +206,11 @@ export default {
     height: 80px;
     font-size: 30px;
     line-height: 80px;
+  }
+  h1 {
+    color: #999999;
+    font-size: 24px;
+    padding: 25px 40px;
   }
 }
 </style>
