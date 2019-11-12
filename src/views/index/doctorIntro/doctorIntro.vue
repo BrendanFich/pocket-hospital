@@ -82,11 +82,11 @@ export default {
     },
     getDocInfo (deptCode) {
       if (deptCode === undefined) {
-        deptCode = '00336'
+        deptCode = '336'
         console.log(deptCode)
       }
       util.http
-        .post('/api/doctor/doc_info', {deptCode: deptCode})
+        .post('/api/doctor/doc_info', {deptCode: deptCode.toString()})
         .then(res => {
           this.docList = res.data.Records
           console.log(res.data.Records)

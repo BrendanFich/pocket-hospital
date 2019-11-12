@@ -32,7 +32,7 @@ export default {
         {
           identity: 'doctor',
           avatarUrl: require('@/assets/img/avatar80x80.png'),
-          content: '我是主任医师陈辉'
+          content: '我是副主任医师劳绍祥'
         },
         {
           identity: 'patient',

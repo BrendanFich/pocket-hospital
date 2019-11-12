@@ -1,19 +1,19 @@
 <template>
   <div class="liveHosOrder">
     <ul>
-      <li v-for="n in 3" :key="n" @click="to()">
+      <li v-for="(item, index) in myDoctorList" :key="index" @click="to()">
         <div class="orderCard">
           <div class="left">
             <img src="@/assets/img/avatar88x88.png" alt />
             <div class="baseInfo">
               <div>
-                <span class="name">张家辉</span>
-                <span class="title">主任医师</span>
+                <span class="name">{{item.doctorName}}</span>
+                <span class="title">{{item.doctorTitle}}</span>
               </div>
-              <div class="department">内分泌科</div>
+              <div class="department">{{item.deptName}}</div>
             </div>
           </div>
-          <div class="beforeTime">上次就诊:2019-09-26 ></div>
+          <div class="beforeTime">上次就诊:2019-11-11 ></div>
         </div>
       </li>
     </ul>
@@ -26,7 +26,8 @@ export default {
   name: 'LiveHosOrder',
   data () {
     return {
-      selected: 0
+      selected: 0,
+      myDoctorList: []
     }
   },
   created () {
@@ -40,8 +41,7 @@ export default {
       util.http
         .post('/api/pat/findMyDoctor')
         .then(res => {
-          console.log(res)
-          // 没有相应内容
+          this.myDoctorList = res.data.Records.Records
         })
         .catch(error => {
           console.log(error)

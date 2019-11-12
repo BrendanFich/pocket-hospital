@@ -3,8 +3,8 @@
     <div class="doctorIntroCard">
       <img class="avatar" src="@/assets/img/avatar100x101.png" />
       <div class="doctorInfo">
-        <p class="doctorName">杨辉</p>
-        <p class="doctorTitle">内分泌科 主任医师</p>
+        <p class="doctorName">劳绍祥</p>
+        <p class="doctorTitle">内科门诊 副主任医师</p>
         <div class="star">
           <img v-for="n in 5" :key="n" src="@/assets/img/starOn.png" />
         </div>
@@ -24,11 +24,11 @@
     <div class="moreIntro">
       <div class="msg">
         <span class="key">所属科室</span>
-        <span class="value">内分泌科</span>
+        <span class="value">内科门诊</span>
       </div>
       <div class="msg">
         <span class="key">医生职称</span>
-        <span class="value">主任医师</span>
+        <span class="value">副主任医师</span>
       </div>
       <div class="msg">
         <span class="key">专业擅长</span>
