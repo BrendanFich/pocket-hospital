@@ -1,19 +1,19 @@
 <template>
   <div class="liveHosOrder">
     <ul>
-      <li v-for="n in 2" :key="n">
-        <div class="paidTime">下单日期：2019-08-20 20:31:05</div>
+      <li v-for="(item, index) in payInfoList" :key="index">
+        <div class="paidTime">下单日期：{{item.paymentDate}}</div>
         <div class="orderCard">
           <div class="left">
             <img src="@/assets/img/money.png" alt />
             <div class="baseInfo">
               <div>
-                <span class="name">张家辉</span>
-                <span class="num">3567901</span>
+                <span class="name">{{item.patName}}</span>
+                <span class="num">{{item.PatCardNo}}</span>
               </div>
               <div class="item">
                 <span class="key">院区</span>
-                <span class="value">：南海院区</span>
+                <span class="value">：全院</span>
               </div>
               <div class="item">
                 <span class="key">类型</span>
@@ -22,7 +22,7 @@
             </div>
           </div>
           <div class="right">
-            <span class="price">+1300</span>
+            <span class="price">{{item.paymentFee}}元</span>
           </div>
         </div>
       </li>
@@ -31,12 +31,25 @@
 </template>
 
 <script>
+import util from '@/assets/js/util'
 export default {
   name: 'liveHosOrder',
   data () {
     return {
-      selected: 0
+      selected: 0,
+      payInfoList: []
     }
+  },
+  created () {
+    util.http
+      .post('/api/invisit/getVisitPayInfo')
+      .then(res => {
+        console.log(res)
+        this.payInfoList = res.data.Records
+      })
+      .catch(error => {
+        console.log(error)
+      })
   }
 }
 </script>
@@ -44,7 +57,7 @@ export default {
 <style lang="scss" scoped>
 .liveHosOrder {
   background: #f2f2f2;
-  height: 100vh;
+  min-height: 100vh;
   .paidTime {
     color: #999999;
     font-size: 24px;
@@ -100,6 +113,9 @@ export default {
       }
       .price {
         background: #f69343;
+        min-width: 80px;
+        height: 28px;
+        text-align: center;
       }
       .orderTime {
         margin-top: 10px;

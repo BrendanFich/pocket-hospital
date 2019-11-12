@@ -1,29 +1,43 @@
 <template>
   <div class="selectDoc">
-    <Searchbar placeholder="搜索科室或医生" @getSearchStatus="setSearchStatus"></Searchbar>
-    <mt-tab-container v-model="selected" :class="{hidden: searching}">
-      <mt-tab-container-item v-for="(item,index) in departments" :key="index" :id="index">
-        <router-link class="item" to="/iHospital/docIntro">
+    <!-- <Searchbar placeholder="搜索医生" @getSearchStatus="setSearchStatus"></Searchbar> -->
+    <div class="searchbar">
+      <img class="cancelIcon" src="@/assets/img/search.png" alt />
+      <input type="text" v-model="value" placeholder="搜索医生" @focus="focus" />
+      <div class="xIcon" :class="{show: value}" @click="clear">×</div>
+      <button class="cancel" :class="{show : isShow}" @click="cancel">取消</button>
+      <div class="resultList" :class="{show : isShow}">
+        <div v-if="searchResult.length===0 && value !== ''" class="noInfo">无相关医生信息</div>
+        <div v-for="(item,index) in searchResult" :key="index" @click="select(item.deptCode, item.deptName)">
+          <mt-cell :title="item.deptName">
+            <img class="icon" src="@/assets/img/deptIcon.png" />&gt;
+          </mt-cell>
+        </div>
+      </div>
+    </div>
+    <mt-tab-container v-model="selected" :class="{hidden: isShow}">
+      <mt-tab-container-item>
+        <div class="item">
           <ul style="background: #fff;">
-            <li class="doctorIntroCard" v-for="(doctor,dindex) in item.doctors" :key="dindex">
+            <li class="doctorIntroCard" v-for="(item,index) in displayDoc" :key="index">
               <div class="baseInfo">
                 <img class="avatar" src="@/assets/img/avatar100x101.png" />
                 <div>
-                  <p class="doctorName">{{doctor.name}}</p>
-                  <p class="doctorTitle">{{item.name}} {{doctor.title}}</p>
+                  <p class="doctorName">{{item.doctorName}}</p>
+                  <p class="doctorTitle">{{item.deptName}} {{doctor.doctorTitle}}</p>
                   <div class="star">
                     <img v-for="n in doctor.star" :key="n" src="@/assets/img/starOn.png" />
                   </div>
                 </div>
                 <div class="price">
                   <img src="@/assets/img/communication.png" />
-                  <span>{{doctor.price}}元</span>
+                  <span>{{item.price ? item.price : "20"}}元</span>
                 </div>
               </div>
-              <p class="textIntro">{{doctor.intro}}</p>
+              <p class="textIntro">{{item.doctorIntrodution ? item.doctorIntrodution : '暂无简介'}}</p>
             </li>
           </ul>
-        </router-link>
+        </div>
       </mt-tab-container-item>
     </mt-tab-container>
   </div>
@@ -31,121 +45,90 @@
 
 <script>
 import Searchbar from '@/components/Searchbar'
+import util from '@/assets/js/util'
 export default {
   name: 'selectDoc',
   components: { Searchbar },
   data () {
     return {
       selected: 0,
-      searching: false,
-      searchTags: [
-        '头痛',
-        '消化不良',
-        '月经不调',
-        '妇科炎症',
-        '过敏',
-        '头痛',
-        '消化不良',
-        '月经不调'
-      ],
-      departments: [
+      doctors: [],
+      value: '',
+      isShow: false,
+      displayDoc: [
         {
-          name: '内分泌专科',
-          bgcolor: '#E3B461',
-
-          doctors: [
-            {
-              avatarUrl: '',
-              name: '杨辉',
-              title: '主任医师',
-              star: 5,
-              price: 20,
-              intro:
-                '擅长免疫性皮肤病，男性内分泌不平衡，由内分泌 引起的各种疾病。'
-            },
-            {
-              avatarUrl: '',
-              name: '杨辉',
-              title: '主任医师',
-              star: 4,
-              price: 30,
-              intro:
-                '擅长免疫性皮肤病，男性内分泌不平衡，由内分泌 引起的各种疾病。'
-            },
-            {
-              avatarUrl: '',
-              name: '杨辉',
-              title: '主任医师',
-              star: 3,
-              price: 50,
-              intro:
-                '擅长免疫性皮肤病，男性内分泌不平衡，由内分泌 引起的各种疾病。'
-            }
-          ]
+          deptCode: 173,
+          deptName: '内科门诊',
+          doctorCode: 60,
+          doctorIntrodution: null,
+          doctorName: '黄惠平',
+          doctorSkill: '',
+          doctorTitle: '副主任医师',
+          hasRegtable: '0'
         },
         {
-          name: '皮肤科',
-          bgcolor: '#E36A61',
-          doctors: [
-            {
-              avatarUrl: '',
-              name: '刘玉明',
-              title: '主任医师',
-              star: 5,
-              price: 50,
-              intro:
-                '肠道主任医师，曾在中山大学附属研究参与研究，有多年主治经验，擅长治疗各种肠道疾病。'
-            },
-            {
-              avatarUrl: '',
-              name: '刘玉明',
-              title: '主任医师',
-              star: 5,
-              price: 50,
-              intro:
-                '肠道主任医师，曾在中山大学附属研究参与研究，有多年主治经验，擅长治疗各种肠道疾病。'
-            }
-          ]
+          deptCode: 173,
+          deptName: '内科门诊',
+          doctorCode: 64,
+          doctorIntrodution: null,
+          doctorName: '黄卫红',
+          doctorSkill: '',
+          doctorTitle: '护师',
+          hasRegtable: '0'
         },
         {
-          name: '肠道专科',
-          bgcolor: '#98E361',
-          doctors: [
-            {
-              avatarUrl: '',
-              name: '梁君婷',
-              title: '主任医师',
-              star: 5,
-              price: 50,
-              intro:
-                '肠道主任医师，曾在中山大学附属研究参与研究，有多年主治经验，擅长治疗各种肠道疾病。'
-            }
-          ]
+          deptCode: 173,
+          deptName: '内科门诊',
+          doctorCode: 75,
+          doctorIntrodution: null,
+          doctorName: '丘华',
+          doctorSkill: '',
+          doctorTitle: '经济师',
+          hasRegtable: '0'
         },
-        { name: '耳鼻喉科', bgcolor: '#61E3B4' },
-        { name: '骨内科', bgcolor: '#619BE3' },
-        { name: '内分泌专科', bgcolor: '#E3B461' },
-        { name: '皮肤科', bgcolor: '#E36A61' },
-        { name: '肠道专科', bgcolor: '#98E361' },
-        { name: '耳鼻喉科', bgcolor: '#61E3B4' },
-        { name: '骨内科', bgcolor: '#619BE3' },
-        { name: '内分泌专科', bgcolor: '#E3B461' },
-        { name: '皮肤科', bgcolor: '#E36A61' },
-        { name: '肠道专科', bgcolor: '#98E361' },
-        { name: '耳鼻喉科', bgcolor: '#61E3B4' },
-        { name: '骨内科', bgcolor: '#619BE3' },
-        { name: '内分泌专科', bgcolor: '#E3B461' },
-        { name: '皮肤科', bgcolor: '#E36A61' },
-        { name: '肠道专科', bgcolor: '#98E361' },
-        { name: '耳鼻喉科', bgcolor: '#61E3B4' },
-        { name: '骨内科', bgcolor: '#619BE3' }
+        {
+          deptCode: 173,
+          deptName: '内科门诊',
+          doctorCode: 80,
+          doctorIntrodution: null,
+          doctorName: '林淦河',
+          doctorSkill: '',
+          doctorTitle: '西放射副主任医师',
+          hasRegtable: '0'
+        }
       ]
     }
   },
-  methods: {
-    setSearchStatus (data) {
-      this.searching = data
+  computed: {
+    searchResult () {
+      if (this.value === '') {
+        return []
+      } else {
+        return this.doctors.filter((item) => { return item.doctorName.indexOf(this.value) !== -1 })
+      }
     }
+  },
+  methods: {
+    focus () {
+      this.isShow = true
+    },
+    cancel () {
+      this.value = ''
+      this.isShow = false
+    },
+    clear () {
+      this.value = ''
+    }
+  },
+  created () {
+    util.http.post('/api/doctor/doc_info', {
+      deptCode: this.$route.params.deptCode
+    }).then(res => {
+      this.doctors = res.data.Records
+      console.log(res.data)
+    }).catch((error) => {
+      console.log(error)
+    })
   }
 }
 </script>
@@ -154,6 +137,95 @@ export default {
 .selectDoc {
   background: #f2f2f2;
   height: 100vh;
+  .searchbar {
+    width: 750px;
+    position: relative;
+    input {
+      margin: 30px 25px;
+      border-radius: 10px;
+      padding: 20px 70px;
+      width: 560px;
+      border: none;
+      outline: none;
+      font-size: 24px;
+    }
+    .cancelIcon {
+      width: 16px;
+      position: absolute;
+      top: 55px;
+      left: 65px;
+    }
+    .cancel {
+      display: none;
+      position: absolute;
+      top: 30px;
+      right: 50px;
+      font-size: 24px;
+      border: none;
+      background: #fff;
+      outline: none;
+      height: 68px;
+      margin-left: -10px;
+      color: #09cf74;
+    }
+    .resultList {
+      background: #fff;
+      display: none;
+      min-height: calc(100vh - 128px);
+      /deep/ .mint-cell-wrapper {
+        height: 80px;
+        padding: 0 25px;
+        border-bottom: 1px solid #e3e3e3;
+        .mint-cell-text {
+          padding-left: 50px;
+          font-size: 26px;
+          color: #333333;
+        }
+        .mint-cell-value {
+          .icon {
+            position: absolute;
+            left: 32px;
+            top: 27px;
+            width: 20px;
+          }
+        }
+      }
+      .resultStyle {
+        font-size: 24px;
+        padding: 20px 30px;
+        border-bottom: 1px solid #dedede;
+      }
+      .resultItem {
+        display: flex;
+        align-items: center;
+        padding: 10px 30px;
+        font-size: 20px;
+        line-height: 30px;
+        border-bottom: 1px solid #dedede;
+      }
+    }
+
+    .xIcon {
+      display: none;
+      position: absolute;
+      top: 50px;
+      right: 130px;
+      font-size: 25px;
+      background: #f6f6f6;
+      border-radius: 50%;
+      width: 30px;
+      height: 25px;
+      text-align: center;
+      padding-bottom: 5px;
+      color: #333;
+    }
+    .show {
+      display: block;
+    }
+    .noInfo {
+      padding: 20px;
+    }
+  }
   .doctorIntroCard {
     margin-top: 10px;
     height: 195px;
@@ -195,6 +267,7 @@ export default {
         margin-left: 240px;
         img {
           width: 38px;
+          margin-bottom: 10px;
         }
         span {
           color: #333333;

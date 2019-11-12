@@ -118,7 +118,7 @@ export default {
 <style lang="scss" scoped>
 .regOrder {
   background: #f2f2f2;
-  height: 100vh;
+  min-height: 100vh;
   .noData {
     width: 366px;
     margin-top: 50px;

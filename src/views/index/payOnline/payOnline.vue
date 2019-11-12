@@ -7,7 +7,7 @@
     <mt-tab-container v-model="selected">
       <mt-tab-container-item id="1">
         <img class="noData" v-if="unpaid.length === 0" src="@/assets/img/noData.png" />
-        <dic v-for="(item,index) in unpaid" :key="index">
+        <div v-for="(item,index) in unpaid" :key="index">
           <mt-cell @click.native="pay(item.ledgerSn)">
             <div class="leftInfo">
               <div class="name">{{item.patName}}</div>
@@ -26,7 +26,7 @@
               <div class="date">{{item.paymentDate}}</div>
             </div>
           </mt-cell>
-        </dic>
+        </div>
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
         <img class="noData" v-if="paid.length === 0" src="@/assets/img/noData.png" />
@@ -129,7 +129,7 @@ export default {
     pay (ledgerSn) {
       console.log('paying...')
       util.http
-        .post('/api/doctor/payComfirm', {ledgerSn, password: ''})
+        .post('/api/doctor/payInfo', {ledgerSn})
         .then(res => {
           console.log(res)
         })
@@ -144,7 +144,7 @@ export default {
 <style lang="scss" scoped>
 .payOnline {
   background: #f2f2f2;
-  height: 100vh;
+  min-height: 100vh;
   .mint-navbar {
     .mint-tab-item {
       padding: 31px 0;
