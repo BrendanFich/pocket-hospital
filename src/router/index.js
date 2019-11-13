@@ -81,7 +81,7 @@ export default new Router({
       component: guidance,
       children: [
         { path: 'sSymptom', component: sSymptom },
-        { path: 'gSTime', component: gSTime }
+        { path: 'gSTime/:deptCode&:doctorCode', name: 'gSTime', component: gSTime }
       ]
     },
     {

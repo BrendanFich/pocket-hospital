@@ -3,12 +3,12 @@
     <div class="doctorIntroCard">
       <img class="avatar" src="@/assets/img/avatar100x101.png" />
       <div class="doctorInfo">
-        <p class="doctorName">杨辉</p>
-        <p class="doctorTitle">内分泌科 主任医师</p>
+        <p class="doctorName">{{doctorInfo.doctorName}}</p>
+        <p class="doctorTitle">{{doctorInfo.deptName}} {{doctorInfo.doctorTitle}}</p>
         <div class="star">
           <img v-for="n in 5" :key="n" src="@/assets/img/starOn.png" />
         </div>
-        <p class="textIntro">擅长免疫性皮肤病，男性内分泌不平衡，由内分泌引起的各种疾病。</p>
+        <p class="textIntro">{{doctorInfo.doctorIntrodution ? doctorInfo.doctorIntrodution : '擅长免疫性皮肤病，男性内分泌不平衡，由内分泌引起的各种疾病。'}}</p>
       </div>
     </div>
     <week-slider
@@ -41,10 +41,13 @@
 <script>
 import moment from 'moment'
 import weekSlider from '@/components/weekSlider'
+import util from '@/assets/js/util'
+
 export default {
   name: 'gSTime',
   data () {
     return {
+      doctorInfo: {},
       date: moment(new Date()).format('YYYY-MM-DD'),
       workTimeList: [
         { time: '09:00 - 10:00', remaining: 3 },
@@ -54,6 +57,9 @@ export default {
     }
   },
   components: { weekSlider },
+  created () {
+    this.getDoctorInfo()
+  },
   methods: {
     dateClickhandler (e) {
       this.date = e
@@ -65,6 +71,16 @@ export default {
       } else {
         return '/reserve/confirm'
       }
+    },
+    getDoctorInfo () {
+      util.http
+        .post('/api/doctor/doc_info', { deptCode: this.$route.params.deptCode, doctorCode: this.$route.params.doctorCode })
+        .then(res => {
+          this.doctorInfo = res.data.Records
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   }
 }

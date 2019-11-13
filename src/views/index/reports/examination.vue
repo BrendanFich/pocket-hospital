@@ -36,10 +36,10 @@ export default {
     getPacsList () {
       util.http
         .post('/api/report/getPacsList', {
-          patCardNo: '1000259326',
-          beginDate: '2016-03-01',
-          endDate: '2017-04-01',
-          patCardType: '1'
+          patCardNo: '1000259326', // 写死
+          beginDate: '2016-03-01', // 写死
+          endDate: '2017-04-01', // 写死
+          patCardType: '1' // 写死
         })
         .then(res => {
           console.log(res)
@@ -52,28 +52,21 @@ export default {
     getLisInfo (checkId) {
       util.http
         .post('/api/report/getPacsInfo', {
-          patCardType: '1',
-          patCardNo: '1000259326',
-          checkId
+          patCardType: '1', // 写死
+          patCardNo: '1000259326', // 写死
+          checkId: '1153173' // 写死
         })
         .then(res => {
           console.log(res)
-          //     let text = `
-          // <div>
-          //   <p>订单流水号: ${res.data.Records.hisOrdNum}</p>
-          //   <p>创建时间: ${res.data.Records.createDate}</p>
-          //   <p>就诊科室：${res.data.Records.deptName}</p>
-          //   <p>就诊医生：${res.data.Records.doctorName}</p>
-          //   <p>就诊日期：${res.data.Records.scheduleDate}</p>
-          //   <p>就诊时间：${res.data.Records.beginTime}-${res.data.Records.endTime}</p>
-          //   <p>病人姓名：${res.data.Records.patName}</p>
-          //   <p>病人卡号：${res.data.Records.patCardNo}</p>
-          //   <p>卡号类型：${res.data.Records.patCardType === '1' ? '就诊卡' : '社保卡'}</p>
-          //   <p>挂号费用：${res.data.Records.regFee}</p>
-          //   <p>当前状态：${status}</p>
-          // </div>
-          // `
-          //     this.$messagebox('提示', text)
+          let text = `
+          <div>
+            <p>化验编号: ${res.data.Records[0].checkId}</p>
+            <p>化验类型: ${res.data.Records[0].checkMethod}</p>
+            <p>化验名称：${res.data.Records[0].checkName}</p>
+            <p>门诊名称：${res.data.Records[0].deptName}</p>
+          </div>
+          `
+          this.$messagebox('提示', text)
         })
         .catch(error => {
           console.log(error)

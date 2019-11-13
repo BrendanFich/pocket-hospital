@@ -23,7 +23,7 @@ http.ajax.interceptors.response.use(res => {
 
   if (res.code === 500) {
     localStorage.removeItem('token')
-    window.location.href = 'http://yun.gdqlyt.com.cn:84'
+    window.location.href = 'http://yun.gdqlyt.com.cn'
   }
   return res
 }, err => {
