@@ -135,7 +135,7 @@ export default new Router({
         { path: '', component: iHospital },
         { path: 'iSDept', component: iSDept },
         { path: 'selectDoc/:deptCode&:deptName', name: 'selectDoc', component: selectDoc },
-        { path: 'docIntro', component: docIntro },
+        { path: 'docIntro/:deptCode&:doctorCode', name: 'docIntro', component: docIntro },
         { path: 'inquiry', component: inquiry },
         { path: 'evaluate', component: evaluate },
 

@@ -3,8 +3,8 @@
     <div class="doctorIntroCard">
       <img class="avatar" src="@/assets/img/avatar100x101.png" />
       <div class="doctorInfo">
-        <p class="doctorName">劳绍祥</p>
-        <p class="doctorTitle">内科门诊 副主任医师</p>
+        <p class="doctorName">{{doctorInfo.doctorName}}</p>
+        <p class="doctorTitle">{{doctorInfo.deptName}} {{doctorInfo.doctorTitle}}</p>
         <div class="star">
           <img v-for="n in 5" :key="n" src="@/assets/img/starOn.png" />
         </div>
@@ -24,11 +24,11 @@
     <div class="moreIntro">
       <div class="msg">
         <span class="key">所属科室</span>
-        <span class="value">内科门诊</span>
+        <span class="value">{{doctorInfo.deptName}}</span>
       </div>
       <div class="msg">
         <span class="key">医生职称</span>
-        <span class="value">副主任医师</span>
+        <span class="value">{{doctorInfo.doctorTitle}}</span>
       </div>
       <div class="msg">
         <span class="key">专业擅长</span>
@@ -50,99 +50,24 @@
 </template>
 
 <script>
+import util from '@/assets/js/util'
 export default {
   name: 'docIntro',
   data () {
     return {
-      selected: 0,
-      departments: [
-        {
-          name: '内分泌专科',
-          bgcolor: '#E3B461',
-          doctors: [
-            {
-              avatarUrl: '',
-              name: '杨辉',
-              title: '主任医师',
-              star: 5,
-              intro:
-                '擅长免疫性皮肤病，男性内分泌不平衡，由内分泌 引起的各种疾病。'
-            },
-            {
-              avatarUrl: '',
-              name: '杨辉',
-              title: '主任医师',
-              star: 4,
-              intro:
-                '擅长免疫性皮肤病，男性内分泌不平衡，由内分泌 引起的各种疾病。'
-            },
-            {
-              avatarUrl: '',
-              name: '杨辉',
-              title: '主任医师',
-              star: 3,
-              intro:
-                '擅长免疫性皮肤病，男性内分泌不平衡，由内分泌 引起的各种疾病。'
-            }
-          ]
-        },
-        {
-          name: '皮肤科',
-          bgcolor: '#E36A61',
-          doctors: [
-            {
-              avatarUrl: '',
-              name: '刘玉明',
-              title: '主任医师',
-              star: 5,
-              intro:
-                '肠道主任医师，曾在中山大学附属研究参与研究，有多年主治经验，擅长治疗各种肠道疾病。'
-            },
-            {
-              avatarUrl: '',
-              name: '刘玉明',
-              title: '主任医师',
-              star: 5,
-              intro:
-                '肠道主任医师，曾在中山大学附属研究参与研究，有多年主治经验，擅长治疗各种肠道疾病。'
-            }
-          ]
-        },
-        {
-          name: '肠道专科',
-          bgcolor: '#98E361',
-          doctors: [
-            {
-              avatarUrl: '',
-              name: '梁君婷',
-              title: '主任医师',
-              star: 5,
-              intro:
-                '肠道主任医师，曾在中山大学附属研究参与研究，有多年主治经验，擅长治疗各种肠道疾病。'
-            }
-          ]
-        },
-        { name: '耳鼻喉科', bgcolor: '#61E3B4' },
-        { name: '骨内科', bgcolor: '#619BE3' },
-        { name: '内分泌专科', bgcolor: '#E3B461' },
-        { name: '皮肤科', bgcolor: '#E36A61' },
-        { name: '肠道专科', bgcolor: '#98E361' },
-        { name: '耳鼻喉科', bgcolor: '#61E3B4' },
-        { name: '骨内科', bgcolor: '#619BE3' },
-        { name: '内分泌专科', bgcolor: '#E3B461' },
-        { name: '皮肤科', bgcolor: '#E36A61' },
-        { name: '肠道专科', bgcolor: '#98E361' },
-        { name: '耳鼻喉科', bgcolor: '#61E3B4' },
-        { name: '骨内科', bgcolor: '#619BE3' },
-        { name: '内分泌专科', bgcolor: '#E3B461' },
-        { name: '皮肤科', bgcolor: '#E36A61' },
-        { name: '肠道专科', bgcolor: '#98E361' },
-        { name: '耳鼻喉科', bgcolor: '#61E3B4' },
-        { name: '骨内科', bgcolor: '#619BE3' }
-      ]
+      doctorInfo: {}
     }
   },
-  created () {},
+  created () {
+    util.http.post('/api/doctor/doc_info', {
+      deptCode: this.$route.params.deptCode,
+      doctorCode: this.$route.params.doctorCode
+    }).then(res => {
+      this.doctorInfo = res.data.Records[0]
+    }).catch((error) => {
+      console.log(error)
+    })
+  },
   methods: {
     enter () {
       this.$router.push('/iHospital/inquiry')

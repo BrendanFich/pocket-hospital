@@ -61,17 +61,6 @@ export default {
   created () {
     this.idNum = this.$route.params.patIdNo ? this.$route.params.patIdNo : ''
     this.name = this.$route.params.patName ? this.$route.params.patName : ''
-    // util.http
-    //   .post('/api/pat/pat_info')
-    //   .then(res => {
-    //     console.log('----------获取患者信息-----------')
-    //     // this.cardList = res.data
-    //     this.$store.commit('updateUserPatInfo', res.data)
-    //     console.log(res.data)
-    //   })
-    //   .catch(error => {
-    //     console.log(error)
-    //   })
     this.$store.commit('updateUserPatInfo')
   },
   computed: {
@@ -168,8 +157,8 @@ export default {
                 }
               } else if (res.code === 500 && res.msg === '卡号已绑定') {
                 this.$toast({ message: res.msg, duration, className })
-              } else {
-                this.$toast({ message: res.msg, duration: 2000, className })
+              } else if (res.code === 400 && res.msg === 'PatientId参数必填;') {
+                this.$toast({ message: '未建档，请先建档', duration: 2000, className })
               }
             })
             .catch(error => {

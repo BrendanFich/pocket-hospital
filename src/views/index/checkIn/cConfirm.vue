@@ -70,7 +70,7 @@ export default {
             console.log(error)
           })
         if (this.registerInfo.hisOrdNum) {
-          this.$router.push({name: 'cQueue', params: this.registerInfo.hisOrdNum})
+          this.$router.push({name: 'cQueue', params: {hisOrdNum: this.registerInfo.hisOrdNum}})
         }
       })
       // if (this.isArrived) {

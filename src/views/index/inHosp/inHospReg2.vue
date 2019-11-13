@@ -14,20 +14,20 @@
     <mt-field label="联系地址" type="string" v-model="addressDetail" :disableClear="true" :readonly="true"></mt-field>
     <h1>待完善信息</h1>
     <div @click="showOption(2)" class="selectItem">
-      <mt-field label="性别" placeholder="请选择性别" v-model="sex" :disableClear="true" :readonly="true"></mt-field>
+      <mt-field label="性别" placeholder="请选择性别" v-model="patSex" :disableClear="true" :readonly="true"></mt-field>
       <div class="isLink">></div>
     </div>
     <div @click="showOption(4)" class="selectItem">
       <mt-field
         label="婚姻状态"
         placeholder="请选择婚姻状态"
-        v-model="maritalStatus"
+        v-model="arryStatus"
         :disableClear="true"
         :readonly="true"
       ></mt-field>
       <div class="isLink">></div>
     </div>
-    <mt-field label="国家" placeholder="请输入国家" type="string" v-model="country" :disableClear="true"></mt-field>
+    <mt-field label="国籍" placeholder="请输入国家" type="string" v-model="country" :disableClear="true"></mt-field>
     <mt-field label="民族" placeholder="请输入民族" type="string" v-model="nation" :disableClear="true"></mt-field>
     <mt-field
       label="出生地址"
@@ -36,14 +36,8 @@
       v-model="birthPlace"
       :disableClear="true"
     ></mt-field>
-    <mt-field
-      label="籍贯"
-      placeholder="请输入籍贯"
-      type="string"
-      v-model="registration"
-      :disableClear="true"
-    ></mt-field>
-
+    <mt-field label="联系人姓名" placeholder="请输入联系人姓名" type="string" v-model="contactName" :disableClear="true"></mt-field>
+    <mt-field label="联系人电话" placeholder="请输入联系人电话" type="string" v-model="contactPhone" :disableClear="true"></mt-field>
     <mt-button type="primary" class="btn" @click.native="submit">提交信息</mt-button>
     <mt-actionsheet :actions="actions2" v-model="sheet2Visible"></mt-actionsheet>
     <mt-actionsheet :actions="actions4" v-model="sheet4Visible"></mt-actionsheet>
@@ -65,24 +59,25 @@ export default {
       patientId: '',
       patName: '',
       addressDetail: '',
-      sex: '',
+      patSex: '',
       patIdType: '',
       patIdNo: '',
       patMobile: '',
       country: '',
-      maritalStatus: '',
+      arryStatus: '',
       nation: '',
       birthPlace: '',
-      registration: '',
+      contactName: '',
+      contactPhone: '',
       actions2: [
-        { name: '男', method: this.sSex },
-        { name: '女', method: this.sSex }
+        { name: '男', method: this.sPatSex },
+        { name: '女', method: this.sPatSex }
       ],
       actions4: [
-        { name: '未婚', method: this.sMaritalStatus },
-        { name: '已婚', method: this.sMaritalStatus },
-        { name: '丧偶', method: this.sMaritalStatus },
-        { name: '离婚', method: this.sMaritalStatus }
+        { name: '未婚', method: this.sArryStatus },
+        { name: '已婚', method: this.sArryStatus },
+        { name: '丧偶', method: this.sArryStatus },
+        { name: '离婚', method: this.sArryStatus }
       ]
     }
   },
@@ -102,14 +97,14 @@ export default {
     sPayStyle (e) {
       this.payStyle = e.name
     },
-    sSex (e) {
-      this.sex = e.name
+    sPatSex (e) {
+      this.patSex = e.name
     },
     sPatIdType (e) {
       this.patIdType = e.name
     },
-    sMaritalStatus (e) {
-      this.maritalStatus = e.name
+    sArryStatus (e) {
+      this.arryStatus = e.name
     },
     submit () {
       this.register()
@@ -121,12 +116,13 @@ export default {
         .post('/api/invisit/register', {
           patName: this.patName, // 必要
           patMobile: this.patMobile,
-          country: this.country,
-          registration: this.registration,
+          nationNality: this.country,
           birthPlace: this.birthPlace,
-          sex: this.sex,
+          patSex: this.patSex,
           nation: this.nation,
-          maritalStatus: this.maritalStatus
+          arryStatus: this.arryStatus,
+          contactName: this.contactName,
+          contactPhone: this.contactPhone
         })
         .then(res => {
           if (res.code === 0 && res.data.Code === '0') {
@@ -142,7 +138,7 @@ export default {
     }
   },
   created () {
-    this.CardNo = this.$store.state.userInfo.visitCardNo || this.$store.state.userInfo.socialHosCardNO
+    this.CardNo = this.$store.state.userInfo.visitCardNo || this.$store.state.userInfo.socialCardNo
     let self = this
     if (this.$store.state.patInfoBinded !== []) {
       this.$store.state.patInfoBinded.forEach(item => {

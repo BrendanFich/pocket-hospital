@@ -1,6 +1,5 @@
 <template>
   <div class="selectDoc">
-    <!-- <Searchbar placeholder="搜索医生" @getSearchStatus="setSearchStatus"></Searchbar> -->
     <div class="searchbar">
       <img class="cancelIcon" src="@/assets/img/search.png" alt />
       <input type="text" v-model="value" placeholder="搜索医生" @focus="focus" />
@@ -8,25 +7,42 @@
       <button class="cancel" :class="{show : isShow}" @click="cancel">取消</button>
       <div class="resultList" :class="{show : isShow}">
         <div v-if="searchResult.length===0 && value !== ''" class="noInfo">无相关医生信息</div>
-        <div v-for="(item,index) in searchResult" :key="index" @click="select(item.deptCode, item.deptName)">
-          <mt-cell :title="item.deptName">
+        <!-- <div v-for="(item,index) in searchResult" :key="index" @click="select(item.deptCode, item.deptName)">
+          <mt-cell :title="item.doctorName">
             <img class="icon" src="@/assets/img/deptIcon.png" />&gt;
           </mt-cell>
+        </div> -->
+        <div class="doctorIntroCard" v-for="(item,index) in searchResult" :key="index" @click="select(item.deptCode, item.doctorCode)">
+          <div class="baseInfo">
+            <img class="avatar" src="@/assets/img/avatar100x101.png" />
+            <div style="width:260px">
+              <p class="doctorName">{{item.doctorName}}</p>
+              <p class="doctorTitle">{{item.deptName}} {{item.doctorTitle}}</p>
+              <div class="star">
+                <img v-for="n in 5" :key="n" src="@/assets/img/starOn.png" />
+              </div>
+            </div>
+            <div class="price">
+              <img src="@/assets/img/communication.png" />
+              <span>{{item.price ? item.price : "20"}}元</span>
+            </div>
+          </div>
+          <p class="textIntro">{{item.doctorIntrodution ? item.doctorIntrodution : '暂无简介'}}</p>
         </div>
       </div>
     </div>
-    <mt-tab-container v-model="selected" :class="{hidden: isShow}">
-      <mt-tab-container-item>
+
+      <mt-tab-container-item  :class="{hidden: isShow}">
         <div class="item">
           <ul style="background: #fff;">
-            <li class="doctorIntroCard" v-for="(item,index) in displayDoc" :key="index">
+            <li class="doctorIntroCard" v-for="(item,index) in doctors" :key="index"  @click="select(item.deptCode, item.doctorCode)">
               <div class="baseInfo">
                 <img class="avatar" src="@/assets/img/avatar100x101.png" />
-                <div>
+                <div style="width:260px">
                   <p class="doctorName">{{item.doctorName}}</p>
-                  <p class="doctorTitle">{{item.deptName}} {{doctor.doctorTitle}}</p>
+                  <p class="doctorTitle">{{item.deptName}} {{item.doctorTitle}}</p>
                   <div class="star">
-                    <img v-for="n in doctor.star" :key="n" src="@/assets/img/starOn.png" />
+                    <img v-for="n in 5" :key="n" src="@/assets/img/starOn.png" />
                   </div>
                 </div>
                 <div class="price">
@@ -39,7 +55,6 @@
           </ul>
         </div>
       </mt-tab-container-item>
-    </mt-tab-container>
   </div>
 </template>
 
@@ -51,52 +66,9 @@ export default {
   components: { Searchbar },
   data () {
     return {
-      selected: 0,
       doctors: [],
       value: '',
-      isShow: false,
-      displayDoc: [
-        {
-          deptCode: 173,
-          deptName: '内科门诊',
-          doctorCode: 60,
-          doctorIntrodution: null,
-          doctorName: '黄惠平',
-          doctorSkill: '',
-          doctorTitle: '副主任医师',
-          hasRegtable: '0'
-        },
-        {
-          deptCode: 173,
-          deptName: '内科门诊',
-          doctorCode: 64,
-          doctorIntrodution: null,
-          doctorName: '黄卫红',
-          doctorSkill: '',
-          doctorTitle: '护师',
-          hasRegtable: '0'
-        },
-        {
-          deptCode: 173,
-          deptName: '内科门诊',
-          doctorCode: 75,
-          doctorIntrodution: null,
-          doctorName: '丘华',
-          doctorSkill: '',
-          doctorTitle: '经济师',
-          hasRegtable: '0'
-        },
-        {
-          deptCode: 173,
-          deptName: '内科门诊',
-          doctorCode: 80,
-          doctorIntrodution: null,
-          doctorName: '林淦河',
-          doctorSkill: '',
-          doctorTitle: '西放射副主任医师',
-          hasRegtable: '0'
-        }
-      ]
+      isShow: false
     }
   },
   computed: {
@@ -118,6 +90,9 @@ export default {
     },
     clear () {
       this.value = ''
+    },
+    select (deptCode, doctorCode) {
+      this.$router.push({name: 'docIntro', params: {deptCode: deptCode.toString(), doctorCode: doctorCode.toString()}})
     }
   },
   created () {
@@ -264,7 +239,6 @@ export default {
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        margin-left: 240px;
         img {
           width: 38px;
           margin-bottom: 10px;

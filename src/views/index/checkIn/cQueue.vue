@@ -5,27 +5,27 @@
       <ul>
         <li>
           <span class="key">院区</span>
-          <span class="value">南海院区</span>
+          <span class="value">{{registerInfo.hostpitalName}}</span>
         </li>
         <li>
           <span class="key">科室</span>
-          <span class="value">内分泌科(门)</span>
+          <span class="value">{{registerInfo.deptName}}</span>
         </li>
         <li>
           <span class="key">医生</span>
-          <span class="value">杨辉</span>
+          <span class="value">{{registerInfo.doctorName}}</span>
         </li>
         <li>
           <span class="key">就诊日期</span>
-          <span class="value">2019-08-31</span>
+          <span class="value">{{registerInfo.scheduleDate}}</span>
         </li>
         <li>
           <span class="key">时间段</span>
-          <span class="value">09:00 - 10:00</span>
+          <span class="value">{{registerInfo.beginTime}} - {{registerInfo.endTime}}</span>
         </li>
         <li>
           <span class="key">诊查费</span>
-          <span class="value">20</span>
+          <span class="value">{{registerInfo.regFee}}元</span>
         </li>
         <li>
           <span class="key">报到时间</span>
@@ -47,7 +47,9 @@ export default {
   name: 'cQueue',
   components: { CustomerInfoCard },
   data () {
-    return {}
+    return {
+      registerInfo: []
+    }
   },
   methods: {
     confirm () {
@@ -56,7 +58,7 @@ export default {
   },
   created () {
     util.http.post('/api/pat/findRegisterInfo', {hisOrdNum: this.$route.params.hisOrdNum}).then(res => {
-      this.registerInfo = res.data
+      this.registerInfo = res.data.Records
       console.log(res)
     }).catch((error) => {
       console.log(error)

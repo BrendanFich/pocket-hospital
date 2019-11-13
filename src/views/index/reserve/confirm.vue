@@ -48,6 +48,16 @@ export default {
     getPatCardNo (patCardNo) {
       this.patCardNo = patCardNo
     },
+    payComfirm (ledgerSn) {
+      util.http
+        .post('/api/doctor/payComfirm', {ledgerSn})
+        .then(res => {
+          console.log(res)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
     confirm () {
       let configdata = {
         psOrdNum: '123',
@@ -70,8 +80,8 @@ export default {
       util.http
         .post('/api/doctor/currentDayRegister', configdata)
         .then(res => {
-          console.log(res)
           if (res.code === 0) {
+            this.payComfirm(res.data.Records[0].LedgerSn)
             this.$indicator.close()
             this.$toast({
               message: '挂号成功',
@@ -84,7 +94,7 @@ export default {
             this.$indicator.close()
             if (res.msg === '当前有正在进行的预约挂号..') {
               this.$toast({
-                message: '当前有正在进行的预约挂号..',
+                message: res.msg,
                 duration: 1000,
                 className: 'toast'
               })
