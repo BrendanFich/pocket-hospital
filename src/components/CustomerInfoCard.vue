@@ -28,12 +28,10 @@ export default {
   },
   created () {
     util.http.post('/api/user/vx_info').then(res => {
-      console.log('-----------获取用户信息/api/user/vx_info-----------')
       this.visitName = res.data.info.visitName
       this.visitCardNo = res.data.info.visitCardNo
       this.socialCardNo = res.data.info.socialCardNo
       this.$store.commit('updateDefaultCard', res.data.info.visitName, res.data.info.visitCardNo, res.data.info.socialCardNo)
-      console.log(res.data.info.visitName)
       if (res.data.info.visitCardNo !== '') {
         this.$emit('sendCardNo', res.data.info.visitCardNo)
       } else {

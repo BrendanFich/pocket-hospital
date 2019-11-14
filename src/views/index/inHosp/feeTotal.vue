@@ -1,70 +1,141 @@
 <template>
-  <div class='feeTotal'>
-    <CustomerInfoCard></CustomerInfoCard>
-    <div class="summary">
-      <ul>
-        <li>总费用汇总：</li>
-        <li></li>
-        <li>预交金总额：<span class="value">5000.00</span></li>
-        <li>住院总费用：<span class="value">3000.00</span></li>
-        <li>预交金余额：<span class="value">2000.00</span></li>
-        <li @click="recharge"><span class="icon">充值</span></li>
-      </ul>
+  <div class="dailyList">
+    <div class="list">
+      <img class="noData" v-if="unpaid.length === 0" src="@/assets/img/noData.png" />
+      <mt-cell v-for="(item,index) in unpaid" :key="index">
+        <div class="leftInfo">
+          <div class="name">{{item.name}}</div>
+          <div class="medical_card">{{item.medical_card}}</div>
+          <div class="serial_number">
+            流水号：
+            <span class="value">{{item.serial_number}}</span>
+          </div>
+          <div class="department">
+            开单科室：
+            <span class="value">{{item.department}}</span>
+          </div>
+        </div>
+        <div class="rightInfo">
+          <div class="price unPaid">{{item.price}}</div>
+          <div class="date">{{item.date}}</div>
+        </div>
+      </mt-cell>
     </div>
-
   </div>
 </template>
 
 <script>
-import CustomerInfoCard from '@/components/CustomerInfoCard'
+import util from '@/assets/js/util'
 export default {
-  components: { CustomerInfoCard },
+  components: {},
   data () {
-    return {}
+    return {
+      unpaid: [
+        {
+          name: '张家辉',
+          medical_card: '3567901',
+          serial_number: '2019082854321',
+          department: '内分泌科(门)',
+          date: '2019-08-28 11:30',
+          price: '113.21元'
+        },
+        {
+          name: '张家辉',
+          medical_card: '3567901',
+          serial_number: '2019082854321',
+          department: '内分泌科(门)',
+          date: '2019-08-28 11:30',
+          price: '113.21元'
+        }
+      ]
+    }
   },
   computed: {},
   watch: {},
   methods: {
-    recharge () {
-      this.$router.push('/inHosp/balance')
+    getListInfo () {
+      util.http
+        .post('/api/invisit/getVisitDaliySum')
+        .then(res => {
+          console.log(res)
+          // this.unpaid = res.data.Records
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   },
-  created () {}
+  created () {
+    this.getListInfo()
+  }
 }
 </script>
 
 <style lang='scss' scoped>
-.feeTotal{
+.dailyList {
   background: #f2f2f2;
   height: 100vh;
-  .summary {
-    background: url("../../../assets/img/allTotalBg.png") no-repeat;
+  /deep/ .mint-cell-value {
     width: 750px;
-    height: 269px;
-    background-size: 100% 100%;
-    color: #fff;
-    margin-top: 28px;
-    ul{
-      padding: 32px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      li{
-        width: 330px;
-        height: 78px;
-        font-size: 24px;
-        .value {
-          font-size: 36px;
-          font-weight:bold;
-        }
+    justify-content: space-between;
+  }
+  /deep/ .mint-cell-wrapper {
+    border-bottom: 1px solid#e3e3e3;
+    padding: 28px 45px 30px 41px;
+  }
+  .list {
+    .leftInfo {
+      .name {
+        display: inline-block;
+        margin-right: 13px;
+        line-height: 66px;
+        font-size: 30px;
+        color: #09cf74;
+        font-weight: bold;
       }
-      .icon {
-        padding: 8px 25px;
-        background: rgba(255, 255, 255, 0.41);
+      .medical_card {
+        display: inline-block;
+        font-size: 24px;
+        color: #666666;
+      }
+      .serial_number {
+        line-height: 48px;
+        font-size: 26px;
+        color: #333333;
+
+      }
+      .department {
+        line-height: 48px;
+        font-size: 26px;
+        color: #333333;
+      }
+      .value {
+          color: #09CF74;
+        }
+    }
+    .rightInfo {
+      text-align:end;
+      .price {
+        display: inline-block;
+        padding: 12px 10px;
+        background: #f69343;
+        color: #fff;
         border-radius: 10px;
-        cursor: pointer;
+        font-size: 26px;
+        margin-bottom: 16px;
+      }
+      .unPaid {
+        background: #09CF74;
+      }
+      .date {
+        color: #999999;
+        font-size: 24px;
       }
     }
   }
+  .noData {
+        width: 366px;
+        margin: 100px 200px;
+      }
 }
 </style>

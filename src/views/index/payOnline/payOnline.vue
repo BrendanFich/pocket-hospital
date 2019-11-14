@@ -1,7 +1,7 @@
 <template>
   <div class="payOnline">
     <mt-navbar v-model="selected">
-      <mt-tab-item id="1">未付款</mt-tab-item>
+      <mt-tab-item id="1" @click.native="getUnpaidList">未付款</mt-tab-item>
       <mt-tab-item id="2" @click.native="getPaidList">已付款</mt-tab-item>
     </mt-navbar>
     <mt-tab-container v-model="selected">
@@ -62,36 +62,8 @@ export default {
   data () {
     return {
       selected: '1',
-      clickedPaid: false,
-      clickedUnPaid: false,
-      unpaid: [
-        // {
-        //   name: '张家辉',
-        //   patCardNo: '3567901',
-        //   serial_number: '2019082854321',
-        //   department: '内分泌科(门)',
-        //   date: '2019-08-28 11:30',
-        //   price: '113.21元'
-        // }
-      ],
-      paid: [
-        // {
-        //   name: '陈小春',
-        //   patCardNo: '3567901',
-        //   serial_number: '2019082854321',
-        //   department: '内分泌科(门)',
-        //   date: '2019-08-28 11:30',
-        //   price: '113.21元'
-        // },
-        // {
-        //   name: '陈小春',
-        //   patCardNo: '3567901',
-        //   serial_number: '2019082854321',
-        //   department: '内分泌科(门)',
-        //   date: '2019-08-28 11:30',
-        //   price: '113.21元'
-        // }
-      ]
+      unpaid: [],
+      paid: []
     }
   },
   created () {
@@ -99,43 +71,45 @@ export default {
   },
   methods: {
     getUnpaidList () {
-      if (!this.clickedUnPaid) {
-        util.http
-          .post('/api/doctor/getVisitPayInfo')
-          .then(res => {
-            console.log(res)
-            this.unpaid = res.data.Records
-            this.clickedUnPaid = true
-          })
-          .catch(error => {
-            console.log(error)
-          })
-      }
-    },
-    getPaidList () {
-      if (!this.clickedPaid) {
-        util.http
-          .post('/api/doctor/payInfoList')
-          .then(res => {
-            console.log(res)
-            this.paid = res.data.Records
-            this.clickedPaid = true
-          })
-          .catch(error => {
-            console.log(error)
-          })
-      }
-    },
-    pay (ledgerSn) {
-      console.log('paying...')
       util.http
-        .post('/api/doctor/payInfo', {ledgerSn})
+        .post('/api/doctor/getVisitPayInfo')
         .then(res => {
           console.log(res)
+          this.unpaid = res.data.Records
         })
         .catch(error => {
           console.log(error)
         })
+    },
+    getPaidList () {
+      util.http
+        .post('/api/doctor/payInfoList')
+        .then(res => {
+          console.log(res)
+          this.paid = res.data.Records
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    pay (ledgerSn) {
+      const duration = 1500
+      const className = 'toast'
+      this.$messagebox.confirm('请确认支付').then(action => {
+        util.http
+          .post('/api/doctor/payComfirm', {ledgerSn})
+          .then(res => {
+            if (res.code === 0 && res.data.Records.Code === '0') {
+              this.$toast({ message: '支付成功', duration, className })
+              this.getUnpaidList()
+            } else {
+              this.$toast({ message: '支付失败', duration, className })
+            }
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      })
     }
   }
 }

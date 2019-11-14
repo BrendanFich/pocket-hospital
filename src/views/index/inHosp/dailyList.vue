@@ -1,7 +1,7 @@
 <template>
   <div class="dailyList">
     <div class="list">
-      <img class="noData" v-if="unpaid.length === 0" src="@/assets/img/noData.png" />
+      <img class="noData" v-if="unpaid === {}" src="@/assets/img/noData.png" />
       <mt-cell v-for="(item,index) in unpaid" :key="index">
         <div class="leftInfo">
           <div class="name">{{item.name}}</div>
@@ -25,34 +25,49 @@
 </template>
 
 <script>
+import util from '@/assets/js/util'
 export default {
   components: {},
   data () {
     return {
       unpaid: [
-        {
-          name: '张家辉',
-          medical_card: '3567901',
-          serial_number: '2019082854321',
-          department: '内分泌科(门)',
-          date: '2019-08-28 11:30',
-          price: '113.21元'
-        },
-        {
-          name: '张家辉',
-          medical_card: '3567901',
-          serial_number: '2019082854321',
-          department: '内分泌科(门)',
-          date: '2019-08-28 11:30',
-          price: '113.21元'
-        }
+        // {
+        //   name: '张家辉',
+        //   medical_card: '3567901',
+        //   serial_number: '2019082854321',
+        //   department: '内分泌科(门)',
+        //   date: '2019-08-28 11:30',
+        //   price: '113.21元'
+        // },
+        // {
+        //   name: '张家辉',
+        //   medical_card: '3567901',
+        //   serial_number: '2019082854321',
+        //   department: '内分泌科(门)',
+        //   date: '2019-08-28 11:30',
+        //   price: '113.21元'
+        // }
       ]
     }
   },
   computed: {},
   watch: {},
-  methods: {},
-  created () {}
+  methods: {
+    getListInfo () {
+      util.http
+        .post('/api/invisit/getVisitDaliyOne')
+        .then(res => {
+          console.log(res)
+          this.unpaid = res.data.Records.Records[0]
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
+  },
+  created () {
+    this.getListInfo()
+  }
 }
 </script>
 
@@ -118,5 +133,9 @@ export default {
       }
     }
   }
+  .noData {
+        width: 366px;
+        margin: 100px 200px;
+      }
 }
 </style>
