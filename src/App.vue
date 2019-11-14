@@ -27,12 +27,12 @@ export default {
     let _this = this
     if (wxSign) {
       wx.config({
-        debug: true,
+        debug: false,
         appId: config.appId,
         timestamp: wxSign.split('&')[0],
         nonceStr: wxSign.split('&')[1],
         signature: wxSign.split('&')[2],
-        jsApiList: ['openLocation', 'getLocation', 'updateAppMessageShareData']
+        jsApiList: ['openLocation', 'getLocation', 'updateAppMessageShareData', 'chooseWXPay']
       })
       wx.error(function (res) {
         console.log('wxerror')
@@ -54,12 +54,6 @@ export default {
     // 用户登录，将用户信息存至store
     this.$store.commit('updateUserInfo')
 
-    // window.addEventListener('pageshow', function (e) {
-    //   // 通过persisted属性判断是否存在 BF Cache
-    //   if (/iPhone|mac|iPod|iPad/i.test(navigator.userAgent) && e.persisted) {
-    //     location.reload()
-    //   }
-    // })
     // 在页面加载时读取sessionStorage里的状态信息
     if (sessionStorage.getItem('store')) {
       this.$store.replaceState(
@@ -78,21 +72,31 @@ export default {
   methods: {
     wxAuth () {
       // 先获取appid，redirect_url等授权地址所需字段,然后跳转至授权地址
-      const token = this.getUrlParam('token')
-      if (!token) {
-        util.http
-          .post('/api/user/vx_perpare', {
-            getMode: 'authorize'
-          })
-          .then(res => {
-            console.log('======/api/user/vx_perpare=======')
-            // alert(res.data.state)
-            window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + res.data.appid + '&redirect_uri=' + res.data.redirect_uri + '&response_type=' + res.data.response_type + '&scope=' + res.data.scope + '&state=' + res.data.state + res.data.wechat_redirect
-          })
-          .catch(error => {
+      // window.localStorage.setItem('token', '')
+      // const lstoken = window.localStorage.getItem('token')
+      if (this.getUrlParam('token')) {
+        alert(this.getUrlParam('token'))
+        window.localStorage.setItem('token', this.getUrlParam('token'))
+        window.location.href = window.location.href.split('?')[0]
+      }
+
+      util.http
+        .post('/api/user/vx_perpare', {
+          getMode: 'authorize'
+        })
+        .then(res1 => {
+          util.http.post('/api/user/vx_info').then(res2 => {
+            if (res2.code === 401) {
+              alert('过期准备跳转')
+              window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + res1.data.appid + '&redirect_uri=' + res1.data.redirect_uri + '&response_type=' + res1.data.response_type + '&scope=' + res1.data.scope + '&state=' + res1.data.state + res1.data.wechat_redirect
+            }
+          }).catch((error) => {
             console.log(error)
           })
-      }
+        })
+        .catch(error => {
+          console.log(error)
+        })
     },
     getSign () {
       util.http
@@ -105,7 +109,7 @@ export default {
             [res.data.timestamp, res.data.nonceStr, res.data.signtrue].join('&')
           )
           wx.config({
-            debug: true,
+            debug: false,
             appId: config.appId,
             timestamp: res.data.timestamp,
             nonceStr: res.data.nonceStr,

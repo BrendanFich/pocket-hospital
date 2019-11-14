@@ -57,6 +57,7 @@
 
 <script>
 import util from '@/assets/js/util'
+import wx from 'weixin-js-sdk'
 export default {
   name: 'payOnline',
   data () {
@@ -74,7 +75,6 @@ export default {
       util.http
         .post('/api/doctor/getVisitPayInfo')
         .then(res => {
-          console.log(res)
           this.unpaid = res.data.Records
         })
         .catch(error => {
@@ -85,7 +85,6 @@ export default {
       util.http
         .post('/api/doctor/payInfoList')
         .then(res => {
-          console.log(res)
           this.paid = res.data.Records
         })
         .catch(error => {
@@ -93,18 +92,31 @@ export default {
         })
     },
     pay (ledgerSn) {
-      const duration = 1500
-      const className = 'toast'
+      // const duration = 1500
+      // const className = 'toast'
       this.$messagebox.confirm('请确认支付').then(action => {
         util.http
           .post('/api/doctor/payComfirm', {ledgerSn})
           .then(res => {
-            if (res.code === 0 && res.data.Records.Code === '0') {
-              this.$toast({ message: '支付成功', duration, className })
-              this.getUnpaidList()
-            } else {
-              this.$toast({ message: '支付失败', duration, className })
-            }
+            wx.ready(function () {
+              wx.chooseWXPay({
+                timestamp: res.data.Records.timeStamp,
+                nonceStr: res.data.Records.nonceStr,
+                package: res.data.Records.package,
+                signType: res.data.Records.signType,
+                paySign: res.data.Records.paySign,
+                success: function (res) {
+                  console.log('支付成功后的回调函数')
+                  console.log(res)
+                }
+              })
+            })
+            // if (res.code === 0 && res.data.Records.Code === '0') {
+            //   this.$toast({ message: '支付成功', duration, className })
+            //   this.getUnpaidList()
+            // } else {
+            //   this.$toast({ message: '支付失败', duration, className })
+            // }
           })
           .catch(error => {
             console.log(error)
