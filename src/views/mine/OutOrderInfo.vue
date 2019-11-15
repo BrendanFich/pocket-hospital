@@ -51,11 +51,12 @@ export default {
       if (this.$route.params.paymentStatus === '2') {
         this.$toast({ message: '该订单退款中...', duration: 1500, className: 'toast' })
       }
-      if (this.paymentStatus === '1') {
+      if (this.$route.params.paymentStatus === '1') {
         util.http
           .post('/api/doctor/payRefund', {ledgerSn: this.$route.params.ledgerSn})
           .then(res => {
             if (res.code === 0) {
+              this.$toast({ message: '成功申请退款', duration: 1500, className: 'toast' })
               this.$router.go(-1)
             }
           })
