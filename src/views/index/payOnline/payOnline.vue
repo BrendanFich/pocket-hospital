@@ -30,7 +30,7 @@
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
         <img class="noData" v-if="paid.length === 0" src="@/assets/img/noData.png" />
-        <div v-for="(item,index) in paid" :key="index">
+        <div v-for="(item,index) in paid" :key="index" @click="enterInfo(item.ledgerSn,item.paymentStatus)">
           <mt-cell>
             <div class="leftInfo">
               <div class="name">{{item.patName}}</div>
@@ -71,6 +71,9 @@ export default {
     this.getUnpaidList()
   },
   methods: {
+    enterInfo (ledgerSn, paymentStatus) {
+      this.$router.push({name: 'outOrderInfo', params: {ledgerSn, paymentStatus}})
+    },
     getUnpaidList () {
       util.http
         .post('/api/doctor/getVisitPayInfo')
@@ -85,7 +88,7 @@ export default {
       util.http
         .post('/api/doctor/payInfoList')
         .then(res => {
-          this.paid = res.data.Records
+          this.paid = res.data.Records.filter(item => item.paymentStatus === '1' || item.paymentStatus === '2')
         })
         .catch(error => {
           console.log(error)

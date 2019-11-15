@@ -23,6 +23,7 @@
         <span class="value">{{regInfo.patMobile}}</span>
       </li>
     </ul>
+    <mt-button class="backBtn" type="primary" @click="back">返回</mt-button>
   </div>
 </template>
 
@@ -37,7 +38,11 @@ export default {
   },
   computed: {},
   watch: {},
-  methods: {},
+  methods: {
+    back () {
+      this.$router.go(-1)
+    }
+  },
   created () {
     util.http
       .post('/api/invisit/getInPatInfo')
@@ -82,6 +87,14 @@ export default {
       color: #666666;
       font-size: 30px;
     }
+  }
+  .backBtn {
+    margin: 0 12.5px;
+    margin-top: 92px;
+    width: 725px;
+    height: 80px;
+    background: #09cf74;
+    font-size: 30px;
   }
 }
 </style>

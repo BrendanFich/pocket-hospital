@@ -49,6 +49,7 @@ import evaluate from '@/views/iHospital/evaluate'
 
 // mine
 import mine from '@/views/mine/mine'
+import OutOrderInfo from '@/views/mine/OutOrderInfo'
 import liveHosOrder from '@/views/mine/liveHosOrder'
 import regOrder from '@/views/mine/regOrder'
 import cardManage from '@/views/mine/cardManage/cardManage'
@@ -157,7 +158,8 @@ export default new Router({
           ]
         },
         { path: 'liveHosOrder', component: liveHosOrder },
-        { path: 'regOrder', component: regOrder }
+        { path: 'regOrder', component: regOrder },
+        { path: 'outOrderInfo/:ledgerSn&:paymentStatus', name: 'outOrderInfo', component: OutOrderInfo }
       ]
     }
   ]

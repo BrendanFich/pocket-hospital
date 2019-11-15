@@ -2,7 +2,7 @@
   <div class="liveHosOrder">
 
     <mt-navbar v-model="selected">
-      <mt-tab-item id="1">未付款</mt-tab-item>
+      <mt-tab-item id="1" @click.native="getUnpaidList">未付款</mt-tab-item>
       <mt-tab-item id="2" @click.native="getPaidList">已付款</mt-tab-item>
     </mt-navbar>
 

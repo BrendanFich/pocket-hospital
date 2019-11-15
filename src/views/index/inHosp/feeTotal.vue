@@ -1,22 +1,22 @@
 <template>
   <div class="dailyList">
     <div class="list">
-      <img class="noData" v-if="unpaid.length === 0" src="@/assets/img/noData.png" />
-      <mt-cell v-for="(item,index) in unpaid" :key="index">
+      <img class="noData" v-if="totalFee.length === 0" src="@/assets/img/noData.png" />
+      <mt-cell v-for="(item,index) in totalFee" :key="index">
         <div class="leftInfo">
-          <div class="name">{{item.name}}</div>
-          <div class="medical_card">{{item.medical_card}}</div>
+          <div class="name">床位号</div>
+          <div class="medical_card">{{item.BedNo}}</div>
           <div class="serial_number">
-            流水号：
-            <span class="value">{{item.serial_number}}</span>
+            结算类别：
+            <span class="value">{{item.SettleType}}</span>
           </div>
           <div class="department">
-            开单科室：
-            <span class="value">{{item.department}}</span>
+            科室：
+            <span class="value">{{item.DeptName}}</span>
           </div>
         </div>
         <div class="rightInfo">
-          <div class="price unPaid">{{item.price}}</div>
+          <div class="price unPaid">{{item.ItemTotalFee}}</div>
           <div class="date">{{item.date}}</div>
         </div>
       </mt-cell>
@@ -30,24 +30,7 @@ export default {
   components: {},
   data () {
     return {
-      unpaid: [
-        {
-          name: '张家辉',
-          medical_card: '3567901',
-          serial_number: '2019082854321',
-          department: '内分泌科(门)',
-          date: '2019-08-28 11:30',
-          price: '113.21元'
-        },
-        {
-          name: '张家辉',
-          medical_card: '3567901',
-          serial_number: '2019082854321',
-          department: '内分泌科(门)',
-          date: '2019-08-28 11:30',
-          price: '113.21元'
-        }
-      ]
+      totalFee: []
     }
   },
   computed: {},
@@ -58,7 +41,7 @@ export default {
         .post('/api/invisit/getVisitDaliySum')
         .then(res => {
           console.log(res)
-          // this.unpaid = res.data.Records
+          this.totalFee = res.data.Records.Records
         })
         .catch(error => {
           console.log(error)
