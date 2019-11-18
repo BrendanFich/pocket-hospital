@@ -2,13 +2,15 @@
   <div class='balance'>
     <div class="showBalance">
       <div class="label">账号余额</div>
-      <div class="amount">1089.00</div>
+      <div class="amount">{{this.$store.state.userInfo.balance === '' ? '0' : this.$store.state.userInfo.balance}}</div>
     </div>
-    <mt-button type="primary" class="btn" @click.native="submit">充值</mt-button>
+    <mt-button type="primary" class="btn" @click.native="recharge">充值</mt-button>
   </div>
 </template>
 
 <script>
+import util from '@/assets/js/util'
+import wx from 'weixin-js-sdk'
 export default {
   components: {},
   data () {
@@ -16,7 +18,48 @@ export default {
   },
   computed: {},
   watch: {},
-  methods: {},
+  methods: {
+    recharge () {
+      this.$messagebox.prompt('请输入充值金额（单位：元）', {
+        inputValidator: (val) => {
+          if (!isNaN(Number(val))) {
+            return true
+          } else {
+            return false
+          }
+        },
+        inputErrorMessage: '无效金额'
+      }).then((val) => {
+        console.log(val)
+        this.getWxConig(Number(val.value))
+      })
+    },
+    getWxConig (money) {
+      util.http
+        .post('/api/invisit/payRecharge', {money})
+        .then(res => {
+          this.wxPay(res.Records)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    wxPay (config) {
+      wx.ready(function () {
+        wx.chooseWXPay({
+          timestamp: config.timestamp,
+          nonceStr: config.nonceStr,
+          package: config.package,
+          signType: config.signType,
+          paySign: config.paySign,
+          success: function (res) {
+            console.log('支付成功后的回调函数')
+            console.log(res)
+          }
+        })
+      })
+    }
+  },
   created () {}
 }
 </script>
