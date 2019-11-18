@@ -38,7 +38,7 @@ export default {
       util.http
         .post('/api/invisit/payRecharge', {money})
         .then(res => {
-          this.wxPay(res.Records)
+          this.wxPay(res.data.Records)
         })
         .catch(error => {
           console.log(error)
