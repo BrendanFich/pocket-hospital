@@ -20,18 +20,18 @@
     ></week-slider>
     <div class="workTime">
       <ul>
-        <li v-for="(item,index) in workTimeList" :key="index">
-          <router-link :to="linkTo(item.remaining)" class="itemContent">
+        <li v-for="(item,index) in showWorkTime" :key="index">
+          <div @click="linkTo(item)" class="itemContent">
             <div class="time">
               <img src="@/assets/img/clock.png" />
-              <span>{{item.time}}</span>
+              <span>{{item.beginTime.split(' ')[1]}}-{{item.endTime.split(' ')[1]}}</span>
             </div>
             <div class="remaining">
-              <span :class="{over: item.remaining<=0}">剩余 {{item.remaining}}</span>
-              <span :class="{over: item.remaining<=0}" class="icon">&gt;</span>
-              <span :class="{overShow: item.remaining<=0}" class="overMsg">已约满</span>
+              <span :class="{over: item.leftNum<=0}">剩余 {{item.leftNum}}</span>
+              <span :class="{over: item.leftNum<=0}" class="icon">&gt;</span>
+              <span :class="{overShow: item.leftNum<=0}" class="overMsg">已约满</span>
             </div>
-          </router-link>
+          </div>
         </li>
       </ul>
     </div>
@@ -49,34 +49,50 @@ export default {
     return {
       doctorInfo: {},
       date: moment(new Date()).format('YYYY-MM-DD'),
-      workTimeList: [
-        { time: '09:00 - 10:00', remaining: 3 },
-        { time: '10:00 - 11:00', remaining: 0 },
-        { time: '11:00 - 12:00', remaining: 3 }
-      ]
+      allworkTime: []
+    }
+  },
+  computed: {
+    showWorkTime () {
+      return this.allworkTime.filter((item) => {
+        return item.scheduleDate.indexOf(this.date) !== -1
+      })
     }
   },
   components: { weekSlider },
   created () {
     this.getDoctorInfo()
+    this.getRegSource()
   },
   methods: {
     dateClickhandler (e) {
       this.date = e
-      console.log(this.date)
     },
-    linkTo (remaining) {
-      if (remaining <= 0) {
-        return ''
-      } else {
-        return '/reserve/confirm'
+    linkTo (item) {
+      if (item.leftNum > 0) {
+        this.$store.commit('changeDate', this.date)
+        this.$store.commit('changeTime', item.scheduleDate.split(' ')[0])
+        this.$store.commit('changeBeginTime', item.beginTime.split(' ')[1])
+        this.$store.commit('changeEndTime', item.endTime.split(' ')[1])
+        this.$store.commit('setPrice', item.Price)
+        this.$router.push('/reserve/confirm')
       }
     },
     getDoctorInfo () {
       util.http
         .post('/api/doctor/doc_info', { deptCode: this.$route.params.deptCode, doctorCode: this.$route.params.doctorCode })
         .then(res => {
-          this.doctorInfo = res.data.Records
+          this.doctorInfo = res.data.Records[0]
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    getRegSource () {
+      util.http
+        .post('/api/doctor/getRegSource', { deptCode: '173', doctorCode: '020' })
+        .then(res => {
+          this.allworkTime = res.data.Records
         })
         .catch(error => {
           console.log(error)

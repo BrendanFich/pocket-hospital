@@ -86,7 +86,7 @@ export default {
         .then(res1 => {
           util.http.post('/api/user/vx_info').then(res2 => {
             if (res2.code === 401) {
-              window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + res1.data.appid + '&redirect_uri=' + res1.data.redirect_uri + '&response_type=' + res1.data.response_type + '&scope=' + res1.data.scope + '&state=' + res1.data.state + res1.data.wechat_redirect
+              // window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + res1.data.appid + '&redirect_uri=' + res1.data.redirect_uri + '&response_type=' + res1.data.response_type + '&scope=' + res1.data.scope + '&state=' + res1.data.state + res1.data.wechat_redirect
             }
           }).catch((error) => {
             console.log(error)

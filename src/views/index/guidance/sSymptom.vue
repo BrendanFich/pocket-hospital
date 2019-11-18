@@ -7,7 +7,7 @@
         <div class="xIcon" :class="{show: value}" @click="clear">×</div>
         <button class="cancel" :class="{show : isShow}" @click="cancel">取消</button>
         <div class="resultList" :class="{show : isShow}">
-          <div class="doctorIntroCard" v-for="(item,index) in searchResult" :key="index" @click="linkTo(item.deptCode, item.doctorCode)">
+          <div class="doctorIntroCard" v-for="(item,index) in searchResult" :key="index" @click="linkTo(item)">
             <div class="baseInfo">
               <div class="left">
                 <img class="avatar" src="@/assets/img/avatar100x101.png" />
@@ -40,7 +40,7 @@
       <mt-tab-container-item :class="{hidden: isShow}">
         <div class="item">
           <ul style="background: #fff;">
-            <li class="doctorIntroCard" v-for="(item, index) in showDoctors" :key="index" @click="linkTo(item.deptCode, item.doctorCode)">
+            <li class="doctorIntroCard" v-for="(item, index) in showDoctors" :key="index" @click="linkTo(item)">
               <div class="baseInfo">
                 <div class="left">
                   <img class="avatar" src="@/assets/img/avatar100x101.png" />
@@ -155,8 +155,10 @@ export default {
       this.focus()
       this.value = tagName
     },
-    linkTo (deptCode, doctorCode) {
-      this.$router.push({name: 'gSTime', params: {deptCode, doctorCode}})
+    linkTo (item) {
+      this.$store.commit('changeDept', {deptName: item.deptName, deptCode: item.deptCode})
+      this.$store.commit('changeDoc', {docName: item.doctorName, docCode: item.USER_ID})
+      this.$router.push({name: 'gSTime', params: {deptCode: item.deptCode, doctorCode: item.USER_ID}})
     }
   },
   watch: {
