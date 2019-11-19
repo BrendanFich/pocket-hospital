@@ -5,10 +5,10 @@
       <ul>
         <li>总费用汇总：</li>
         <li></li><!-- 空li占位 -->
-        <li>预交金总额：<span class="value">{{prePay}}</span></li>
+        <li>预交金总额：<span class="value">{{balance}}</span></li>
         <li>住院总费用：<span class="value">{{totalFee}}</span></li>
-        <li>预交金余额：<span class="value">{{prePay - totalFee}}</span></li>
-        <li @click="recharge"><span class="icon">充值</span></li>
+        <li style="width:200px">预交金余额：<span class="value">{{balance - totalFee}}</span></li>
+        <li @click="recharge" style="width:60px"><span class="icon">充值</span></li>
       </ul>
     </div>
 
@@ -22,8 +22,8 @@ export default {
   components: { CustomerInfoCard },
   data () {
     return {
-      prePay: 50000,
-      totalFee: null
+      totalFee: null,
+      balance: null
     }
   },
   computed: {},
@@ -32,11 +32,20 @@ export default {
     recharge () {
       this.$router.push('/inHosp/balance')
     },
+    getBalance () {
+      util.http
+        .post('/api/invisit/checkBalance')
+        .then(res => {
+          this.balance = res.data.balance / 100
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
     getSumList () {
       util.http
         .post('/api/invisit/getVisitDaliySum')
         .then(res => {
-          console.log(res)
           let totalFee = 0
           let resData = res.data.Records.Records
           for (let i = 0; i < resData.length; i++) {
@@ -51,6 +60,7 @@ export default {
   },
   created () {
     this.getSumList()
+    this.getBalance()
   }
 }
 </script>
@@ -72,7 +82,7 @@ export default {
       flex-wrap: wrap;
       align-items: center;
       li{
-        width: 330px;
+        width: 320px;
         height: 78px;
         font-size: 24px;
         .value {

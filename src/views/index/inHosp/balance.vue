@@ -5,6 +5,7 @@
       <div class="amount">{{balance}}</div>
     </div>
     <mt-button type="primary" class="btn" @click.native="recharge">充值</mt-button>
+    <router-link class="record" to="/inHosp/rechargeRecord">充值记录</router-link>
   </div>
 </template>
 
@@ -75,6 +76,13 @@ export default {
     background: #09cf74;
     color: #fff;
     font-size: 26px;
+  }
+  .record {
+    display: block;
+    color: #09cf74;
+    text-align: center;
+    margin-top: 20px;
+    text-decoration: underline;
   }
   /deep/ .mint-actionsheet-listitem,/deep/ .mint-actionsheet-button {
     height: 80px;

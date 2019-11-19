@@ -16,6 +16,8 @@ import gSTime from '@/views/index/guidance/gSTime'
 import checkIn from '@/views/index/checkIn/checkIn'
 import cQueue from '@/views/index/checkIn/cQueue'
 import cConfirm from '@/views/index/checkIn/cConfirm'
+
+// 住院模块
 import inHosp from '@/views/index/inHosp/inHosp'
 import nav from '@/views/index/inHosp/nav'
 import dailyList from '@/views/index/inHosp/dailyList'
@@ -27,6 +29,7 @@ import feeTotal from '@/views/index/inHosp/feeTotal'
 import InHospInfo from '@/views/index/inHosp/InHospInfo'
 import RegInfo from '@/views/index/inHosp/RegInfo'
 import Recharge from '@/views/index/inHosp/Recharge'
+import RechargeRecord from '@/views/index/inHosp/RechargeRecord'
 
 import hospitalInfo from '@/views/index/hospitalInfo/hospitalInfo'
 import doctorIntro from '@/views/index/doctorIntro/doctorIntro'
@@ -109,7 +112,8 @@ export default new Router({
         { path: 'feeTotal', component: feeTotal },
         { path: 'inHospInfo', component: InHospInfo },
         { path: 'regInfo', component: RegInfo },
-        { path: 'recharge', component: Recharge }
+        { path: 'recharge', component: Recharge },
+        { path: 'rechargeRecord', component: RechargeRecord }
       ]
     },
     { path: '/hospitalInfo', component: hospitalInfo },

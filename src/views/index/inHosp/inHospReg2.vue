@@ -38,7 +38,7 @@
     ></mt-field>
     <mt-field label="联系人姓名" placeholder="请输入联系人姓名" type="string" v-model="contactName" :disableClear="true"></mt-field>
     <mt-field label="联系人电话" placeholder="请输入联系人电话" type="string" v-model="contactPhone" :disableClear="true"></mt-field>
-    <mt-button type="primary" class="btn" @click.native="submit">提交信息</mt-button>
+    <mt-button type="primary" class="btn" @click.native="nextStep">下一步,支付预缴金</mt-button>
     <mt-actionsheet :actions="actions2" v-model="sheet2Visible"></mt-actionsheet>
     <mt-actionsheet :actions="actions4" v-model="sheet4Visible"></mt-actionsheet>
   </div>
@@ -46,6 +46,7 @@
 
 <script>
 import util from '@/assets/js/util'
+import wx from 'weixin-js-sdk'
 export default {
   components: {},
   data () {
@@ -106,12 +107,11 @@ export default {
     sArryStatus (e) {
       this.arryStatus = e.name
     },
-    submit () {
+    nextStep () {
+      // this.$router.push({name: 'recharge', params: {regFee: 0.01}})
       this.register()
     },
     register () {
-      const duration = 1500
-      const className = 'toast'
       util.http
         .post('/api/invisit/register', {
           patName: this.patName, // 必要
@@ -126,15 +126,44 @@ export default {
         })
         .then(res => {
           if (res.code === 0 && res.data.Code === '0') {
-            this.$toast({ message: '登记成功', duration, className })
-            this.$router.push('/inHosp/nav')
+            this.getWxConig(res.data.Records.AdvancePayment)
           } else if (res.code === 500) {
-            this.$toast({ message: res.msg, duration, className })
+            this.$toast({ message: res.msg, duration: 1500, className: 'toast' })
           }
         })
         .catch(error => {
           console.log(error)
         })
+    },
+    getWxConig (advancePayment) {
+      util.http
+        .post('/api/invisit/payRecharge', {money: advancePayment})
+        .then(res => {
+          this.wxPay(res.data.Records)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    wxPay (config) {
+      let self = this
+      wx.ready(function () {
+        wx.chooseWXPay({
+          timestamp: config.timestamp,
+          nonceStr: config.nonceStr,
+          package: config.package,
+          signType: config.signType,
+          paySign: config.paySign,
+          success: function (res) {
+            self.$toast({ message: '登记成功', duration: 1500, className: 'toast' })
+            self.$router.push('/inHosp/nav')
+          },
+          cancel: function (res) {
+            self.$toast({ message: '登记成功，请及时支付预缴金', duration: 1500, className: 'toast' })
+            self.$router.push('/inHosp/nav')
+          }
+        })
+      })
     }
   },
   created () {

@@ -64,7 +64,6 @@
       </mt-cell>
     </div>
     <mt-button class="btn" type="primary" @click="back">返回</mt-button>
-    <mt-button class="btn" type="primary" @click="pay">支付</mt-button>
   </div>
 </template>
 

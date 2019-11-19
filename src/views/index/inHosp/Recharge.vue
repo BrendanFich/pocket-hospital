@@ -18,7 +18,6 @@ export default {
       value: null
     }
   },
-  computed: {},
   watch: {},
   methods: {
     getWxConig () {

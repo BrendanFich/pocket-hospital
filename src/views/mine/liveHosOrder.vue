@@ -11,28 +11,28 @@
         <img class="noData" v-if="unpaid.length === 0" src="@/assets/img/noData.png" />
         <div v-for="(item,index) in unpaid" :key="index" >
           <div class="paidTime">下单日期：{{item.paymentDate}}</div>
-          <div class="orderCard" @click="pay(item.ledgerSn)">
-          <div class="left">
-            <img src="@/assets/img/money.png" alt />
-            <div class="baseInfo">
-              <div>
-                <span class="name">{{item.patName}}</span>
-                <span class="num">{{item.PatCardNo}}</span>
-              </div>
-              <div class="item">
-                <span class="key">院区</span>
-                <span class="value">：全院</span>
-              </div>
-              <div class="item">
-                <span class="key">类型</span>
-                <span class="value">: 住院费预交金</span>
+          <div class="orderCard" @click="pay(item.paymentFee/100)">
+            <div class="left">
+              <img src="@/assets/img/money.png" alt />
+              <div class="baseInfo">
+                <div>
+                  <span class="name">{{item.patName}}</span>
+                  <span class="num">{{item.PatCardNo}}</span>
+                </div>
+                <div class="item">
+                  <span class="key">院区</span>
+                  <span class="value">：全院</span>
+                </div>
+                <div class="item">
+                  <span class="key">类型</span>
+                  <span class="value">: 住院费预交金</span>
+                </div>
               </div>
             </div>
+            <div class="right">
+              <span class="price">{{item.paymentFee/100}}元</span>
+            </div>
           </div>
-          <div class="right">
-            <span class="price">{{item.paymentFee ? item.paymentFee : 999}}元</span>
-          </div>
-        </div>
         </div>
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
@@ -40,26 +40,26 @@
         <div v-for="(item,index) in paid" :key="index">
           <div class="paidTime">下单日期：{{item.paymentDate}}</div>
           <div class="orderCard">
-          <div class="left">
-            <img src="@/assets/img/money.png" alt />
-            <div class="baseInfo">
-              <div>
-                <span class="name">{{item.patName}}</span>
-                <span class="num">{{item.PatCardNo}}</span>
-              </div>
-              <div class="item">
-                <span class="key">院区</span>
-                <span class="value">：全院</span>
-              </div>
-              <div class="item">
-                <span class="key">类型</span>
-                <span class="value">: 住院费预交金</span>
+            <div class="left">
+              <img src="@/assets/img/money.png" alt />
+              <div class="baseInfo">
+                <div>
+                  <span class="name">{{item.patName}}</span>
+                  <span class="num">{{item.PatCardNo}}</span>
+                </div>
+                <div class="item">
+                  <span class="key">院区</span>
+                  <span class="value">：全院</span>
+                </div>
+                <div class="item">
+                  <span class="key">类型</span>
+                  <span class="value">: 住院费预交金</span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="right">
-            <span class="price">{{item.paymentFee ? item.paymentFee : 999}}元</span>
-          </div>
+            <div class="right">
+              <span class="price">{{item.paymentFee/100}}元</span>
+            </div>
         </div>
         </div>
       </mt-tab-container-item>
@@ -70,6 +70,8 @@
 
 <script>
 import util from '@/assets/js/util'
+import wx from 'weixin-js-sdk'
+
 export default {
   name: 'liveHosOrder',
   data () {
@@ -106,21 +108,43 @@ export default {
           console.log(error)
         })
     },
-    pay (ledgerSn) {
-      const duration = 1500
-      const className = 'toast'
+    pay (money) {
+      // const duration = 1500
+      // const className = 'toast'
       this.$messagebox.confirm('请确认支付').then(action => {
+        // util.http
+        //   .post('/api/doctor/payComfirm', {ledgerSn})
+        //   .then(res => {
+        //     if (res.code === 0 && res.data.Records.Code === '0') {
+        //       // this.$toast({ message: '支付成功', duration, className })
+        //       // this.getUnpaidList()
+        //     }
+        //   })
+        //   .catch(error => {
+        //     console.log(error)
+        //   })
         util.http
-          .post('/api/doctor/payComfirm', {ledgerSn})
+          .post('/api/invisit/payRecharge', {money: money * 100})
           .then(res => {
-            if (res.code === 0 && res.data.Records.Code === '0') {
-              this.$toast({ message: '支付成功', duration, className })
-              this.getUnpaidList()
-            }
+            this.wxPay(res.data.Records)
           })
           .catch(error => {
             console.log(error)
           })
+      })
+    },
+    wxPay (config) {
+      wx.ready(function () {
+        wx.chooseWXPay({
+          timestamp: config.timestamp,
+          nonceStr: config.nonceStr,
+          package: config.package,
+          signType: config.signType,
+          paySign: config.paySign,
+          success: function (res) {
+            this.$router.go(-1)
+          }
+        })
       })
     }
   }
