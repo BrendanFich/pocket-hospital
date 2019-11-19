@@ -2,7 +2,7 @@
   <div class='balance'>
     <div class="showBalance">
       <div class="label">账号余额</div>
-      <div class="amount">{{this.$store.state.userInfo.balance === '' ? '0' : this.$store.state.userInfo.balance}}</div>
+      <div class="amount">{{balance}}</div>
     </div>
     <mt-button type="primary" class="btn" @click.native="recharge">充值</mt-button>
   </div>
@@ -10,57 +10,33 @@
 
 <script>
 import util from '@/assets/js/util'
-import wx from 'weixin-js-sdk'
 export default {
   components: {},
   data () {
-    return {}
+    return {
+      balance: 0
+    }
   },
   computed: {},
   watch: {},
   methods: {
-    recharge () {
-      this.$messagebox.prompt('请输入充值金额（单位：元）', {
-        inputValidator: (val) => {
-          if (!isNaN(Number(val))) {
-            return true
-          } else {
-            return false
-          }
-        },
-        inputErrorMessage: '无效金额'
-      }).then((val) => {
-        console.log(val)
-        this.getWxConig(Number(val.value))
-      })
-    },
-    getWxConig (money) {
+    getBalance () {
       util.http
-        .post('/api/invisit/payRecharge', {money})
+        .post('/api/invisit/checkBalance')
         .then(res => {
-          this.wxPay(res.data.Records)
+          this.balance = res.data.balance
         })
         .catch(error => {
           console.log(error)
         })
     },
-    wxPay (config) {
-      wx.ready(function () {
-        wx.chooseWXPay({
-          timestamp: config.timestamp,
-          nonceStr: config.nonceStr,
-          package: config.package,
-          signType: config.signType,
-          paySign: config.paySign,
-          success: function (res) {
-            console.log('支付成功后的回调函数')
-            console.log(res)
-          }
-        })
-      })
+    recharge () {
+      this.$router.push('/inHosp/recharge')
     }
   },
-  created () {}
+  created () {
+    this.getBalance()
+  }
 }
 </script>
 

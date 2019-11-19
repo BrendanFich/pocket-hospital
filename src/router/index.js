@@ -26,6 +26,7 @@ import balance from '@/views/index/inHosp/balance'
 import feeTotal from '@/views/index/inHosp/feeTotal'
 import InHospInfo from '@/views/index/inHosp/InHospInfo'
 import RegInfo from '@/views/index/inHosp/RegInfo'
+import Recharge from '@/views/index/inHosp/Recharge'
 
 import hospitalInfo from '@/views/index/hospitalInfo/hospitalInfo'
 import doctorIntro from '@/views/index/doctorIntro/doctorIntro'
@@ -107,7 +108,8 @@ export default new Router({
         { path: 'balance', component: balance },
         { path: 'feeTotal', component: feeTotal },
         { path: 'inHospInfo', component: InHospInfo },
-        { path: 'regInfo', component: RegInfo }
+        { path: 'regInfo', component: RegInfo },
+        { path: 'recharge', component: Recharge }
       ]
     },
     { path: '/hospitalInfo', component: hospitalInfo },
