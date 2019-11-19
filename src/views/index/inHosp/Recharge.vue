@@ -2,6 +2,7 @@
   <div class="recharge">
     <h1>充值金额</h1>
     <mt-field label="￥" type="number" v-model="value"></mt-field>
+    <!-- <h1>支付方式</h1> -->
     <mt-button type="primary" class="btn" @click.native="getWxConig">确认充值</mt-button>
   </div>
 </template>
@@ -20,9 +21,6 @@ export default {
   computed: {},
   watch: {},
   methods: {
-    back () {
-      this.$router.go(-1)
-    },
     getWxConig () {
       let money = Number(this.value)
       if (this.value === null || this.value === '' || money === 0) {
@@ -33,7 +31,7 @@ export default {
         this.$toast({ message: '每日最多充值2万', duration: 1500, className: 'toast' })
       } else {
         util.http
-          .post('/api/invisit/payRecharge', {money})
+          .post('/api/invisit/payRecharge', {money: money * 100})
           .then(res => {
             this.wxPay(res.data.Records)
           })
@@ -51,8 +49,7 @@ export default {
           signType: config.signType,
           paySign: config.paySign,
           success: function (res) {
-            console.log('支付成功后的回调函数')
-            console.log(res)
+            this.$router.go(-1)
           }
         })
       })
