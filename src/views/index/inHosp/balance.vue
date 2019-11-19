@@ -24,7 +24,7 @@ export default {
       util.http
         .post('/api/invisit/checkBalance')
         .then(res => {
-          this.balance = res.data.balance
+          this.balance = res.data.balance / 100
         })
         .catch(error => {
           console.log(error)
