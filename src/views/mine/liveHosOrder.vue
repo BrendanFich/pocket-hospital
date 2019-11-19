@@ -11,7 +11,7 @@
         <img class="noData" v-if="unpaid.length === 0" src="@/assets/img/noData.png" />
         <div v-for="(item,index) in unpaid" :key="index" >
           <div class="paidTime">下单日期：{{item.paymentDate}}</div>
-          <div class="orderCard" @click="pay(item.paymentFee/100)">
+          <div class="orderCard" @click="pay(item.ledgerSn)">
             <div class="left">
               <img src="@/assets/img/money.png" alt />
               <div class="baseInfo">
@@ -108,7 +108,7 @@ export default {
           console.log(error)
         })
     },
-    pay (money) {
+    pay (ledgerSn) {
       // const duration = 1500
       // const className = 'toast'
       this.$messagebox.confirm('请确认支付').then(action => {
@@ -124,7 +124,7 @@ export default {
         //     console.log(error)
         //   })
         util.http
-          .post('/api/invisit/payRecharge', {money: money * 100})
+          .post('/api/doctor/payComfirm', {ledgerSn})
           .then(res => {
             this.wxPay(res.data.Records)
           })
@@ -136,7 +136,7 @@ export default {
     wxPay (config) {
       wx.ready(function () {
         wx.chooseWXPay({
-          timestamp: config.timestamp,
+          timestamp: config.timeStamp,
           nonceStr: config.nonceStr,
           package: config.package,
           signType: config.signType,

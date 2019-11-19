@@ -38,7 +38,7 @@
     ></mt-field>
     <mt-field label="联系人姓名" placeholder="请输入联系人姓名" type="string" v-model="contactName" :disableClear="true"></mt-field>
     <mt-field label="联系人电话" placeholder="请输入联系人电话" type="string" v-model="contactPhone" :disableClear="true"></mt-field>
-    <mt-button type="primary" class="btn" @click.native="nextStep">下一步,支付预缴金</mt-button>
+    <mt-button type="primary" class="btn" @click.native="register">下一步,支付预缴金</mt-button>
     <mt-actionsheet :actions="actions2" v-model="sheet2Visible"></mt-actionsheet>
     <mt-actionsheet :actions="actions4" v-model="sheet4Visible"></mt-actionsheet>
   </div>
@@ -107,10 +107,6 @@ export default {
     sArryStatus (e) {
       this.arryStatus = e.name
     },
-    nextStep () {
-      // this.$router.push({name: 'recharge', params: {regFee: 0.01}})
-      this.register()
-    },
     register () {
       util.http
         .post('/api/invisit/register', {
@@ -126,7 +122,8 @@ export default {
         })
         .then(res => {
           if (res.code === 0 && res.data.Code === '0') {
-            this.getWxConig(res.data.Records.AdvancePayment)
+            // this.getWxConig(res.data.Records.AdvancePayment)
+            this.getWxConig(res.data.Records.LedgerSn)
           } else if (res.code === 500) {
             this.$toast({ message: res.msg, duration: 1500, className: 'toast' })
           }
@@ -135,9 +132,9 @@ export default {
           console.log(error)
         })
     },
-    getWxConig (advancePayment) {
+    getWxConig (ledgerSn) {
       util.http
-        .post('/api/invisit/payRecharge', {money: advancePayment})
+        .post('/api/doctor/payComfirm', {ledgerSn})
         .then(res => {
           this.wxPay(res.data.Records)
         })
@@ -149,7 +146,7 @@ export default {
       let self = this
       wx.ready(function () {
         wx.chooseWXPay({
-          timestamp: config.timestamp,
+          timestamp: config.timeStamp,
           nonceStr: config.nonceStr,
           package: config.package,
           signType: config.signType,

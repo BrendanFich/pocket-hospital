@@ -2,13 +2,13 @@
   <div class="rechargeRecord">
     <img class="noData" v-if="recordList.length === 0" src="@/assets/img/noData.png" />
     <div v-for="(item,index) in recordList" :key="index">
-      <div class="paidTime">下单日期：{{item.paymentDate}}</div>
+      <div class="paidTime">充值日期：{{item.paymentDate}}</div>
       <div class="orderCard">
         <div class="left">
           <img src="@/assets/img/money.png" alt />
           <div class="baseInfo">
             <div class="item">
-              <span class="key">流水号：</span>
+              <span class="key">订单号：</span>
               <span class="value">{{item.ledgerSn}}</span>
             </div>
             <div class="item">
