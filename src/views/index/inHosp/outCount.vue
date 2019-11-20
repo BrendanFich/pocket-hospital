@@ -5,9 +5,9 @@
       <ul>
         <li>总费用汇总：</li>
         <li></li><!-- 空li占位 -->
-        <li>预交金总额：<span class="value">{{balance}}</span></li>
+        <li>预交金总额：<span class="value">{{balance + allPaidFee}}</span></li>
         <li>住院总费用：<span class="value">{{totalFee}}</span></li>
-        <li style="width:200px">预交金余额：<span class="value">{{balance - totalFee}}</span></li>
+        <li style="width:200px">预交金余额：<span class="value">{{balance + allPaidFee - totalFee}}</span></li>
         <li @click="recharge" style="width:60px"><span class="icon">充值</span></li>
       </ul>
     </div>
@@ -23,7 +23,8 @@ export default {
   data () {
     return {
       totalFee: null,
-      balance: null
+      balance: null,
+      allPaidFee: null
     }
   },
   computed: {},
@@ -56,11 +57,28 @@ export default {
         .catch(error => {
           console.log(error)
         })
+    },
+    getAllPaidFee () {
+      util.http
+        .post('/api/invisit/payInfoList')
+        .then(res => {
+          let allPaidFee = 0
+          let resData = res.data.Records
+          this.allPaidFee = res.data.Records
+          for (let i = 0; i < resData.length; i++) {
+            allPaidFee = allPaidFee + parseInt(resData[i].paymentFee)
+          }
+          this.allPaidFee = allPaidFee / 100
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   },
   created () {
     this.getSumList()
     this.getBalance()
+    this.getAllPaidFee()
   }
 }
 </script>

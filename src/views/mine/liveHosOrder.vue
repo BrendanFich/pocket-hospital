@@ -107,20 +107,7 @@ export default {
         })
     },
     pay (ledgerSn) {
-      // const duration = 1500
-      // const className = 'toast'
       this.$messagebox.confirm('请确认支付').then(action => {
-        // util.http
-        //   .post('/api/doctor/payComfirm', {ledgerSn})
-        //   .then(res => {
-        //     if (res.code === 0 && res.data.Records.Code === '0') {
-        //       // this.$toast({ message: '支付成功', duration, className })
-        //       // this.getUnpaidList()
-        //     }
-        //   })
-        //   .catch(error => {
-        //     console.log(error)
-        //   })
         util.http
           .post('/api/doctor/payComfirm', {ledgerSn})
           .then(res => {
