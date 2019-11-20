@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import CustomerInfoCard from '@/components/CustomerInfoCard'
+import CustomerInfoCard from '@/base/CustomerInfoCard'
 import wx from 'weixin-js-sdk'
 import util from '@/assets/js/util'
 export default {
@@ -36,16 +36,16 @@ export default {
         console.log(error)
       })
     wx.getLocation({
-      type: 'gcj02', // 返回可以用于wx.openLocation的经纬度
+      type: 'gcj02',
       success (res) {
         this.latitude = res.latitude
         this.longitude = res.longitude
-        // alert(res.latitude, res.longitude)
       }
     })
   },
   methods: {
     confirm () {
+      let self = this
       let text
       if (this.registerInfo.hisOrdNum) {
         text = `
@@ -60,17 +60,20 @@ export default {
         text = `<div>请先预约挂号</div>`
       }
       this.$messagebox.confirm(text).then(action => {
-        util.http
-          .post('/api/pat/visitingReport')
-          .then(res => {
-            console.log(res)
-            // this.orderList = res.data.Records
-          })
-          .catch(error => {
-            console.log(error)
-          })
         if (this.registerInfo.hisOrdNum) {
-          this.$router.push({name: 'cQueue', params: {hisOrdNum: this.registerInfo.hisOrdNum}})
+          util.http
+            .post('/api/pat/visitingReport')
+            .then(res => {
+              console.log(res)
+              if (res.code !== 0) {
+                self.$toast({ message: res.msg, duration: 1500, className: 'toast' })
+              } else {
+                self.$router.push({name: 'cQueue', params: {hisOrdNum: this.registerInfo.hisOrdNum}})
+              }
+            })
+            .catch(error => {
+              console.log(error)
+            })
         }
       })
       // if (this.isArrived) {

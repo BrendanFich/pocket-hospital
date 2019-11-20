@@ -5,9 +5,9 @@
       <ul>
         <li>总费用汇总：</li>
         <li></li><!-- 空li占位 -->
-        <li>预交金总额：<span class="value">{{balance + allPaidFee}}</span></li>
+        <li>预交金总额：<span class="value">{{(balance + allPaidFee)/100}}</span></li>
         <li>住院总费用：<span class="value">{{totalFee}}</span></li>
-        <li style="width:200px">预交金余额：<span class="value">{{balance + allPaidFee - totalFee}}</span></li>
+        <li style="width:200px">预交金余额：<span class="value">{{(balance + allPaidFee - totalFee*100)/100}}</span></li>
         <li @click="recharge" style="width:60px"><span class="icon">充值</span></li>
       </ul>
     </div>
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import CustomerInfoCard from '@/components/CustomerInfoCard'
+import CustomerInfoCard from '@/base/CustomerInfoCard'
 import util from '@/assets/js/util'
 export default {
   components: { CustomerInfoCard },
@@ -37,7 +37,7 @@ export default {
       util.http
         .post('/api/invisit/checkBalance')
         .then(res => {
-          this.balance = res.data.balance / 100
+          this.balance = res.data.balance
         })
         .catch(error => {
           console.log(error)
@@ -68,7 +68,7 @@ export default {
           for (let i = 0; i < resData.length; i++) {
             allPaidFee = allPaidFee + parseInt(resData[i].paymentFee)
           }
-          this.allPaidFee = allPaidFee / 100
+          this.allPaidFee = allPaidFee
         })
         .catch(error => {
           console.log(error)

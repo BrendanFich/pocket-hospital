@@ -128,7 +128,7 @@ export default {
           signType: config.signType,
           paySign: config.paySign,
           success: function (res) {
-            self.$router.push('/mine/liveHosOrder')
+            self.getUnpaidList()
           }
         })
       })

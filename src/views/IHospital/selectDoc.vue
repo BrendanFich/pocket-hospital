@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import Searchbar from '@/components/Searchbar'
+import Searchbar from '@/base/Searchbar'
 import util from '@/assets/js/util'
 export default {
   name: 'selectDoc',
@@ -235,6 +235,7 @@ export default {
         }
       }
       .price {
+        width: 73px;
         display: flex;
         justify-content: center;
         align-items: center;

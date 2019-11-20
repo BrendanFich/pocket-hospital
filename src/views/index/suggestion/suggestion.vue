@@ -18,7 +18,6 @@ export default {
   },
   methods: {
     handleClick () {
-      console.log(this.content)
       if (this.content) {
         util.http
           .post('/api/user/submissionOfOpinions', { opinion: this.content })

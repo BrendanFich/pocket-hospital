@@ -61,9 +61,8 @@
 </template>
 
 <script>
-import CustomerInfoCard from '@/components/CustomerInfoCard'
-import Tabbar from '@/components/Tabbar'
-// import util from '@/assets/js/util'
+import CustomerInfoCard from '@/base/CustomerInfoCard'
+import Tabbar from '@/base/Tabbar'
 
 export default {
   name: 'mine',
@@ -72,7 +71,6 @@ export default {
     }
   },
   created () {
-    // this.$store.commit('updateUserPatInfo')
   },
   components: { CustomerInfoCard, Tabbar },
   methods: {

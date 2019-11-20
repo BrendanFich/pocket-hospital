@@ -66,7 +66,7 @@
 </template>
 
 <script>
-import Searchbar from '@/components/Searchbar'
+import Searchbar from '@/base/Searchbar'
 import util from '@/assets/js/util'
 
 export default {

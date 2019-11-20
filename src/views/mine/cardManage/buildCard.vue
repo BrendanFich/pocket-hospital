@@ -20,20 +20,18 @@
     <div class="attention">
       <h2>注意事项</h2>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-        eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis
-        ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas
-        accumsan lacus vel facilisis.
+        每个微信号可建多个档，每个档仅可以绑定一张就诊卡或医保卡，建档和绑卡时使用的信息须保持一致，就诊卡需要到医院窗口办理。
       </p>
     </div>
 
     <mt-button type="primary" class="btn" @click.native="handleClick">确定</mt-button>
+    <Tabbar></Tabbar>
   </div>
 </template>
 
 <script>
+import Tabbar from '@/base/Tabbar'
 import util from '@/assets/js/util'
-import getInfoFromId from '@/assets/js/getInfoFromId'
 export default {
   name: 'buildCard',
   data () {
@@ -51,6 +49,7 @@ export default {
       ]
     }
   },
+  components: { Tabbar },
   methods: {
     showOption () {
       this.sheetVisible = true
@@ -76,7 +75,7 @@ export default {
           this.$indicator.open()
           util.http
             .post('/api/pat/register', {
-              patIdType: getInfoFromId.getIdType(this.IDNum),
+              patIdType: '1',
               hospitalName: this.block,
               patName: this.name,
               patMobile: this.phoneNum,
@@ -108,7 +107,7 @@ export default {
 <style lang="scss" scoped>
 .buildCard {
   background: #f2f2f2;
-  height: 100vh;
+  min-height: 100vh;
   h2 {
     color: #999999;
     font-size: 24px;

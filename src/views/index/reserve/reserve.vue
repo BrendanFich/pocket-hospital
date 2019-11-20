@@ -13,9 +13,7 @@ export default {
   },
   created () {
     util.http.post('/api/user/vx_info').then(res => {
-      console.log('-----------获取用户信息/api/user/vx_info-----------')
       this.$store.commit('updateDefaultCard', res.data.info.visitName, res.data.info.visitCardNo, res.data.info.socialCardNo)
-      console.log(res.data.info.visitName)
       if (this.$store.state.visitName === '') {
         this.bindCardNotice()
       }

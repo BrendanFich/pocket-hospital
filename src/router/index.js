@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import container from '@/components/container'
+import container from '@/base/container'
 // index
 import index from '@/views/index/index'
 import reserve from '@/views/index/reserve/reserve'
@@ -158,7 +158,7 @@ export default new Router({
           component: container,
           children: [
             { path: '', component: cardManage },
-            { path: 'bindCard/:patName&:patIdNo&:patientId&:cardTypeWord', name: 'bindCard', component: bindCard },
+            { path: 'bindCard/:cardTypeWord', name: 'bindCard', component: bindCard },
             { path: 'buildCard', name: 'buildCard', component: buildCard },
             { path: 'cardInfo/:cardNo', name: 'cardInfo', component: cardInfo }
           ]

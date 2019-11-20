@@ -18,20 +18,17 @@
     <div class="attention">
       <h2>注意事项</h2>
       <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-        eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis
-        ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas
-        accumsan lacus vel facilisis.
+        每个微信号可建多个档，每个档仅可以绑定一张就诊卡或医保卡，建档和绑卡时使用的信息须保持一致，就诊卡需要到医院窗口办理。
       </p>
     </div>
 
     <mt-button type="primary" class="btn" @click.native="handleClick">确定</mt-button>
-    <!-- <Tabbar></Tabbar> -->
+    <Tabbar></Tabbar>
   </div>
 </template>
 
 <script>
-// import Tabbar from '@/components/Tabbar'
+import Tabbar from '@/base/Tabbar'
 import util from '@/assets/js/util'
 
 export default {
@@ -57,7 +54,7 @@ export default {
       ]
     }
   },
-  // components: { Tabbar },
+  components: { Tabbar },
   created () {
     this.idNum = this.$route.params.patIdNo ? this.$route.params.patIdNo : ''
     this.name = this.$route.params.patName ? this.$route.params.patName : ''
@@ -133,8 +130,6 @@ export default {
           patIdType: this.patIdType,
           patIdNo: this.idNum
         }
-        console.log('--------------------------请求--------------------')
-        console.log(reqData)
         if (this.cardNum.length !== 7) {
           // 卡号验证
           this.$toast({ message: '就诊卡号为7位数', duration, className })
@@ -142,11 +137,9 @@ export default {
           // 身份证号验证
           this.$toast({ message: '身份证号有误', duration, className })
         } else {
-          console.log(reqData)
           util.http
             .post('/api/pat/bindCard', reqData)
             .then(res => {
-              console.log(res)
               if (res.code === 0) {
                 if (res.data.Code === '-1' && res.data.Message === '卡号已存在') {
                   this.$toast({ message: res.data.Message, duration, className })

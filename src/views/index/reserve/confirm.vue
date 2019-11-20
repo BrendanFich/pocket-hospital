@@ -34,8 +34,9 @@
 </template>
 
 <script>
-import CustomerInfoCard from '@/components/CustomerInfoCard'
+import CustomerInfoCard from '@/base/CustomerInfoCard'
 import util from '@/assets/js/util'
+import wx from 'weixin-js-sdk'
 export default {
   name: 'confirm',
   components: { CustomerInfoCard },
@@ -53,20 +54,40 @@ export default {
         .post('/api/doctor/payComfirm', {ledgerSn})
         .then(res => {
           console.log(res)
+          this.wxPay(res.data.Records)
         })
         .catch(error => {
           console.log(error)
         })
     },
+    wxPay (config) {
+      let self = this
+      wx.ready(function () {
+        wx.chooseWXPay({
+          timestamp: config.timeStamp,
+          nonceStr: config.nonceStr,
+          package: config.package,
+          signType: config.signType,
+          paySign: config.paySign,
+          success: function (res) {
+            self.$toast({ message: '挂号成功', duration: 1500, className: 'toast' })
+            self.$router.push('/index')
+          },
+          cancel: function (res) {
+            self.$toast({ message: '挂号成功，请及时支付挂号费', duration: 1500, className: 'toast' })
+            self.$router.push('/index')
+          }
+        })
+      })
+    },
     confirm () {
       let configdata = {
-        psOrdNum: '123',
         deptCode: this.$store.state.selectedDeptCode,
         deptName: this.$store.state.selectedDeptName,
         doctorName: this.$store.state.selectedDocName,
         doctorCode: '0' + this.$store.state.selectedDocCode.toString(), // 比实际医生code多2
         scheduleDate: this.$store.state.selectedDate,
-        timeFlag: '1',
+        timeFlag: this.$store.state.timeFlag,
         regFee: this.$store.state.price.toString(),
         patName: this.$store.state.visitName,
         patCardNo: this.patCardNo,
@@ -75,7 +96,6 @@ export default {
         hostpitalName: '全院',
         patCardType: (this.$store.state.visitCardNo === '') ? '2' : '1'
       }
-      console.log(configdata)
       this.$indicator.open()
       util.http
         .post('/api/doctor/currentDayRegister', configdata)
@@ -83,13 +103,12 @@ export default {
           if (res.code === 0) {
             this.payComfirm(res.data.Records[0].LedgerSn)
             this.$indicator.close()
-            this.$toast({
-              message: '挂号成功',
-              duration: 1000,
-              className: 'toast'
-            })
-            this.$router.push('/index')
-            console.log(res)
+            // this.$toast({
+            //   message: '挂号成功',
+            //   duration: 1000,
+            //   className: 'toast'
+            // })
+            // this.$router.push('/index')
           } else {
             this.$indicator.close()
             if (res.msg === '当前有正在进行的预约挂号..') {

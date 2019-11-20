@@ -29,19 +29,19 @@
         </li>
         <li>
           <span class="key">报到时间</span>
-          <span class="value">2019-08-31 08:48</span>
+          <span class="value"></span>
         </li>
       </ul>
     </div>
     <div class="queueBefore">
       <span class="key">前方还有</span>
-      <span class="value">10 人</span>
+      <span class="value"></span>
     </div>
   </div>
 </template>
 
 <script>
-import CustomerInfoCard from '@/components/CustomerInfoCard'
+import CustomerInfoCard from '@/base/CustomerInfoCard'
 import util from '@/assets/js/util'
 export default {
   name: 'cQueue',

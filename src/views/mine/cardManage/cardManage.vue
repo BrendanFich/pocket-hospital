@@ -46,12 +46,12 @@
         <span class="linkIcon">></span>
       </li>
     </ul>
-    <!-- <Tabbar></Tabbar> -->
+    <Tabbar></Tabbar>
   </div>
 </template>
 
 <script>
-// import Tabbar from '@/components/Tabbar'
+import Tabbar from '@/base/Tabbar'
 import util from '@/assets/js/util'
 
 export default {
@@ -64,14 +64,11 @@ export default {
       socialCardNo: ''
     }
   },
-  // components: { Tabbar },
+  components: { Tabbar },
   computed: {
     defaultCardNo () {
       return this.visitCardNo ? this.visitCardNo : this.socialCardNo
     }
-    // cardList () {
-    //   return this.$store.state.patInfoBinded
-    // }
   },
   methods: {
     linkTo (name, params) {
@@ -79,12 +76,9 @@ export default {
     }
   },
   created () {
-    // this.$store.commit('updateUserPatInfo')
     util.http
       .post('/api/pat/pat_info')
       .then(res => {
-        console.log('----------获取患者信息-----------')
-        console.log(res)
         this.patInfoNobind = res.data.filter(item => (item.visitCardNo === '') && (item.socialHosCardNO === ''))
         let patInfoContent = []
         res.data.filter(item => (item.visitCardNo !== '') || (item.socialHosCardNO !== '')).forEach((item) => {
@@ -107,12 +101,10 @@ export default {
         this.patInfoBinded = patInfoContent
         console.log(this.patInfoBinded)
         util.http.post('/api/user/vx_info').then(res => {
-          console.log('-----------获取用户信息/api/user/vx_info-----------')
           this.visitName = res.data.info.visitName
           this.visitCardNo = res.data.info.visitCardNo
           this.socialCardNo = res.data.info.socialCardNo
           this.$store.commit('updateDefaultCard', res.data.info.visitName, res.data.info.visitCardNo, res.data.info.socialCardNo)
-          console.log(res.data.info.visitName)
         }).catch((error) => {
           console.log(error)
         })
@@ -127,7 +119,8 @@ export default {
 <style lang="scss" scoped>
 .cardManage {
   background: #f2f2f2;
-  height: 100vh;
+  min-height: 100vh;
+  padding-bottom: 200px;
   .noData {
     width: 366px;
     margin-top: 50px;

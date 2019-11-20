@@ -14,11 +14,13 @@
     <mt-field label="性别" v-model="cardInfo.patSex" :readonly="true" :disableClear="true"></mt-field>
     <mt-field label="生日" v-model="cardInfo.patBirth" :readonly="true" :disableClear="true"></mt-field>
     <mt-button type="primary" class="btn" @click.native="setDefault">设为默认</mt-button>
+    <Tabbar></Tabbar>
   </div>
 </template>
 
 <script>
 import util from '@/assets/js/util'
+import Tabbar from '@/base/Tabbar'
 
 export default {
   name: 'cardInfo',
@@ -28,6 +30,7 @@ export default {
       patInfoBinded: []
     }
   },
+  components: { Tabbar },
   created () {
     this.updateUserPatInfo()
   },
@@ -93,7 +96,7 @@ export default {
 <style lang="scss" scoped>
 .cardInfo {
   background: #f2f2f2;
-  height: 100vh;
+  min-height: 100vh;
   h2 {
     color: #999999;
     font-size: 24px;

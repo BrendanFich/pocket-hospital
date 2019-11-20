@@ -23,7 +23,6 @@
 
       <mt-tab-container v-model="selected" class="right_container">
         <mt-tab-container-item id="0">
-          <!-- <img class="noData" v-if="deptList.length === 0" src="@/assets/img/暂无数据.png" /> -->
           <div v-for="(item,index) in deptList" :key="index" @click="select(item.deptCode, item.deptName)">
             <mt-cell :title="item.deptName">
               <img class="icon" src="@/assets/img/deptIcon.png" />&gt;
@@ -33,13 +32,11 @@
       </mt-tab-container>
 
     </div>
-    <!-- <Tabbar></Tabbar> -->
   </div>
 </template>
 
 <script>
 import util from '@/assets/js/util'
-// import Tabbar from '@/components/Tabbar'
 export default {
   name: 'sDept',
   data () {
@@ -48,10 +45,8 @@ export default {
       selected: '0',
       deptList: [],
       isShow: false
-      // searchResult: []
     }
   },
-  // components: { Tabbar },
   computed: {
     searchResult () {
       if (this.value === '') {
@@ -64,7 +59,6 @@ export default {
   created () {
     util.http.post('/api/doctor/allDeptInfo').then(res => {
       this.deptList = res.data.Records
-      console.log(res.data)
     }).catch((error) => {
       console.log(error)
     })
@@ -81,7 +75,6 @@ export default {
       this.value = ''
     },
     select (deptCode, deptName) {
-      // this.$store.commit('changeDept', deptCode, deptName)
       this.$store.commit('changeDept', { deptCode: '173', deptName: '内科门诊' })
       this.$router.push({name: 'sDayDoc', params: { deptCode: '173', deptName: '内科门诊' }})
     }

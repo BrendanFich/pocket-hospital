@@ -6,13 +6,10 @@
         <div>
           <div class="name">{{docInfo.doctorName}}</div>
           <div class="department">{{docInfo.deptName}}</div>
-          <!-- <div class="name">劳绍祥</div>
-          <div class="department">内科门诊</div> -->
         </div>
       </div>
       <div class="intro">
         {{(docInfo.doctorIntrodution === "" || docInfo.doctorIntrodution === null) ? '暂无简介' : docInfo.doctorIntrodution}}
-        <!-- 暂无简介 -->
       </div>
     </div>
     <div class="workTime">
@@ -37,7 +34,7 @@
 
 <script>
 import util from '@/assets/js/util'
-// import moment from 'moment'
+import moment from 'moment'
 
 export default {
   name: 'sTime',
@@ -52,7 +49,6 @@ export default {
     this.getRegSource()
   },
   methods: {
-    // setTimeFormat(item.beginTime, item.endTime)
     resetTimeFormat (beginTime, endTime) {
       let begin = beginTime.split(' ')[1].toString()
       let end = endTime.split(' ')[1].toString()
@@ -64,7 +60,6 @@ export default {
         .then(res => {
           this.docInfo = res.data.Records[0]
           this.$store.commit('changeDoc', {docCode: this.docInfo.doctorCode, docName: this.docInfo.doctorName})
-          console.log(res.data.Records)
         })
         .catch(error => {
           console.log(error)
@@ -78,8 +73,9 @@ export default {
           endDate: this.$route.params.date
         })
         .then(res => {
-          this.workTimeList = res.data.Records
-          console.log(res.data.Records)
+          this.workTimeList = res.data.Records.filter(item => {
+            return moment(item.beginTime, 'YYYY-MM-DD HH:mm:ss').valueOf() > Date.parse(new Date())
+          })
         })
         .catch(error => {
           console.log(error)
@@ -93,21 +89,25 @@ export default {
       }
     },
     select (item) {
-      console.log(item.beginTime)
-      console.log(item.endTime)
       let beginTime = item.beginTime.split(' ')[1].toString().split(':')
       beginTime.pop()
       let endTime = item.endTime.split(' ')[1].toString().split(':')
       endTime.pop()
-      console.log('beginTime:' + beginTime.join(':'))
-      console.log('endTime:' + endTime.join(':'))
       let time = beginTime + '-' + endTime
-      console.log(time)
+      let timeFlag
+      if (item.timeFlag === '上午班') {
+        timeFlag = '1'
+      } else if (item.timeFlag === '下午班') {
+        timeFlag = '2'
+      } else {
+        timeFlag = '3'
+      }
       if (item.leftNum > 0) {
         this.$store.commit('changeTime', time)
         this.$store.commit('changeBeginTime', beginTime.join(':'))
         this.$store.commit('changeEndTime', endTime.join(':'))
         this.$store.commit('setPrice', item.Price)
+        this.$store.commit('changeTimeFlag', timeFlag)
         this.$router.push('/reserve/confirm')
       }
     }

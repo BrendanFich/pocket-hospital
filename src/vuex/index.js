@@ -20,7 +20,8 @@ export default new Vuex.Store({
     selectedTime: '',
     beginTime: '',
     endTime: '',
-    price: ''
+    price: '',
+    timeFlag: ''
   },
   mutations: {
     updateUserInfo (state) {
@@ -98,6 +99,9 @@ export default new Vuex.Store({
     },
     changeEndTime (state, endTime) {
       state.endTime = endTime
+    },
+    changeTimeFlag (state, timeFlag) {
+      state.timeFlag = timeFlag
     }
   }
 })

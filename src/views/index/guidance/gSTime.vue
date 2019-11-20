@@ -40,7 +40,7 @@
 
 <script>
 import moment from 'moment'
-import weekSlider from '@/components/weekSlider'
+import weekSlider from '@/base/weekSlider'
 import util from '@/assets/js/util'
 
 export default {
@@ -69,12 +69,21 @@ export default {
       this.date = e
     },
     linkTo (item) {
+      let timeFlag
+      if (item.timeFlag === '上午班') {
+        timeFlag = '1'
+      } else if (item.timeFlag === '下午班') {
+        timeFlag = '2'
+      } else {
+        timeFlag = '3'
+      }
       if (item.leftNum > 0) {
         this.$store.commit('changeDate', this.date)
         this.$store.commit('changeTime', item.scheduleDate.split(' ')[0])
         this.$store.commit('changeBeginTime', item.beginTime.split(' ')[1])
         this.$store.commit('changeEndTime', item.endTime.split(' ')[1])
         this.$store.commit('setPrice', item.Price)
+        this.$store.commit('changeTimeFlag', timeFlag)
         this.$router.push('/reserve/confirm')
       }
     },

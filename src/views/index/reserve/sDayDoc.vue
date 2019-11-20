@@ -46,7 +46,7 @@
 
 <script>
 import moment from 'moment'
-import weekSlider from '@/components/weekSlider'
+import weekSlider from '@/base/weekSlider'
 import util from '@/assets/js/util'
 
 export default {
@@ -70,16 +70,13 @@ export default {
   methods: {
     dateClickhandler (e) {
       this.date = e
-      // this.getRegSource()
       console.log(this.date)
     },
     select (leftNum, doctorCode, doctorName) {
-      // this.$store.commit('changeDoc', {doctorCode, doctorName: 'ss'})
       if (leftNum > 0) {
         this.$router.push({
           name: 'sTime',
           params: { doctorCode: doctorCode, date: this.date }
-          // params: { doctorCode: '020', date: this.date }
         })
       }
     },
@@ -87,11 +84,12 @@ export default {
       util.http
         .post('/api/doctor/getRegSource', {
           deptCode: this.$route.params.deptCode
-          // endDate: this.date 加日期接口无响应
         })
         .then(res => {
           console.log(res)
-          this.doctors = res.data.Records
+          this.doctors = res.data.Records = res.data.Records.filter(item => {
+            return moment(item.beginTime, 'YYYY-MM-DD HH:mm:ss').valueOf() > Date.parse(new Date())
+          })
         })
         .catch(error => {
           console.log(error)

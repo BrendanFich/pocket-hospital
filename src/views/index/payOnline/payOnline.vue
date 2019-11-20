@@ -97,6 +97,7 @@ export default {
     pay (ledgerSn) {
       // const duration = 1500
       // const className = 'toast'
+      let self = this
       this.$messagebox.confirm('请确认支付').then(action => {
         util.http
           .post('/api/doctor/payComfirm', {ledgerSn})
@@ -109,8 +110,7 @@ export default {
                 signType: res.data.Records.signType,
                 paySign: res.data.Records.paySign,
                 success: function (res) {
-                  console.log('支付成功后的回调函数')
-                  console.log(res)
+                  self.getUnpaidList()
                 }
               })
             })

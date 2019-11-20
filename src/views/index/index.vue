@@ -84,7 +84,7 @@
 </template>
 
 <script>
-import Tabbar from '@/components/Tabbar'
+import Tabbar from '@/base/Tabbar'
 import wx from 'weixin-js-sdk'
 import config from '@/assets/js/config'
 
