@@ -8,7 +8,7 @@ import wxsdk from '@/assets/js/wxsdk'
 import util from '@/assets/js/util'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
-import store from './vuex'
+import store from './vuex/store'
 // import VConsole from 'vconsole'
 // const vConsole = new VConsole()
 // console.log(vConsole.version)

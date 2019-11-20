@@ -20,9 +20,7 @@ export default {
     }
   },
   created () {
-    // 微信授权
     this.wxAuth()
-    // 获取微信SDK配置签名
     let wxSign = window.localStorage.getItem('wxSign')
     let _this = this
     if (wxSign) {
@@ -35,14 +33,8 @@ export default {
         jsApiList: ['openLocation', 'getLocation', 'updateAppMessageShareData', 'chooseWXPay']
       })
       wx.error(function (res) {
-        console.log('wxerror')
-        console.log(res)
-        // 如果签名过期，再重新获取
-        // 有个坑：微信开发者工具返回的errMsg,与真机测试时返回的errMsg存在区别
-        // 微信开发者工具的返回有错误码63002，真机测试时没有错误码
         if (res.errMsg.includes('invalid signature')) {
           if (_this.count < 1) {
-            console.log('--------------签名过期获取新签名--------------')
             _this.getSign()
             _this.count++
           }
@@ -51,10 +43,8 @@ export default {
     } else {
       this.getSign()
     }
-    // 用户登录，将用户信息存至store
     this.$store.commit('updateUserInfo')
 
-    // 在页面加载时读取sessionStorage里的状态信息
     if (sessionStorage.getItem('store')) {
       this.$store.replaceState(
         Object.assign(
@@ -64,16 +54,12 @@ export default {
         )
       )
     }
-    // 在页面刷新时将vuex里的信息保存到sessionStorage里
     window.addEventListener('beforeunload', () => {
       sessionStorage.setItem('store', JSON.stringify(this.$store.state))
     })
   },
   methods: {
     wxAuth () {
-      // 先获取appid，redirect_url等授权地址所需字段,然后跳转至授权地址
-      // window.localStorage.setItem('token', '')
-      // const lstoken = window.localStorage.getItem('token')
       if (this.getUrlParam('token')) {
         window.localStorage.setItem('token', this.getUrlParam('token'))
         window.location.href = window.location.href.split('?')[0]
