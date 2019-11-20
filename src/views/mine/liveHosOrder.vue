@@ -90,8 +90,7 @@ export default {
       util.http
         .post('/api/invisit/getVisitPayInfo')
         .then(res => {
-          this.unpaid = res.data.Records
-          this.clickedUnPaid = true
+          this.unpaid = res.data.Records.sort(util.compareTime('paymentDate'))
         })
         .catch(error => {
           console.log(error)
@@ -101,8 +100,7 @@ export default {
       util.http
         .post('/api/invisit/payInfoList')
         .then(res => {
-          this.paid = res.data.Records
-          this.clickedPaid = true
+          this.paid = res.data.Records.sort(util.compareTime('paymentDate'))
         })
         .catch(error => {
           console.log(error)
@@ -134,6 +132,7 @@ export default {
       })
     },
     wxPay (config) {
+      let self = this
       wx.ready(function () {
         wx.chooseWXPay({
           timestamp: config.timeStamp,
@@ -142,7 +141,7 @@ export default {
           signType: config.signType,
           paySign: config.paySign,
           success: function (res) {
-            this.$router.go(-1)
+            self.$router.push('/mine/liveHosOrder')
           }
         })
       })

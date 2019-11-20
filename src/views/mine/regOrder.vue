@@ -33,7 +33,7 @@
           <div class="right">
             <span class="price">{{item.regFee}}元</span>
             <span class="orderTime">{{item.beginTime}}-{{item.endTime}}</span>
-            <span :class="{noArrival: item.visitFlag ==='0',arrivaled: item.visitFlag ==='1'}">{{status(item.visitFlag)}}</span>
+            <span :class="{noArrival: item.visitFlag ==='0',arrivaled: item.visitFlag ==='1' || item.visitFlag === '-1'}">{{status(item.visitFlag)}}</span>
           </div>
         </div>
       </li>
@@ -55,7 +55,7 @@ export default {
       .post('/api/pat/findAllRegister')
       .then(res => {
         console.log(res)
-        this.orderList = res.data.Records
+        this.orderList = res.data.Records.sort(util.compareTime('createDate'))
       })
       .catch(error => {
         console.log(error)

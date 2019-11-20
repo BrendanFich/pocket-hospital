@@ -61,12 +61,11 @@ export default {
       util.http
         .post('/api/invisit/getInPatInfo')
         .then(res => {
-          // if (res.data.hisOrdNum === '') {
-          //   this.$router.push('/inHosp/inHospReg1')
-          // } else {
-          //   this.$router.push('/inHosp/regInfo')
-          // }
-          this.$router.push('/inHosp/inHospReg1')
+          if (res.data.curVisitStatus === '1') {
+            this.$router.push('/inHosp/regInfo')
+          } else {
+            this.$router.push('/inHosp/inHospReg1')
+          }
         })
         .catch(error => {
           console.log(error)

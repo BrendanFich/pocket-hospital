@@ -1,4 +1,5 @@
 import axios from 'axios'
+import moment from 'moment'
 import { Indicator } from 'mint-ui'
 // const BaseUrl = 'http://qlyt.vicp.net:8197'
 const BaseUrl = 'http://yun.gdqlyt.com.cn:8197'
@@ -55,7 +56,21 @@ function getUrlParam (name) {
   return null
 }
 
+function compareTime (pro) {
+  return function (obj1, obj2) {
+    var val1 = moment(obj1[pro], 'YYYY-MM-DD HH:mm:ss').valueOf()
+    var val2 = moment(obj2[pro], 'YYYY-MM-DD HH:mm:ss').valueOf()
+    if (val1 < val2) { // 正序
+      return 1
+    } else if (val1 > val2) {
+      return -1
+    } else {
+      return 0
+    }
+  }
+}
 export default {
   http,
-  getUrlParam
+  getUrlParam,
+  compareTime
 }

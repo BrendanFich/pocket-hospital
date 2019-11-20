@@ -45,7 +45,7 @@ export default {
       util.http
         .post('/api/invisit/findRecharge')
         .then(res => {
-          this.recordList = res.data.Records
+          this.recordList = res.data.Records.sort(util.compareTime('paymentDate'))
         })
         .catch(error => {
           console.log(error)
