@@ -43,8 +43,6 @@ export default new Vuex.Store({
       util.http
         .post('/api/pat/pat_info')
         .then(res => {
-          console.log('----------获取患者信息-----------')
-          console.log(res)
           state.patInfoNobind = res.data.filter(item => (item.visitCardNo === '') && (item.socialHosCardNO === ''))
           let patInfoContent = []
           res.data.filter(item => (item.visitCardNo !== '') || (item.socialHosCardNO !== '')).forEach((item) => {
@@ -66,8 +64,6 @@ export default new Vuex.Store({
           })
           state.patInfoBinded = patInfoContent
           util.http.post('/api/user/vx_info').then(res => {
-            console.log('-----------获取用户信息/api/user/vx_info-----------')
-            console.log(res)
             state.userInfo = res.data.info
           }).catch((error) => {
             console.log(error)

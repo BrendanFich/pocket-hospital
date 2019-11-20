@@ -9,9 +9,9 @@ import util from '@/assets/js/util'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 import store from './vuex'
-import VConsole from 'vconsole'
-const vConsole = new VConsole()
-console.log(vConsole.version)
+// import VConsole from 'vconsole'
+// const vConsole = new VConsole()
+// console.log(vConsole.version)
 
 Vue.use(VueAwesomeSwiper)
 Vue.use(MintUI)

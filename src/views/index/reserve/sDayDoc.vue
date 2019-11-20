@@ -88,7 +88,7 @@ export default {
         .then(res => {
           console.log(res)
           this.doctors = res.data.Records = res.data.Records.filter(item => {
-            return moment(item.beginTime, 'YYYY-MM-DD HH:mm:ss').valueOf() > Date.parse(new Date())
+            return moment(item.beginTime, 'YYYY-MM-DD HH:mm:ss').valueOf() + 1800000 > Date.parse(new Date())
           })
         })
         .catch(error => {

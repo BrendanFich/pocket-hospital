@@ -74,7 +74,7 @@ export default {
         })
         .then(res => {
           this.workTimeList = res.data.Records.filter(item => {
-            return moment(item.beginTime, 'YYYY-MM-DD HH:mm:ss').valueOf() > Date.parse(new Date())
+            return moment(item.beginTime, 'YYYY-MM-DD HH:mm:ss').valueOf() + 1800000 > Date.parse(new Date())
           })
         })
         .catch(error => {

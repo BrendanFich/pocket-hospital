@@ -101,7 +101,9 @@ export default {
       util.http
         .post('/api/doctor/getRegSource', { deptCode: '173', doctorCode: '020' })
         .then(res => {
-          this.allworkTime = res.data.Records
+          this.allworkTime = res.data.Records.filter(item => {
+            return moment(item.beginTime, 'YYYY-MM-DD HH:mm:ss').valueOf() + 1800000 > Date.parse(new Date())
+          })
         })
         .catch(error => {
           console.log(error)
