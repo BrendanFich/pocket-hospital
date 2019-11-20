@@ -23,7 +23,6 @@
 
       <mt-tab-container v-model="selected" class="right_container">
         <mt-tab-container-item id="0">
-          <!-- <img class="noData" v-if="deptList.length === 0" src="@/assets/img/暂无数据.png" /> -->
           <div v-for="(item,index) in deptList" :key="index" @click="select(item.deptCode, item.deptName)">
             <mt-cell :title="item.deptName">
               <img class="icon" src="@/assets/img/deptIcon.png" />&gt;

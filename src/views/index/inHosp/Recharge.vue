@@ -2,7 +2,6 @@
   <div class="recharge">
     <h1>充值金额</h1>
     <mt-field label="￥" type="number" v-model="value"></mt-field>
-    <!-- <h1>支付方式</h1> -->
     <mt-button type="primary" class="btn" @click.native="getWxConig">确认充值</mt-button>
   </div>
 </template>

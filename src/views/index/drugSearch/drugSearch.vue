@@ -90,12 +90,10 @@ export default {
   created () {},
   watch: {
     value () {
-      // 函数防抖
       if (this.timer) {
         clearTimeout(this.timer)
       }
       this.timer = setTimeout(() => {
-        // 搜索内容为空时，不发请求
         if (this.value) {
           this.searchResult = []
           this.getSearchResult()

@@ -19,12 +19,6 @@ export default {
       registerInfo: {}
     }
   },
-  computed: {
-    // isArrived () {
-    //   return (localtion.longitude - 0.0005) < this.longitude && (localtion.longitude + 0.0005) > this.longitude &&
-    //   (localtion.latitude - 0.001) < this.latitude && (localtion.latitude + 0.001) > this.latitude
-    // }
-  },
   created () {
     util.http
       .post('/api/pat/findVisitingRegister')
@@ -76,13 +70,6 @@ export default {
             })
         }
       })
-      // if (this.isArrived) {
-      //   this.$messagebox.confirm(text).then(action => {
-      //     this.$router.push('/checkIn/cQueue')
-      //   })
-      // } else {
-      //   alert('还未到达医院')
-      // }
     }
   }
 }

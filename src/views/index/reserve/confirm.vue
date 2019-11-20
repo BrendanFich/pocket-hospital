@@ -85,7 +85,7 @@ export default {
         deptCode: this.$store.state.selectedDeptCode,
         deptName: this.$store.state.selectedDeptName,
         doctorName: this.$store.state.selectedDocName,
-        doctorCode: '0' + this.$store.state.selectedDocCode.toString(), // 比实际医生code多2
+        doctorCode: '0' + this.$store.state.selectedDocCode.toString(),
         scheduleDate: this.$store.state.selectedDate,
         timeFlag: this.$store.state.timeFlag,
         regFee: this.$store.state.price.toString(),
@@ -103,12 +103,6 @@ export default {
           if (res.code === 0) {
             this.payComfirm(res.data.Records[0].LedgerSn)
             this.$indicator.close()
-            // this.$toast({
-            //   message: '挂号成功',
-            //   duration: 1000,
-            //   className: 'toast'
-            // })
-            // this.$router.push('/index')
           } else {
             this.$indicator.close()
             if (res.msg === '当前有正在进行的预约挂号..') {

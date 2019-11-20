@@ -95,8 +95,6 @@ export default {
         })
     },
     pay (ledgerSn) {
-      // const duration = 1500
-      // const className = 'toast'
       let self = this
       this.$messagebox.confirm('请确认支付').then(action => {
         util.http
@@ -114,12 +112,6 @@ export default {
                 }
               })
             })
-            // if (res.code === 0 && res.data.Records.Code === '0') {
-            //   this.$toast({ message: '支付成功', duration, className })
-            //   this.getUnpaidList()
-            // } else {
-            //   this.$toast({ message: '支付失败', duration, className })
-            // }
           })
           .catch(error => {
             console.log(error)

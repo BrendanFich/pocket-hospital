@@ -4,7 +4,7 @@
     <div class="summary">
       <ul>
         <li>总费用汇总：</li>
-        <li></li><!-- 空li占位 -->
+        <li></li>
         <li>预交金总额：<span class="value">{{(balance + allPaidFee)/100}}</span></li>
         <li>住院总费用：<span class="value">{{totalFee}}</span></li>
         <li style="width:200px">预交金余额：<span class="value">{{(balance + allPaidFee - totalFee*100)/100}}</span></li>

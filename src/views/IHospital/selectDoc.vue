@@ -7,11 +7,6 @@
       <button class="cancel" :class="{show : isShow}" @click="cancel">取消</button>
       <div class="resultList" :class="{show : isShow}">
         <div v-if="searchResult.length===0 && value !== ''" class="noInfo">无相关医生信息</div>
-        <!-- <div v-for="(item,index) in searchResult" :key="index" @click="select(item.deptCode, item.deptName)">
-          <mt-cell :title="item.doctorName">
-            <img class="icon" src="@/assets/img/deptIcon.png" />&gt;
-          </mt-cell>
-        </div> -->
         <div class="doctorIntroCard" v-for="(item,index) in searchResult" :key="index" @click="select(item.deptCode, item.doctorCode)">
           <div class="baseInfo">
             <img class="avatar" src="@/assets/img/avatar100x101.png" />

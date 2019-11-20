@@ -122,7 +122,6 @@ export default {
         })
         .then(res => {
           if (res.code === 0 && res.data.Code === '0') {
-            // this.getWxConig(res.data.Records.AdvancePayment)
             this.getWxConig(res.data.Records.LedgerSn)
           } else if (res.code === 500) {
             this.$toast({ message: res.msg, duration: 1500, className: 'toast' })

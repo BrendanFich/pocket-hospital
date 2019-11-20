@@ -36,10 +36,10 @@ export default {
     getPacsList () {
       util.http
         .post('/api/report/getPacsList', {
-          patCardNo: '1000259326', // 写死
-          beginDate: '2016-03-01', // 写死
-          endDate: '2017-04-01', // 写死
-          patCardType: '1' // 写死
+          patCardNo: '1000259326', 
+          beginDate: '2016-03-01', 
+          endDate: '2017-04-01', 
+          patCardType: '1' 
         })
         .then(res => {
           console.log(res)
@@ -52,9 +52,9 @@ export default {
     getLisInfo (checkId) {
       util.http
         .post('/api/report/getPacsInfo', {
-          patCardType: '1', // 写死
-          patCardNo: '1000259326', // 写死
-          checkId: '1153173' // 写死
+          patCardType: '1', 
+          patCardNo: '1000259326', 
+          checkId: '1153173' 
         })
         .then(res => {
           console.log(res)

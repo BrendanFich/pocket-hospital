@@ -59,23 +59,6 @@ export default {
           inspectId
         })
         .then(res => {
-          console.log(res)
-          //     let text = `
-          // <div>
-          //   <p>订单流水号: ${res.data.Records.hisOrdNum}</p>
-          //   <p>创建时间: ${res.data.Records.createDate}</p>
-          //   <p>就诊科室：${res.data.Records.deptName}</p>
-          //   <p>就诊医生：${res.data.Records.doctorName}</p>
-          //   <p>就诊日期：${res.data.Records.scheduleDate}</p>
-          //   <p>就诊时间：${res.data.Records.beginTime}-${res.data.Records.endTime}</p>
-          //   <p>病人姓名：${res.data.Records.patName}</p>
-          //   <p>病人卡号：${res.data.Records.patCardNo}</p>
-          //   <p>卡号类型：${res.data.Records.patCardType === '1' ? '就诊卡' : '社保卡'}</p>
-          //   <p>挂号费用：${res.data.Records.regFee}</p>
-          //   <p>当前状态：${status}</p>
-          // </div>
-          // `
-          //     this.$messagebox('提示', text)
         })
         .catch(error => {
           console.log(error)

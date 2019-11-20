@@ -54,11 +54,6 @@ export default {
       docList: []
     }
   },
-  computed: {
-    // showDocList() {
-    //   return this.docList.slice()
-    // }
-  },
   created () {
     vm = this
     this.getDeptList()
