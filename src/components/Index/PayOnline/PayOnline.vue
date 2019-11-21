@@ -122,93 +122,73 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.payOnline {
-  background: #f2f2f2;
-  min-height: 100vh;
-  .mint-navbar {
-    .mint-tab-item {
-      padding: 31px 0;
-      /deep/ .mint-tab-item-label {
-        color: #999999;
-        font-size: 26px;
-      }
-    }
-    .mint-tab-item.is-selected {
-      text-decoration: none;
-      margin: 0;
-      border: none;
-      background: #09cf74;
-      /deep/ .mint-tab-item-label {
-        color: #fff;
-      }
-    }
-  }
-  .mint-tab-container {
-    margin-top: 28px;
-    /deep/ .mint-cell-value {
-      width: 750px;
-      justify-content: space-between;
-    }
-    /deep/ .mint-cell-wrapper {
-      border-bottom: 1px solid#e3e3e3;
-      padding: 28px 45px 30px 41px;
-    }
-    .mint-cell-wrapper {
-      .leftInfo {
-        .name {
-          display: inline-block;
-          margin-right: 13px;
-          line-height: 66px;
-          font-size: 30px;
-          color: #09cf74;
-          font-weight: bold;
-        }
-        .patCardNo {
-          display: inline-block;
-          font-size: 24px;
-          color: #666666;
-        }
-        .serial_number {
-          line-height: 48px;
-          font-size: 26px;
-          color: #333333;
-          .value {
-            color: #999999;
-          }
-        }
-        .department {
-          line-height: 48px;
-          font-size: 26px;
-          color: #333333;
-        }
-      }
-      .rightInfo {
-        text-align: center;
-        .price {
-          float: right;
-          width: 80px;
-          padding: 12px 10px;
-          background: #f69343;
-          color: #fff;
-          border-radius: 10px;
-          font-size: 26px;
-          margin-bottom: 16px;
-        }
-        .unPaid {
-          background: #d8d8d8;
-        }
-        .date {
-          clear: both;
-          color: #999999;
-          font-size: 24px;
-        }
-      }
-    }
-  }
-  .noData {
-        width: 366px;
-        margin: 100px 200px;
-      }
-}
+<style lang="sass" scoped>
+@import '~assets/sass/variable'
+@import '~assets/sass/mixin'
+.payOnline
+  @include page($color-page-background)
+  .mint-navbar
+    .mint-tab-item
+      padding: 31px 0
+      /deep/ .mint-tab-item-label
+        color: $color-word-grey
+        font-size: 26px
+    .mint-tab-item.is-selected
+      text-decoration: none
+      margin: 0
+      border: none
+      background: $color-primary
+      /deep/ .mint-tab-item-label
+        color: $color-white
+  .mint-tab-container
+    margin-top: 28px
+    /deep/ .mint-cell-value
+      width: 750px
+      justify-content: space-between
+    /deep/ .mint-cell-wrapper
+      border-bottom: 1px solid #e3e3e3
+      padding: 28px 45px 30px 41px
+    .mint-cell-wrapper
+      .leftInfo
+        .name
+          display: inline-block
+          margin-right: 13px
+          line-height: 66px
+          font-size: 30px
+          color: $color-primary
+          font-weight: bold
+        .patCardNo
+          display: inline-block
+          font-size: 24px
+          color: $color-value-grey
+        .serial_number
+          line-height: 48px
+          font-size: 26px
+          color: $color-title-black
+          .value
+            color: $color-word-grey
+        .department
+          line-height: 48px
+          font-size: 26px
+          color: $color-title-black
+      .rightInfo
+        text-align: center
+        .price
+          float: right
+          width: 80px
+          padding: 12px 10px
+          background: #f69343
+          color: #fff
+          border-radius: 10px
+          font-size: 26px
+          margin-bottom: 16px
+        .unPaid
+          background: #d8d8d8
+        .date
+          clear: both
+          color: $color-value-grey
+          font-size: 24px
+  .noData
+        width: 366px
+        margin: 100px 200px
 </style>

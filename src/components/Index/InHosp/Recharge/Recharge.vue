@@ -70,34 +70,29 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
-.recharge {
-  background: #f2f2f2;
-  min-height: 100vh;
-  h1 {
-    color: #999999;
+<style lang="sass" scoped>
+@import '~assets/sass/variable'
+@import '~assets/sass/mixin'
+.recharge
+  @include page($color-page-background)
+  h1
+    color: $color-word-grey;
     font-size: 24px;
     padding: 25px 30px;
-  }
-  >>>.mint-cell-wrapper {
+  >>>.mint-cell-wrapper
     font-size: 1.5rem;
     line-height: 100px;
-    .mint-cell-text {
+    .mint-cell-text
       padding-bottom: 10px;
       margin-left: 30px;
-    }
-    .mintui {
+    .mintui
       font-size: 1rem;
       margin-right: 10px;
-    }
-  }
-  .btn {
+  .btn
     margin: 0 12.5px;
     margin-top: 92px;
     width: 725px;
     height: 80px;
-    background: #09cf74;
+    background: $color-primary;
     font-size: 30px;
-  }
-}
 </style>

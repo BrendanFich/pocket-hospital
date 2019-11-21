@@ -51,52 +51,44 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.liveHosOrder {
-  background: #f2f2f2;
-  height: 100vh;
-  .orderCard {
-    height: 155px;
-    background: #fff;
-    padding: 30px 50px 30px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #EDEDED;
-    .left {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      img {
-        width: 88px;
-        margin-right: 30px;
-      }
-      .baseInfo {
-        font-size: 24px;
-        line-height: 36px;
-        .name {
-          color: #333333;
-          font-size: 28px;
-          font-weight: bold;
-          line-height: 50px;
-        }
-        .title {
-          font-size: 24px;
-          color: #cccccc;
-          display: inline-block;
-          margin-left: 12px;
-        }
-        .department {
-          color: #666666;
-          font-size: 24px;
-          font-weight: bold;
-        }
-      }
-    }
-    .beforeTime {
-      color: #09cf74;
-      font-size: 24px;
-    }
-  }
-}
+<style lang="sass" scoped>
+@import '~assets/sass/variable'
+@import '~assets/sass/mixin'
+.liveHosOrder
+  @include page($color-page-background)
+  .orderCard
+    height: 155px
+    background: $color-white
+    padding: 30px 50px 30px 40px
+    display: flex
+    justify-content: space-between
+    align-items: center
+    border-bottom: 1px solid $color-border
+    .left
+      display: flex
+      justify-content: flex-start
+      align-items: center
+      img
+        width: 88px
+        margin-right: 30px
+      .baseInfo
+        font-size: 24px
+        line-height: 36px
+        .name
+          color: $color-title-black
+          font-size: 28px
+          font-weight: bold
+          line-height: 50px
+        .title
+          font-size: 24px
+          color: $color-title-grey
+          display: inline-block
+          margin-left: 12px
+        .department
+          color: #666666
+          font-size: 24px
+          font-weight: bold
+    .beforeTime
+      color: $color-primary
+      font-size: 24px
 </style>

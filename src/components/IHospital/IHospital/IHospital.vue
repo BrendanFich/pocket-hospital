@@ -29,30 +29,26 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.iHospital {
-  height: 100vh;
-  background: #fff;
-  > img {
-    display: block;
-    margin: 0 auto;
-    padding-top: 32px;
-    width: 680px;
-  }
-  .btns {
-    margin-top: 40px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    text-align: center;
-    img {
-      width: 170px;
-    }
-    p {
-      color: #999999;
-      font-size: 24px;
-      margin-top: -12px;
-    }
-  }
-}
+<style lang="sass" scoped>
+@import '~assets/sass/variable'
+@import '~assets/sass/mixin'
+.iHospital
+  @include page($color-page-background)
+  > img
+    display: block
+    margin: 0 auto
+    padding-top: 32px
+    width: 680px
+  .btns
+    margin-top: 40px
+    display: flex
+    justify-content: space-around
+    align-items: center
+    text-align: center
+    img
+      width: 170px
+    p
+      color: $color-word-grey
+      font-size: 24px
+      margin-top: -12px
 </style>

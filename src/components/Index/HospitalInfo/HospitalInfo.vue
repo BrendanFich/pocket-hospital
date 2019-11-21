@@ -18,26 +18,23 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.hospitalInfo {
-  background: #f2f2f2;
-  height: 100vh;
-  img {
-    width: 750px;
-  }
-  article {
-    width: 750px;
-    background: #fff;
-    padding: 50px 0;
-    color: #333333;
-    font-size: 24px;
-    line-height: 36px;
-    word-wrap: break-word;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    p {
-      margin: 0 50px;
-    }
-  }
-}
+<style lang="sass" scoped>
+@import '~assets/sass/variable'
+@import '~assets/sass/mixin'
+.hospitalInfo
+  @include page($color-page-background)
+  img
+    width: 750px
+  article
+    width: 750px
+    background: $color-white
+    padding: 50px 0
+    color: $color-title-black
+    font-size: 24px
+    line-height: 36px
+    word-wrap: break-word
+    overflow: hidden
+    text-overflow: ellipsis
+    p
+      margin: 0 50px
 </style>

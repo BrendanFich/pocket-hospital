@@ -50,60 +50,49 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
-.InHospInfo {
-  background: #f2f2f2;
-  height: 100vh;
-  .mint-cell-wrapper {
-    .leftInfo {
-      .name {
-        display: inline-block;
-        margin-right: 13px;
-        line-height: 66px;
-        font-size: 30px;
-        color: #09cf74;
-        font-weight: bold;
-      }
-      .patCardNo {
-        display: inline-block;
-        font-size: 24px;
-        color: #666666;
-      }
-      .serial_number {
-        line-height: 48px;
-        font-size: 26px;
-        color: #333333;
-        .value {
-          color: #999999;
-        }
-      }
-      .department {
-        line-height: 48px;
-        font-size: 26px;
-        color: #333333;
-      }
-    }
-    .rightInfo {
-      text-align: center;
-      .price {
-        float: right;
-        width: 80px;
-        padding: 12px 10px;
-        background: #f69343;
-        color: #fff;
-        border-radius: 10px;
-        font-size: 26px;
-        margin-bottom: 16px;
-      }
-      .unPaid {
-        background: #d8d8d8;
-      }
-      .date {
-        clear: both;
-        color: #999999;
-        font-size: 24px;
-      }
-    }
-  }
-}
+<style lang="sass" scoped>
+@import '~assets/sass/variable'
+@import '~assets/sass/mixin'
+.InHospInfo
+  @include page($color-page-background)
+  .mint-cell-wrapper
+    .leftInfo
+      .name
+        display: inline-block
+        margin-right: 13px
+        line-height: 66px
+        font-size: 30px
+        color: $color-primary
+        font-weight: bold
+      .patCardNo
+        display: inline-block
+        font-size: 24px
+        color: $color-value-grey
+      .serial_number
+        line-height: 48px
+        font-size: 26px
+        color: $color-title-black
+        .value
+          color: $color-word-grey
+      .department
+        line-height: 48px
+        font-size: 26px
+        color: $color-title-black
+    .rightInfo
+      text-align: center
+      .price
+        float: right
+        width: 80px
+        padding: 12px 10px
+        background: $color-primary
+        color: $color-white
+        border-radius: 10px
+        font-size: 26px
+        margin-bottom: 16px
+      .unPaid
+        background: #d8d8d8
+      .date
+        clear: both
+        color: $color-word-grey
+        font-size: 24px
 </style>

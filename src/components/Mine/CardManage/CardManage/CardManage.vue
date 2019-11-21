@@ -116,94 +116,77 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.cardManage {
-  background: #f2f2f2;
-  min-height: 100vh;
-  padding-bottom: 200px;
-  .noData {
-    width: 366px;
-    margin-top: 50px;
-    margin-left: 200px;
-  }
-  h2 {
-    color: #999999;
-    font-size: 24px;
-    padding: 25px 30px;
-  }
-  .customerInfoCard {
-    border-bottom: 1px solid #f2f2f2;
-    padding: 47px 50px 46px 31px;
-    background: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    div {
-      display: flex;
-      align-items: center;
-      img {
-        width: 104px;
-        margin-right: 30px;
-      }
-      .textInfo {
-        display: block;
-        .name {
-          color: #666666;
-          font-size: 30px;
-          font-weight: bold;
-        }
+<style lang="sass" scoped>
+@import '~assets/sass/variable'
+@import '~assets/sass/mixin'
+.cardManage
+  @include page($color-page-background)
+  padding-bottom: 200px
+  .noData
+    width: 366px
+    margin-top: 50px
+    margin-left: 200px
+  h2
+    color: $color-word-grey
+    font-size: 24px
+    padding: 25px 30px
+  .customerInfoCard
+    border-bottom: 1px solid #f2f2f2
+    padding: 47px 50px 46px 31px
+    background: $color-white
+    display: flex
+    align-items: center
+    justify-content: space-between
+    div
+      display: flex
+      align-items: center
+      img
+        width: 104px
+        margin-right: 30px
+      .textInfo
+        display: block
+        .name
+          color: $color-value-grey
+          font-size: 30px
+          font-weight: bold
 
-        .cardNumber {
-          margin-top: 12px;
-          font-size: 24px;
-          color: #999999;
-        }
-      }
-    }
-    .changeCard {
-      color: #09cf74;
-      font-size: 24px;
-    }
-    .status {
-      margin-left: 17px;
-      font-size: 24px;
-      color: #ffffff;
-      background: #f69343;
-      padding: 3px 12px;
-      border-radius: 5px;
-    }
-    .isLink {
-      color: #5adba3;
-      font-size: 24px;
-    }
-  }
-  .orderList {
-    background: #fff;
-    margin-top: 40px;
-  }
-  .orderList > li {
-    height: 100px;
-    padding: 0 54px 0 43px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #ededed;
-    > div {
-      display: flex;
-      align-items: center;
-      > img {
-        width: 30px;
-        margin-right: 30px;
-      }
-    }
-    .title {
-      color: #666666;
-      font-size: 24px;
-    }
-    .linkIcon {
-      color: #cccccc;
-      font-size: 24px;
-    }
-  }
-}
+        .cardNumber
+          margin-top: 12px
+          font-size: 24px
+          color: $color-word-grey
+    .changeCard
+      color: $color-primary
+      font-size: 24px
+    .status
+      margin-left: 17px
+      font-size: 24px
+      color: $color-white
+      background: #f69343
+      padding: 3px 12px
+      border-radius: 5px
+    .isLink
+      color: #5adba3
+      font-size: 24px
+  .orderList
+    background: $color-white
+    margin-top: 40px
+  .orderList > li
+    height: 100px
+    padding: 0 54px 0 43px
+    display: flex
+    justify-content: space-between
+    align-items: center
+    border-bottom: 1px solid $color-border
+    > div
+      display: flex
+      align-items: center
+      > img
+        width: 30px
+        margin-right: 30px
+    .title
+      color: $color-value-grey
+      font-size: 24px
+    .linkIcon
+      color: $color-title-grey
+      font-size: 24px
 </style>

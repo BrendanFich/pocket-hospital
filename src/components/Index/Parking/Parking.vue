@@ -17,29 +17,26 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.parking {
-  background: #f2f2f2;
-  height: 100vh;
-  img {
-    width: 750px;
-  }
-  .btns{
-    margin: 0 auto;
-    width: 618px;
-    position: absolute;
-    top: 327px;
-    left: 66px;
-    display: flex;
-    justify-content: space-between;
-    .btn{
-      width: 280px;
-      height: 80px;
-      border-radius: 10px;
-      background: rgba(255, 255, 255, 0.21);
-      color: #fff;
-      font-size: 26px;
-    }
-  }
-}
+<style lang="sass" scoped>
+@import '~assets/sass/variable'
+@import '~assets/sass/mixin'
+.parking
+  @include page($color-page-background)
+  img
+    width: 750px
+  .btns
+    margin: 0 auto
+    width: 618px
+    position: absolute
+    top: 327px
+    left: 66px
+    display: flex
+    justify-content: space-between
+    .btn
+      width: 280px
+      height: 80px
+      border-radius: 10px
+      background: rgba(255, 255, 255, 0.21)
+      color: $color-white
+      font-size: 26px
 </style>

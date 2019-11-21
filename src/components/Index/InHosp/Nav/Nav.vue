@@ -1,6 +1,6 @@
 <template>
   <div class="nav">
-    <img src="。/img/hosptalBg.png" class="hospBg" />
+    <img src="./img/hosptalBg.png" class="hospBg" />
     <div class="content">
       <ul>
         <li @click="register">
@@ -76,51 +76,43 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
-.nav {
-  background: #f2f2f2;
-  min-height: 100vh;
-  position: relative;
-  .hospBg {
-    width: 750px;
-  }
-  .content {
-    position: absolute;
-    top: 229px;
-    left: 57px;
-    width: 626px;
-    margin: 0 auto;
-    background: #fff;
-    border-radius: 10px;
-    ul {
-      margin-left: 40px;
-      margin-right: 40px;
-      padding-bottom: 110px;
-    }
-    li {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      height: 137px;
-      border-bottom: 1px solid #ccc;
-      .icon {
-        width: 69px;
-        margin-right: 30px;
-      }
-      .navInfo {
-        flex: 1;
-        .navName {
-          font-size: 30px;
-          color: #333333;
-          font-weight: bold;
-          margin-bottom: 14px;
-        }
-        .navIntro {
-          font-size: 24px;
-          color: #999999;
-        }
-      }
-    }
-  }
-}
+<style lang="sass" scoped>
+@import '~assets/sass/variable'
+@import '~assets/sass/mixin'
+.nav
+  @include page($color-page-background)
+  position: relative
+  .hospBg
+    width: 750px
+  .content
+    position: absolute
+    top: 229px
+    left: 57px
+    width: 626px
+    margin: 0 auto
+    background: $color-white
+    border-radius: 10px
+    ul
+      margin-left: 40px
+      margin-right: 40px
+      padding-bottom: 110px
+    li
+      display: flex
+      justify-content: flex-start
+      align-items: center
+      height: 137px
+      border-bottom: 1px solid $color-title-grey
+      .icon
+        width: 69px
+        margin-right: 30px
+      .navInfo
+        flex: 1
+        .navName
+          font-size: 30px
+          color: $color-title-black
+          font-weight: bold
+          margin-bottom: 14px
+        .navIntro
+          font-size: 24px
+          color: $color-word-grey
 </style>

@@ -137,96 +137,77 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.liveHosOrder {
-  background: #f2f2f2;
-  min-height: 100vh;
-  .mint-navbar {
-    .mint-tab-item {
-      padding: 31px 0;
-      /deep/ .mint-tab-item-label {
-        color: #999999;
-        font-size: 26px;
-      }
-    }
-    .mint-tab-item.is-selected {
-      text-decoration: none;
-      margin: 0;
-      border: none;
-      background: #09cf74;
-      /deep/ .mint-tab-item-label {
-        color: #fff;
-      }
-    }
-  }
-  .paidTime {
-    color: #999999;
-    font-size: 24px;
-    padding: 25px 30px;
-  }
-  .orderCard {
-    height: 107px;
-    background: #fff;
-    padding: 30px 50px 30px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    .left {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      img {
-        width: 47px;
-        margin-right: 30px;
-      }
-      .baseInfo {
-        font-size: 24px;
-        line-height: 36px;
-        .key {
-          color: #999999;
-        }
-        .value {
-          color: #666666;
-        }
-        .name {
-          color: #5adba3;
-          font-size: 26px;
-          font-weight: bold;
-          line-height: 50px;
-        }
-        .num {
-          font-size: 24px;
-          color: #cccccc;
-          display: inline-block;
-          margin-left: 12px;
-        }
-      }
-    }
-    .right {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      span {
-        color: #fff;
-        font-size: 24px;
-        padding: 3px 11px;
-        border-radius: 5px;
-      }
-      .price {
-        background: #f69343;
-        min-width: 80px;
-        height: 28px;
-        text-align: center;
-      }
-      .orderTime {
-        margin-top: 10px;
-        background: #5adba3;
-      }
-    }
-  }
-  .noData {
-        width: 366px;
-        margin: 100px 200px;
-      }
-}
+<style lang="sass" scoped>
+@import '~assets/sass/variable'
+@import '~assets/sass/mixin'
+.liveHosOrder
+  @include page($color-page-background)
+  .mint-navbar
+    .mint-tab-item
+      padding: 31px 0
+      /deep/ .mint-tab-item-label
+        color: $color-word-grey
+        font-size: 26px
+    .mint-tab-item.is-selected
+      text-decoration: none
+      margin: 0
+      border: none
+      background: $color-primary
+      /deep/ .mint-tab-item-label
+        color: $color-white
+  .paidTime
+    color: $color-word-grey
+    font-size: 24px
+    padding: 25px 30px
+  .orderCard
+    height: 107px
+    background: $color-white
+    padding: 30px 50px 30px 40px
+    display: flex
+    justify-content: space-between
+    align-items: center
+    .left
+      display: flex
+      justify-content: flex-start
+      align-items: center
+      img
+        width: 47px
+        margin-right: 30px
+      .baseInfo
+        font-size: 24px
+        line-height: 36px
+        .key
+          color: $color-word-grey
+        .value
+          color: $color-value-grey
+        .name
+          color: #5adba3
+          font-size: 26px
+          font-weight: bold
+          line-height: 50px
+        .num
+          font-size: 24px
+          color: $color-title-grey
+          display: inline-block
+          margin-left: 12px
+    .right
+      display: flex
+      flex-direction: column
+      align-items: flex-end
+      span
+        color: $color-white
+        font-size: 24px
+        padding: 3px 11px
+        border-radius: 5px
+      .price
+        background: #f69343
+        min-width: 80px
+        height: 28px
+        text-align: center
+      .orderTime
+        margin-top: 10px
+        background: #5adba3
+  .noData
+        width: 366px
+        margin: 100px 200px
 </style>

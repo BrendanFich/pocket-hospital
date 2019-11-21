@@ -60,85 +60,71 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.evaluate {
-  background: #f2f2f2;
-  height: 100vh;
-  > h2 {
-    font-size: 24px;
-    color: #cccccc;
-    line-height: 82px;
-    margin-left: 42px;
-  }
-  .score {
-    height: 233px;
-    background: #fff;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    h3 {
-      color: #999999;
-      font-size: 24px;
-      margin-bottom: 56px;
-    }
-    .stars {
-      .star {
-        display: inline-block;
-        margin: 0 20px;
-        > img {
-          width: 39px;
-          height: 37px;
-        }
-      }
-    }
-  }
-  .inquiryInfo {
-    li {
-      height: 88px;
-      background: #fff;
-      border-bottom: 1px solid #f2f2f2;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 50px;
-      font-size: 28px;
-      .value {
-        display: flex;
-        align-items: center;
-        color: #333333;
-        img {
-          width: 55px;
-          margin-right: 17px;
-        }
-      }
-      .key {
-        color: #999999;
-      }
-    }
-  }
-  .textarea {
-    width: 725px;
-    margin: 0 auto;
-    > .mint-cell {
-      border: 1px solid #dddddd;
-      border-radius: 5px;
-      /deep/ .mint-field-core {
-        font-size: 28px;
-        padding: 10px;
-      }
-    }
-  }
-  .btn {
-    margin: 0 auto;
-    margin-top: 54px;
-    margin-left: 12.5px;
-    width: 725px;
-    height: 80px;
-    border-radius: 10px;
-    background: #09cf74;
-    color: #fff;
-    font-size: 26px;
-  }
-}
+<style lang="sass" scoped>
+@import '~assets/sass/variable'
+@import '~assets/sass/mixin'
+.evaluate
+  @include page($color-page-background)
+  > h2
+    font-size: 24px
+    color: $color-title-black
+    line-height: 82px
+    margin-left: 42px
+  .score
+    height: 233px
+    background: $color-white
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    h3
+      color: $color-word-grey
+      font-size: 24px
+      margin-bottom: 56px
+    .stars
+      .star
+        display: inline-block
+        margin: 0 20px
+        > img
+          width: 39px
+          height: 37px
+  .inquiryInfo
+    li
+      height: 88px
+      background: #fff
+      border-bottom: 1px solid $color-border
+      display: flex
+      justify-content: space-between
+      align-items: center
+      padding: 0 50px
+      font-size: 28px
+      .value
+        display: flex
+        align-items: center
+        color: $color-title-black
+        img
+          width: 55px
+          margin-right: 17px
+      .key
+        color: $color-word-grey
+  .textarea
+    width: 725px
+    margin: 0 auto
+    > .mint-cell
+      border: 1px solid $color-border
+      border-radius: 5px
+      /deep/ .mint-field-core
+        font-size: 28px
+        padding: 10px
+  .btn
+    margin: 0 auto
+    margin-top: 54px
+    margin-left: 12.5px
+    width: 725px
+    height: 80px
+    border-radius: 10px
+    background: $color-primary
+    color: $color-white
+    font-size: 26px
+
 </style>

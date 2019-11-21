@@ -92,63 +92,53 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.cardInfo {
-  background: #f2f2f2;
-  min-height: 100vh;
-  h2 {
-    color: #999999;
-    font-size: 24px;
-    padding: 25px 40px;
-  }
-  .mint-field {
-    /deep/ .mint-cell-wrapper {
-      padding: 0;
-      height: 88px;
-      font-size: 30px;
-      font-weight: bold;
-      .mint-cell-title {
-        color: #44a0f5;
-        width: 168px;
-        padding-left: 40px;
-      }
-    }
-  }
-  .selectItem {
-    position: relative;
-    .isLink {
-      color: #5adba3;
-      font-size: 30px;
-      position: absolute;
-      top: 27px;
-      right: 66px;
-    }
-  }
-  /deep/ .mint-actionsheet-listitem {
-    height: 80px;
-    font-size: 30px;
-    line-height: 80px;
-  }
-  .attention {
-    margin-top: 40px;
-    p {
-      width: 670px;
-      margin: 0 auto;
-      font-size: 24px;
-      color: #999999;
-      line-height: 36px;
-    }
-  }
-  .btn {
-    margin: 0 auto;
-    margin-top: 54px;
-    margin-left: 12.5px;
-    width: 725px;
-    height: 80px;
-    border-radius: 10px;
-    background: #09cf74;
-    color: #fff;
-    font-size: 26px;
-  }
-}
+<style lang="sass" scoped>
+@import '~assets/sass/variable'
+@import '~assets/sass/mixin'
+.cardInfo
+  @include page($color-page-background)
+  h2
+    color: $color-word-grey
+    font-size: 24px
+    padding: 25px 40px
+  .mint-field
+    /deep/ .mint-cell-wrapper
+      padding: 0
+      height: 88px
+      font-size: 30px
+      font-weight: bold
+      .mint-cell-title
+        color: #44a0f5
+        width: 168px
+        padding-left: 40px
+  .selectItem
+    position: relative
+    .isLink
+      color: #5adba3
+      font-size: 30px
+      position: absolute
+      top: 27px
+      right: 66px
+  /deep/ .mint-actionsheet-listitem
+    height: 80px
+    font-size: 30px
+    line-height: 80px
+  .attention
+    margin-top: 40px
+    p
+      width: 670px
+      margin: 0 auto
+      font-size: 24px
+      color: $color-word-grey
+      line-height: 36px
+  .btn
+    margin: 0 auto
+    margin-top: 54px
+    margin-left: 12.5px
+    width: 725px
+    height: 80px
+    border-radius: 10px
+    background: $color-primary
+    color: $color-white
+    font-size: 26px
 </style>

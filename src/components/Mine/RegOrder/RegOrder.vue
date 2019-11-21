@@ -115,84 +115,68 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.regOrder {
-  background: #f2f2f2;
-  min-height: 100vh;
-  .noData {
-    width: 366px;
-    margin-top: 50px;
-    margin-left: 200px;
-  }
-  .paidTime {
-    color: #999999;
-    font-size: 24px;
-    padding: 25px 30px;
-  }
-  .orderCard {
-    height: 170px;
-    background: #fff;
-    padding: 30px 50px 30px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    .left {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      img {
-        width: 43px;
-        margin-right: 30px;
-      }
-      .baseInfo {
-        font-size: 24px;
-        line-height: 36px;
-        .key {
-          color: #999999;
-        }
-        .value {
-          color: #666666;
-        }
-        .name {
-          color: #5adba3;
-          font-size: 26px;
-          font-weight: bold;
-          line-height: 50px;
-        }
-        .num {
-          font-size: 24px;
-          color: #cccccc;
-          display: inline-block;
-          margin-left: 12px;
-        }
-      }
-    }
-    .right {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      span {
-        color: #fff;
-        font-size: 24px;
-        padding: 3px 11px;
-        border-radius: 5px;
-      }
-      .price {
-        background: #f69343;
-      }
-      .orderTime {
-        margin-top: 10px;
-        background: #5adba3;
-      }
-      .noArrival{
-        margin-top: 10px;
-        background: #f69343;
-      }
-      .arrivaled {
-        margin-top: 10px;
-        background: #5adba3;
-      }
-    }
-  }
-}
+<style lang="sass" scoped>
+@import '~assets/sass/variable'
+@import '~assets/sass/mixin'
+.regOrder
+  @include page($color-page-background)
+  .noData
+    width: 366px
+    margin-top: 50px
+    margin-left: 200px
+  .paidTime
+    color: $color-word-grey
+    font-size: 24px
+    padding: 25px 30px
+  .orderCard
+    height: 170px
+    background: $color-white
+    padding: 30px 50px 30px 40px
+    display: flex
+    justify-content: space-between
+    align-items: center
+    .left
+      display: flex
+      justify-content: flex-start
+      align-items: center
+      img
+        width: 43px
+        margin-right: 30px
+      .baseInfo
+        font-size: 24px
+        line-height: 36px
+        .key
+          color: $color-word-grey
+        .value
+          color: $color-value-grey
+        .name
+          color: #5adba3
+          font-size: 26px
+          font-weight: bold
+          line-height: 50px
+        .num
+          font-size: 24px
+          color: $color-title-grey
+          display: inline-block
+          margin-left: 12px
+    .right
+      display: flex
+      flex-direction: column
+      align-items: flex-end
+      span
+        color: $color-white
+        font-size: 24px
+        padding: 3px 11px
+        border-radius: 5px
+      .price
+        background: #f69343
+      .orderTime
+        margin-top: 10px
+        background: #5adba3
+      .noArrival
+        margin-top: 10px
+        background: #f69343
+      .arrivaled
+        margin-top: 10px
+        background: #5adba3
 </style>

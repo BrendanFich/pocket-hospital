@@ -67,34 +67,29 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.cQueue {
-  background: #f2f2f2;
-  height: 100vh;
-  .orderInfo {
-    margin-top: 22px;
-    background: #fff;
-  }
-  .orderInfo ul > li ,.queueBefore{
-    height: 88px;
-    padding: 0 54px 0 43px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #ededed;
-    .key {
-      color: #333333;
-      font-size: 30px;
-      font-weight: bold;
-    }
-    .value {
-      color: #666666;
-      font-size: 30px;
-    }
-  }
-  .queueBefore{
-    margin-top: 85px;
-    background: #fff;
-  }
-}
+<style lang="sass" scoped>
+@import '~assets/sass/variable'
+@import '~assets/sass/mixin'
+.cQueue
+  @include page($color-page-background)
+  .orderInfo
+    margin-top: 22px
+    background: $color-white
+  .orderInfo ul > li ,.queueBefore
+    height: 88px
+    padding: 0 54px 0 43px
+    display: flex
+    justify-content: space-between
+    align-items: center
+    border-bottom: 1px solid $color-border
+    .key
+      color: $color-title-black
+      font-size: 30px
+      font-weight: bold
+    .value
+      color: $color-value-grey
+      font-size: 30px
+  .queueBefore
+    margin-top: 85px
+    background: $color-white
 </style>

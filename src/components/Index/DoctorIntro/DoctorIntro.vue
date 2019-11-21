@@ -94,81 +94,67 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.doctorIntro {
-  background: #f2f2f2;
-  height: 100vh;
-  text-align: center;
-  .noData {
-    width: 366px;
-    margin-top: 50px;
-  }
-  /deep/ .swiper-wrapper {
-    padding: 0 20px;
-  }
-  .swiper-slide {
-    height: 160px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    .icon {
-      width: 70px;
-      height: 70px;
-      line-height: 70px;
-      text-align: center;
-      border-radius: 50%;
-      color: #fff;
-      font-size: 30px;
-    }
-    .department {
-      height: 22px;
-      margin-top: 15px;
-      font-size: 20px;
-      color: #666666;
-    }
-  }
-  .title {
-    font-size: 24px;
-    color: #999999;
-    line-height: 88px;
-    margin-left: 30px;
-  }
-  .doctorIntroCard {
-    height: 195px;
-    padding: 30px 50px 40px 30px;
-    border-bottom: 1px solid#dedede;
-    display: flex;
-    .avatar {
-      width: 100px;
-      height: 100px;
-      margin-right: 24px;
-    }
-    .doctorInfo {
-      flex: 1;
-      text-align: start;
-      .doctorName {
-        font-size: 30px;
-        color: #333333;
-        font-weight: bold;
-        line-height: 42px;
-      }
-      .doctorTitle {
-        font-size: 24px;
-        color: #333333;
-        line-height: 34px;
-      }
-      .star {
-        padding: 5px 0 10px 0;
-        img {
-          width: 20px;
-        }
-      }
-      .textIntro {
-        font-size: 24px;
-        color: #999999;
-      }
-    }
-  }
-}
+<style lang="sass" scoped>
+@import '~assets/sass/variable'
+@import '~assets/sass/mixin'
+.doctorIntro
+  @include page($color-page-background)
+  text-align: center
+  .noData
+    width: 366px
+    margin-top: 50px
+  /deep/ .swiper-wrapper
+    padding: 0 20px
+  .swiper-slide
+    height: 160px
+    display: flex
+    justify-content: center
+    align-items: center
+    flex-direction: column
+    .icon
+      width: 70px
+      height: 70px
+      line-height: 70px
+      text-align: center
+      border-radius: 50%
+      color: $color-white
+      font-size: 30px
+    .department
+      height: 22px
+      margin-top: 15px
+      font-size: 20px
+      color: $color-value-grey
+  .title
+    font-size: 24px
+    color: $color-word-grey
+    line-height: 88px
+    margin-left: 30px
+  .doctorIntroCard
+    height: 195px
+    padding: 30px 50px 40px 30px
+    border-bottom: 1px solid $color-border
+    display: flex
+    .avatar
+      width: 100px
+      height: 100px
+      margin-right: 24px
+    .doctorInfo
+      flex: 1
+      text-align: start
+      .doctorName
+        font-size: 30px
+        color: $color-title-black
+        font-weight: bold
+        line-height: 42px
+      .doctorTitle
+        font-size: 24px
+        color: $color-title-black
+        line-height: 34px
+      .star
+        padding: 5px 0 10px 0
+        img
+          width: 20px
+      .textIntro
+        font-size: 24px
+        color: $color-title-black
 </style>

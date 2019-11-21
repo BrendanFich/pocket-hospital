@@ -105,166 +105,137 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.drugSearch {
-  background: #f2f2f2;
-  height: 100vh;
-  .displayCard {
-    height: 200px;
-    background: linear-gradient(to right, #47baeb, #65d5f1);
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 30px 70px 18px;
-    > img {
-      width: 150px;
-      margin-right: 53px;
-    }
-    .title {
-      color: #fff;
-      h1 {
-        font-size: 36px;
-        line-height: 48px;
-      }
-      p {
-        font-size: 26px;
-        line-height: 36px;
-      }
-      .icon {
-        width: 60px;
-        height: 6px;
-        border-radius: 3px;
-        background: #f6f6f6;
-        margin-top: 20px;
-        opacity: 0.75;
-      }
-    }
-  }
-  .mint-search {
-    border-radius: 10px;
-    height: 66px;
-    padding: 30px 25px;
-    /deep/ .mint-searchbar {
-      background: #f6f6f6;
-      border-radius: 10px;
-      height: 66px;
-      padding: 0;
-      .mint-searchbar-inner {
-        padding: 20px 38px;
-        background: #f6f6f6;
-        border-radius: 10px;
-        .mintui.mintui-search {
-          margin-top: 3px;
-          margin-right: 10px;
-        }
-        .mint-searchbar-core {
-          background: #f6f6f6;
-          font-size: 24px;
-        }
-      }
-      .mint-searchbar-cancel {
-        margin-right: 38px;
-        font-size: 24px;
-      }
-    }
-  }
-  .cell {
-    .fakePicture {
-      width: 123px;
-      height: 123px;
-      background: #dfdfdf;
-      margin-right: 30px;
-    }
-    .content {
-      font-size: 24px;
-      line-height: 42px;
-      color: #333333;
-    }
-    /deep/ .mint-cell-allow-right::after {
-      width: 15px;
-      height: 15px;
-      margin-right: 60px;
-    }
-    /deep/ .mint-cell-wrapper {
-      padding: 0;
-    }
-  }
-  /deep/ .mint-cell-title {
-    padding: 27px 80px 27px 40px;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-  }
-  .hidden {
-    display: none !important;
-  }
-  .searchbar {
-    width: 750px;
-    position: relative;
-    input {
-      margin: 30px 25px;
-      border-radius: 10px;
-      padding: 20px 70px;
-      width: 560px;
-      border: none;
-      outline: none;
-      font-size: 24px;
-    }
-    .cancelIcon {
-      width: 16px;
-      position: absolute;
-      top: 55px;
-      left: 65px;
-    }
-    .cancel {
-      display: none;
-      position: absolute;
-      top: 30px;
-      right: 50px;
-      font-size: 24px;
-      border: none;
-      background: #fff;
-      outline: none;
-      height: 68px;
-      margin-left: -10px;
-      color: #09cf74;
-    }
-    .resultList {
-      background: #fff;
-      display: none;
-      min-height: calc(100vh - 128px);
-      .resultStyle {
-        font-size: 24px;
-        padding: 20px 30px;
-        border-bottom: 1px solid #dedede;
-      }
-      .resultItem {
-        display: flex;
-        align-items: center;
-        padding: 10px 30px;
-        font-size: 20px;
-        line-height: 30px;
-        border-bottom: 1px solid #dedede;
-      }
-    }
-
-    .xIcon {
-      display: none;
-      position: absolute;
-      top: 50px;
-      right: 130px;
-      font-size: 25px;
-      background: #f6f6f6;
-      border-radius: 50%;
-      width: 30px;
-      height: 25px;
-      text-align: center;
-      padding-bottom: 5px;
-      color: #333;
-    }
-    .show {
-      display: block;
-    }
-  }
-}
+<style lang="sass" scoped>
+@import '~assets/sass/variable'
+@import '~assets/sass/mixin'
+.drugSearch
+  @include page($color-page-background)
+  .displayCard
+    height: 200px
+    background: linear-gradient(to right, #47baeb, #65d5f1)
+    display: flex
+    justify-content: flex-start
+    align-items: center
+    padding: 30px 70px 18px
+    > img
+      width: 150px
+      margin-right: 53px
+    .title
+      color: $color-white
+      h1
+        font-size: 36px
+        line-height: 48px
+      p
+        font-size: 26px
+        line-height: 36px
+      .icon
+        width: 60px
+        height: 6px
+        border-radius: 3px
+        background: $color-xIcon-grey
+        margin-top: 20px
+        opacity: 0.75
+  .mint-search
+    border-radius: 10px
+    height: 66px
+    padding: 30px 25px
+    /deep/ .mint-searchbar
+      background: $color-xIcon-grey
+      border-radius: 10px
+      height: 66px
+      padding: 0
+      .mint-searchbar-inner
+        padding: 20px 38px
+        background: $color-xIcon-grey
+        border-radius: 10px
+        .mintui.mintui-search
+          margin-top: 3px
+          margin-right: 10px
+        .mint-searchbar-core
+          background: $color-xIcon-grey
+          font-size: 24px
+      .mint-searchbar-cancel
+        margin-right: 38px
+        font-size: 24px
+  .cell
+    .fakePicture
+      width: 123px
+      height: 123px
+      background: $color-img-grey
+      margin-right: 30px
+    .content
+      font-size: 24px
+      line-height: 42px
+      color: $color-black
+    /deep/ .mint-cell-allow-right::after
+      width: 15px
+      height: 15px
+      margin-right: 60px
+    /deep/ .mint-cell-wrapper
+      padding: 0
+  /deep/ .mint-cell-title
+    padding: 27px 80px 27px 40px
+    display: flex
+    justify-content: flex-start
+    align-items: center
+  .hidden
+    display: none !important
+  .searchbar
+    width: 750px
+    position: relative
+    input
+      margin: 30px 25px
+      border-radius: 10px
+      padding: 20px 70px
+      width: 560px
+      border: none
+      outline: none
+      font-size: 24px
+    .cancelIcon
+      width: 16px
+      position: absolute
+      top: 55px
+      left: 65px
+    .cancel
+      display: none
+      position: absolute
+      top: 30px
+      right: 50px
+      font-size: 24px
+      border: none
+      background: $color-white
+      outline: none
+      height: 68px
+      margin-left: -10px
+      color: $color-primary
+    .resultList
+      background: $color-white
+      display: none
+      min-height: calc(100vh - 128px)
+      .resultStyle
+        font-size: 24px
+        padding: 20px 30px
+        border-bottom: 1px solid $color-border
+      .resultItem
+        display: flex
+        align-items: center
+        padding: 10px 30px
+        font-size: 20px
+        line-height: 30px
+        border-bottom: 1px solid $color-border
+    .xIcon
+      display: none
+      position: absolute
+      top: 50px
+      right: 130px
+      font-size: 25px
+      background: $color-xIcon-grey
+      border-radius: 50%
+      width: 30px
+      height: 25px
+      text-align: center
+      padding-bottom: 5px
+      color: $color-title-black
+    .show
+      display: block
 </style>

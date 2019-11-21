@@ -76,108 +76,89 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.docIntro {
-  background: #f2f2f2;
-  height: 100vh;
-  .doctorIntroCard {
-    background: #fff;
-    padding: 30px 50px 40px 30px;
-    border-bottom: 1px solid#dedede;
-    display: flex;
-    .avatar {
-      width: 100px;
-      height: 100px;
-      margin-right: 24px;
-    }
-    .doctorInfo {
-      flex: 1;
-      .doctorName {
-        font-size: 30px;
-        color: #333333;
-        font-weight: bold;
-        line-height: 42px;
-      }
-      .doctorTitle {
-        font-size: 24px;
-        color: #333333;
-        line-height: 34px;
-      }
-      .star {
-        padding: 5px 0 10px 0;
-        img {
-          width: 20px;
-          height: 20px;
-        }
-      }
-      .textIntro {
-        font-size: 24px;
-        color: #999999;
-      }
-    }
-  }
-  .evaluate {
-    margin-top: 10px;
-    width: 100%;
-    height: 127px;
-    background: #fff;
-    display: flex;
-    .total,
-    .praise {
-      width: 50%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-    .praise {
-      border-left: 1px solid #ededed;
-    }
-    .desc {
-      color: #999999;
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-    .num {
-      color: #333333;
-      font-size: 48px;
-    }
-  }
-  .moreIntro {
-    background: #fff;
-    margin-top: 10px;
-    margin-bottom: 98px;
-    padding: 35px 50px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    .msg {
-      display: flex;
-      justify-content: flex-start;
-      align-items: flex-start;
-      padding: 15px 0;
-      .key {
-        width: 150px;
-        color: #999999;
-        font-size: 24px;
-        line-height: 36px;
-      }
-      .value {
-        flex: 1;
-        color: #333333;
-        font-size: 24px;
-        line-height: 36px;
-      }
-    }
-  }
-  .btn {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 92px;
-    background: #09cf74;
-    font-size: 30px;
-  }
-}
+<style lang="sass" scoped>
+@import '~assets/sass/variable'
+@import '~assets/sass/mixin'
+.docIntro
+  @include page($color-page-background)
+  .doctorIntroCard
+    background: $color-white
+    padding: 30px 50px 40px 30px
+    border-bottom: 1px solid $color-border
+    display: flex
+    .avatar
+      width: 100px
+      height: 100px
+      margin-right: 24px
+    .doctorInfo
+      flex: 1
+      .doctorName
+        font-size: 30px
+        color: $color-title-black
+        font-weight: bold
+        line-height: 42px
+      .doctorTitle
+        font-size: 24px
+        color: $color-title-black
+        line-height: 34px
+      .star
+        padding: 5px 0 10px 0
+        img
+          width: 20px
+          height: 20px
+      .textIntro
+        font-size: 24px
+        color: $color-word-grey
+  .evaluate
+    margin-top: 10px
+    width: 100%
+    height: 127px
+    background: $color-white
+    display: flex
+    .total,.praise
+      width: 50%
+      height: 100%
+      display: flex
+      flex-direction: column
+      justify-content: center
+      align-items: center
+    .praise
+      border-left: 1px solid $color-border
+    .desc
+      color: $color-word-grey
+      font-size: 24px
+      margin-bottom: 20px
+    .num
+      color: $color-title-black
+      font-size: 48px
+  .moreIntro
+    background: $color-white
+    margin-top: 10px
+    margin-bottom: 98px
+    padding: 35px 50px
+    display: flex
+    flex-direction: column
+    align-items: flex-start
+    .msg
+      display: flex
+      justify-content: flex-start
+      align-items: flex-start
+      padding: 15px 0
+      .key
+        width: 150px
+        color: $color-word-grey
+        font-size: 24px
+        line-height: 36px
+      .value
+        flex: 1
+        color: $color-title-black
+        font-size: 24px
+        line-height: 36px
+  .btn
+    position: fixed
+    bottom: 0
+    width: 100%
+    height: 92px
+    background: $color-primary
+    font-size: 30px
 </style>

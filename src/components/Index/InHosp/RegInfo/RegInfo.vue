@@ -60,41 +60,36 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
-.regInfo {
-  background: #f2f2f2;
-  min-height: 100vh;
-  h1 {
-    color: #333333;
-    font-size: 30px;
-    font-weight: bold;
-    padding: 30px 40px;
-  }
-  ul > li {
-    background: #fff;
-    height: 88px;
-    padding: 0 54px 0 43px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #ededed;
-    .key {
-      color: #333333;
-      font-size: 30px;
-      font-weight: bold;
-    }
-    .value {
-      color: #666666;
-      font-size: 30px;
-    }
-  }
-  .backBtn {
-    margin: 0 12.5px;
-    margin-top: 92px;
-    width: 725px;
-    height: 80px;
-    background: #09cf74;
-    font-size: 30px;
-  }
-}
+<style lang="sass" scoped>
+@import '~assets/sass/variable'
+@import '~assets/sass/mixin'
+.regInfo
+  @include page($color-page-background)
+  h1
+    color: $color-title-black
+    font-size: 30px
+    font-weight: bold
+    padding: 30px 40px
+  ul > li
+    background: $color-white
+    height: 88px
+    padding: 0 54px 0 43px
+    display: flex
+    justify-content: space-between
+    align-items: center
+    border-bottom: 1px solid $color-border
+    .key
+      color: $color-title-black
+      font-size: 30px
+      font-weight: bold
+    .value
+      color: $color-value-grey
+      font-size: 30px
+  .backBtn
+    margin: 0 12.5px
+    margin-top: 92px
+    width: 725px
+    height: 80px
+    background: $color-primary
+    font-size: 30px
 </style>

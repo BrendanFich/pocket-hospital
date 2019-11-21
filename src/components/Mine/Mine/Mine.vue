@@ -81,59 +81,49 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.mine {
-  background: #f2f2f2;
-  height: 100vh;
-  .orderList {
-    margin-top: 22px;
-    background: #fff;
-  }
-  .orderList > li {
-    height: 100px;
-    padding: 0 54px 0 43px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid #ededed;
-    > div {
-      display: flex;
-      align-items: center;
-      > img {
-        width: 30px;
-        margin-right: 30px;
-      }
-    }
-    .title {
-      color: #666666;
-      font-size: 24px;
-    }
-    .linkIcon {
-      color: #cccccc;
-      font-size: 24px;
-    }
-  }
-  .others {
-    background: #fff;
-    margin-top: 45px;
-    margin-bottom: 98px;
-    padding: 30px 10px;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    .item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      img {
-        margin-bottom: 16px;
-        width: 80px;
-      }
-      span {
-        font-size: 24px;
-        color: #666666;
-      }
-    }
-  }
-}
+<style lang="sass" scoped>
+@import '~assets/sass/variable'
+@import '~assets/sass/mixin'
+.mine
+  @include page($color-page-background)
+  .orderList
+    margin-top: 22px
+    background: $color-white
+  .orderList > li
+    height: 100px
+    padding: 0 54px 0 43px
+    display: flex
+    justify-content: space-between
+    align-items: center
+    border-bottom: 1px solid $color-border
+    > div
+      display: flex
+      align-items: center
+      > img
+        width: 30px
+        margin-right: 30px
+    .title
+      color: $color-value-grey
+      font-size: 24px
+    .linkIcon
+      color: $color-title-grey
+      font-size: 24px
+  .others
+    background: $color-white
+    margin-top: 45px
+    margin-bottom: 98px
+    padding: 30px 10px
+    display: flex
+    justify-content: space-around
+    align-items: center
+    .item
+      display: flex
+      flex-direction: column
+      align-items: center
+      img
+        margin-bottom: 16px
+        width: 80px
+      span
+        font-size: 24px
+        color: $color-value-grey
 </style>

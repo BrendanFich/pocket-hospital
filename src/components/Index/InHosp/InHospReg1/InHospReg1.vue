@@ -35,28 +35,26 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
-.inHospReg1 {
-  background: #fff;
-  padding: 36px;
-  line-height: 48px;
-  h1{
-    font-size: 26px;
-    color: #333333;
-    font-weight:bold;
-  }
-  p{
-    font-size: 26px;
-    color: #333333;
-  }
-  .btn {
-    margin: 54px 0;
-    width: 678px;
-    height: 80px;
-    border-radius: 10px;
-    background: #09cf74;
-    color: #fff;
-    font-size: 26px;
-  }
-}
+<style lang="sass" scoped>
+@import '~assets/sass/variable'
+@import '~assets/sass/mixin'
+.inHospReg1
+  @include page($color-page-background)
+  padding: 36px
+  line-height: 48px
+  h1
+    font-size: 26px
+    color: $color-title-black
+    font-weight:bold
+  p
+    font-size: 26px
+    color: $color-title-black
+  .btn
+    margin: 54px 0
+    width: 678px
+    height: 80px
+    border-radius: 10px
+    background: $color-primary
+    color: $color-white
+    font-size: 26px
 </style>

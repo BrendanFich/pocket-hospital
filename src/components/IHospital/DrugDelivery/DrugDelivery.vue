@@ -15,13 +15,13 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
-.drugDelivery {
-  background: #f2f2f2;
-  height: 100vh;
-  font-size: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+<style lang="sass" scoped>
+@import '~assets/sass/variable'
+@import '~assets/sass/mixin'
+.drugDelivery
+  @include page($color-page-background)
+  font-size: 30px
+  display: flex
+  justify-content: center
+  align-items: center
 </style>

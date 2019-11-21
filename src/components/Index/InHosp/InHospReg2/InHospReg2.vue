@@ -180,58 +180,50 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
-.inHospReg2 {
-  background: #f2f2f2;
-  .mint-field {
-    /deep/ .mint-cell-wrapper {
-      padding: 0;
-      height: 88px;
-      font-size: 30px;
-      font-weight: bold;
-      .mint-cell-title {
-        color: #44a0f5;
-        font-weight: bold;
-        width: 168px;
-        padding-left: 40px;
-      }
-    }
-  }
-  .selectItem {
-    position: relative;
-    .isLink {
-      color: #5adba3;
-      font-size: 30px;
-      position: absolute;
-      top: 27px;
-      right: 66px;
-    }
-  }
-  /deep/ .mint-actionsheet-listitem {
-    height: 80px;
-    font-size: 30px;
-    line-height: 80px;
-  }
-  .btn {
-    margin-top: 54px;
-    margin-left: 12.5px;
-    margin-bottom: 50px;
-    width: 725px;
-    height: 80px;
-    border-radius: 10px;
-    background: #09cf74;
-    color: #fff;
-    font-size: 26px;
-  }
-  /deep/ .mint-actionsheet-listitem,/deep/ .mint-actionsheet-button {
-    height: 80px;
-    font-size: 30px;
-    line-height: 80px;
-  }
-  h1 {
-    color: #999999;
-    font-size: 24px;
-    padding: 25px 40px;
-  }
-}
+<style lang="sass" scoped>
+@import '~assets/sass/variable'
+@import '~assets/sass/mixin'
+.inHospReg2
+  @include page($color-page-background)
+  .mint-field
+    /deep/ .mint-cell-wrapper
+      padding: 0
+      height: 88px
+      font-size: 30px
+      font-weight: bold
+      .mint-cell-title
+        color: #44a0f5
+        font-weight: bold
+        width: 168px
+        padding-left: 40px
+  .selectItem
+    position: relative
+    .isLink
+      color: $color-primary
+      font-size: 30px
+      position: absolute
+      top: 27px
+      right: 66px
+  /deep/ .mint-actionsheet-listitem
+    height: 80px
+    font-size: 30px
+    line-height: 80px
+  .btn
+    margin-top: 54px
+    margin-left: 12.5px
+    margin-bottom: 50px
+    width: 725px
+    height: 80px
+    border-radius: 10px
+    background: $color-primary
+    color: #fff
+    font-size: 26px
+  /deep/ .mint-actionsheet-listitem,/deep/ .mint-actionsheet-button
+    height: 80px
+    font-size: 30px
+    line-height: 80px
+  h1
+    color: $color-word-grey
+    font-size: 24px
+    padding: 25px 40px
 </style>

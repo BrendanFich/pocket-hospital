@@ -58,66 +58,54 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
-.rechargeRecord {
-  background: #f2f2f2;
-  min-height: 100vh;
-  .paidTime {
-    color: #999999;
-    font-size: 24px;
-    padding: 25px 30px;
-  }
-  .orderCard {
-    height: 107px;
-    background: #fff;
-    padding: 30px 50px 30px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    .left {
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      img {
-        width: 47px;
-        margin-right: 30px;
-      }
-      .baseInfo {
-        font-size: 24px;
-        line-height: 36px;
-        .key {
-          color: #999999;
-        }
-        .value {
-          color: #666666;
-        }
-      }
-    }
-    .right {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      span {
-        color: #fff;
-        font-size: 24px;
-        padding: 3px 11px;
-        border-radius: 5px;
-      }
-      .price {
-        background: #f69343;
-        min-width: 80px;
-        height: 28px;
-        text-align: center;
-      }
-      .orderTime {
-        margin-top: 10px;
-        background: #5adba3;
-      }
-    }
-  }
-  .noData {
-    width: 366px;
-    margin: 100px 200px;
-  }
-}
+<style lang="sass" scoped>
+@import '~assets/sass/variable'
+@import '~assets/sass/mixin'
+.rechargeRecord
+  @include page($color-page-background)
+  .paidTime
+    color: $color-word-grey
+    font-size: 24px
+    padding: 25px 30px
+  .orderCard
+    height: 107px
+    background: $color-white
+    padding: 30px 50px 30px 40px
+    display: flex
+    justify-content: space-between
+    align-items: center
+    .left
+      display: flex
+      justify-content: flex-start
+      align-items: center
+      img
+        width: 47px
+        margin-right: 30px
+      .baseInfo
+        font-size: 24px
+        line-height: 36px
+        .key
+          color: $color-word-grey
+        .value
+          color: $color-value-grey
+    .right
+      display: flex
+      flex-direction: column
+      align-items: flex-end
+      span
+        color: $color-white
+        font-size: 24px
+        padding: 3px 11px
+        border-radius: 5px
+      .price
+        background: #f69343
+        min-width: 80px
+        height: 28px
+        text-align: center
+      .orderTime
+        margin-top: 10px
+        background: #5adba3
+  .noData
+    width: 366px
+    margin: 100px 200px
 </style>

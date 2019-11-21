@@ -83,38 +83,33 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
-.outCount{
-  background: #f2f2f2;
-  height: 100vh;
-  .summary {
-    background: url("./img/allTotalBg.png") no-repeat;
-    width: 750px;
-    height: 269px;
-    background-size: 100% 100%;
-    color: #fff;
-    margin-top: 28px;
-    ul{
-      padding: 32px;
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      li{
-        width: 320px;
-        height: 78px;
-        font-size: 24px;
-        .value {
-          font-size: 36px;
-          font-weight:bold;
-        }
-      }
-      .icon {
-        padding: 8px 25px;
-        background: rgba(255, 255, 255, 0.41);
-        border-radius: 10px;
-        cursor: pointer;
-      }
-    }
-  }
-}
+<style lang="sass" scoped>
+@import '~assets/sass/variable'
+@import '~assets/sass/mixin'
+.outCount
+  @include page($color-page-background)
+  .summary
+    background: url("./img/allTotalBg.png") no-repeat
+    width: 750px
+    height: 269px
+    background-size: 100% 100%
+    color: $color-white
+    margin-top: 28px
+    ul
+      padding: 32px
+      display: flex
+      flex-wrap: wrap
+      align-items: center
+      li
+        width: 320px
+        height: 78px
+        font-size: 24px
+        .value
+          font-size: 36px
+          font-weight:bold
+      .icon
+        padding: 8px 25px
+        background: rgba(255, 255, 255, 0.41)
+        border-radius: 10px
+        cursor: pointer
 </style>

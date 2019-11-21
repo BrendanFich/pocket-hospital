@@ -54,71 +54,57 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
-.dailyList {
-  background: #f2f2f2;
-  height: 100vh;
-  /deep/ .mint-cell-value {
-    width: 750px;
-    justify-content: space-between;
-  }
-  /deep/ .mint-cell-wrapper {
-    border-bottom: 1px solid#e3e3e3;
-    padding: 28px 45px 30px 41px;
-  }
-  .list {
-    .leftInfo {
-      .name {
-        display: inline-block;
-        margin-right: 13px;
-        line-height: 66px;
-        font-size: 30px;
-        color: #09cf74;
-        font-weight: bold;
-      }
-      .medical_card {
-        display: inline-block;
-        font-size: 24px;
-        color: #666666;
-      }
-      .serial_number {
-        line-height: 48px;
-        font-size: 26px;
-        color: #333333;
+<style lang="sass" scoped>
+@import '~assets/sass/variable'
+@import '~assets/sass/mixin'
+.dailyList
+  @include page($color-page-background)
+  /deep/ .mint-cell-value
+    width: 750px
+    justify-content: space-between
+  /deep/ .mint-cell-wrapper
+    border-bottom: 1px solid $color-border
+    padding: 28px 45px 30px 41px
+  .list
+    .leftInfo
+      .name
+        display: inline-block
+        margin-right: 13px
+        line-height: 66px
+        font-size: 30px
+        color: $color-primary
+        font-weight: bold
+      .medical_card
+        display: inline-block
+        font-size: 24px
+        color: $color-value-grey
+      .serial_number
+        line-height: 48px
+        font-size: 26px
+        color: $color-title-black
 
-      }
-      .department {
-        line-height: 48px;
-        font-size: 26px;
-        color: #333333;
-      }
-      .value {
-          color: #09CF74;
-        }
-    }
-    .rightInfo {
-      text-align:end;
-      .price {
-        display: inline-block;
-        padding: 12px 10px;
-        background: #f69343;
-        color: #fff;
-        border-radius: 10px;
-        font-size: 26px;
-        margin-bottom: 16px;
-      }
-      .unPaid {
-        background: #09CF74;
-      }
-      .date {
-        color: #999999;
-        font-size: 24px;
-      }
-    }
-  }
-  .noData {
-        width: 366px;
-        margin: 100px 200px;
-      }
-}
+      .department
+        line-height: 48px
+        font-size: 26px
+        color: $color-title-black
+      .value
+          color: $color-primary
+    .rightInfo
+      text-align:end
+      .price
+        display: inline-block
+        padding: 12px 10px
+        background: $color-primary
+        color: $color-white
+        border-radius: 10px
+        font-size: 26px
+        margin-bottom: 16px
+      .unPaid
+        background: $color-primary
+      .date
+        color: $color-word-grey
+        font-size: 24px
+  .noData
+        width: 366px
+        margin: 100px 200px
 </style>

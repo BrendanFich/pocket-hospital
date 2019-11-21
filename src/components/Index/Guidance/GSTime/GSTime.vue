@@ -113,95 +113,76 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.gSTime {
-  background: #f2f2f2;
-  height: 100vh;
-  .doctorIntroCard {
-    background: #fff;
-    height: 195px;
-    padding: 30px 50px 40px 30px;
-    border-bottom: 1px solid#dedede;
-    display: flex;
-    .avatar {
-      width: 100px;
-      height: 100px;
-      margin-right: 24px;
-    }
-    .doctorInfo {
-      flex: 1;
-      .doctorName {
-        font-size: 30px;
-        color: #333333;
-        font-weight: bold;
-        line-height: 42px;
-      }
-      .doctorTitle {
-        font-size: 24px;
-        color: #333333;
-        line-height: 34px;
-      }
-      .star {
-        padding: 5px 0 10px 0;
-        img {
-          width: 20px;
-        }
-      }
-      .textIntro {
-        font-size: 24px;
-        line-height: 36px;
-        color: #999999;
-      }
-    }
-  }
-  .week_slider {
-    margin-top: 18px;
-    background: #fff;
-  }
-  .workTime {
-    background: #fff;
-    margin-top: 8px;
-    ul > li {
-      padding-left: 31px;
-      padding-right: 47px;
-      border-bottom: 1px solid #ededed;
-      .itemContent {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        height: 88px;
-        .time {
-          display: flex;
-          align-items: center;
-          color: #333333;
-          font-size: 30px;
-          img {
-            width: 24px;
-            margin-right: 16px;
-          }
-        }
-      }
-      .remaining {
-        font-size: 24px;
-        color: #09cf74;
-        .over {
-          display: none;
-        }
-        .overMsg {
-          display: none;
-          color: #999999;
-          float: right;
-        }
-        .overShow {
-          display: inline;
-        }
-        .icon {
-          color: #999999;
-          float: right;
-          margin-left: 38px;
-        }
-      }
-    }
-  }
-}
+<style lang="sass" scoped>
+@import '~assets/sass/variable'
+@import '~assets/sass/mixin'
+.gSTime
+  @include page($color-page-background)
+  .doctorIntroCard
+    background: $color-white
+    height: 195px
+    padding: 30px 50px 40px 30px
+    border-bottom: 1px solid $color-border
+    display: flex
+    .avatar
+      width: 100px
+      height: 100px
+      margin-right: 24px
+    .doctorInfo
+      flex: 1
+      .doctorName
+        font-size: 30px
+        color: $color-title-black
+        font-weight: bold
+        line-height: 42px
+      .doctorTitle
+        font-size: 24px
+        color: $color-title-black
+        line-height: 34px
+      .star
+        padding: 5px 0 10px 0
+        img
+          width: 20px
+      .textIntro
+        font-size: 24px
+        line-height: 36px
+        color: $color-title-black
+  .week_slider
+    margin-top: 18px
+    background: $color-white
+  .workTime
+    background: $color-white
+    margin-top: 8px
+    ul > li
+      padding-left: 31px
+      padding-right: 47px
+      border-bottom: 1px solid $color-border
+      .itemContent
+        display: flex
+        justify-content: space-between
+        align-items: center
+        height: 88px
+        .time
+          display: flex
+          align-items: center
+          color: $color-title-black
+          font-size: 30px
+          img
+            width: 24px
+            margin-right: 16px
+      .remaining
+        font-size: 24px
+        color: $color-primary
+        .over
+          display: none
+        .overMsg
+          display: none
+          color: $color-title-black
+          float: right
+        .overShow
+          display: inline
+        .icon
+          color: $color-title-black
+          float: right
+          margin-left: 38px
 </style>

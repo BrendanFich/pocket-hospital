@@ -176,161 +176,131 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.sSymptom {
-  background: #f2f2f2;
-  height: 100vh;
-  .searchbar {
-    width: 750px;
-    position: relative;
-    input {
-      margin: 30px 25px;
-      border-radius: 10px;
-      padding: 20px 70px;
-      width: 560px;
-      border: none;
-      outline: none;
-      font-size: 24px;
-    }
-    .cancelIcon {
-      width: 16px;
-      position: absolute;
-      top: 55px;
-      left: 65px;
-    }
-    .cancel {
-      display: none;
-      position: absolute;
-      top: 30px;
-      right: 50px;
-      font-size: 24px;
-      border: none;
-      background: #fff;
-      outline: none;
-      height: 68px;
-      margin-left: -10px;
-      color: #09cf74;
-    }
-    .resultList {
-      background: #fff;
-      display: none;
-      min-height: calc(100vh - 128px);
-      .resultStyle {
-        font-size: 24px;
-        padding: 20px 30px;
-        border-bottom: 1px solid #dedede;
-      }
-      .resultItem {
-        display: flex;
-        align-items: center;
-        padding: 10px 30px;
-        font-size: 20px;
-        line-height: 30px;
-        border-bottom: 1px solid #dedede;
-      }
-    }
-
-    .xIcon {
-      display: none;
-      position: absolute;
-      top: 50px;
-      right: 130px;
-      font-size: 25px;
-      background: #f6f6f6;
-      border-radius: 50%;
-      width: 30px;
-      height: 25px;
-      text-align: center;
-      padding-bottom: 5px;
-      color: #333;
-    }
-    .show {
-      display: block;
-    }
-  }
-  .search {
-    background: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    .searchTags {
-      width: 710px;
-      margin-bottom: 38px;
-      .tag {
-        display: inline-block;
-        padding: 10px 20px;
-        margin: 10px;
-        border: 1px dashed #dfdfdf;
-        border-radius: 10px;
-        font-size: 24px;
-        color: #999999;
-      }
-    }
-  }
-
-  .doctorIntroCard {
-    margin-top: 10px;
-    height: 195px;
-    padding: 30px 50px 40px 30px;
-    border-bottom: 1px solid#dedede;
-
-    .baseInfo {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      .left {
-        display: flex;
-        .avatar {
-          width: 100px;
-          height: 100px;
-          margin-right: 24px;
-        }
-        div {
-          .doctorName {
-            font-size: 30px;
-            color: #333333;
-            font-weight: bold;
-            line-height: 42px;
-          }
-          .doctorTitle {
-            font-size: 24px;
-            color: #333333;
-            line-height: 34px;
-          }
-          .star {
-            padding: 5px 0 10px 0;
-            img {
-              width: 20px;
-            }
-          }
-        }
-      }
-
-      .price {
-        margin-right: 20px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-        img {
-          width: 38px;
-          margin-bottom: 15px;
-        }
-        span {
-          color: #333333;
-          font-size: 24px;
-        }
-      }
-    }
-    .textIntro {
-      font-size: 24px;
-      color: #999999;
-      margin-left: 124px;
-    }
-  }
-  .hidden {
-    display: none;
-  }
-}
+<style lang="sass" scoped>
+@import '~assets/sass/variable'
+@import '~assets/sass/mixin'
+.sSymptom
+  @include page($color-page-background)
+  .searchbar
+    width: 750px
+    position: relative
+    input
+      margin: 30px 25px
+      border-radius: 10px
+      padding: 20px 70px
+      width: 560px
+      border: none
+      outline: none
+      font-size: 24px
+    .cancelIcon
+      width: 16px
+      position: absolute
+      top: 55px
+      left: 65px
+    .cancel
+      display: none
+      position: absolute
+      top: 30px
+      right: 50px
+      font-size: 24px
+      border: none
+      background: $color-white
+      outline: none
+      height: 68px
+      margin-left: -10px
+      color: $color-primary
+    .resultList
+      background: $color-white
+      display: none
+      min-height: calc(100vh - 128px)
+      .resultStyle
+        font-size: 24px
+        padding: 20px 30px
+        border-bottom: 1px solid $color-border
+      .resultItem
+        display: flex
+        align-items: center
+        padding: 10px 30px
+        font-size: 20px
+        line-height: 30px
+        border-bottom: 1px solid $color-border
+    .xIcon
+      display: none
+      position: absolute
+      top: 50px
+      right: 130px
+      font-size: 25px
+      background: $color-xIcon-grey
+      border-radius: 50%
+      width: 30px
+      height: 25px
+      text-align: center
+      padding-bottom: 5px
+      color: $color-title-black
+    .show
+      display: block
+  .search
+    background: $color-white
+    display: flex
+    justify-content: center
+    align-items: center
+    flex-direction: column
+    .searchTags
+      width: 710px
+      margin-bottom: 38px
+      .tag
+        display: inline-block
+        padding: 10px 20px
+        margin: 10px
+        border: 1px dashed $color-border
+        border-radius: 10px
+        font-size: 24px
+        color: $color-title-black
+  .doctorIntroCard
+    margin-top: 10px
+    height: 195px
+    padding: 30px 50px 40px 30px
+    border-bottom: 1px solid $color-border
+    .baseInfo
+      display: flex
+      justify-content: space-between
+      align-items: center
+      .left
+        display: flex
+        .avatar
+          width: 100px
+          height: 100px
+          margin-right: 24px
+        div
+          .doctorName
+            font-size: 30px
+            color: $color-title-black
+            font-weight: bold
+            line-height: 42px
+          .doctorTitle
+            font-size: 24px
+            color: $color-title-black
+            line-height: 34px
+          .star
+            padding: 5px 0 10px 0
+            img
+              width: 20px
+      .price
+        margin-right: 20px
+        display: flex
+        justify-content: center
+        align-items: center
+        flex-direction: column
+        img
+          width: 38px
+          margin-bottom: 15px
+        span
+          color: $color-title-black
+          font-size: 24px
+    .textIntro
+      font-size: 24px
+      color: $color-word-grey
+      margin-left: 124px
+  .hidden
+    display: none
 </style>

@@ -112,141 +112,118 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.index {
-  background: #fff;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  .slogan {
-    width: 100%;
-    > img {
-      width: 100%;
-    }
-  }
-  .navs1 {
-    display: flex;
-    .nav1 {
-      display: block;
-      width: 368px;
-      height: 148px;
-      color: #fff;
-      position: relative;
-      > img {
-        width: 358px;
-      }
-      h2 {
-        font-size: 30px;
-        font-weight: bold;
-        position: absolute;
-        top: 46px;
-        left: 125px;
-      }
-      p {
-        font-size: 20px;
-        position: absolute;
-        top: 85px;
-        left: 125px;
-      }
-    }
-  }
-  .navs2 {
-    border-top: 1px solid #ededed;
-    border-bottom: 1px solid #ededed;
-    margin-top: 30px;
-    width: 100%;
-    display: flex;
-    .left {
-      width: 324px;
-      height: 247px;
-      padding: 32px 0 0 39px;
-      position: relative;
-      border-right: 1px solid #ededed;
-      h2 {
-        font-size: 30px;
-        color: #666666;
-        font-weight: bold;
-      }
-      p {
-        margin-top: 10px;
-        font-size: 18px;
-        color: #999999;
-      }
-      > img {
-        position: absolute;
-        right: -4px;
-        bottom: -10px;
-        width: 181px;
-      }
-    }
-    .right {
-      width: 424px;
-      padding: 0 1px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      align-items: center;
-      .nav2:first-child {
-        border-bottom: 1px solid #ededed;
-      }
-      .nav2 {
-        height: 124px;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        h2 {
-          font-size: 30px;
-          color: #666666;
-          font-weight: bold;
-        }
-        p {
-          margin-top: 10px;
-          font-size: 18px;
-          color: #999999;
-          margin-right: 50px;
-        }
-        > img {
-          width: 72px;
-        }
-      }
-    }
-  }
-  .navs3 {
-    width: 100%;
-    padding-bottom: 110px;
-    h2 {
-      color: #333333;
-      font-size: 30px;
-      padding-left: 49px;
-      line-height: 88px;
-      font-weight: 400;
-      border-bottom: 1px solid #ededed;
-    }
-    .otherItems {
-      width: 100%;
-      margin-top: 52px;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-      align-items: center;
-      text-align: center;
-      .item {
-        width: 180px;
-        height: 140px;
-        h3 {
-          font-size: 24px;
-          color: #333;
-          font-weight: 400;
-          line-height: 68px;
-        }
-        > img {
-          width: 45px;
-        }
-      }
-    }
-  }
-}
+<style lang="sass" scoped>
+@import '~assets/sass/variable'
+@import '~assets/sass/mixin'
+.index
+  @include page($color-white)
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  flex-wrap: wrap
+  .slogan
+    width: 100%
+    > img
+      width: 100%
+  .navs1
+    display: flex
+    .nav1
+      display: block
+      width: 368px
+      height: 148px
+      color: $color-white
+      position: relative
+      > img
+        width: 358px
+      h2
+        font-size: 30px
+        font-weight: bold
+        position: absolute
+        top: 46px
+        left: 125px
+      p
+        font-size: 20px
+        position: absolute
+        top: 85px
+        left: 125px
+  .navs2
+    border-top: 1px solid $color-border
+    border-bottom: 1px solid $color-border
+    margin-top: 30px
+    width: 100%
+    display: flex
+    .left
+      width: 324px
+      height: 247px
+      padding: 32px 0 0 39px
+      position: relative
+      border-right: 1px solid $color-border
+      h2
+        font-size: 30px
+        color: $color-value-grey
+        font-weight: bold
+      p
+        margin-top: 10px
+        font-size: 18px
+        color: $color-word-grey
+      > img
+        position: absolute
+        right: -4px
+        bottom: -10px
+        width: 181px
+    .right
+      width: 424px
+      padding: 0 1px
+      display: flex
+      flex-wrap: wrap
+      justify-content: center
+      align-items: center
+      .nav2:first-child
+        border-bottom: 1px solid $color-border
+      .nav2
+        height: 124px
+        width: 100%
+        display: flex
+        justify-content: center
+        align-items: center
+        h2
+          font-size: 30px
+          color: $color-value-grey
+          font-weight: bold
+        p
+          margin-top: 10px
+          font-size: 18px
+          color: $color-word-grey
+          margin-right: 50px
+        > img
+          width: 72px
+  .navs3
+    width: 100%
+    padding-bottom: 110px
+    h2
+      color: $color-title-black
+      font-size: 30px
+      padding-left: 49px
+      line-height: 88px
+      font-weight: 400
+      border-bottom: 1px solid $color-border
+    .otherItems
+      width: 100%
+      margin-top: 52px
+      display: flex
+      flex-wrap: wrap
+      justify-content: space-around
+      align-items: center
+      text-align: center
+      .item
+        width: 180px
+        height: 140px
+        h3
+          font-size: 24px
+          color: $color-title-black
+          font-weight: 400
+          line-height: 68px
+        > img
+          width: 45px
 </style>

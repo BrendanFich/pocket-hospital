@@ -46,31 +46,27 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.suggestion {
-  background: #f2f2f2;
-  height: 100vh;
-  text-align: center;
-  .textarea {
-    width: 726px;
-    margin: 0 auto;
-    padding-top: 38px;
-    > .mint-cell {
-      border: 1px solid #dddddd;
-      border-radius: 5px;
-      /deep/ .mint-field-core {
-        font-size: 28px;
-      }
-    }
-  }
-  .btn {
-    margin-top: 30px;
-    width: 725px;
-    height: 80px;
-    border-radius: 10px;
-    background: #09cf74;
-    color: #fff;
-    font-size: 26px;
-  }
-}
+<style lang="sass" scoped>
+@import '~assets/sass/variable'
+@import '~assets/sass/mixin'
+.suggestion
+  @include page($color-page-background)
+  text-align: center
+  .textarea
+    width: 726px
+    margin: 0 auto
+    padding-top: 38px
+    > .mint-cell
+      border: 1px solid $color-border
+      border-radius: 5px
+      /deep/ .mint-field-core
+        font-size: 28px
+  .btn
+    margin-top: 30px
+    width: 725px
+    height: 80px
+    border-radius: 10px
+    background: $color-primary
+    color: $color-white
+    font-size: 26px
 </style>

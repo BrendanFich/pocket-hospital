@@ -134,38 +134,33 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.confirm {
-  background: #f2f2f2;
-  height: 100vh;
-  .orderInfo {
-    margin-top: 22px;
-    background: #fff;
-    ul > li {
-      height: 88px;
-      padding: 0 54px 0 43px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #ededed;
-      .key {
-        color: #333333;
-        font-size: 30px;
-        font-weight: bold;
-      }
-      .value {
-        color: #666666;
-        font-size: 30px;
-      }
-    }
-  }
-  .confirmBtn {
-    margin: 0 12.5px;
-    margin-top: 92px;
-    width: 725px;
-    height: 80px;
-    background: #09cf74;
-    font-size: 30px;
-  }
-}
+<style lang="sass" scoped>
+@import '~assets/sass/variable'
+@import '~assets/sass/mixin'
+.confirm
+  @include page($color-page-background)
+  .orderInfo
+    margin-top: 22px
+    background: $color-white
+    ul > li
+      height: 88px
+      padding: 0 54px 0 43px
+      display: flex
+      justify-content: space-between
+      align-items: center
+      border-bottom: 1px solid $color-border
+      .key
+        color: $color-title-black
+        font-size: 30px
+        font-weight: bold
+      .value
+        color: $color-value-grey
+        font-size: 30px
+  .confirmBtn
+    margin: 0 12.5px
+    margin-top: 92px
+    width: 725px
+    height: 80px
+    background: $color-primary
+    font-size: 30px
 </style>

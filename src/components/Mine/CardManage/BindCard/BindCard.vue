@@ -112,8 +112,6 @@ export default {
       const p = /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
       let allPatInfo = this.$store.state.patInfoBinded.concat(this.$store.state.patInfoNobind)
       if (this.cardNum && this.name && this.idNum) {
-        // 通过身份证id判断其对应的patientId
-
         if (allPatInfo !== []) {
           allPatInfo.forEach(item => {
             if (item.patIdNo === this.idNum) {
@@ -131,10 +129,8 @@ export default {
           patIdNo: this.idNum
         }
         if (this.cardNum.length !== 7) {
-          // 卡号验证
           this.$toast({ message: '就诊卡号为7位数', duration, className })
         } else if (!p.test(this.idNum) && this.paperwork === '身份证') {
-          // 身份证号验证
           this.$toast({ message: '身份证号有误', duration, className })
         } else {
           util.http
@@ -166,63 +162,53 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.bindCard {
-  background: #f2f2f2;
-  height: 100vh;
-  h2 {
-    color: #999999;
-    font-size: 24px;
-    padding: 25px 40px;
-  }
-  .mint-field {
-    /deep/ .mint-cell-wrapper {
-      padding: 0;
-      height: 88px;
-      font-size: 30px;
-      font-weight: bold;
-      .mint-cell-title {
-        color: #44a0f5;
-        width: 168px;
-        padding-left: 40px;
-      }
-    }
-  }
-  .selectItem {
-    position: relative;
-    .isLink {
-      color: #5adba3;
-      font-size: 30px;
-      position: absolute;
-      top: 27px;
-      right: 66px;
-    }
-  }
-  /deep/ .mint-actionsheet-listitem,/deep/ .mint-actionsheet-button {
-    height: 80px;
-    font-size: 30px;
-    line-height: 80px;
-  }
-  .attention {
-    margin-top: 40px;
-    p {
-      width: 670px;
-      margin: 0 auto;
-      font-size: 24px;
-      color: #999999;
-      line-height: 36px;
-    }
-  }
-  .btn {
-    margin: 0 auto;
-    margin-top: 54px;
-    margin-left: 12.5px;
-    width: 725px;
-    height: 80px;
-    border-radius: 10px;
-    background: #09cf74;
-    color: #fff;
-    font-size: 26px;
-  }
-}
+<style lang="sass" scoped>
+@import '~assets/sass/variable'
+@import '~assets/sass/mixin'
+.bindCard
+  @include page($color-page-background)
+  h2
+    color: $color-word-grey
+    font-size: 24px
+    padding: 25px 40px
+  .mint-field
+    /deep/ .mint-cell-wrapper
+      padding: 0
+      height: 88px
+      font-size: 30px
+      font-weight: bold
+      .mint-cell-title
+        color: #44a0f5
+        width: 168px
+        padding-left: 40px
+  .selectItem
+    position: relative
+    .isLink
+      color: #5adba3
+      font-size: 30px
+      position: absolute
+      top: 27px
+      right: 66px
+  /deep/ .mint-actionsheet-listitem,/deep/ .mint-actionsheet-button
+    height: 80px
+    font-size: 30px
+    line-height: 80px
+  .attention
+    margin-top: 40px
+    p
+      width: 670px
+      margin: 0 auto
+      font-size: 24px
+      color: $color-word-grey
+      line-height: 36px
+  .btn
+    margin: 0 auto
+    margin-top: 54px
+    margin-left: 12.5px
+    width: 725px
+    height: 80px
+    border-radius: 10px
+    background: $color-primary
+    color: $color-white
+    font-size: 26px
 </style>
