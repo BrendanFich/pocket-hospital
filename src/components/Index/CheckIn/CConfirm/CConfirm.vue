@@ -24,7 +24,7 @@ export default {
       .post('/api/pat/findVisitingRegister')
       .then(res => {
         console.log(res)
-        this.registerInfo = res.data.Records
+        this.registerInfo = res.data.Records[0]
       })
       .catch(error => {
         console.log(error)
@@ -56,7 +56,7 @@ export default {
       this.$messagebox.confirm(text).then(action => {
         if (this.registerInfo.hisOrdNum) {
           util.http
-            .post('/api/pat/visitingReport')
+            .post('/api/pat/visitingReport', {hisOrdNum: this.registerInfo.hisOrdNum})
             .then(res => {
               console.log(res)
               if (res.code !== 0) {

@@ -105,19 +105,11 @@ export default {
             this.$indicator.close()
           } else {
             this.$indicator.close()
-            if (res.msg === '当前有正在进行的预约挂号..') {
-              this.$toast({
-                message: res.msg,
-                duration: 1000,
-                className: 'toast'
-              })
-            } else {
-              this.$toast({
-                message: '提交失败',
-                duration: 1000,
-                className: 'toast'
-              })
-            }
+            this.$toast({
+              message: res.msg,
+              duration: 1000,
+              className: 'toast'
+            })
           }
         })
         .catch(error => {

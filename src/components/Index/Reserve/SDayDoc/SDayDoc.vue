@@ -17,26 +17,26 @@
         <img class="noData" v-if="showDoctors.length === 0" src="./img/noData.png" />
         <div
           class="item"
-          @click="select(item.leftNum, item.doctorCode, item.doctorName)"
+          @click="select(item)"
           v-for="(item,index) in showDoctors"
           :key="index"
         >
           <div class="doctorInfo">
             <img slot="icon" src="./img/avatar100x101.png" />
             <div class="textInfo">
-              <span class="name">{{item.Doctor}}</span>
+              <span class="name">{{item.doctorName}}</span>
               <span class="title">{{item.doctorTitle}}</span>
               <br />
               <span
                 class="workTime"
-                :class="{ pm: item.timeFlag === '2'}"
-              >{{item.timeFlag === '2' ? '下午' : '上午'}}</span>
+                :class="{ pm: item.pmTotalNum > 0}"
+              >{{item.pmTotalNum > 0 ? '下午' : '上午'}}</span>
             </div>
           </div>
           <div class="leftNum">
-            <span :class="{over: item.leftNum<=0}">剩余 {{item.leftNum}}</span>
-            <span :class="{over: item.leftNum<=0}" class="icon">&gt;</span>
-            <span :class="{overShow: item.leftNum<=0}" class="overMsg">已约满</span>
+            <span>剩余 {{item.amTotalNum || item.pmTotalNum}}</span>
+            <span class="icon">&gt;</span>
+            <!-- <span :class="{overShow: item.totalNum<=0}" class="overMsg">已约满</span> -->
           </div>
         </div>
       </div>
@@ -56,11 +56,11 @@ export default {
       tbSelected: '',
       deptInfo: '',
       date: moment(new Date()).format('YYYY-MM-DD'),
-      doctors: []
+      showDoctors: []
     }
   },
   computed: {
-    showDoctors () {
+    computedDoctors () {
       return this.doctors.filter((item) => {
         return item.scheduleDate.indexOf(this.date) !== -1
       })
@@ -72,24 +72,61 @@ export default {
       this.date = e
       console.log(this.date)
     },
-    select (leftNum, doctorCode, doctorName) {
-      if (leftNum > 0) {
+    select (item) {
+      let timeFlagNo = ''
+      if (item.amTotalNum) {
+        timeFlagNo = '1'
+      }
+      if (item.pmTotalNum) {
+        timeFlagNo = '2'
+      }
+      if ((item.amTotalNum || item.pmTotalNum) > 0) {
         this.$router.push({
           name: 'sTime',
-          params: { doctorCode: doctorCode, date: this.date }
+          params: { doctorCode: item.doctorCode, date: this.date, timeFlagNo }
         })
       }
     },
     getRegSource () {
+      let self = this
       util.http
         .post('/api/doctor/getRegSource', {
-          deptCode: this.$route.params.deptCode
+          deptCode: this.$route.params.deptCode,
+          endDate: this.date
         })
         .then(res => {
-          console.log(res)
-          this.doctors = res.data.Records = res.data.Records.filter(item => {
-            return moment(item.beginTime, 'YYYY-MM-DD HH:mm:ss').valueOf() + 1800000 > Date.parse(new Date())
+          // this.doctors = res.data.Records.filter(item => {
+          //   return moment(item.beginTime, 'YYYY-MM-DD HH:mm:ss').valueOf() + 1800000 > Date.parse(new Date())
+          // })
+          let doctors = []
+          let resData = res.data
+          Object.keys(resData).forEach(function (key) {
+            let item = {}
+            item.doctorName = key
+            item.amTotalNum = 0
+            item.pmTotalNum = 0
+            item.doctorCode = resData[key][0].doctorCode
+            resData[key].forEach(function (el) {
+              if (el.timeFlag === '上午班') {
+                item.amTotalNum = item.amTotalNum + 1
+              }
+              if (el.timeFlag === '下午班') {
+                item.pmTotalNum = item.pmTotalNum + 1
+              }
+            })
+            doctors.push(item)
           })
+          let showDoctors = []
+          doctors.forEach(function (el) {
+            if (el.amTotalNum > 0) {
+              showDoctors.push({doctorName: el.doctorName, amTotalNum: el.amTotalNum, doctorCode: el.doctorCode})
+            }
+            if (el.pmTotalNum > 0) {
+              showDoctors.push({doctorName: el.doctorName, pmTotalNum: el.pmTotalNum, doctorCode: el.doctorCode})
+            }
+          })
+          self.showDoctors = showDoctors
+          console.log(showDoctors)
         })
         .catch(error => {
           console.log(error)

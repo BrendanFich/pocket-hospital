@@ -75,7 +75,7 @@ export default new Router({
       children: [
         { path: 'sDept', component: SDept },
         { path: 'sDayDoc/:deptCode&:deptName', name: 'sDayDoc', component: SDayDoc },
-        { path: 'sTime/:doctorCode&:date', name: 'sTime', component: STime },
+        { path: 'sTime/:doctorCode&:date/:timeFlagNo', name: 'sTime', component: STime },
         { path: 'confirm', component: Confirm }
       ]
     },

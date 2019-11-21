@@ -116,7 +116,7 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .index
-  @include page($color-white)
+  backgroud: $color-white
   display: flex
   flex-direction: column
   justify-content: center

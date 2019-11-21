@@ -34,7 +34,7 @@
 
 <script>
 import util from '@/assets/js/util'
-import moment from 'moment'
+// import moment from 'moment'
 
 export default {
   name: 'sTime',
@@ -47,6 +47,8 @@ export default {
   created () {
     this.getDocInfo()
     this.getRegSource()
+  },
+  computed: {
   },
   methods: {
     resetTimeFormat (beginTime, endTime) {
@@ -66,6 +68,14 @@ export default {
         })
     },
     getRegSource () {
+      // let self = this
+      let timeFlag
+      if (this.$route.params.timeFlagNo === '1') {
+        timeFlag = '上午班'
+      }
+      if (this.$route.params.timeFlagNo === '2') {
+        timeFlag = '下午班'
+      }
       util.http
         .post('/api/doctor/getRegSource', {
           doctorCode: this.$route.params.doctorCode,
@@ -73,9 +83,10 @@ export default {
           endDate: this.$route.params.date
         })
         .then(res => {
-          this.workTimeList = res.data.Records.filter(item => {
-            return moment(item.beginTime, 'YYYY-MM-DD HH:mm:ss').valueOf() + 1800000 > Date.parse(new Date())
+          this.workTimeList = res.data[Object.keys(res.data)[0]].filter((item) => {
+            return item.timeFlag === timeFlag
           })
+          console.log(this.workTimeList)
         })
         .catch(error => {
           console.log(error)
