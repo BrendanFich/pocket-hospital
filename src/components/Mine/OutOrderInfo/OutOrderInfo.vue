@@ -3,7 +3,7 @@
     <h1>缴费订单详情：</h1>
     <ul>
       <li>
-        <span class="key">流水号</span>
+        <span class="key">订单号</span>
         <span class="value">{{info.ledgerSn}}</span>
       </li>
       <li>
@@ -26,9 +26,13 @@
         <span class="key">患者</span>
         <span class="value">{{info.patName}}</span>
       </li>
+      <li>
+        <span class="key">订单状态</span>
+        <span class="value">{{paymentStatus}}</span>
+      </li>
     </ul>
     <mt-button class="btn" type="primary" @click="back">返回</mt-button>
-    <mt-button class="btn" type="primary" @click="cancelOrder">退款</mt-button>
+    <mt-button class="btn" type="primary" @click="cancelOrder" v-if="info.paymentStatus === '1' || this.info.paymentStatus === '-1'">申请退款</mt-button>
   </div>
 </template>
 
@@ -40,22 +44,31 @@ export default {
       info: {}
     }
   },
-  computed: {},
+  computed: {
+    paymentStatus () {
+      if (this.info.paymentStatus === '1' || this.info.paymentStatus === '-1') {
+        return '已支付'
+      }
+      if (this.info.paymentStatus === '2') {
+        return '退款中'
+      }
+      if (this.info.paymentStatus === '-2') {
+        return '已退款'
+      }
+    }
+  },
   watch: {},
   methods: {
     back () {
       this.$router.go(-1)
     },
     cancelOrder () {
-      if (this.$route.params.paymentStatus === '2') {
-        this.$toast({ message: '该订单退款中...', duration: 1500, className: 'toast' })
-      }
-      if (this.$route.params.paymentStatus === '1') {
+      if (this.info.paymentStatus === '1' || this.info.paymentStatus === '-1') {
         util.http
           .post('/api/doctor/payRefund', {ledgerSn: this.$route.params.ledgerSn})
           .then(res => {
             if (res.code === 0) {
-              this.$toast({ message: '成功申请退款', duration: 1500, className: 'toast' })
+              this.$toast({ message: res.data.Records.message, duration: 1500, className: 'toast' })
               this.$router.go(-1)
             }
           })

@@ -165,7 +165,7 @@ export default new Router({
         },
         { path: 'liveHosOrder', component: LiveHosOrder },
         { path: 'regOrder', component: RegOrder },
-        { path: 'outOrderInfo/:ledgerSn&:paymentStatus', name: 'outOrderInfo', component: OutOrderInfo }
+        { path: 'outOrderInfo/:ledgerSn', name: 'outOrderInfo', component: OutOrderInfo }
       ]
     }
   ]

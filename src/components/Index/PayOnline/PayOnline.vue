@@ -13,7 +13,7 @@
               <div class="name">{{item.patName}}</div>
               <div class="patCardNo">{{item.PatCardNo}}</div>
               <div class="serial_number">
-                流水号：
+                订单号：
                 <span class="value">{{item.outPatId}}</span>
               </div>
               <div class="department">
@@ -30,14 +30,14 @@
       </mt-tab-container-item>
       <mt-tab-container-item id="2">
         <img class="noData" v-if="paid.length === 0" src="./img/noData.png" />
-        <div v-for="(item,index) in paid" :key="index" @click="enterInfo(item.ledgerSn,item.paymentStatus)">
+        <div v-for="(item,index) in paid" :key="index" @click="enterInfo(item.ledgerSn)">
           <mt-cell>
             <div class="leftInfo">
               <div class="name">{{item.patName}}</div>
               <div class="patCardNo">{{item.PatCardNo}}</div>
               <div class="serial_number">
-                流水号：
-                <span class="value">{{item.outPatId}}</span>
+                订单号：
+                <span class="value">{{item.ledgerSn}}</span>
               </div>
               <div class="department">
                 开单科室：
@@ -45,8 +45,13 @@
               </div>
             </div>
             <div class="rightInfo">
-              <div class="price">{{item.paymentFee}}元</div>
+              <div>
+                <div class="refunding" v-if="item.paymentStatus === '2'">退款中</div>
+                <div class="refunded" v-if="item.paymentStatus === '-2'">已退款</div>
+                <div class="price">{{item.paymentFee}}元</div>
+              </div>
               <div class="date">{{item.paymentDate}}</div>
+
             </div>
           </mt-cell>
         </div>
@@ -71,8 +76,8 @@ export default {
     this.getUnpaidList()
   },
   methods: {
-    enterInfo (ledgerSn, paymentStatus) {
-      this.$router.push({name: 'outOrderInfo', params: {ledgerSn, paymentStatus}})
+    enterInfo (ledgerSn) {
+      this.$router.push({name: 'outOrderInfo', params: {ledgerSn}})
     },
     getUnpaidList () {
       util.http
@@ -173,7 +178,7 @@ export default {
           color: $color-title-black
       .rightInfo
         text-align: center
-        .price
+        .price,.refunding
           float: right
           width: 80px
           padding: 12px 10px
@@ -182,6 +187,17 @@ export default {
           border-radius: 10px
           font-size: 26px
           margin-bottom: 16px
+          margin-left: 5px
+        .refunded
+          background: $color-primary
+          float: right
+          width: 80px
+          padding: 12px 10px
+          color: #fff
+          border-radius: 10px
+          font-size: 26px
+          margin-bottom: 16px
+          margin-left: 5px
         .unPaid
           background: #d8d8d8
         .date

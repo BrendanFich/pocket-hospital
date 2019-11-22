@@ -70,7 +70,7 @@ export default {
   methods: {
     dateClickhandler (e) {
       this.date = e
-      console.log(this.date)
+      this.getRegSource(e)
     },
     select (item) {
       let timeFlagNo = ''
@@ -87,17 +87,14 @@ export default {
         })
       }
     },
-    getRegSource () {
+    getRegSource (date) {
       let self = this
       util.http
         .post('/api/doctor/getRegSource', {
           deptCode: this.$route.params.deptCode,
-          endDate: this.date
+          endDate: date
         })
         .then(res => {
-          // this.doctors = res.data.Records.filter(item => {
-          //   return moment(item.beginTime, 'YYYY-MM-DD HH:mm:ss').valueOf() + 1800000 > Date.parse(new Date())
-          // })
           let doctors = []
           let resData = res.data
           Object.keys(resData).forEach(function (key) {
@@ -134,7 +131,7 @@ export default {
     }
   },
   created () {
-    this.getRegSource()
+    this.getRegSource(this.date)
     this.$store.commit('changeDate', this.date)
   },
   watch: {
