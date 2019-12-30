@@ -64,7 +64,7 @@ import CardInfo from '@/components/Mine/CardManage/CardInfo/CardInfo'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  // mode: 'history',
   routes: [
     { path: '/', redirect: '/index' },
     { path: '/index', component: Index },

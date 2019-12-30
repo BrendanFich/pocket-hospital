@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view v-if="$store.state.userInfo !== {}"/>
+    <router-view/>
   </div>
 </template>
 
@@ -13,6 +13,7 @@ export default {
   name: 'App',
   data () {
     return {
+      errorMsg: '',
       timestamp: '',
       nonceStr: '',
       signature: '',
@@ -20,7 +21,22 @@ export default {
     }
   },
   created () {
-    this.wxAuth()
+    if (this.getUrlParam('token')) {
+      window.localStorage.setItem('token', this.getUrlParam('token'))
+      console.log(this.getUrlParam('token'))
+      window.location.href = window.location.href.split('?')[0]
+    }
+    if (this.getUrlParam('msg')) {
+      this.errorMsg = decodeURIComponent(this.getUrlParam('msg'))
+      console.log(this.errorMsg)
+      this.$toast({
+        message: '登录失败信息',
+        duration: 1000,
+        className: 'toast'
+      })
+      window.location.href = window.location.href.split('?')[0]
+    }
+    // this.wxAuth()
     let wxSign = window.localStorage.getItem('wxSign')
     let _this = this
     if (wxSign) {
@@ -30,7 +46,12 @@ export default {
         timestamp: wxSign.split('&')[0],
         nonceStr: wxSign.split('&')[1],
         signature: wxSign.split('&')[2],
-        jsApiList: ['openLocation', 'getLocation', 'updateAppMessageShareData', 'chooseWXPay']
+        jsApiList: [
+          'openLocation',
+          'getLocation',
+          'updateAppMessageShareData',
+          'chooseWXPay'
+        ]
       })
       wx.error(function (res) {
         if (res.errMsg.includes('invalid signature')) {
@@ -59,29 +80,38 @@ export default {
     })
   },
   methods: {
-    wxAuth () {
-      if (this.getUrlParam('token')) {
-        window.localStorage.setItem('token', this.getUrlParam('token'))
-        window.location.href = window.location.href.split('?')[0]
-      }
-
-      util.http
-        .post('/api/user/vx_perpare', {
-          getMode: 'authorize'
-        })
-        .then(res1 => {
-          util.http.post('/api/user/vx_info').then(res2 => {
-            if (res2.code === 401) {
-              window.location.href = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + res1.data.appid + '&redirect_uri=' + res1.data.redirect_uri + '&response_type=' + res1.data.response_type + '&scope=' + res1.data.scope + '&state=' + res1.data.state + res1.data.wechat_redirect
-            }
-          }).catch((error) => {
-            console.log(error)
-          })
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    },
+    // wxAuth () {
+    //   util.http
+    //     .post('/api/user/vx_perpare', {
+    //       getMode: 'authorize'
+    //     })
+    //     .then(res1 => {
+    //       util.http
+    //         .post('/api/user/vx_info')
+    //         .then(res2 => {
+    //           if (res2.code === 401) {
+    //             window.location.href =
+    //               'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' +
+    //               res1.data.appid +
+    //               '&redirect_uri=' +
+    //               res1.data.redirect_uri +
+    //               '&response_type=' +
+    //               res1.data.response_type +
+    //               '&scope=' +
+    //               res1.data.scope +
+    //               '&state=' +
+    //               res1.data.state +
+    //               res1.data.wechat_redirect
+    //           }
+    //         })
+    //         .catch(error => {
+    //           console.log(error)
+    //         })
+    //     })
+    //     .catch(error => {
+    //       console.log(error)
+    //     })
+    // },
     getSign () {
       util.http
         .post('/api/user/vx_sign', { url: location.href.split('#')[0] })
@@ -98,7 +128,11 @@ export default {
             timestamp: res.data.timestamp,
             nonceStr: res.data.nonceStr,
             signature: res.data.signtrue,
-            jsApiList: ['openLocation', 'getLocation', 'updateAppMessageShareData']
+            jsApiList: [
+              'openLocation',
+              'getLocation',
+              'updateAppMessageShareData'
+            ]
           })
         })
         .catch(error => {
@@ -115,7 +149,7 @@ export default {
 }
 </script>
 
-<style lang="scss" >
+<style lang="scss">
 #app {
   font-family: "Microsoft YaHei", "Avenir", Helvetica, Arial, sans-serif;
   width: 750px;

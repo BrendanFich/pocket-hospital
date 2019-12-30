@@ -1,9 +1,11 @@
 import axios from 'axios'
 import moment from 'moment'
-import { Indicator } from 'mint-ui'
+import { Indicator, Toast } from 'mint-ui'
 const BaseUrl = 'http://yun.gdqlyt.com.cn:8197'
 let http = {}
 http.ajax = axios.create()
+
+// 请求拦截
 http.ajax.interceptors.request.use(config => {
   Indicator.open()
   if (localStorage.token) { config.headers.Authorization = localStorage.token }
@@ -12,12 +14,17 @@ http.ajax.interceptors.request.use(config => {
   return Promise.reject(error)
 })
 
+// 响应拦截
 http.ajax.interceptors.response.use(res => {
   Indicator.close()
-
-  if (res.code === 500) {
+  if (res.data.code === 401) {
     localStorage.removeItem('token')
-    window.location.href = 'http://yun.gdqlyt.com.cn'
+    Toast({
+      message: 'token过期,重新登录',
+      duration: 1000,
+      className: 'toast'
+    })
+    window.location.href = 'http://yun.gdqlyt.com.cn/api/user/wx_authorize'
   }
   return res
 }, err => {
@@ -25,6 +32,7 @@ http.ajax.interceptors.response.use(res => {
   return Promise.reject(err)
 })
 
+// post
 http.post = function (url, data) {
   return new Promise((resolve, reject) => {
     http.ajax.post(BaseUrl + url, data).then((res) => {
@@ -39,6 +47,7 @@ http.post = function (url, data) {
   })
 }
 
+// 获取url的param
 const getUrlParam = (name) => {
   var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)')
   var r = window.location.search.substr(1).match(reg)
@@ -46,6 +55,7 @@ const getUrlParam = (name) => {
   return null
 }
 
+// 时间比较
 const compareTime = (pro) => {
   return function (obj1, obj2) {
     var val1 = moment(obj1[pro], 'YYYY-MM-DD HH:mm:ss').valueOf()
