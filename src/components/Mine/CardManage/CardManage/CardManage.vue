@@ -24,14 +24,14 @@
       <span class="isLink" v-else>></span>
     </router-link>
     <ul class="orderList">
-      <li @click="linkTo('bindCard',{cardTypeWord:'就诊卡'})">
+      <li @click="linkTo('bindCard')">
         <div>
-          <img src="./img/bindJiuzhen.png" />
-          <span class="title">绑定就诊卡</span>
+          <img src="./img/build.png" />
+          <span class="title">添加就诊人</span>
         </div>
         <span class="linkIcon">></span>
       </li>
-      <li @click="linkTo('buildCard')">
+      <!-- <li @click="linkTo('buildCard')">
         <div>
           <img src="./img/build.png" />
           <span class="title">初诊建档</span>
@@ -44,7 +44,7 @@
           <span class="title">绑定社保卡</span>
         </div>
         <span class="linkIcon">></span>
-      </li>
+      </li> -->
     </ul>
     <Tabbar></Tabbar>
   </div>
@@ -71,8 +71,8 @@ export default {
     }
   },
   methods: {
-    linkTo (name, params) {
-      this.$router.push({name, params})
+    linkTo (name) {
+      this.$router.push({name})
     }
   },
   created () {

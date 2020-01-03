@@ -2,12 +2,27 @@
   <div class="sDept">
     <div class="searchbar">
       <img class="cancelIcon" src="./img/search.png" alt />
-      <input type="text" v-model="value" placeholder="搜索科室名称" @focus="focus" />
-      <div class="xIcon" :class="{show: value}" @click="clear">×</div>
-      <button class="cancel" :class="{show : isShow}" @click="cancel">取消</button>
-      <div class="resultList" :class="{show : isShow}">
-        <div v-if="searchResult.length===0 && value !== ''" class="noInfo">无相关科室信息</div>
-        <div v-for="(item,index) in searchResult" :key="index" @click="select(item.deptCode, item.deptName)">
+      <input
+        type="text"
+        v-model="value"
+        placeholder="搜索科室名称"
+        @focus="focus"
+      />
+      <div class="xIcon" :class="{ show: value }" @click="clear">×</div>
+      <button class="cancel" :class="{ show: isShow }" @click="cancel">
+        取消
+      </button>
+      <div class="resultList" :class="{ show: isShow }">
+        <img
+          class="noData"
+          v-if="searchResult.length === 0 && value !== ''"
+          src="./img/noData.png"
+        />
+        <div
+          v-for="(item, index) in searchResult"
+          :key="index"
+          @click="select(item.deptCode, item.deptName)"
+        >
           <mt-cell :title="item.deptName">
             <img class="icon" src="./img/deptIcon.png" />&gt;
           </mt-cell>
@@ -15,28 +30,30 @@
       </div>
     </div>
 
-    <div class="content" :class="{hidden: isShow}">
-
+    <div class="content" :class="{ hidden: isShow }">
       <mt-navbar v-model="selected" class="left_navbar">
-        <mt-tab-item id='0'>全院科室</mt-tab-item>
+        <mt-tab-item id="0">全院科室</mt-tab-item>
       </mt-navbar>
 
       <mt-tab-container v-model="selected" class="right_container">
         <mt-tab-container-item id="0">
-          <div v-for="(item,index) in deptList" :key="index" @click="select(item.deptCode, item.deptName)">
+          <div
+            v-for="(item, index) in deptList"
+            :key="index"
+            @click="select(item.deptCode, item.deptName)"
+          >
             <mt-cell :title="item.deptName">
               <img class="icon" src="./img/deptIcon.png" />&gt;
             </mt-cell>
           </div>
         </mt-tab-container-item>
       </mt-tab-container>
-
     </div>
   </div>
 </template>
 
 <script>
-import util from '@/assets/js/util'
+import PinyinEngine from 'pinyin-engine'
 export default {
   name: 'sDept',
   data () {
@@ -52,16 +69,18 @@ export default {
       if (this.value === '') {
         return []
       } else {
-        return this.deptList.filter((item) => { return item.deptName.indexOf(this.value) !== -1 })
+        return new PinyinEngine(this.deptList, ['deptName']).query(this.value)
       }
     }
   },
   created () {
-    util.http.post('/api/doctor/allDeptInfo').then(res => {
-      this.deptList = res.data.Records
-    }).catch((error) => {
-      console.log(error)
-    })
+    this.$post('/api/doctor/allDeptInfo')
+      .then(res => {
+        this.deptList = res.data.Records
+      })
+      .catch(error => {
+        console.log(error)
+      })
   },
   methods: {
     focus () {
@@ -75,8 +94,14 @@ export default {
       this.value = ''
     },
     select (deptCode, deptName) {
-      this.$store.commit('changeDept', { deptCode: '173', deptName: '内科门诊' })
-      this.$router.push({name: 'sDayDoc', params: { deptCode: '173', deptName: '内科门诊' }})
+      this.$store.commit('changeDept', {
+        deptCode: '173',
+        deptName: '内科门诊'
+      })
+      this.$router.push({
+        name: 'sDayDoc',
+        params: { deptCode: '173', deptName: '内科门诊' }
+      })
     }
   }
 }
@@ -159,8 +184,9 @@ export default {
       color: $color-title-black
     .show
       display: block
-    .noInfo
-      padding: 20px
+    .noData
+      width: 366px
+      margin: 100px 200px
   .content
     min-height: calc(100vh - 128px)
     width: 100%

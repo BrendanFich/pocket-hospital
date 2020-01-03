@@ -158,7 +158,7 @@ export default new Router({
           component: Container,
           children: [
             { path: '', component: CardManage },
-            { path: 'bindCard/:cardTypeWord', name: 'bindCard', component: BindCard },
+            { path: 'bindCard', name: 'bindCard', component: BindCard },
             { path: 'buildCard', name: 'buildCard', component: BuildCard },
             { path: 'cardInfo/:cardNo', name: 'cardInfo', component: CardInfo }
           ]

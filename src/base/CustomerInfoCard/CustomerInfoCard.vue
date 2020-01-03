@@ -1,6 +1,12 @@
 <template>
   <div class="customerInfoCard">
-    <div class="banded" v-if="visitName">
+    <div class="firstUse" v-if="!visitName">
+      <router-link class="text" to="/mine/cardManage/bindCard/%E5%B0%B1%E8%AF%8A%E5%8D%A1">
+        添加就诊人，点击绑定
+      </router-link>
+    </div>
+
+    <div class="banded" v-else>
       <div>
         <img src="./img/greenAvatar.png" />
         <div class="textInfo">
@@ -14,37 +20,30 @@
         <span class="changeCard">切换诊疗卡></span>
       </router-link>
     </div>
-    <router-link class="firstUse" v-else to="/mine/cardManage/bindCard/%E5%B0%B1%E8%AF%8A%E5%8D%A1">
-      <span>请先绑卡，点击添加</span>
-    </router-link>
+
   </div>
 </template>
 
 <script>
-import util from '@/assets/js/util'
 export default {
   name: 'customerInfoCard',
   data () {
     return {
-      visitName: '',
-      visitCardNo: '',
-      socialCardNo: ''
+    }
+  },
+  computed: {
+    visitName () {
+      return this.$store.state.visitName
+    },
+    visitCardNo () {
+      return this.$store.state.visitCardNo
+    },
+    socialCardNo () {
+      return this.$store.state.socialCardNo
     }
   },
   created () {
-    util.http.post('/api/user/vx_info').then(res => {
-      this.visitName = res.data.info.visitName
-      this.visitCardNo = res.data.info.visitCardNo
-      this.socialCardNo = res.data.info.socialCardNo
-      this.$store.commit('updateDefaultCard', res.data.info.visitName, res.data.info.visitCardNo, res.data.info.socialCardNo)
-      if (res.data.info.visitCardNo !== '') {
-        this.$emit('sendCardNo', res.data.info.visitCardNo)
-      } else {
-        this.$emit('sendCardNo', res.data.info.socialCardNo)
-      }
-    }).catch((error) => {
-      console.log(error)
-    })
+    this.$store.commit('updateUserInfo')
   }
 }
 </script>
@@ -93,15 +92,15 @@ export default {
     }
   }
   .firstUse {
-    height: 200px;
-    background: #fff;
+    height: 150px;
+    background: #09cf74;
     display: flex;
     justify-content: center;
     align-items: center;
-    span {
+    .text {
       font-size: 30px;
-      color: #666;
-      border: 3px solid #09cf74;
+      color: #fff;
+      border: 3px solid #fff;
       padding: 20px 30px;
       border-radius: 30px;
     }

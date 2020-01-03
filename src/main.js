@@ -9,6 +9,7 @@ import util from '@/assets/js/util'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 import store from './vuex/store'
+import moment from 'moment'
 // import VConsole from 'vconsole'
 // const vConsole = new VConsole()
 // console.log(vConsole.version)
@@ -16,9 +17,10 @@ import store from './vuex/store'
 Vue.use(VueAwesomeSwiper)
 Vue.use(MintUI)
 
-Vue.prototype.http = util.http
-Vue.prototype.getUrlParam = util.getUrlParam
+Vue.prototype.$post = util.http.post
 Vue.prototype.wxsdk = wxsdk
+
+moment.locale('zh-cn')
 
 Vue.config.productionTip = false
 router.beforeEach((to, from, next) => {

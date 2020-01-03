@@ -86,7 +86,7 @@
 <script>
 import Tabbar from '@/base/Tabbar/Tabbar'
 import wx from 'weixin-js-sdk'
-import config from '@/assets/js/config'
+import { latitude, longitude, hospitalName, address } from '@/assets/js/config'
 
 export default {
   name: 'index',
@@ -100,10 +100,10 @@ export default {
       console.log('click')
       wx.ready(function () {
         wx.openLocation({
-          latitude: config.latitude,
-          longitude: config.longitude,
-          name: config.hospitalName,
-          address: config.address,
+          latitude,
+          longitude,
+          name: hospitalName,
+          address,
           scale: 18
         })
       })
@@ -200,7 +200,8 @@ export default {
           width: 72px
   .navs3
     width: 100%
-    padding-bottom: 110px
+    padding-bottom: 98px
+    flex: 1
     h2
       color: $color-title-black
       font-size: 30px

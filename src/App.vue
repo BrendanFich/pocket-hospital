@@ -5,8 +5,7 @@
 </template>
 
 <script>
-import util from '@/assets/js/util'
-import config from '@/assets/js/config'
+import { appId } from '@/assets/js/config'
 import wx from 'weixin-js-sdk'
 
 export default {
@@ -30,19 +29,18 @@ export default {
       this.errorMsg = decodeURIComponent(this.getUrlParam('msg'))
       console.log(this.errorMsg)
       this.$toast({
-        message: '登录失败信息',
+        message: '登录失败',
         duration: 1000,
         className: 'toast'
       })
       window.location.href = window.location.href.split('?')[0]
     }
-    // this.wxAuth()
     let wxSign = window.localStorage.getItem('wxSign')
     let _this = this
     if (wxSign) {
       wx.config({
         debug: false,
-        appId: config.appId,
+        appId,
         timestamp: wxSign.split('&')[0],
         nonceStr: wxSign.split('&')[1],
         signature: wxSign.split('&')[2],
@@ -80,40 +78,8 @@ export default {
     })
   },
   methods: {
-    // wxAuth () {
-    //   util.http
-    //     .post('/api/user/vx_perpare', {
-    //       getMode: 'authorize'
-    //     })
-    //     .then(res1 => {
-    //       util.http
-    //         .post('/api/user/vx_info')
-    //         .then(res2 => {
-    //           if (res2.code === 401) {
-    //             window.location.href =
-    //               'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' +
-    //               res1.data.appid +
-    //               '&redirect_uri=' +
-    //               res1.data.redirect_uri +
-    //               '&response_type=' +
-    //               res1.data.response_type +
-    //               '&scope=' +
-    //               res1.data.scope +
-    //               '&state=' +
-    //               res1.data.state +
-    //               res1.data.wechat_redirect
-    //           }
-    //         })
-    //         .catch(error => {
-    //           console.log(error)
-    //         })
-    //     })
-    //     .catch(error => {
-    //       console.log(error)
-    //     })
-    // },
     getSign () {
-      util.http
+      this.$http
         .post('/api/user/vx_sign', { url: location.href.split('#')[0] })
         .then(res => {
           console.log(res)
@@ -124,7 +90,7 @@ export default {
           )
           wx.config({
             debug: false,
-            appId: config.appId,
+            appId,
             timestamp: res.data.timestamp,
             nonceStr: res.data.nonceStr,
             signature: res.data.signtrue,

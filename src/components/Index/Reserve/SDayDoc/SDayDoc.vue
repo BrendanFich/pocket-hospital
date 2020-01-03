@@ -5,14 +5,7 @@
         <span class="department">{{$route.params.deptName}}</span>
         <span class="selectedDate">已选:{{date}}</span>
       </div>
-      <week-slider
-        class="week_slider"
-        @dateClick="dateClickhandler"
-        :defaultDate="date"
-        :showYear="false"
-        activeBgColor="#09CF74"
-        todayBgColor="#eee"
-      ></week-slider>
+      <week v-on:changeDate='changeDate'></week>
       <div class="doctorItems">
         <img class="noData" v-if="showDoctors.length === 0" src="./img/noData.png" />
         <div
@@ -45,8 +38,7 @@
 </template>
 
 <script>
-import moment from 'moment'
-import WeekSlider from '@/base/WeekSlider/WeekSlider'
+import Week from '@/base/Week/Week'
 import util from '@/assets/js/util'
 
 export default {
@@ -55,7 +47,7 @@ export default {
     return {
       tbSelected: '',
       deptInfo: '',
-      date: moment(new Date()).format('YYYY-MM-DD'),
+      date: '',
       showDoctors: []
     }
   },
@@ -66,11 +58,11 @@ export default {
       })
     }
   },
-  components: { WeekSlider },
+  components: { Week },
   methods: {
-    dateClickhandler (e) {
-      this.date = e
-      this.getRegSource(e)
+    changeDate (val) {
+      this.date = val
+      this.getRegSource(val)
     },
     select (item) {
       let timeFlagNo = ''

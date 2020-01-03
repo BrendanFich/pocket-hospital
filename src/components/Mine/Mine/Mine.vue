@@ -85,7 +85,8 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .mine
-  @include page($color-page-background)
+  background: $color-page-background
+  min-height: calc(100vh - 98px)
   .orderList
     margin-top: 22px
     background: $color-white

@@ -4,7 +4,7 @@ import util from '@/assets/js/util'
 const mutations = {
   updateUserInfo (state) {
     util.http.post('/api/user/vx_info').then(res => {
-      if (res.data.code === 0) {
+      if (res.code === 0) {
         state.userInfo = res.data.info
         state.visitCardNo = res.data.info.visitCardNo
         state.visitName = res.data.info.visitName
