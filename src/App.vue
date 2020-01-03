@@ -79,8 +79,7 @@ export default {
   },
   methods: {
     getSign () {
-      this.$http
-        .post('/api/user/vx_sign', { url: location.href.split('#')[0] })
+      this.$post('/api/user/vx_sign', { url: location.href.split('#')[0] })
         .then(res => {
           console.log(res)
 
