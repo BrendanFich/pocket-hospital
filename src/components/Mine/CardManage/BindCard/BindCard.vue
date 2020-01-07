@@ -9,6 +9,7 @@
       <mt-field label="性别" v-model="patSex" placeholder="请选择性别" :disableClear="true" :readonly="true"></mt-field>
       <div class="isLink">></div>
     </div>
+    <mt-field label="出生日期" type="string" v-model="birthday" :disableClear="true" :readonly="true"></mt-field>
     <mt-actionsheet :actions="actions" v-model="sheetVisible"></mt-actionsheet>
     <div class="attention">
       <h2>注意事项</h2>
@@ -17,13 +18,10 @@
       </p>
     </div>
     <mt-button type="primary" class="btn" @click.native="handleClick">确认绑定</mt-button>
-    <!-- <Tabbar></Tabbar> -->
   </div>
 </template>
 
 <script>
-// import Tabbar from '@/base/Tabbar/Tabbar'
-
 export default {
   name: 'bindCard',
   data () {
@@ -34,6 +32,7 @@ export default {
       patIdNo: '',
       patName: '',
       address: '',
+      birthday: '',
       patSex: '',
       actions: [
         { name: '男', method: () => { this.patSex = '男' } },
@@ -41,9 +40,7 @@ export default {
       ]
     }
   },
-  // components: { Tabbar },
   created () {
-    // this.$store.commit('updateUserPatInfo')
   },
   computed: {
     cardType () {
@@ -57,7 +54,8 @@ export default {
     handleClick () {
       const duration = 1500
       const className = 'toast'
-      const p = /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
+      // const p = /^[1-9]\d{5}(18|19|20)\d{2}((0[1-9])|(1[0-2]))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$/
+      const p = /(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}$)/
       if (this.patName && this.phone && this.patIdNo && this.address && this.patSex) {
         let reqData = {
           patName: this.patName,
@@ -65,28 +63,15 @@ export default {
           patIdNo: this.patIdNo,
           address: this.address,
           patSex: this.patSex,
-          patIdType: '1'
+          patIdType: '1',
+          birthday: this.birthday
         }
         if (!p.test(this.patIdNo)) {
           this.$toast({ message: '身份证号格式错误', duration, className })
         } else {
-          reqData.birthday = this.patIdNo.substring(6, 10) + '-' + this.patIdNo.substring(10, 12) + '-' + this.patIdNo.substring(12, 14)
           this.$post('/api/pat/bindCard/auto', reqData)
             .then(res => {
               console.log(res)
-              // if (res.code === 0) {
-              //   if (res.data.Code === '-1' && res.data.Message === '卡号已存在') {
-              //     this.$toast({ message: res.data.Message, duration, className })
-              //   } else {
-              //     this.$store.commit('updateUserInfo')
-              //     this.$toast({ message: '绑定成功', duration, className })
-              //     this.$router.push({ path: '/mine/cardManage' })
-              //   }
-              // } else if (res.code === 500 && res.msg === '卡号已绑定') {
-              //   this.$toast({ message: res.msg, duration, className })
-              // } else if (res.code === 400 && res.msg === 'PatientId参数必填;') {
-              //   this.$toast({ message: '未建档，请先建档', duration: 2000, className })
-              // }
               if (res.code === 0) {
                 this.$toast({ message: '绑定成功', duration, className })
                 this.$router.push({ path: '/mine/cardManage' })
@@ -98,6 +83,17 @@ export default {
         }
       } else {
         this.$toast({ message: '请完整填写所有信息', duration, className })
+      }
+    }
+  },
+  watch: {
+    patIdNo (val) {
+      if (val.length === 15) {
+        this.birthday = '19' + val.substring(6, 8) + '-' + val.substring(8, 10) + '-' + val.substring(10, 12)
+      } else if (val.length === 18) {
+        this.birthday = val.substring(6, 10) + '-' + val.substring(10, 12) + '-' + val.substring(12, 14)
+      } else {
+        this.birthday = ''
       }
     }
   }

@@ -2,18 +2,18 @@ import util from '@/assets/js/util'
 // import { Toast } from 'mint-ui'
 
 const mutations = {
-  updateUserInfo (state) {
-    util.http.post('/api/user/vx_info').then(res => {
-      if (res.code === 0) {
-        state.userInfo = res.data.info
-        state.visitCardNo = res.data.info.visitCardNo
-        state.visitName = res.data.info.visitName
-        state.socialCardNo = res.data.info.socialCardNo
-      }
-    }).catch((error) => {
-      console.log(error)
-    })
-  },
+  // updateUserInfo (state) {
+  //   util.http.post('/api/user/vx_info').then(res => {
+  //     if (res.code === 0) {
+  //       state.userInfo = res.data.info
+  //       state.visitCardNo = res.data.info.visitCardNo
+  //       state.visitName = res.data.info.visitName
+  //       state.pat_list = res.data.info.pat_list
+  //     }
+  //   }).catch((error) => {
+  //     console.log(error)
+  //   })
+  // },
   updateDefaultCard (state, visitName, visitCardNo, socialCardNo) {
     state.visitName = visitName
     state.visitCardNo = visitCardNo

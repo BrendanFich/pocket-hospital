@@ -12,7 +12,7 @@
       :disableClear="true"
     ></mt-field>
     <mt-field label="性别" v-model="cardInfo.patSex" :readonly="true" :disableClear="true"></mt-field>
-    <mt-field label="生日" v-model="cardInfo.birthday" :readonly="true" :disableClear="true"></mt-field>
+    <mt-field label="生日" v-model="cardInfo.patBirth" :readonly="true" :disableClear="true"></mt-field>
     <mt-button type="primary" class="btn" @click.native="setDefault">设为默认</mt-button>
     <mt-button type="primary" class="btn" @click.native="untie">解绑</mt-button>
   </div>
@@ -23,24 +23,22 @@ export default {
   name: 'cardInfo',
   data () {
     return {
-      patInfoNobind: [],
-      patInfoBinded: [],
-      cardInfo: ''
+      cardInfo: {}
     }
   },
   created () {
-    this.getPatCardInfo()
+    this.$post('/api/user/vx_info').then(res => {
+      if (res.code === 0) {
+        this.cardInfo = res.data.info.pat_list.filter(item => item.visitCardNo === this.$route.params.cardNo)[0]
+        this.visitCardNo = res.data.info.visitCardNo
+      }
+    }).catch((error) => {
+      console.log(error)
+    })
   },
   computed: {
-
   },
   methods: {
-    getPatCardInfo () {
-      this.$post('/api/pat/pat_info')
-        .then(res => {
-          this.cardInfo = res.data.filter(item => item.visitCardNo === this.$route.params.cardNo)[0]
-        })
-    },
     setDefault () {
       const duration = 1500
       const className = 'toast'
@@ -50,7 +48,6 @@ export default {
           patName: this.cardInfo.patName
         })
         .then(res => {
-          // this.$store.commit('updateUserInfo')
           if (res.code === 0) {
             this.$toast({ message: '设置成功', duration, className })
             this.$router.go(-1)
@@ -62,13 +59,15 @@ export default {
     },
     untie () {
       this.$post('/api/pat/cancelCard', {
-        PatientId: Number(this.cardInfo.mPIId),
+        PatientId: Number(this.cardInfo.patId),
         CardType: '1',
         patCardNo: this.$route.params.cardNo
       })
         .then(res => {
-          this.$toast({ message: '解绑成功', duration: 1500, className: 'toast' })
-          this.$router.go(-1)
+          if (res.code === 0) {
+            this.$toast({ message: '解绑成功', duration: 1500, className: 'toast' })
+            this.$router.go(-1)
+          }
         })
     }
   }

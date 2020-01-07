@@ -1,10 +1,9 @@
 <template>
   <div class="reserve">
-    <router-view v-if="$store.state.visitName !== ''"></router-view>
+    <router-view></router-view>
   </div>
 </template>
 <script>
-import util from '@/assets/js/util'
 
 export default {
   name: 'reserve',
@@ -12,14 +11,9 @@ export default {
     return {}
   },
   created () {
-    util.http.post('/api/user/vx_info').then(res => {
-      this.$store.commit('updateDefaultCard', res.data.info.visitName, res.data.info.visitCardNo, res.data.info.socialCardNo)
-      if (this.$store.state.visitName === '') {
-        this.bindCardNotice()
-      }
-    }).catch((error) => {
-      console.log(error)
-    })
+    if (this.$store.state.userInfo.visitName === '') {
+      this.bindCardNotice()
+    }
   },
   beforeDestroy () {
     this.$messagebox.close(false)

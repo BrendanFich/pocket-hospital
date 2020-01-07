@@ -64,13 +64,13 @@ export default {
       if (item.leftNum > 0) {
         this.$router.push({
           name: 'sTime',
-          params: { doctorCode: item.doctorCode, date: this.date, timeFlagNo: item.timeFlag }
+          params: { doctorCode: Number(item.doctorCode), date: this.date, timeFlagNo: item.timeFlag }
         })
       }
     },
     getRegSource (date) {
       this.$post('/api/doctor/getRegSource', {
-        deptCode: this.$route.params.deptCode,
+        deptCode: this.$route.params.deptCode.toString(),
         date
       })
         .then(res => {

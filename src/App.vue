@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { appId } from '@/assets/js/config'
+import { appId, authUrl } from '@/assets/js/config'
 import wx from 'weixin-js-sdk'
 
 export default {
@@ -28,41 +28,41 @@ export default {
     if (this.getUrlParam('msg')) {
       this.errorMsg = decodeURIComponent(this.getUrlParam('msg'))
       console.log(this.errorMsg)
-      this.$toast({
-        message: '登录失败',
-        duration: 1000,
-        className: 'toast'
-      })
-      window.location.href = window.location.href.split('?')[0]
-    }
-    let wxSign = window.localStorage.getItem('wxSign')
-    let _this = this
-    if (wxSign) {
-      wx.config({
-        debug: false,
-        appId,
-        timestamp: wxSign.split('&')[0],
-        nonceStr: wxSign.split('&')[1],
-        signature: wxSign.split('&')[2],
-        jsApiList: [
-          'openLocation',
-          'getLocation',
-          'updateAppMessageShareData',
-          'chooseWXPay'
-        ]
-      })
-      wx.error(function (res) {
-        if (res.errMsg.includes('invalid signature')) {
-          if (_this.count < 1) {
-            _this.getSign()
-            _this.count++
-          }
-        }
-      })
+      this.$messagebox.alert(this.errorMsg, '登录失败')
+        .then(action => {
+          window.location.href = authUrl
+        })
     } else {
-      this.getSign()
+      window.location.href = window.location.href.split('?')[0]
+      let wxSign = window.localStorage.getItem('wxSign')
+      let _this = this
+      if (wxSign) {
+        wx.config({
+          debug: false,
+          appId,
+          timestamp: wxSign.split('&')[0],
+          nonceStr: wxSign.split('&')[1],
+          signature: wxSign.split('&')[2],
+          jsApiList: [
+            'openLocation',
+            'getLocation',
+            'updateAppMessageShareData',
+            'chooseWXPay'
+          ]
+        })
+        wx.error(function (res) {
+          if (res.errMsg.includes('invalid signature')) {
+            if (_this.count < 1) {
+              _this.getSign()
+              _this.count++
+            }
+          }
+        })
+      } else {
+        this.getSign()
+      }
+      this.TestToken()
     }
-    this.$store.commit('updateUserInfo')
 
     if (sessionStorage.getItem('store')) {
       this.$store.replaceState(
@@ -78,6 +78,12 @@ export default {
     })
   },
   methods: {
+    TestToken () {
+      this.$post('/api/user/vx_info').then(res => {
+      }).catch((error) => {
+        console.log(error)
+      })
+    },
     getSign () {
       this.$post('/api/user/vx_sign', { url: location.href.split('#')[0] })
         .then(res => {

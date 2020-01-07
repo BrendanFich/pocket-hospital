@@ -1,12 +1,12 @@
 <template>
   <div class="cardManage">
-    <div class="orderList" @click="linkTo('bindCard')">
+    <router-link class="addCard" to="/mine/cardManage/bindCard">
       <div>
         <img src="./img/build.png" />
         <span class="title">添加就诊人</span>
       </div>
       <span class="linkIcon">></span>
-    </div>
+    </router-link>
 
     <h2>就诊卡管理</h2>
     <ul class="cardList">
@@ -53,28 +53,24 @@ export default {
   name: 'cardManage',
   data () {
     return {
-      bindedCardList: []
+      bindedCardList: [],
+      defaultCardNo: ''
     }
   },
   components: { Tabbar },
   computed: {
-    defaultCardNo () {
-      return this.$store.state.userInfo.visitCardNo
-    }
   },
   methods: {
-    linkTo (name) {
-      this.$router.push({ name })
-    }
   },
   created () {
-    this.$post('/api/pat/pat_info')
-      .then(res => {
-        this.bindedCardList = res.data
-      })
-      .catch(error => {
-        console.log(error)
-      })
+    this.$post('/api/user/vx_info').then(res => {
+      if (res.code === 0) {
+        this.bindedCardList = res.data.info.pat_list
+        this.defaultCardNo = res.data.info.visitCardNo
+      }
+    }).catch((error) => {
+      console.log(error)
+    })
   }
 }
 </script>
@@ -90,6 +86,7 @@ export default {
     padding: 25px 30px
   .cardList
     overflow-y: auto
+    max-height: 1200px
     .customerInfoCard
       border-bottom: 1px solid #f2f2f2
       padding: 47px 50px 46px 31px
@@ -126,7 +123,7 @@ export default {
       .isLink
         color: #5adba3
         font-size: 24px
-  .orderList
+  .addCard
     background: $color-white
     height: 100px
     padding: 0 54px 0 43px

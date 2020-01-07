@@ -1,6 +1,6 @@
 <template>
   <div class="customerInfoCard">
-    <div class="firstUse" v-if="!visitName">
+    <div class="firstUse" v-if="!visitCardNo">
       <router-link class="text" to="/mine/cardManage/bindCard">
         添加就诊人，点击绑定
       </router-link>
@@ -12,8 +12,7 @@
         <div class="textInfo">
           <span class="name">{{visitName}}</span>
           <span class="status">默认</span>
-          <p class="cardNumber" v-if="visitCardNo !== ''">就诊卡号：{{visitCardNo}}</p>
-          <p class="cardNumber" v-if="socialCardNo !== ''">社保卡号：{{socialCardNo}}</p>
+          <p class="cardNumber">就诊卡号：{{visitCardNo}}</p>
         </div>
       </div>
       <router-link to="/mine/cardManage">
@@ -29,21 +28,21 @@ export default {
   name: 'customerInfoCard',
   data () {
     return {
+      visitName: '',
+      visitCardNo: ''
     }
   },
   computed: {
-    visitName () {
-      return this.$store.state.visitName
-    },
-    visitCardNo () {
-      return this.$store.state.visitCardNo
-    },
-    socialCardNo () {
-      return this.$store.state.socialCardNo
-    }
   },
   created () {
-    this.$store.commit('updateUserInfo')
+    this.$post('/api/user/vx_info').then(res => {
+      if (res.code === 0) {
+        this.visitName = res.data.info.visitName
+        this.visitCardNo = res.data.info.visitCardNo
+      }
+    }).catch((error) => {
+      console.log(error)
+    })
   }
 }
 </script>

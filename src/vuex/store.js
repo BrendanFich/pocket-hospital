@@ -4,13 +4,6 @@ import mutations from './mutations'
 
 Vue.use(Vuex)
 let state = {
-  userInfo: {},
-  patList: [],
-  visitCardNo: '',
-  visitName: '',
-  socialCardNo: '',
-  patInfoBinded: [],
-  patInfoNobind: [],
   selectedDeptCode: '',
   selectedDeptName: '',
   selectedDocCode: '',

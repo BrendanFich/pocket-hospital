@@ -95,12 +95,12 @@ export default {
     },
     select (deptCode, deptName) {
       this.$store.commit('changeDept', {
-        deptCode: '173',
-        deptName: '内科门诊'
+        deptCode,
+        deptName
       })
       this.$router.push({
         name: 'sDayDoc',
-        params: { deptCode: '173', deptName: '内科门诊' }
+        params: { deptCode, deptName }
       })
     }
   }

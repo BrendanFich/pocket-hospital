@@ -33,7 +33,9 @@ http.ajax.interceptors.response.use(
         duration: 1000,
         className: 'toast'
       })
-      window.location.href = authUrl
+      if (process.env.NODE_ENV === 'production') {
+        window.location.href = authUrl
+      }
     } else if (res.data.code === 500) {
       Toast({
         message: res.data.msg,
