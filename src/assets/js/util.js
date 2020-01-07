@@ -6,7 +6,7 @@ let http = {}
 http.ajax = axios.create()
 
 // 请求超时时间
-http.ajax.defaults.timeout = 5000
+http.ajax.defaults.timeout = 20000
 
 // 请求拦截
 http.ajax.interceptors.request.use(
@@ -45,6 +45,7 @@ http.ajax.interceptors.response.use(
   },
   err => {
     Indicator.close()
+    console.error(err)
     // 若请求超时，再请求一次
     let originalRequest = err.config
     if (
@@ -52,8 +53,13 @@ http.ajax.interceptors.response.use(
       err.message.indexOf('timeout') !== -1 &&
       !originalRequest._retry
     ) {
-      originalRequest._retry = true
-      return axios.request(originalRequest)
+      Toast({
+        message: '请求超时',
+        duration: 1000,
+        className: 'toast'
+      })
+      // originalRequest._retry = true
+      // return axios.request(originalRequest)
     }
   }
 )

@@ -68,25 +68,16 @@ export default {
         })
     },
     getRegSource () {
-      // let self = this
-      let timeFlag
-      if (this.$route.params.timeFlagNo === '1') {
-        timeFlag = '上午班'
-      }
-      if (this.$route.params.timeFlagNo === '2') {
-        timeFlag = '下午班'
-      }
       util.http
         .post('/api/doctor/getRegSource', {
           doctorCode: this.$route.params.doctorCode,
           deptCode: this.$store.state.selectedDeptCode,
-          endDate: this.$route.params.date
+          date: this.$route.params.date
         })
         .then(res => {
-          this.workTimeList = res.data[Object.keys(res.data)[0]].filter((item) => {
-            return item.timeFlag === timeFlag
+          this.workTimeList = res.data.filter((item) => {
+            return item.timeFlag === this.$route.params.timeFlagNo
           })
-          console.log(this.workTimeList)
         })
         .catch(error => {
           console.log(error)

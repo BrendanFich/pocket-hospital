@@ -1,7 +1,7 @@
 <template>
   <div class="customerInfoCard">
     <div class="firstUse" v-if="!visitName">
-      <router-link class="text" to="/mine/cardManage/bindCard/%E5%B0%B1%E8%AF%8A%E5%8D%A1">
+      <router-link class="text" to="/mine/cardManage/bindCard">
         添加就诊人，点击绑定
       </router-link>
     </div>

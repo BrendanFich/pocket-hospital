@@ -43,9 +43,7 @@ export default {
   },
   // components: { Tabbar },
   created () {
-    this.patIdNo = this.$route.params.patIdNo ? this.$route.params.patIdNo : ''
-    this.patName = this.$route.params.patName ? this.$route.params.patName : ''
-    this.$store.commit('updateUserPatInfo')
+    // this.$store.commit('updateUserPatInfo')
   },
   computed: {
     cardType () {

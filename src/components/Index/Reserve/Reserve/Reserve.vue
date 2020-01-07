@@ -21,6 +21,9 @@ export default {
       console.log(error)
     })
   },
+  beforeDestroy () {
+    this.$messagebox.close(false)
+  },
   methods: {
     bindCardNotice () {
       let text = `
@@ -31,7 +34,7 @@ export default {
       this.$messagebox
         .confirm(text)
         .then(action => {
-          this.$router.push('/mine/cardManage/buildCard')
+          this.$router.replace('/mine/cardManage/bindCard')
         })
         .catch(err => {
           console.log(err)

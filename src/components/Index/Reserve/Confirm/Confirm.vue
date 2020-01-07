@@ -1,6 +1,6 @@
 <template>
   <div class="confirm">
-    <CustomerInfoCard v-on:sendCardNo='getPatCardNo'></CustomerInfoCard>
+    <CustomerInfoCard></CustomerInfoCard>
     <div class="orderInfo">
       <ul>
         <li>
@@ -46,9 +46,9 @@ export default {
     }
   },
   methods: {
-    getPatCardNo (patCardNo) {
-      this.patCardNo = patCardNo
-    },
+    // getPatCardNo (patCardNo) {
+    //   this.patCardNo = patCardNo
+    // },
     payComfirm (ledgerSn) {
       util.http
         .post('/api/doctor/payComfirm', {ledgerSn})
@@ -90,7 +90,7 @@ export default {
         timeFlag: this.$store.state.timeFlag,
         regFee: this.$store.state.price.toString(),
         patName: this.$store.state.visitName,
-        patCardNo: this.patCardNo,
+        patCardNo: this.$store.state.visitCardNo,
         beginTime: this.$store.state.beginTime,
         endTime: this.$store.state.endTime,
         hostpitalName: '全院',

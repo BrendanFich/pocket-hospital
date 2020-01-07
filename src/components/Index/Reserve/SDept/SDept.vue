@@ -76,7 +76,7 @@ export default {
   created () {
     this.$post('/api/doctor/allDeptInfo')
       .then(res => {
-        this.deptList = res.data.Records
+        this.deptList = res.data
       })
       .catch(error => {
         console.log(error)
@@ -188,7 +188,7 @@ export default {
       width: 366px
       margin: 100px 200px
   .content
-    min-height: calc(100vh - 128px)
+    height: calc(100vh - 128px)
     width: 100%
     display: flex
     justify-content: center
@@ -215,6 +215,7 @@ export default {
     .right_container
       width: 589px
       background: $color-white
+      overflow-y: scroll
       .noData
         width: 366px
         margin-top: 50px
