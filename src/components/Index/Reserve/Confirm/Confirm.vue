@@ -59,7 +59,7 @@ export default {
       this.$post('/api/doctor/payComfirm', {ledgerSn})
         .then(res => {
           console.log(res)
-          this.wxPay(res.data.Records)
+          this.wxPay(res.data)
         })
         .catch(error => {
           console.log(error)
