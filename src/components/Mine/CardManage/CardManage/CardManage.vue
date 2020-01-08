@@ -1,12 +1,12 @@
 <template>
   <div class="cardManage">
-    <router-link class="addCard" to="/mine/cardManage/bindCard">
+    <div class="addCard" @click="linkTo('/mine/cardManage/bindCard')" >
       <div>
         <img src="./img/build.png" />
         <span class="title">添加就诊人</span>
       </div>
       <span class="linkIcon">></span>
-    </router-link>
+    </div>
 
     <h2>就诊卡管理</h2>
     <ul class="cardList">
@@ -42,12 +42,10 @@
       </router-link>
     </ul>
 
-    <Tabbar></Tabbar>
   </div>
 </template>
 
 <script>
-import Tabbar from '@/base/Tabbar/Tabbar'
 
 export default {
   name: 'cardManage',
@@ -57,10 +55,12 @@ export default {
       defaultCardNo: ''
     }
   },
-  components: { Tabbar },
   computed: {
   },
   methods: {
+    linkTo (path) {
+      this.$router.push(path)
+    }
   },
   created () {
     this.$post('/api/user/vx_info').then(res => {

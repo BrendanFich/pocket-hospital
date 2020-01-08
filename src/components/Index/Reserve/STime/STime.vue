@@ -71,7 +71,7 @@ export default {
       this.$post('/api/doctor/getRegSource', {
         doctorCode: this.$store.state.doctorCode.toString(),
         deptCode: this.$store.state.deptCode.toString(),
-        date: this.$store.state.date
+        date: this.$store.state.beginTime.split(' ')[0]
       })
         .then(res => {
           this.workTimeList = res.data.filter((item) => {

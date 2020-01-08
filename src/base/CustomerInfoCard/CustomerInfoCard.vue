@@ -16,7 +16,7 @@
         </div>
       </div>
       <router-link to="/mine/cardManage">
-        <span class="changeCard">切换诊疗卡></span>
+        <span class="changeCard">切换就诊卡></span>
       </router-link>
     </div>
 
@@ -32,20 +32,39 @@ export default {
       visitCardNo: ''
     }
   },
+  props: {
+    temporaryCardNo: String,
+    temporaryCardPatname: String
+  },
   computed: {
   },
   created () {
-    this.$post('/api/user/vx_info').then(res => {
-      if (res.code === 0) {
-        this.visitName = res.data.info.visitName
-        this.visitCardNo = res.data.info.visitCardNo
-        this.$emit('visitName', res.data.info.visitName)
-        this.$emit('visitCardNo', res.data.info.visitCardNo)
-      }
-    }).catch((error) => {
-      console.log(error)
-    })
+    if (this.temporaryCardNo) {
+      this.visitName = this.temporaryCardPatname
+      this.visitCardNo = this.temporaryCardNo
+      this.$emit('visitName', this.temporaryCardPatname)
+      this.$emit('visitCardNo', this.temporaryCardNo)
+    } else {
+      this.$post('/api/user/vx_info').then(res => {
+        if (res.code === 0) {
+          this.visitName = res.data.info.visitName
+          this.visitCardNo = res.data.info.visitCardNo
+          this.$emit('visitName', res.data.info.visitName)
+          this.$emit('visitCardNo', res.data.info.visitCardNo)
+        }
+      }).catch((error) => {
+        console.log(error)
+      })
+    }
   }
+  // watch: {
+  //   temporaryCardNo (val) {
+  //     this.visitCardNo = val
+  //   },
+  //   temporaryCardPatname (val) {
+  //     this.visitName = val
+  //   }
+  // }
 }
 </script>
 

@@ -1,6 +1,6 @@
 <template>
   <div class="confirm">
-    <CustomerInfoCard v-on:visitName="getVisitName" v-on:visitCardNo="getVisitCardNo"></CustomerInfoCard>
+    <CustomerInfoCard @visitName="getVisitName" @visitCardNo="getVisitCardNo" :temporaryCardNo= temporaryCardNo :temporaryCardPatname = temporaryCardPatname></CustomerInfoCard>
     <div class="orderInfo">
       <ul>
         <li>
@@ -35,7 +35,6 @@
 
 <script>
 import CustomerInfoCard from '@/base/CustomerInfoCard/CustomerInfoCard'
-import util from '@/assets/js/util'
 import wx from 'weixin-js-sdk'
 export default {
   name: 'confirm',
@@ -44,13 +43,12 @@ export default {
     return {
       patCardNo: '',
       visitName: '',
-      visitCardNo: ''
+      visitCardNo: '',
+      temporaryCardNo: '',
+      temporaryCardPatname: ''
     }
   },
   methods: {
-    // getPatCardNo (patCardNo) {
-    //   this.patCardNo = patCardNo
-    // },
     getVisitName (visitName) {
       this.visitName = visitName
     },
@@ -58,8 +56,7 @@ export default {
       this.visitCardNo = visitCardNo
     },
     payComfirm (ledgerSn) {
-      util.http
-        .post('/api/doctor/payComfirm', {ledgerSn})
+      this.$post('/api/doctor/payComfirm', {ledgerSn})
         .then(res => {
           console.log(res)
           this.wxPay(res.data.Records)
@@ -90,39 +87,21 @@ export default {
     },
     confirm () {
       let configdata = {
-        // deptCode: this.$store.state.selectedDeptCode.toString(),
-        // deptName: this.$store.state.selectedDeptName,
-        // doctorName: this.$store.state.selectedDocName,
-        // doctorCode: '0' + this.$store.state.selectedDocCode.toString(),
-        // scheduleDate: this.$store.state.selectedDate,
-        // timeFlag: this.$store.state.timeFlag,
-        // regFee: this.$store.state.price.toString(),
-        // patName: this.visitName,
-        // patCardNo: this.visitCardNo,
-        // beginTime: this.$store.state.beginTime,
-        // endTime: this.$store.state.endTime,
-        // hostpitalName: '全院',
-        // patCardType: (this.$store.state.visitCardNo === '') ? '2' : '1'
-        beginTime: this.$route.params.beginTime,
-        patCardNo: this.$route.params.visitCardNo,
-        deptCode: this.$route.params.deptCode.toString(),
-        doctorCode: this.$route.params.doctorCode.toString()
+        beginTime: this.$store.state.beginTime,
+        patCardNo: this.visitCardNo,
+        deptCode: this.$store.state.deptCode.toString(),
+        doctorCode: this.$store.state.doctorCode.toString()
       }
-      this.$indicator.open()
-      util.http
-        // .post('/api/doctor/currentDayRegister', configdata)
-        .post('/api/doctor/register', configdata)
+      this.$post('/api/doctor/register', configdata)
         .then(res => {
           if (res.code === 0) {
             this.$toast({
-              message: '提交失败',
+              message: '提交成功',
               duration: 1000,
               className: 'toast'
             })
-            this.payComfirm(res.data.Records[0].LedgerSn)
-            this.$indicator.close()
+            this.payComfirm(res.data.LedgerSn)
           } else {
-            this.$indicator.close()
             this.$toast({
               message: res.msg,
               duration: 1000,
@@ -131,12 +110,6 @@ export default {
           }
         })
         .catch(error => {
-          this.$indicator.close()
-          this.$toast({
-            message: '提交失败',
-            duration: 1000,
-            className: 'toast'
-          })
           console.log(error)
         })
     }
