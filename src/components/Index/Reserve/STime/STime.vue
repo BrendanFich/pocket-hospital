@@ -33,7 +33,6 @@
 </template>
 
 <script>
-import util from '@/assets/js/util'
 // import moment from 'moment'
 
 export default {
@@ -57,26 +56,26 @@ export default {
       return begin + '-' + end
     },
     getDocInfo () {
-      util.http
-        .post('/api/doctor/doc_info', {deptCode: this.$store.state.selectedDeptCode.toString(), doctorCode: (parseInt(this.$route.params.doctorCode) - 2).toString()})
+      this.$post('/api/doctor/doc_info', {deptCode: this.$store.state.deptCode, doctorCode: this.$store.state.doctorCode})
         .then(res => {
-          this.docInfo = res.data.Records[0]
-          this.$store.commit('changeDoc', {docCode: this.docInfo.doctorCode, docName: this.docInfo.doctorName})
+          if (res.code === 0 && res.data.Records[0]) {
+            this.docInfo = res.data.Records[0]
+            this.$store.commit('updateDoctorName', this.docInfo.doctorName)
+          }
         })
         .catch(error => {
           console.log(error)
         })
     },
     getRegSource () {
-      util.http
-        .post('/api/doctor/getRegSource', {
-          doctorCode: this.$route.params.doctorCode,
-          deptCode: this.$store.state.selectedDeptCode,
-          date: this.$route.params.date
-        })
+      this.$post('/api/doctor/getRegSource', {
+        doctorCode: this.$store.state.doctorCode.toString(),
+        deptCode: this.$store.state.deptCode.toString(),
+        date: this.$store.state.date
+      })
         .then(res => {
           this.workTimeList = res.data.filter((item) => {
-            return item.timeFlag === this.$route.params.timeFlagNo
+            return item.timeFlag === this.$store.state.timeFlag
           })
         })
         .catch(error => {
@@ -91,25 +90,10 @@ export default {
       }
     },
     select (item) {
-      let beginTime = item.beginTime.split(' ')[1].toString().split(':')
-      beginTime.pop()
-      let endTime = item.endTime.split(' ')[1].toString().split(':')
-      endTime.pop()
-      let time = beginTime + '-' + endTime
-      let timeFlag
-      if (item.timeFlag === '上午班') {
-        timeFlag = '1'
-      } else if (item.timeFlag === '下午班') {
-        timeFlag = '2'
-      } else {
-        timeFlag = '3'
-      }
       if (item.leftNum > 0) {
-        this.$store.commit('changeTime', time)
-        this.$store.commit('changeBeginTime', beginTime.join(':'))
-        this.$store.commit('changeEndTime', endTime.join(':'))
-        this.$store.commit('setPrice', item.Price)
-        this.$store.commit('changeTimeFlag', timeFlag)
+        this.$store.commit('updateBeginTime', item.beginTime)
+        this.$store.commit('updateEndTime', item.endTime)
+        this.$store.commit('updatePrice', item.Price)
         this.$router.push('/reserve/confirm')
       }
     }

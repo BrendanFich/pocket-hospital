@@ -39,6 +39,8 @@ export default {
       if (res.code === 0) {
         this.visitName = res.data.info.visitName
         this.visitCardNo = res.data.info.visitCardNo
+        this.$emit('visitName', res.data.info.visitName)
+        this.$emit('visitCardNo', res.data.info.visitCardNo)
       }
     }).catch((error) => {
       console.log(error)

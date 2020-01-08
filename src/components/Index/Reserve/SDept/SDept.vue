@@ -94,14 +94,10 @@ export default {
       this.value = ''
     },
     select (deptCode, deptName) {
-      this.$store.commit('changeDept', {
-        deptCode,
-        deptName
-      })
-      this.$router.push({
-        name: 'sDayDoc',
-        params: { deptCode, deptName }
-      })
+      this.$store.commit('updateArea', '全院')
+      this.$store.commit('updateDeptCode', deptCode)
+      this.$store.commit('updateDeptName', deptName)
+      this.$router.push('/reserve/sDayDoc')
     }
   }
 }

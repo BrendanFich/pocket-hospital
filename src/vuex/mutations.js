@@ -2,18 +2,6 @@ import util from '@/assets/js/util'
 // import { Toast } from 'mint-ui'
 
 const mutations = {
-  // updateUserInfo (state) {
-  //   util.http.post('/api/user/vx_info').then(res => {
-  //     if (res.code === 0) {
-  //       state.userInfo = res.data.info
-  //       state.visitCardNo = res.data.info.visitCardNo
-  //       state.visitName = res.data.info.visitName
-  //       state.pat_list = res.data.info.pat_list
-  //     }
-  //   }).catch((error) => {
-  //     console.log(error)
-  //   })
-  // },
   updateDefaultCard (state, visitName, visitCardNo, socialCardNo) {
     state.visitName = visitName
     state.visitCardNo = visitCardNo
@@ -53,31 +41,32 @@ const mutations = {
         console.log(error)
       })
   },
-  setPrice (state, price) {
-    state.price = price
+  updateDoctorCode (state, doctorCode) {
+    state.doctorCode = doctorCode
   },
-  changeDept (state, dept) {
-    state.selectedDeptCode = dept.deptCode
-    state.selectedDeptName = dept.deptName
+  updateDoctorName (state, doctorName) {
+    state.doctorName = doctorName
   },
-  changeDoc (state, doc) {
-    state.selectedDocCode = doc.docCode
-    state.selectedDocName = doc.docName
+  updateTimeFlag (state, timeFlag) {
+    state.timeFlag = timeFlag
   },
-  changeDate (state, date) {
-    state.selectedDate = date
-  },
-  changeTime (state, time) {
-    state.selectedTime = time
-  },
-  changeBeginTime (state, beginTime) {
+  updateBeginTime (state, beginTime) {
     state.beginTime = beginTime
   },
-  changeEndTime (state, endTime) {
+  updateEndTime (state, endTime) {
     state.endTime = endTime
   },
-  changeTimeFlag (state, timeFlag) {
-    state.timeFlag = timeFlag
+  updatePrice (state, Price) {
+    state.Price = Price
+  },
+  updateArea (state, area) {
+    state.area = area
+  },
+  updateDeptCode (state, deptCode) {
+    state.deptCode = deptCode
+  },
+  updateDeptName (state, deptName) {
+    state.deptName = deptName
   }
 }
 

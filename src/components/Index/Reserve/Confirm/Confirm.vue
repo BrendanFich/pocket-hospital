@@ -1,31 +1,31 @@
 <template>
   <div class="confirm">
-    <CustomerInfoCard></CustomerInfoCard>
+    <CustomerInfoCard v-on:visitName="getVisitName" v-on:visitCardNo="getVisitCardNo"></CustomerInfoCard>
     <div class="orderInfo">
       <ul>
         <li>
           <span class="key">院区</span>
-          <span class="value">全院</span>
+          <span class="value">{{$store.state.area}}</span>
         </li>
         <li>
           <span class="key">科室</span>
-          <span class="value">{{$store.state.selectedDeptName}}</span>
+          <span class="value">{{$store.state.deptName}}</span>
         </li>
         <li>
           <span class="key">医生</span>
-          <span class="value">{{$store.state.selectedDocName}}</span>
+          <span class="value">{{$store.state.doctorName}}</span>
         </li>
         <li>
           <span class="key">就诊日期</span>
-          <span class="value">{{$store.state.selectedDate}}</span>
+          <span class="value">{{$store.state.beginTime.split(' ')[0]}}</span>
         </li>
         <li>
           <span class="key">时间段</span>
-          <span class="value">{{$store.state.beginTime+ '-' + $store.state.endTime}}</span>
+          <span class="value">{{$store.state.beginTime.split(' ')[1]+ '-' + $store.state.endTime.split(' ')[1]}}</span>
         </li>
         <li>
           <span class="key">诊查费</span>
-          <span class="value">{{$store.state.price}}</span>
+          <span class="value">{{$store.state.Price}}</span>
         </li>
       </ul>
     </div>
@@ -42,13 +42,21 @@ export default {
   components: { CustomerInfoCard },
   data () {
     return {
-      patCardNo: ''
+      patCardNo: '',
+      visitName: '',
+      visitCardNo: ''
     }
   },
   methods: {
     // getPatCardNo (patCardNo) {
     //   this.patCardNo = patCardNo
     // },
+    getVisitName (visitName) {
+      this.visitName = visitName
+    },
+    getVisitCardNo (visitCardNo) {
+      this.visitCardNo = visitCardNo
+    },
     payComfirm (ledgerSn) {
       util.http
         .post('/api/doctor/payComfirm', {ledgerSn})
@@ -82,25 +90,35 @@ export default {
     },
     confirm () {
       let configdata = {
-        deptCode: this.$store.state.selectedDeptCode,
-        deptName: this.$store.state.selectedDeptName,
-        doctorName: this.$store.state.selectedDocName,
-        doctorCode: '0' + this.$store.state.selectedDocCode.toString(),
-        scheduleDate: this.$store.state.selectedDate,
-        timeFlag: this.$store.state.timeFlag,
-        regFee: this.$store.state.price.toString(),
-        patName: this.$store.state.visitName,
-        patCardNo: this.$store.state.visitCardNo,
-        beginTime: this.$store.state.beginTime,
-        endTime: this.$store.state.endTime,
-        hostpitalName: '全院',
-        patCardType: (this.$store.state.visitCardNo === '') ? '2' : '1'
+        // deptCode: this.$store.state.selectedDeptCode.toString(),
+        // deptName: this.$store.state.selectedDeptName,
+        // doctorName: this.$store.state.selectedDocName,
+        // doctorCode: '0' + this.$store.state.selectedDocCode.toString(),
+        // scheduleDate: this.$store.state.selectedDate,
+        // timeFlag: this.$store.state.timeFlag,
+        // regFee: this.$store.state.price.toString(),
+        // patName: this.visitName,
+        // patCardNo: this.visitCardNo,
+        // beginTime: this.$store.state.beginTime,
+        // endTime: this.$store.state.endTime,
+        // hostpitalName: '全院',
+        // patCardType: (this.$store.state.visitCardNo === '') ? '2' : '1'
+        beginTime: this.$route.params.beginTime,
+        patCardNo: this.$route.params.visitCardNo,
+        deptCode: this.$route.params.deptCode.toString(),
+        doctorCode: this.$route.params.doctorCode.toString()
       }
       this.$indicator.open()
       util.http
-        .post('/api/doctor/currentDayRegister', configdata)
+        // .post('/api/doctor/currentDayRegister', configdata)
+        .post('/api/doctor/register', configdata)
         .then(res => {
           if (res.code === 0) {
+            this.$toast({
+              message: '提交失败',
+              duration: 1000,
+              className: 'toast'
+            })
             this.payComfirm(res.data.Records[0].LedgerSn)
             this.$indicator.close()
           } else {

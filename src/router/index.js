@@ -74,9 +74,9 @@ export default new Router({
       component: Reserve,
       children: [
         { path: 'sDept', component: SDept },
-        { path: 'sDayDoc/:deptCode&:deptName', name: 'sDayDoc', component: SDayDoc },
-        { path: 'sTime/:doctorCode&:date/:timeFlagNo', name: 'sTime', component: STime },
-        { path: 'confirm', component: Confirm }
+        { path: 'sDayDoc', name: 'sDayDoc', component: SDayDoc },
+        { path: 'sTime', name: 'sTime', component: STime },
+        { path: 'confirm', name: 'confirm', component: Confirm }
       ]
     },
     { path: '/payOnline', component: PayOnline },

@@ -11,9 +11,13 @@ export default {
     return {}
   },
   created () {
-    if (this.$store.state.userInfo.visitName === '') {
-      this.bindCardNotice()
-    }
+    this.$post('/api/user/vx_info').then(res => {
+      if (res.data.info.visitName === '') {
+        this.bindCardNotice()
+      }
+    }).catch((error) => {
+      console.log(error)
+    })
   },
   beforeDestroy () {
     this.$messagebox.close(false)

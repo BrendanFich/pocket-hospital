@@ -2,7 +2,7 @@
   <div class="sDayDoc">
     <div class="container">
       <div class="selectedInfo">
-        <span class="department">{{$route.params.deptName}}</span>
+        <span class="department">{{$store.state.deptName}}</span>
         <span class="selectedDate">已选:{{date}}</span>
       </div>
       <week v-on:changeDate='changeDate'></week>
@@ -48,11 +48,6 @@ export default {
     }
   },
   computed: {
-    computedDoctors () {
-      return this.doctors.filter((item) => {
-        return item.scheduleDate.indexOf(this.date) !== -1
-      })
-    }
   },
   components: { Week },
   methods: {
@@ -62,15 +57,15 @@ export default {
     },
     select (item) {
       if (item.leftNum > 0) {
-        this.$router.push({
-          name: 'sTime',
-          params: { doctorCode: Number(item.doctorCode), date: this.date, timeFlagNo: item.timeFlag }
-        })
+        this.$store.commit('updateDeptCode', item.deptCode)
+        this.$store.commit('updateDoctorCode', item.doctorCode)
+        this.$store.commit('updateTimeFlag', item.timeFlag)
+        this.$router.push('/reserve/sTime')
       }
     },
     getRegSource (date) {
       this.$post('/api/doctor/getRegSource', {
-        deptCode: this.$route.params.deptCode.toString(),
+        deptCode: this.$store.state.deptCode.toString(),
         date
       })
         .then(res => {
@@ -82,12 +77,6 @@ export default {
     }
   },
   created () {
-    this.$store.commit('changeDate', this.date)
-  },
-  watch: {
-    date (newDate, oldDate) {
-      this.$store.commit('changeDate', newDate)
-    }
   }
 }
 </script>

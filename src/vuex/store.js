@@ -4,16 +4,25 @@ import mutations from './mutations'
 
 Vue.use(Vuex)
 let state = {
-  selectedDeptCode: '',
-  selectedDeptName: '',
-  selectedDocCode: '',
-  selectedDocName: '',
-  selectedDate: '',
-  selectedTime: '',
+  // selectedDeptCode: '',
+  // selectedDeptName: '',
+  // selectedDocCode: '',
+  // selectedDocName: '',
+  // selectedDate: '',
+  // selectedTime: '',
+  // beginTime: '',
+  // endTime: '',
+  // price: '',
+  // timeFlag: '',
+  doctorCode: '',
+  doctorName: '',
+  timeFlag: '',
   beginTime: '',
   endTime: '',
-  price: '',
-  timeFlag: ''
+  Price: '',
+  area: '',
+  deptCode: '',
+  deptName: ''
 }
 
 export default new Vuex.Store({
