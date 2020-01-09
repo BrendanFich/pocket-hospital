@@ -1,46 +1,57 @@
 <template>
   <div class="paid">
     <img class="noData" v-if="paidList.length === 0" src="./img/noData.png" />
-    <mt-loadmore
-      :bottom-method="loadBottom"
-      :bottom-all-loaded="allLoaded"
-      ref="loadmore"
-    >
-      <ul>
-        <li
-          v-for="(item, index) in paidList"
-          :key="index"
-          @click="enterInfo(item.ledgerSn)"
-        >
-          <mt-cell>
-            <div class="leftInfo">
-              <div class="name">{{ item.patName }}</div>
-              <div class="patCardNo">{{ item.PatCardNo }}</div>
-              <div class="serial_number">
-                订单号：
-                <span class="value">{{ item.ledgerSn }}</span>
-              </div>
-              <div class="department">
-                开单科室：
-                <span class="value">{{ item.paymentDeptName }}</span>
-              </div>
-            </div>
-            <div class="rightInfo">
-              <div>
-                <div class="refunding" v-if="item.paymentStatus === '2'">
-                  退款中
+    <div class="page-loadmore-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
+      <mt-loadmore
+        :bottom-method="loadBottom"
+        :bottom-all-loaded="allLoaded"
+        :auto-fill="false"
+        @bottom-status-change="handleBottomChange"
+        ref="loadmore"
+      >
+        <ul>
+          <li
+            class="page-loadmore-listitem"
+            v-for="(item, index) in paidList"
+            :key="index"
+            @click="enterInfo(item.ledgerSn)"
+          >
+            <mt-cell>
+              <div class="leftInfo">
+                <div class="name">{{ item.patName }}</div>
+                <div class="patCardNo">{{ item.PatCardNo }}</div>
+                <div class="serial_number">
+                  订单号：
+                  <span class="value">{{ item.ledgerSn }}</span>
                 </div>
-                <div class="refunded" v-if="item.paymentStatus === '-2'">
-                  已退款
+                <div class="department">
+                  开单科室：
+                  <span class="value">{{ item.paymentDeptName }}</span>
                 </div>
-                <div class="price">{{ item.paymentFee }}元</div>
               </div>
-              <div class="date">{{ item.paymentDate }}</div>
-            </div>
-          </mt-cell>
-        </li>
-      </ul>
-    </mt-loadmore>
+              <div class="rightInfo">
+                <div>
+                  <div class="refunding" v-if="item.paymentStatus === '2'">
+                    退款中
+                  </div>
+                  <div class="refunded" v-if="item.paymentStatus === '-2'">
+                    已退款
+                  </div>
+                  <div class="price">{{ item.paymentFee }}元</div>
+                </div>
+                <div class="date">{{ item.paymentDate }}</div>
+              </div>
+            </mt-cell>
+          </li>
+        </ul>
+        <div slot="bottom" class="mint-loadmore-bottom">
+          <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑</span>
+          <span v-show="bottomStatus === 'loading'">
+            <mt-spinner type="snake"></mt-spinner>
+          </span>
+        </div>
+      </mt-loadmore>
+    </div>
   </div>
 </template>
 
@@ -51,11 +62,16 @@ export default {
     return {
       paidList: [],
       size: 8,
+      bottomStatus: '',
+      wrapperHeight: 0,
       allLoaded: false
     }
   },
   created () {
     this.getPaidList()
+  },
+  mounted () {
+    this.wrapperHeight = document.documentElement.clientHeight - this.$refs.wrapper.getBoundingClientRect().top
   },
   methods: {
     enterInfo (ledgerSn) {
@@ -69,11 +85,16 @@ export default {
       })
         .then(res => {
           this.paidList = res.data
-          this.allLoaded = res.page.count <= res.page.pageSize
+          this.allLoaded = res.page.count <= this.size
+          this.$refs.loadmore.onBottomLoaded()
         })
         .catch(error => {
           console.log(error)
         })
+    },
+    handleBottomChange (status) {
+      console.log('handleBottomChange ', status)
+      this.bottomStatus = status
     },
     loadBottom () {
       this.size += 8
@@ -89,7 +110,9 @@ export default {
 .paid
   background: $color-page-background
   height: calc(100vh - 120px)
-  overflow-y: auto
+  .page-loadmore-wrapper
+    overflow-y: scroll // 很重要
+    -webkit-overflow-scrolling : touch // 解决view滑动速度慢或者卡顿问题
   >>>.mint-cell-wrapper
     border-bottom: 1px solid $color-border
     padding: 10px

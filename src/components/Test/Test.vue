@@ -1,24 +1,15 @@
 <template>
   <div class="list">
-    <x-header>上拉加载,下拉刷新</x-header>
     <div class="page-loadmore-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
       <mt-loadmore
-        :top-method="loadTop"
         :bottom-method="loadBottom"
         :bottom-all-loaded="allLoaded"
         :auto-fill="false"
-        @top-status-change="handleTopChange"
         @bottom-status-change="handleBottomChange"
         ref="loadmore">
         <ul>
           <li class="page-loadmore-listitem" :key="item" v-for="item in list">{{ item }}</li>
         </ul>
-        <div slot="top" class="mint-loadmore-top">
-          <span v-show="topStatus !== 'loading'" :class="{ 'is-rotate': topStatus === 'drop' }">↓</span>
-          <span v-show="topStatus === 'loading'">
-            <mt-spinner type="snake"></mt-spinner>
-          </span>
-        </div>
         <div slot="bottom" class="mint-loadmore-bottom">
           <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑</span>
           <span v-show="bottomStatus === 'loading'">
@@ -48,24 +39,9 @@ export default {
     'mt-loadmore': Loadmore
   },
   methods: {
-    handleTopChange (status) {
-      console.log(status)
-      this.topStatus = status
-    },
     handleBottomChange (status) {
       console.log('handleBottomChange ', status)
       this.bottomStatus = status
-    },
-    loadTop () {
-      console.log('loadTop')
-      setTimeout(() => {
-        let firstValue = this.list[0]
-        for (let i = 1; i <= 10; i++) {
-          this.list.unshift(firstValue - i)
-        }
-        this.$refs.loadmore.onTopLoaded()
-        console.log('load top end')
-      }, 2000)
     },
     loadBottom () {
       setTimeout(() => {
@@ -83,7 +59,7 @@ export default {
     }
   },
   created () {
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 25; i++) {
       this.list.push(i)
     }
   },
@@ -94,13 +70,9 @@ export default {
 </script>
 
 <style lang="scss">
-body {
-  margin: 0;
-  background-color: #fafafa;
-}
-ul,li{ padding:0;margin:0;list-style:none};
 .page-loadmore-wrapper {
-  overflow: scroll; // 很重要
+  height: calc(100vh - 800px);
+  overflow-y: scroll; // 很重要
   -webkit-overflow-scrolling : touch; // 解决view滑动速度慢或者卡顿问题
 }
 .page-loadmore-listitem {
