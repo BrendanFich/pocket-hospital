@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+import Test from '@/components/Test/Test'
+
 import Container from '@/base/Container/Container'
 // Index
 import Index from '@/components/Index/Index/Index'
@@ -10,6 +12,8 @@ import SDayDoc from '@/components/Index/Reserve/SDayDoc/SDayDoc'
 import STime from '@/components/Index/Reserve/STime/STime'
 import Confirm from '@/components/Index/Reserve/Confirm/Confirm'
 import PayOnline from '@/components/Index/PayOnline/PayOnline'
+import Unpaid from '@/components/Index/PayOnline/Unpaid/Unpaid'
+import Paid from '@/components/Index/PayOnline/Paid/Paid'
 import Guidance from '@/components/Index/Guidance/Guidance/Guidance'
 import SSymptom from '@/components/Index/Guidance/SSymptom/SSymptom'
 import GSTime from '@/components/Index/Guidance/GSTime/GSTime'
@@ -68,6 +72,7 @@ export default new Router({
   routes: [
     { path: '/', redirect: '/index' },
     { path: '/index', component: Index },
+    { path: '/test', component: Test },
     {
       path: '/reserve',
       redirect: '/reserve/sDept',
@@ -79,7 +84,15 @@ export default new Router({
         { path: 'confirm', name: 'confirm', component: Confirm }
       ]
     },
-    { path: '/payOnline', component: PayOnline },
+    {
+      path: '/payOnline',
+      redirect: '/payOnline/unpaid',
+      component: PayOnline,
+      children: [
+        { path: 'unpaid', name: 'unpaid', component: Unpaid },
+        { path: 'paid', name: 'paid', component: Paid }
+      ]
+    },
     {
       path: '/guidance',
       redirect: '/guidance/sSymptom',

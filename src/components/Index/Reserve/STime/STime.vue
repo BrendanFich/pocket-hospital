@@ -2,8 +2,10 @@
   <div class="sTime">
     <div class="doctorInfo">
       <div class="baseInfo">
-        <img src="./img/avatar100x101.png" alt />
-        <div>
+        <div class="avatar">
+          <img :src="getAvatar(docInfo.doctorName)" @error="setDefualtImg" />
+        </div>
+        <div class="text">
           <div class="name">{{docInfo.doctorName}}</div>
           <div class="department">{{docInfo.deptName}}</div>
         </div>
@@ -33,7 +35,8 @@
 </template>
 
 <script>
-// import moment from 'moment'
+import { apiBaseUrl } from '@/assets/js/config'
+import defualtImg from './img/greenAvatar.png'
 
 export default {
   name: 'sTime',
@@ -50,6 +53,12 @@ export default {
   computed: {
   },
   methods: {
+    getAvatar (name) {
+      return apiBaseUrl + '/upload/doctor/' + name + '.jpg'
+    },
+    setDefualtImg (e) {
+      e.target.src = defualtImg
+    },
     resetTimeFormat (beginTime, endTime) {
       let begin = beginTime.split(' ')[1].toString()
       let end = endTime.split(' ')[1].toString()
@@ -74,9 +83,10 @@ export default {
         date: this.$store.state.beginTime.split(' ')[0]
       })
         .then(res => {
-          this.workTimeList = res.data.filter((item) => {
-            return item.timeFlag === this.$store.state.timeFlag
-          })
+          // this.workTimeList = res.data.filter((item) => {
+          //   return item.timeFlag === this.$store.state.timeFlag
+          // })
+          this.workTimeList = res.data
         })
         .catch(error => {
           console.log(error)
@@ -118,10 +128,16 @@ export default {
       display: flex
       justify-content: start
       align-items: center
-      img
+      .avatar
         width: 102px
-        margin-right: 23px
-      div
+        height: 102px
+        overflow: hidden
+        border-radius: 50%
+        img
+          width: 102px
+          margin-right: 20px
+      .text
+        margin-left: 23px
         .name
           font-size: 30px
           color: $color-title-black

@@ -52,7 +52,7 @@
         <span>随访问卷</span>
       </div>
       <div class="item">
-        <img src="./img/linkIcon.png" alt />
+        <img src="./img/linkIcon.png" @click="linkTo('/test')" alt />
         <span>友情链接</span>
       </div>
     </div>

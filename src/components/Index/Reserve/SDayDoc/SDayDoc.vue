@@ -15,15 +15,11 @@
           :key="index"
         >
           <div class="doctorInfo">
-            <img slot="icon" src="./img/avatar100x101.png" />
+            <div class="avatar" slot="icon"><img :src="getAvatar(item.Doctor)" @error="setDefualtImg"/></div>
             <div class="textInfo">
               <span class="name">{{item.Doctor}}</span>
-              <span class="title">{{item.doctorTitle}}</span>
               <br />
-              <span
-                class="workTime"
-                :class="{ am: item.timeFlag === '下午班', pm: item.timeFlag === '下午班', night: item.timeFlag === '晚班', noon: item.timeFlag === '中午班'}"
-              >{{item.timeFlag}}</span>
+              <span class="title">{{item.EmpTitle}}</span>
             </div>
           </div>
           <div class="leftNum">
@@ -38,7 +34,8 @@
 
 <script>
 import Week from '@/base/Week/Week'
-
+import { apiBaseUrl } from '@/assets/js/config'
+import defualtImg from './img/greenAvatar.png'
 export default {
   name: 'sDayDoc',
   data () {
@@ -55,11 +52,18 @@ export default {
       this.date = val
       this.getRegSource(val)
     },
+    getAvatar (name) {
+      return apiBaseUrl + '/upload/doctor/' + name + '.jpg'
+    },
+    setDefualtImg (e) {
+      e.target.src = defualtImg
+    },
     select (item) {
       if (item.leftNum > 0) {
         this.$store.commit('updateDeptCode', item.deptCode)
         this.$store.commit('updateDoctorCode', item.doctorCode)
         this.$store.commit('updateTimeFlag', item.timeFlag)
+        this.$store.commit('updateBeginTime', item.beginTime)
         this.$router.push('/reserve/sTime')
       }
     },
@@ -118,8 +122,13 @@ export default {
           display: flex
           justify-content: start
           align-items: center
-          img
+          .avatar
             width: 102px
+            height: 102px
+            overflow: hidden
+            border-radius: 50%
+            img
+              width: 102px
           .textInfo
             margin-left: 24px
             .name

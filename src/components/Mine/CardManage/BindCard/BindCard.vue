@@ -74,7 +74,7 @@ export default {
               console.log(res)
               if (res.code === 0) {
                 this.$toast({ message: '绑定成功', duration, className })
-                this.$router.replace('/mine/cardManage')
+                this.$router.go(-1)
               }
             })
             .catch(error => {

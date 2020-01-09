@@ -10,9 +10,9 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 import store from './vuex/store'
 import moment from 'moment'
-// import VConsole from 'vconsole'
-// const vConsole = new VConsole()
-// console.log(vConsole.version)
+import VConsole from 'vconsole'
+const vConsole = new VConsole()
+console.log(vConsole.version)
 
 Vue.use(VueAwesomeSwiper)
 Vue.use(MintUI)
@@ -25,6 +25,40 @@ moment.locale('zh-cn')
 Vue.config.productionTip = false
 router.beforeEach((to, from, next) => {
   Indicator.close()
+  switch (to.fullPath) {
+    case '/index' :
+      document.title = '首页'
+      break
+
+    case '/reserve/sDept' :
+      document.title = '选择科室'
+      break
+    case '/reserve/sDayDoc' :
+      document.title = '选择医生'
+      break
+    case '/reserve/sTime' :
+      document.title = '选择时间'
+      break
+    case '/reserve/confirm' :
+      document.title = '选择挂号信息'
+      break
+    case '/iHospital' :
+      document.title = '互联网医院'
+      break
+
+    case '/mine' :
+      document.title = '个人中心'
+      break
+    case '/mine/cardManage' :
+      document.title = '就诊卡管理'
+      break
+    case '/mine/cardManage/bindCard' :
+      document.title = '就诊卡绑定'
+      break
+    default:
+      document.title = '掌上医院'
+  }
+  // console.log(to.fullPath)
   next()
 })
 /* eslint-disable no-new */

@@ -64,17 +64,17 @@ export default {
       this.TestToken()
     }
 
-    if (sessionStorage.getItem('store')) {
+    if (localStorage.getItem('store')) {
       this.$store.replaceState(
         Object.assign(
           {},
           this.$store.state,
-          JSON.parse(sessionStorage.getItem('store'))
+          JSON.parse(localStorage.getItem('store'))
         )
       )
     }
     window.addEventListener('beforeunload', () => {
-      sessionStorage.setItem('store', JSON.stringify(this.$store.state))
+      localStorage.setItem('store', JSON.stringify(this.$store.state))
     })
   },
   methods: {
@@ -98,7 +98,7 @@ export default {
             appId,
             timestamp: res.data.timestamp,
             nonceStr: res.data.nonceStr,
-            signature: res.data.signtrue,
+            signature: res.data.signature,
             jsApiList: [
               'openLocation',
               'getLocation',

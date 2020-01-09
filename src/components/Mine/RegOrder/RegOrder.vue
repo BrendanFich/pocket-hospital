@@ -14,7 +14,7 @@
               </div>
               <div class="item">
                 <span class="key">日期</span>
-                <span class="value">：{{item.scheduleDate}}</span>
+                <span class="value">：{{item.scheduleDate.split(' ')[0]}}</span>
               </div>
               <div class="item">
                 <span class="key">院区</span>
@@ -32,7 +32,7 @@
           </div>
           <div class="right">
             <span class="price">{{item.regFee}}元</span>
-            <span class="orderTime">{{item.beginTime}}-{{item.endTime}}</span>
+            <span class="orderTime">{{timeFormat(item.beginTime)}}-{{timeFormat(item.endTime)}}</span>
             <span :class="{noArrival: item.visitFlag ==='0',arrivaled: item.visitFlag ==='1' || item.visitFlag === '-1'}">{{status(item.visitFlag)}}</span>
           </div>
         </div>
@@ -52,10 +52,11 @@ export default {
   },
   created () {
     util.http
-      .post('/api/pat/findAllRegister')
+      .post('/api/pat/findAllRegister', {page: 1, size: 1})
       .then(res => {
         console.log(res)
-        this.orderList = res.data.Records.sort(util.compareTime('createDate'))
+        // this.orderList = res.data.Records.sort(util.compareTime('createDate'))
+        this.orderList = res.data
       })
       .catch(error => {
         console.log(error)
@@ -110,6 +111,9 @@ export default {
         .catch(error => {
           console.log(error)
         })
+    },
+    timeFormat (time) {
+      return time.split(' ')[1].split(':').slice(0, 2).join(':')
     }
   }
 }

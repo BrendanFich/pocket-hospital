@@ -76,11 +76,11 @@ export default {
           paySign: config.paySign,
           success: function (res) {
             self.$toast({ message: '挂号成功', duration: 1500, className: 'toast' })
-            self.$router.push('/index')
+            self.$router.go(-4)
           },
           cancel: function (res) {
             self.$toast({ message: '挂号成功，请及时支付挂号费', duration: 1500, className: 'toast' })
-            self.$router.push('/index')
+            self.$router.go(-4)
           }
         })
       })
