@@ -1,4 +1,3 @@
-export const appId = 'wx8c8504584ebd4544'
 export const apiBaseUrl = 'http://yun.gdqlyt.com.cn:8197'
 export const authUrl = 'http://yun.gdqlyt.com.cn/api/user/wx_authorize'
 

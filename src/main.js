@@ -6,16 +6,20 @@ import router from './router'
 import '@/assets/js/rem'
 import wxsdk from '@/assets/js/wxsdk'
 import util from '@/assets/js/util'
-import VueAwesomeSwiper from 'vue-awesome-swiper'
 import 'swiper/dist/css/swiper.css'
 import store from './vuex/store'
 import moment from 'moment'
+import { NavBar, PullRefresh, List, Cell } from 'vant'
+
 import VConsole from 'vconsole'
 const vConsole = new VConsole()
 console.log(vConsole.version)
 
-Vue.use(VueAwesomeSwiper)
 Vue.use(MintUI)
+Vue.use(NavBar)
+Vue.use(PullRefresh)
+Vue.use(List)
+Vue.use(Cell)
 
 Vue.prototype.$post = util.http.post
 Vue.prototype.wxsdk = wxsdk

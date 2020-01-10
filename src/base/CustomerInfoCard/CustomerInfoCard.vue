@@ -1,6 +1,6 @@
 <template>
   <div class="customerInfoCard">
-    <div class="firstUse" v-if="!visitCardNo">
+    <div class="firstUse" v-if="isShowBandTips">
       <router-link class="text" to="/mine/cardManage/bindCard">
         添加就诊人，点击绑定
       </router-link>
@@ -29,7 +29,8 @@ export default {
   data () {
     return {
       visitName: '',
-      visitCardNo: ''
+      visitCardNo: '',
+      isShowBandTips: false
     }
   },
   props: {
@@ -51,6 +52,9 @@ export default {
           this.visitCardNo = res.data.info.visitCardNo
           this.$emit('visitName', res.data.info.visitName)
           this.$emit('visitCardNo', res.data.info.visitCardNo)
+          if (res.data.info.visitName === '') {
+            this.isShowBandTips = true
+          }
         }
       }).catch((error) => {
         console.log(error)

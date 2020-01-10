@@ -69,7 +69,7 @@ export default {
       let self = this
       wx.ready(function () {
         wx.chooseWXPay({
-          timestamp: config.timeStamp,
+          timestamp: config.timestamp,
           nonceStr: config.nonceStr,
           package: config.package,
           signType: config.signType,

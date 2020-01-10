@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { appId, authUrl } from '@/assets/js/config'
+import { authUrl } from '@/assets/js/config'
 import wx from 'weixin-js-sdk'
 
 export default {
@@ -39,10 +39,10 @@ export default {
       if (wxSign) {
         wx.config({
           debug: false,
-          appId,
-          timestamp: wxSign.split('&')[0],
-          nonceStr: wxSign.split('&')[1],
-          signature: wxSign.split('&')[2],
+          appId: wxSign.split('&')[0],
+          timestamp: wxSign.split('&')[1],
+          nonceStr: wxSign.split('&')[2],
+          signature: wxSign.split('&')[3],
           jsApiList: [
             'openLocation',
             'getLocation',
@@ -51,7 +51,7 @@ export default {
           ]
         })
         wx.error(function (res) {
-          if (res.errMsg.includes('invalid signature')) {
+          if (res.errMsg.includes('invalid signature') || res.errMsg.includes('config:fail')) {
             if (_this.count < 1) {
               _this.getSign()
               _this.count++
@@ -91,11 +91,11 @@ export default {
 
           window.localStorage.setItem(
             'wxSign',
-            [res.data.timestamp, res.data.nonceStr, res.data.signtrue].join('&')
+            [res.data.appId, res.data.timestamp, res.data.nonceStr, res.data.signature].join('&')
           )
           wx.config({
             debug: false,
-            appId,
+            appId: res.data.appId,
             timestamp: res.data.timestamp,
             nonceStr: res.data.nonceStr,
             signature: res.data.signature,

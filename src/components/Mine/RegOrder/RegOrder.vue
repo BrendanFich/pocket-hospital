@@ -1,58 +1,64 @@
 <template>
-  <div class="regOrder">
-    <img class="noData" v-if="orderList.length === 0" src="./img/noData.png" />
-    <div class="page-loadmore-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
-      <mt-loadmore
-        :bottom-method="loadBottom"
-        :bottom-all-loaded="allLoaded"
-        :auto-fill="false"
-        @bottom-status-change="handleBottomChange"
-        ref="loadmore">
-        <ul>
-          <li v-for="(item, index) in orderList" :key="index" @click="detail(item.hisOrdNum)">
-            <div class="paidTime">下单日期：{{item.createDate}}</div>
-            <div class="orderCard">
-              <div class="left">
-                <img src="./img/orderIcon.png" alt />
-                <div class="baseInfo">
-                  <div>
-                    <span class="name">{{item.patName}}</span>
-                    <span class="num">{{item.patCardNo}}</span>
-                  </div>
-                  <div class="item">
-                    <span class="key">日期</span>
-                    <span class="value">：{{item.scheduleDate.split(' ')[0]}}</span>
-                  </div>
-                  <div class="item">
-                    <span class="key">院区</span>
-                    <span class="value">：{{item.hostpitalName}}</span>
-                  </div>
-                  <div class="item">
-                    <span class="key">科室</span>
-                    <span class="value">：{{item.deptName}}</span>
-                  </div>
-                  <div class="item">
-                    <span class="key">医生</span>
-                    <span class="value">：{{item.doctorName}}</span>
-                  </div>
-                </div>
+  <div class="list-content" id="list-content">
+    <van-list
+      v-model="loading"
+      :finished="finished"
+      @load="onLoad"
+      :offset="10"
+    >
+      <div
+        v-for="(item, index) in orderList"
+        :key="index"
+        @click="detail(item.hisOrdNum)"
+      >
+        <div class="paidTime">下单日期：{{ item.createDate }}</div>
+        <div class="orderCard">
+          <div class="left">
+            <img src="./img/orderIcon.png" alt />
+            <div class="baseInfo">
+              <div>
+                <span class="name">{{ item.patName }}</span>
+                <span class="num">{{ item.patCardNo }}</span>
               </div>
-              <div class="right">
-                <span class="price">{{item.regFee}}元</span>
-                <span class="orderTime">{{timeFormat(item.beginTime)}}-{{timeFormat(item.endTime)}}</span>
-                <span :class="{noArrival: item.visitFlag ==='0',arrivaled: item.visitFlag ==='1' || item.visitFlag === '-1'}">{{status(item.visitFlag)}}</span>
+              <div class="item">
+                <span class="key">日期</span>
+                <span class="value"
+                  >：{{ item.scheduleDate.split(" ")[0] }}</span
+                >
+              </div>
+              <div class="item">
+                <span class="key">院区</span>
+                <span class="value">：{{ item.hostpitalName }}</span>
+              </div>
+              <div class="item">
+                <span class="key">科室</span>
+                <span class="value">：{{ item.deptName }}</span>
+              </div>
+              <div class="item">
+                <span class="key">医生</span>
+                <span class="value">：{{ item.doctorName }}</span>
               </div>
             </div>
-          </li>
-        </ul>
-        <div slot="bottom" class="mint-loadmore-bottom">
-          <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑</span>
-          <span v-show="bottomStatus === 'loading'">
-            <mt-spinner type="snake" style="text-align: center"></mt-spinner>
-          </span>
+          </div>
+          <div class="right">
+            <span class="price">{{ item.regFee }}元</span>
+            <span class="orderTime"
+              >{{ timeFormat(item.beginTime) }}-{{
+                timeFormat(item.endTime)
+              }}</span
+            >
+            <span
+              :class="{
+                noArrival: item.visitFlag === '0',
+                arrivaled: item.visitFlag === '1' || item.visitFlag === '-1'
+              }"
+              >{{ status(item.visitFlag) }}</span
+            >
+          </div>
         </div>
-      </mt-loadmore>
-    </div>
+      </div>
+    </van-list>
+    <img class="noData" v-if="isShowNoData" src="./img/noData.png" />
   </div>
 </template>
 
@@ -63,19 +69,19 @@ export default {
   data () {
     return {
       orderList: [],
-      size: 8,
-      bottomStatus: '',
-      wrapperHeight: 0,
-      allLoaded: false
+      size: 0,
+      loading: false, // 是否处于加载状态
+      finished: false, // 是否已加载完所有数据
+      isLoading: false, // 是否处于下拉刷新状态
+      isShowNoData: false
     }
   },
   created () {
     this.getOrderList()
   },
   mounted () {
-    this.wrapperHeight =
-      document.documentElement.clientHeight -
-      this.$refs.wrapper.getBoundingClientRect().top
+    let winHeight = document.documentElement.clientHeight // 视口大小
+    document.getElementById('list-content').style.height = winHeight + 'px'
   },
   methods: {
     getOrderList () {
@@ -85,21 +91,20 @@ export default {
         size: this.size
       })
         .then(res => {
-          console.log(res)
-          // this.orderList = res.data.Records.sort(util.compareTime('createDate'))
           this.orderList = res.data
-          this.allLoaded = res.page.count <= this.size
-          this.$refs.loadmore.onBottomLoaded()
+          if (res.data.length === 0) {
+            this.isShowNoData = true
+          }
+          this.loading = false
+          if (res.page.count <= this.size) {
+            this.finished = true
+          }
         })
         .catch(error => {
           console.log(error)
         })
     },
-    handleBottomChange (status) {
-      console.log('handleBottomChange ', status)
-      this.bottomStatus = status
-    },
-    loadBottom () {
+    onLoad () {
       this.size += 8
       this.getOrderList()
     },
@@ -119,7 +124,7 @@ export default {
     },
     detail (hisOrdNum) {
       util.http
-        .post('/api/pat/findRegisterInfo', {hisOrdNum})
+        .post('/api/pat/findRegisterInfo', { hisOrdNum })
         .then(res => {
           console.log(res)
           let status
@@ -138,10 +143,14 @@ export default {
         <p>就诊科室：${res.data.Records.deptName}</p>
         <p>就诊医生：${res.data.Records.doctorName}</p>
         <p>就诊日期：${res.data.Records.scheduleDate}</p>
-        <p>就诊时间：${res.data.Records.beginTime}-${res.data.Records.endTime}</p>
+        <p>就诊时间：${res.data.Records.beginTime}-${
+  res.data.Records.endTime
+}</p>
         <p>病人姓名：${res.data.Records.patName}</p>
         <p>病人卡号：${res.data.Records.patCardNo}</p>
-        <p>卡号类型：${res.data.Records.patCardType === '1' ? '就诊卡' : '社保卡'}</p>
+        <p>卡号类型：${
+  res.data.Records.patCardType === '1' ? '就诊卡' : '社保卡'
+}</p>
         <p>挂号费用：${res.data.Records.regFee}</p>
         <p>当前状态：${status}</p>
       </div>
@@ -153,7 +162,11 @@ export default {
         })
     },
     timeFormat (time) {
-      return time.split(' ')[1].split(':').slice(0, 2).join(':')
+      return time
+        .split(' ')[1]
+        .split(':')
+        .slice(0, 2)
+        .join(':')
     }
   }
 }
@@ -162,14 +175,12 @@ export default {
 <style lang="sass" scoped>
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
-.regOrder
+.list-content
   background: $color-page-background
-  height: 100vh
-  .page-loadmore-wrapper
-    overflow-y: scroll // 很重要
-    -webkit-overflow-scrolling : touch // 解决view滑动速度慢或者卡顿问题
-    .mint-loadmore
-      margin-bottom: -50px
+  overflow-y: scroll // 很重要
+  -webkit-overflow-scrolling : touch // 解决view滑动速度慢或者卡顿问题
+  &::-webkit-scrollbar
+    display: none
   .noData
     width: 366px
     margin-top: 50px
