@@ -23,7 +23,6 @@ export default {
   methods: {
     select (path) {
       if (this.$route.fullPath === path) {
-        this.getUnpaidList()
       } else {
         this.$router.replace(path)
       }

@@ -1,18 +1,24 @@
 <template>
-  <div class="paid">
+  <div
+    class="page-loadmore-wrapper"
+    ref="wrapper"
+    :style="{ height: wrapperHeight + 'px' }"
+  >
     <mt-loadmore
       :bottom-method="loadBottom"
       :bottom-all-loaded="allLoaded"
+      :auto-fill="false"
+      @bottom-status-change="handleBottomChange"
       ref="loadmore"
     >
+      <img
+        class="noData"
+        v-if="unpaidList.length === 0"
+        src="./img/noData.png"
+      />
       <ul>
-        <li>
-          <img
-            class="noData"
-            v-if="unpaidList.length === 0"
-            src="./img/noData.png"
-          />
-          <div v-for="(item, index) in unpaidList" :key="index">
+        <li v-for="(item, index) in unpaidList" :key="index">
+          <div>
             <mt-cell @click.native="pay(item.ledgerSn)">
               <div class="leftInfo">
                 <div class="name">{{ item.patName }}</div>
@@ -34,6 +40,16 @@
           </div>
         </li>
       </ul>
+      <div slot="bottom" class="mint-loadmore-bottom">
+        <span
+          v-show="bottomStatus !== 'loading'"
+          :class="{ 'is-rotate': bottomStatus === 'drop' }"
+          >↑</span
+        >
+        <span v-show="bottomStatus === 'loading'">
+          <mt-spinner type="snake"></mt-spinner>
+        </span>
+      </div>
     </mt-loadmore>
   </div>
 </template>
@@ -46,11 +62,18 @@ export default {
     return {
       unpaidList: [],
       size: 8,
+      bottomStatus: '',
+      wrapperHeight: 0,
       allLoaded: false
     }
   },
   created () {
     this.getUnpaidList()
+  },
+  mounted () {
+    this.wrapperHeight =
+      document.documentElement.clientHeight -
+      this.$refs.wrapper.getBoundingClientRect().top
   },
   methods: {
     enterInfo (ledgerSn) {
@@ -64,10 +87,17 @@ export default {
       })
         .then(res => {
           this.unpaidList = res.data
+          this.allLoaded = res.page.count <= this.size
+          this.$refs.loadmore.onBottomLoaded() // 这个函数有坑，会自动scroll50px
+          // console.warn(this.$refs.loadmore.scrollEventTarget.scrollTop)
         })
         .catch(error => {
           console.log(error)
         })
+    },
+    handleBottomChange (status) {
+      console.log('handleBottomChange ', status)
+      this.bottomStatus = status
     },
     loadBottom () {
       this.size += 8
@@ -103,71 +133,77 @@ export default {
 <style lang="sass" scoped>
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
-.paid
-  background: $color-page-background
-  height: calc(100vh - 120px)
-  overflow-y: auto
-  >>>.mint-cell-wrapper
-    border-bottom: 1px solid $color-border
-    padding: 10px
-    .mint-cell-title
-      flex: none
-    .mint-cell-value
-      flex: 1
-      padding: 0 20px
-      display: flex
-      justify-content: space-between
-      .leftInfo
-        .name
-          display: inline-block
-          margin-right: 13px
-          line-height: 66px
-          font-size: 30px
-          color: $color-primary
-          font-weight: bold
-        .patCardNo
-          display: inline-block
-          font-size: 24px
-          color: $color-value-grey
-        .serial_number
-          line-height: 48px
-          font-size: 26px
-          color: $color-title-black
-          .value
-            color: $color-word-grey
-        .department
-          line-height: 48px
-          font-size: 26px
-          color: $color-title-black
-      .rightInfo
-        text-align: center
-        .price,.refunding
-          float: right
-          width: 80px
-          padding: 12px 10px
-          background: #f69343
-          color: #fff
-          border-radius: 10px
-          font-size: 26px
-          margin-bottom: 16px
-          margin-left: 5px
-        .refunded
-          background: $color-primary
-          float: right
-          width: 80px
-          padding: 12px 10px
-          color: #fff
-          border-radius: 10px
-          font-size: 26px
-          margin-bottom: 16px
-          margin-left: 5px
-        .unPaid
-          background: #d8d8d8
-        .date
-          clear: both
-          color: $color-value-grey
-          font-size: 24px
-  .noData
-        width: 366px
-        margin: 100px 200px
+.page-loadmore-wrapper
+  overflow-y: scroll // 很重要
+  -webkit-overflow-scrolling : touch // 解决view滑动速度慢或者卡顿问题
+>>>.mint-cell-wrapper
+  border-bottom: 1px solid $color-border
+  padding: 10px
+  .mint-cell-title
+    flex: none
+  .mint-cell-value
+    flex: 1
+    padding: 0 20px
+    display: flex
+    justify-content: space-between
+    .leftInfo
+      .name
+        display: inline-block
+        margin-right: 13px
+        line-height: 66px
+        font-size: 30px
+        color: $color-primary
+        font-weight: bold
+      .patCardNo
+        display: inline-block
+        font-size: 24px
+        color: $color-value-grey
+      .serial_number
+        line-height: 48px
+        font-size: 26px
+        color: $color-title-black
+        .value
+          color: $color-word-grey
+      .department
+        line-height: 48px
+        font-size: 26px
+        color: $color-title-black
+    .rightInfo
+      text-align: center
+      .price,.refunding
+        float: right
+        width: 80px
+        padding: 12px 10px
+        background: #f69343
+        color: #fff
+        border-radius: 10px
+        font-size: 26px
+        margin-bottom: 16px
+        margin-left: 5px
+      .refunded
+        background: $color-primary
+        float: right
+        width: 80px
+        padding: 12px 10px
+        color: #fff
+        border-radius: 10px
+        font-size: 26px
+        margin-bottom: 16px
+        margin-left: 5px
+      .unPaid
+        background: #d8d8d8
+      .date
+        clear: both
+        color: $color-value-grey
+        font-size: 24px
+.noData
+  width: 366px
+  margin: 100px 200px
+.mint-loadmore-bottom
+  span
+    display: inline-block
+    transition: .2s linear
+    vertical-align: middle
+    span.is-rotate
+      transform: rotate(180deg)
 </style>

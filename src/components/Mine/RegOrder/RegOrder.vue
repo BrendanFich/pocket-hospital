@@ -1,43 +1,58 @@
 <template>
   <div class="regOrder">
     <img class="noData" v-if="orderList.length === 0" src="./img/noData.png" />
-    <ul>
-      <li v-for="(item, index) in orderList" :key="index" @click="detail(item.hisOrdNum)">
-        <div class="paidTime">下单日期：{{item.createDate}}</div>
-        <div class="orderCard">
-          <div class="left">
-            <img src="./img/orderIcon.png" alt />
-            <div class="baseInfo">
-              <div>
-                <span class="name">{{item.patName}}</span>
-                <span class="num">{{item.patCardNo}}</span>
+    <div class="page-loadmore-wrapper" ref="wrapper" :style="{ height: wrapperHeight + 'px' }">
+      <mt-loadmore
+        :bottom-method="loadBottom"
+        :bottom-all-loaded="allLoaded"
+        :auto-fill="false"
+        @bottom-status-change="handleBottomChange"
+        ref="loadmore">
+        <ul>
+          <li v-for="(item, index) in orderList" :key="index" @click="detail(item.hisOrdNum)">
+            <div class="paidTime">下单日期：{{item.createDate}}</div>
+            <div class="orderCard">
+              <div class="left">
+                <img src="./img/orderIcon.png" alt />
+                <div class="baseInfo">
+                  <div>
+                    <span class="name">{{item.patName}}</span>
+                    <span class="num">{{item.patCardNo}}</span>
+                  </div>
+                  <div class="item">
+                    <span class="key">日期</span>
+                    <span class="value">：{{item.scheduleDate.split(' ')[0]}}</span>
+                  </div>
+                  <div class="item">
+                    <span class="key">院区</span>
+                    <span class="value">：{{item.hostpitalName}}</span>
+                  </div>
+                  <div class="item">
+                    <span class="key">科室</span>
+                    <span class="value">：{{item.deptName}}</span>
+                  </div>
+                  <div class="item">
+                    <span class="key">医生</span>
+                    <span class="value">：{{item.doctorName}}</span>
+                  </div>
+                </div>
               </div>
-              <div class="item">
-                <span class="key">日期</span>
-                <span class="value">：{{item.scheduleDate.split(' ')[0]}}</span>
-              </div>
-              <div class="item">
-                <span class="key">院区</span>
-                <span class="value">：{{item.hostpitalName}}</span>
-              </div>
-              <div class="item">
-                <span class="key">科室</span>
-                <span class="value">：{{item.deptName}}</span>
-              </div>
-              <div class="item">
-                <span class="key">医生</span>
-                <span class="value">：{{item.doctorName}}</span>
+              <div class="right">
+                <span class="price">{{item.regFee}}元</span>
+                <span class="orderTime">{{timeFormat(item.beginTime)}}-{{timeFormat(item.endTime)}}</span>
+                <span :class="{noArrival: item.visitFlag ==='0',arrivaled: item.visitFlag ==='1' || item.visitFlag === '-1'}">{{status(item.visitFlag)}}</span>
               </div>
             </div>
-          </div>
-          <div class="right">
-            <span class="price">{{item.regFee}}元</span>
-            <span class="orderTime">{{timeFormat(item.beginTime)}}-{{timeFormat(item.endTime)}}</span>
-            <span :class="{noArrival: item.visitFlag ==='0',arrivaled: item.visitFlag ==='1' || item.visitFlag === '-1'}">{{status(item.visitFlag)}}</span>
-          </div>
+          </li>
+        </ul>
+        <div slot="bottom" class="mint-loadmore-bottom">
+          <span v-show="bottomStatus !== 'loading'" :class="{ 'is-rotate': bottomStatus === 'drop' }">↑</span>
+          <span v-show="bottomStatus === 'loading'">
+            <mt-spinner type="snake" style="text-align: center"></mt-spinner>
+          </span>
         </div>
-      </li>
-    </ul>
+      </mt-loadmore>
+    </div>
   </div>
 </template>
 
@@ -47,22 +62,47 @@ export default {
   name: 'regOrder',
   data () {
     return {
-      orderList: []
+      orderList: [],
+      size: 8,
+      bottomStatus: '',
+      wrapperHeight: 0,
+      allLoaded: false
     }
   },
   created () {
-    util.http
-      .post('/api/pat/findAllRegister', {page: 1, size: 1})
-      .then(res => {
-        console.log(res)
-        // this.orderList = res.data.Records.sort(util.compareTime('createDate'))
-        this.orderList = res.data
-      })
-      .catch(error => {
-        console.log(error)
-      })
+    this.getOrderList()
+  },
+  mounted () {
+    this.wrapperHeight =
+      document.documentElement.clientHeight -
+      this.$refs.wrapper.getBoundingClientRect().top
   },
   methods: {
+    getOrderList () {
+      this.$post('/api/pat/findAllRegister', {
+        pay_status: '0',
+        page: 1,
+        size: this.size
+      })
+        .then(res => {
+          console.log(res)
+          // this.orderList = res.data.Records.sort(util.compareTime('createDate'))
+          this.orderList = res.data
+          this.allLoaded = res.page.count <= this.size
+          this.$refs.loadmore.onBottomLoaded()
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    handleBottomChange (status) {
+      console.log('handleBottomChange ', status)
+      this.bottomStatus = status
+    },
+    loadBottom () {
+      this.size += 8
+      this.getOrderList()
+    },
     status (code) {
       let text = ''
       switch (code) {
@@ -123,7 +163,13 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .regOrder
-  @include page($color-page-background)
+  background: $color-page-background
+  height: 100vh
+  .page-loadmore-wrapper
+    overflow-y: scroll // 很重要
+    -webkit-overflow-scrolling : touch // 解决view滑动速度慢或者卡顿问题
+    .mint-loadmore
+      margin-bottom: -50px
   .noData
     width: 366px
     margin-top: 50px
@@ -183,4 +229,11 @@ export default {
       .arrivaled
         margin-top: 10px
         background: #5adba3
+.mint-loadmore-bottom
+  span
+    display: inline-block
+    transition: .2s linear
+    vertical-align: middle
+    span.is-rotate
+      transform: rotate(180deg)
 </style>
