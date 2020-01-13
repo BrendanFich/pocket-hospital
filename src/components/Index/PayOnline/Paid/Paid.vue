@@ -9,7 +9,7 @@
       <div
         v-for="(item, index) in paidList"
         :key="index"
-        @click="enterInfo(item.ledgerSn)"
+        @click="getPayInfo(item.ledgerSn)"
       >
         <mt-cell>
           <div class="leftInfo">
@@ -127,15 +127,11 @@ export default {
     // 调整上拉加载框高度,由于使用rem的原因此处不能只用减120px
   },
   methods: {
-    enterInfo (ledgerSn) {
-      // this.$router.push({ name: 'outOrderInfo', params: { ledgerSn } })
-      this.dialogShow = true
-      this.getPayInfo(ledgerSn)
-    },
     getPayInfo (ledgerSn) {
       this.$post('/api/doctor/payInfo', { ledgerSn })
         .then(res => {
           this.payInfo = res.data.Records
+          this.dialogShow = true
         })
         .catch(error => {
           console.log(error)
@@ -260,8 +256,11 @@ export default {
     vertical-align: middle
     span.is-rotate
       transform: rotate(180deg)
+>>>.van-dialog__header
+  padding-top: 15px
+  color: $color-primary
 .detail
-  margin-top: 40px
+  margin-top: 25px
   display: flex
   flex-direction: column
   justify-content: center

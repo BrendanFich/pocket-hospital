@@ -139,7 +139,6 @@ export default new Router({
         { path: 'examination', name: 'examination', component: Examination },
         { path: 'otherReports', name: 'otherReports', component: OtherReports },
         { path: 'bodyExam', name: 'bodyExam', component: BodyExam }
-
       ]
     },
     { path: '/drugSearch', name: 'drugSearch', component: DrugSearch },

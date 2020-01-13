@@ -8,7 +8,7 @@
     >
       <div v-for="(item, index) in orderList" :key="index">
         <div class="paidTime">下单日期：{{ item.createDate }}</div>
-        <div class="orderCard" @click="showDialog(item.hisOrdNum)">
+        <div class="orderCard" @click="getDetail(item.hisOrdNum)">
           <div class="left">
             <img src="./img/orderIcon.png" alt />
             <div class="baseInfo">
@@ -60,7 +60,7 @@
       title="订单详情"
       show-cancel-button
       :closeOnClickOverlay="true"
-      @confirm="refund"
+      @confirm="cancelRegister"
       confirmButtonColor="#09cf74"
       confirmButtonText="退款"
     >
@@ -69,7 +69,10 @@
           <label>订单号：</label><span>{{ cardDetail.hisOrdNum }}</span>
         </li>
         <li>
-          <label>创建时间：</label><span>{{ cardDetail.createDate && cardDetail.createDate.split(" ")[0] }}</span>
+          <label>创建时间：</label
+          ><span>{{
+            cardDetail.createDate && cardDetail.createDate.split(" ")[0]
+          }}</span>
         </li>
         <li>
           <label>就诊科室：</label><span>{{ cardDetail.deptName }}</span>
@@ -79,7 +82,9 @@
         </li>
         <li>
           <label>就诊日期：</label
-          ><span>{{ cardDetail.scheduleDate && cardDetail.scheduleDate.split(" ")[0] }}</span>
+          ><span>{{
+            cardDetail.scheduleDate && cardDetail.scheduleDate.split(" ")[0]
+          }}</span>
         </li>
         <li>
           <label>就诊时间：</label
@@ -174,15 +179,15 @@ export default {
       }
       return text
     },
-    showDialog (hisOrdNum) {
-      this.hisOrdNum = hisOrdNum
-      this.getDetail(hisOrdNum)
-    },
     getDetail (hisOrdNum) {
-      this.$post('/api/pat/findRegisterInfo', { hisOrdNum }).then(res => {
-        this.cardDetail = res.data.Records
-        this.dialogShow = true
-      })
+      this.$post('/api/pat/findRegisterInfo', { hisOrdNum })
+        .then(res => {
+          this.cardDetail = res.data.Records
+          this.dialogShow = true
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
     timeFormat (time) {
       return time
@@ -191,8 +196,13 @@ export default {
         .slice(0, 2)
         .join(':')
     },
-    refund () {
-      console.log('退款')
+    cancelRegister () {
+      // console.log(this.cardDetail.hisOrdNum)
+      this.$post('/api/register/cancelRegister', {
+        hisOrderNum: this.cardDetail.hisOrdNum
+      }).then(res => {
+        console.log(res)
+      })
     }
   }
 }
@@ -273,8 +283,11 @@ export default {
     vertical-align: middle
     span.is-rotate
       transform: rotate(180deg)
+>>>.van-dialog__header
+  padding-top: 15px
+  color: $color-primary
 .detail
-  margin-top: 30px
+  margin-top: 25px
   display: flex
   flex-direction: column
   justify-content: center

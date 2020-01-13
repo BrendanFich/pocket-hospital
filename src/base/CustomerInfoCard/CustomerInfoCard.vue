@@ -61,14 +61,6 @@ export default {
       })
     }
   }
-  // watch: {
-  //   temporaryCardNo (val) {
-  //     this.visitCardNo = val
-  //   },
-  //   temporaryCardPatname (val) {
-  //     this.visitName = val
-  //   }
-  // }
 }
 </script>
 
