@@ -8,7 +8,7 @@
     >
       <div v-for="(item, index) in orderList" :key="index">
         <div class="paidTime">下单日期：{{ item.createDate }}</div>
-        <div class="orderCard" @click="detail(item.hisOrdNum)">
+        <div class="orderCard" @click="showDialog(item.hisOrdNum)">
           <div class="left">
             <img src="./img/orderIcon.png" alt />
             <div class="baseInfo">
@@ -55,25 +55,59 @@
       </div>
     </van-list>
     <img class="noData" v-if="isShowNoData" src="./img/noData.png" />
-    <van-dialog v-model="detailShow" title="订单详情" show-cancel-button>
+    <van-dialog
+      v-model="dialogShow"
+      title="订单详情"
+      show-cancel-button
+      :closeOnClickOverlay="true"
+      @confirm="refund"
+      confirmButtonColor="#09cf74"
+      confirmButtonText="退款"
+    >
       <ul class="detail">
-        <li style="color: #5adba3;">订单详情</li>
-        <li>订单订单号: {{cardDetail.hisOrdNum}}</li>
-        <li>创建时间: {{cardDetail.createDate}}</li>
-        <li>就诊科室：{{cardDetail.deptName}}</li>
-        <li>就诊医生：{{cardDetail.doctorName}}</li>
-        <li>就诊日期：{{cardDetail.scheduleDate}}</li>
         <li>
-          就诊时间：{{cardDetail.beginTime}}-
-          {{cardDetail.endTime}}
+          <label>订单号：</label><span>{{ cardDetail.hisOrdNum }}</span>
         </li>
-        <li>病人姓名：{{cardDetail.patName}}</li>
-        <li>病人卡号：{{cardDetail.patCardNo}}</li>
         <li>
-          卡号类型：{{cardDetail.patCardType === '1' ? '就诊卡' : '社保卡'}}
+          <label>创建时间：</label><span>{{ cardDetail.createDate && cardDetail.createDate.split(" ")[0] }}</span>
         </li>
-        <li>挂号费用：{{cardDetail.regFee}}</li>
-        <li>当前状态：{{status(cardDetail.visitFlag)}}</li>
+        <li>
+          <label>就诊科室：</label><span>{{ cardDetail.deptName }}</span>
+        </li>
+        <li>
+          <label>就诊医生：</label><span>{{ cardDetail.doctorName }}</span>
+        </li>
+        <li>
+          <label>就诊日期：</label
+          ><span>{{ cardDetail.scheduleDate && cardDetail.scheduleDate.split(" ")[0] }}</span>
+        </li>
+        <li>
+          <label>就诊时间：</label
+          ><span
+            >{{ cardDetail.beginTime && timeFormat(cardDetail.beginTime) }} -
+            {{ cardDetail.endTime && timeFormat(cardDetail.endTime) }}
+          </span>
+        </li>
+        <li>
+          <label>患者：</label><span>{{ cardDetail.patName }}</span>
+        </li>
+        <li>
+          <label>卡号：</label><span>{{ cardDetail.patCardNo }}</span>
+        </li>
+        <li>
+          <label>卡号类型：</label
+          ><span
+            >{{ cardDetail.patCardType === "1" ? "就诊卡" : "社保卡" }}
+          </span>
+        </li>
+        <li>
+          <label>挂号费用：</label
+          ><span>{{ "￥" + cardDetail.regFee / 100 }}</span>
+        </li>
+        <li>
+          <label>当前状态：</label
+          ><span>{{ status(cardDetail.visitFlag) }}</span>
+        </li>
       </ul>
     </van-dialog>
   </div>
@@ -90,7 +124,7 @@ export default {
       finished: false, // 是否已加载完所有数据
       isLoading: false, // 是否处于下拉刷新状态
       isShowNoData: false,
-      detailShow: false,
+      dialogShow: false,
       cardDetail: {}
     }
   },
@@ -140,50 +174,15 @@ export default {
       }
       return text
     },
-    detail (hisOrdNum) {
-      this.$post('/api/pat/findRegisterInfo', { hisOrdNum })
-        .then(res => {
-          // this.detailShow = true
-          this.cardDetail = res.data.Records
-          // console.log(res)
-          let status
-          if (res.data.Records.visitFlag === '0') {
-            status = '未报到'
-          } else if (res.data.Records.visitFlag === '1') {
-            status = '已报道'
-          } else {
-            status = '已就诊'
-          }
-          let text = `
-                <div>
-                  <p style="color: #5adba3;">订单详情</p>
-                  <p>订单订单号: ${res.data.Records.hisOrdNum}</p>
-                  <p>创建时间: ${res.data.Records.createDate}</p>
-                  <p>就诊科室：${res.data.Records.deptName}</p>
-                  <p>就诊医生：${res.data.Records.doctorName}</p>
-                  <p>就诊日期：${res.data.Records.scheduleDate.split(' ')[0]}</p>
-                  <p>就诊时间：${res.data.Records.beginTime.split(' ')[1]}-${
-  res.data.Records.endTime.split(' ')[1]
-}</p>
-                  <p>病人姓名：${res.data.Records.patName}</p>
-                  <p>病人卡号：${res.data.Records.patCardNo}</p>
-                  <p>卡号类型：${
-  res.data.Records.patCardType === '1' ? '就诊卡' : '社保卡'
-}</p>
-                  <p>挂号费用：${res.data.Records.regFee / 100}</p>
-                  <p>当前状态：${status}</p>
-                </div>
-                `
-          this.$messagebox({title: '提示', message: text, showCancelButton: true, confirmButtonText: '退款'}).then(action => {
-            if (action === 'confirm') { // 确认的回调
-              console.log(1)
-            }
-          }).catch(err => {
-            if (err === 'cancel') { // 取消的回调
-              console.log(2)
-            }
-          })
-        })
+    showDialog (hisOrdNum) {
+      this.hisOrdNum = hisOrdNum
+      this.getDetail(hisOrdNum)
+    },
+    getDetail (hisOrdNum) {
+      this.$post('/api/pat/findRegisterInfo', { hisOrdNum }).then(res => {
+        this.cardDetail = res.data.Records
+        this.dialogShow = true
+      })
     },
     timeFormat (time) {
       return time
@@ -191,6 +190,9 @@ export default {
         .split(':')
         .slice(0, 2)
         .join(':')
+    },
+    refund () {
+      console.log('退款')
     }
   }
 }
@@ -271,4 +273,18 @@ export default {
     vertical-align: middle
     span.is-rotate
       transform: rotate(180deg)
+.detail
+  margin-top: 30px
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  >li
+    display: flex
+    height: 50px
+    label
+      width: 200px
+      color: #999
+    span
+      width: 250px
 </style>

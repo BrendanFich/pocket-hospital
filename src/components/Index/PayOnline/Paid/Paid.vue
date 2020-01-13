@@ -32,14 +32,58 @@
               <div class="refunded" v-if="item.paymentStatus === '-2'">
                 已退款
               </div>
-              <div class="price">{{ item.paymentFee/100 }}元</div>
+              <div class="price">{{ item.paymentFee / 100 }}元</div>
             </div>
-            <div class="date">{{ item.paymentDate.split(' ')[0] }}</div>
+            <div class="date">{{ item.paymentDate.split(" ")[0] }}</div>
           </div>
         </mt-cell>
       </div>
     </van-list>
     <img class="noData" v-if="isShowNoData" src="./img/noData.png" />
+    <van-dialog
+      v-model="dialogShow"
+      title="订单详情"
+      show-cancel-button
+      :closeOnClickOverlay="true"
+      @confirm="cancelOrder()"
+      confirmButtonColor="#09cf74"
+      confirmButtonText='退款'
+    >
+      <ul class="detail">
+        <li>
+          <label>患者：</label><span>{{ payInfo.patName }}</span>
+        </li>
+        <li>
+          <label>卡号：</label><span>{{ payInfo.PatCardNo }}</span>
+        </li>
+        <li>
+          <label>卡号类型：</label><span>{{ payInfo.patCardType === "1" ? "就诊卡" : "社保卡" }}</span>
+        </li>
+        <li>
+          <label>订单号：</label><span>{{ payInfo.outPatId }}</span>
+        </li>
+        <li>
+          <label>订单状态：</label><span>{{ paymentStatus }}</span>
+        </li>
+
+        <li>
+          <label>缴费时间：</label
+          ><span>{{
+            payInfo.paymentDate && payInfo.paymentDate.split(" ")[0]
+          }}</span>
+        </li>
+        <li>
+          <label>缴费金额：</label><span>{{  "￥" + payInfo.paymentFee/100 }}</span>
+        </li>
+        <li>
+          <label>开单科室：</label><span>{{ payInfo.paymentDeptName }}</span>
+        </li>
+        <li>
+          <label>开单医生：</label><span>{{ payInfo.paymentDoctorName }}</span>
+        </li>
+
+      </ul>
+    </van-dialog>
   </div>
 </template>
 
@@ -53,18 +97,49 @@ export default {
       loading: false, // 是否处于加载状态
       finished: false, // 是否已加载完所有数据
       isLoading: false, // 是否处于下拉刷新状态
-      isShowNoData: false
+      isShowNoData: false,
+      dialogShow: false,
+      payInfo: {}
+    }
+  },
+  computed: {
+    paymentStatus () {
+      if (
+        this.payInfo.paymentStatus === '1' ||
+        this.payInfo.paymentStatus === '-1'
+      ) {
+        return '已支付'
+      }
+      if (this.payInfo.paymentStatus === '2') {
+        return '退款中'
+      }
+      if (this.payInfo.paymentStatus === '-2') {
+        return '已退款'
+      }
     }
   },
   mounted () {
     let winHeight = document.documentElement.clientHeight // 视口大小
     document.getElementById('list-content').style.height =
-      winHeight - (120 * Math.min(document.documentElement.clientWidth / 750, 2)) + 'px'
-      // 调整上拉加载框高度,由于使用rem的原因此处不能只用减120px
+      winHeight -
+      120 * Math.min(document.documentElement.clientWidth / 750, 2) +
+      'px'
+    // 调整上拉加载框高度,由于使用rem的原因此处不能只用减120px
   },
   methods: {
     enterInfo (ledgerSn) {
-      this.$router.push({ name: 'outOrderInfo', params: { ledgerSn } })
+      // this.$router.push({ name: 'outOrderInfo', params: { ledgerSn } })
+      this.dialogShow = true
+      this.getPayInfo(ledgerSn)
+    },
+    getPayInfo (ledgerSn) {
+      this.$post('/api/doctor/payInfo', { ledgerSn })
+        .then(res => {
+          this.payInfo = res.data.Records
+        })
+        .catch(error => {
+          console.log(error)
+        })
     },
     getPaidList () {
       this.$post('/api/doctor/payInfoList', {
@@ -89,6 +164,21 @@ export default {
     onLoad () {
       this.size += 8
       this.getPaidList()
+    },
+    cancelOrder () {
+      this.$post('/api/doctor/payRefund', { ledgerSn: this.payInfo.outPatId })
+        .then(res => {
+          if (res.code === 0) {
+            this.$toast({
+              message: res.data.Records.message,
+              duration: 1500,
+              className: 'toast'
+            })
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   }
 }
@@ -170,4 +260,18 @@ export default {
     vertical-align: middle
     span.is-rotate
       transform: rotate(180deg)
+.detail
+  margin-top: 40px
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  >li
+    display: flex
+    height: 50px
+    label
+      width: 200px
+      color: #999
+    span
+      width: 200px
 </style>

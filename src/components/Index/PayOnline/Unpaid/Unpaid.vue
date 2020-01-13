@@ -7,7 +7,7 @@
       :offset="10"
     >
       <div class="list-item" v-for="(item, index) in unpaidList" :key="index">
-        <mt-cell @click.native="pay(item.ledgerSn)">
+        <mt-cell @click.native="showDialog(item.ledgerSn)">
           <div class="leftInfo">
             <div class="name">{{ item.patName }}</div>
             <div class="patCardNo">{{ item.PatCardNo }}</div>
@@ -28,6 +28,17 @@
       </div>
     </van-list>
     <img class="noData" v-if="isShowNoData" src="./img/noData.png" />
+      <van-dialog
+        v-model="dialogShow"
+        title="未支付订单"
+        show-cancel-button
+        :closeOnClickOverlay="true"
+        @confirm="pay()"
+        confirmButtonColor="#09cf74"
+        confirmButtonText='确认支付'
+      >
+        <div class="tip">该订单尚未支付，请确认支付</div>
+      </van-dialog>
   </div>
 </template>
 
@@ -43,7 +54,9 @@ export default {
       loading: false, // 是否处于加载状态
       finished: false, // 是否已加载完所有数据
       isLoading: false, // 是否处于下拉刷新状态
-      isShowNoData: false
+      isShowNoData: false,
+      dialogShow: false,
+      ledgerSn: ''
     }
   },
   mounted () {
@@ -77,28 +90,29 @@ export default {
       this.size += 8
       this.getUnpaidList()
     },
-    pay (ledgerSn) {
-      let self = this
-      this.$messagebox.confirm('是否现在支付').then(action => {
-        this.$post('/api/doctor/payComfirm', { ledgerSn })
-          .then(res => {
-            wx.ready(function () {
-              wx.chooseWXPay({
-                timestamp: res.data.timestamp,
-                nonceStr: res.data.nonceStr,
-                package: res.data.package,
-                signType: res.data.signType,
-                paySign: res.data.paySign,
-                success: function (res) {
-                  self.getUnpaidList()
-                }
-              })
+    showDialog (ledgerSn) {
+      this.dialogShow = true
+      this.ledgerSn = ledgerSn
+    },
+    pay () {
+      this.$post('/api/doctor/payComfirm', { ledgerSn: this.ledgerSn })
+        .then(res => {
+          wx.ready(function () {
+            wx.chooseWXPay({
+              timestamp: res.data.timestamp,
+              nonceStr: res.data.nonceStr,
+              package: res.data.package,
+              signType: res.data.signType,
+              paySign: res.data.paySign,
+              success: res => {
+                this.getUnpaidList()
+              }
             })
           })
-          .catch(error => {
-            console.log(error)
-          })
-      })
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   }
 }
@@ -182,4 +196,8 @@ export default {
     vertical-align: middle
     span.is-rotate
       transform: rotate(180deg)
+.tip
+  height: 100px
+  text-align: center
+  line-height: 100px
 </style>

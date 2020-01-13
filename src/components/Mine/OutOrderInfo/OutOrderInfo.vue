@@ -4,7 +4,7 @@
     <ul>
       <li>
         <span class="key">订单号</span>
-        <span class="value">{{info.ledgerSn}}</span>
+        <span class="value">{{info.outPatId}}</span>
       </li>
       <li>
         <span class="key">卡号</span>
