@@ -32,9 +32,9 @@
               <div class="refunded" v-if="item.paymentStatus === '-2'">
                 已退款
               </div>
-              <div class="price">{{ item.paymentFee }}元</div>
+              <div class="price">{{ item.paymentFee/100 }}元</div>
             </div>
-            <div class="date">{{ item.paymentDate }}</div>
+            <div class="date">{{ item.paymentDate.split(' ')[0] }}</div>
           </div>
         </mt-cell>
       </div>

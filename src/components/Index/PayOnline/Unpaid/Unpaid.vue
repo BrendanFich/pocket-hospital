@@ -13,7 +13,7 @@
             <div class="patCardNo">{{ item.PatCardNo }}</div>
             <div class="serial_number">
               订单号：
-              <span class="value">{{ item.outPatId }}</span>
+              <span class="value">{{ item.ledgerSn }}</span>
             </div>
             <div class="department">
               开单科室：
@@ -21,8 +21,8 @@
             </div>
           </div>
           <div class="rightInfo">
-            <div class="price unPaid">{{ item.paymentFee }}元</div>
-            <div class="date">{{ item.paymentDate }}</div>
+            <div class="price unPaid">{{ item.paymentFee/100 }}元</div>
+            <div class="date">{{ item.paymentDate.split(' ')[0] }}</div>
           </div>
         </mt-cell>
       </div>

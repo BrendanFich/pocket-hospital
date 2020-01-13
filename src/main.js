@@ -29,40 +29,50 @@ moment.locale('zh-cn')
 Vue.config.productionTip = false
 router.beforeEach((to, from, next) => {
   Indicator.close()
-  switch (to.fullPath) {
-    case '/index' :
+  switch (to.name) {
+    case 'index' :
       document.title = '首页'
       break
 
-    case '/reserve/sDept' :
+    case 'sDept' :
       document.title = '选择科室'
       break
-    case '/reserve/sDayDoc' :
+    case 'sDayDoc' :
       document.title = '选择医生'
       break
-    case '/reserve/sTime' :
+    case 'sTime' :
       document.title = '选择时间'
       break
-    case '/reserve/confirm' :
+    case 'confirm' :
       document.title = '选择挂号信息'
       break
-    case '/iHospital' :
+    case 'iHospital' :
       document.title = '互联网医院'
       break
-
-    case '/mine' :
+    case 'mine' :
       document.title = '个人中心'
       break
-    case '/mine/cardManage' :
+    case 'cardManage' :
       document.title = '就诊卡管理'
       break
-    case '/mine/cardManage/bindCard' :
+    case 'bindCard' :
       document.title = '就诊卡绑定'
+      break
+    case 'regOrder' :
+      document.title = '挂号订单'
+      break
+    case 'unpaid' :
+    case 'paid' :
+    case 'outOrderInfo':
+      document.title = '缴费订单'
+      break
+    case 'cardInfo' :
+      document.title = '就诊卡信息'
       break
     default:
       document.title = '掌上医院'
   }
-  // console.log(to.fullPath)
+  console.log(to.name)
   next()
 })
 /* eslint-disable no-new */

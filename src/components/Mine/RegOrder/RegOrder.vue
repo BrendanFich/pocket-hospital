@@ -9,10 +9,9 @@
       <div
         v-for="(item, index) in orderList"
         :key="index"
-        @click="detail(item.hisOrdNum)"
       >
         <div class="paidTime">下单日期：{{ item.createDate }}</div>
-        <div class="orderCard">
+        <div class="orderCard" @click="detail(item.hisOrdNum)">
           <div class="left">
             <img src="./img/orderIcon.png" alt />
             <div class="baseInfo">
@@ -26,10 +25,10 @@
                   >：{{ item.scheduleDate.split(" ")[0] }}</span
                 >
               </div>
-              <div class="item">
+              <!-- <div class="item">
                 <span class="key">院区</span>
                 <span class="value">：{{ item.hostpitalName }}</span>
-              </div>
+              </div> -->
               <div class="item">
                 <span class="key">科室</span>
                 <span class="value">：{{ item.deptName }}</span>
