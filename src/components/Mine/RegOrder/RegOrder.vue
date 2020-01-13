@@ -6,10 +6,7 @@
       @load="onLoad"
       :offset="10"
     >
-      <div
-        v-for="(item, index) in orderList"
-        :key="index"
-      >
+      <div v-for="(item, index) in orderList" :key="index">
         <div class="paidTime">下单日期：{{ item.createDate }}</div>
         <div class="orderCard" @click="detail(item.hisOrdNum)">
           <div class="left">
@@ -40,7 +37,7 @@
             </div>
           </div>
           <div class="right">
-            <span class="price">{{ item.regFee }}元</span>
+            <span class="price">{{ item.regFee / 100 }}元</span>
             <span class="orderTime"
               >{{ timeFormat(item.beginTime) }}-{{
                 timeFormat(item.endTime)
@@ -58,11 +55,31 @@
       </div>
     </van-list>
     <img class="noData" v-if="isShowNoData" src="./img/noData.png" />
+    <van-dialog v-model="detailShow" title="订单详情" show-cancel-button>
+      <ul class="detail">
+        <li style="color: #5adba3;">订单详情</li>
+        <li>订单订单号: {{cardDetail.hisOrdNum}}</li>
+        <li>创建时间: {{cardDetail.createDate}}</li>
+        <li>就诊科室：{{cardDetail.deptName}}</li>
+        <li>就诊医生：{{cardDetail.doctorName}}</li>
+        <li>就诊日期：{{cardDetail.scheduleDate}}</li>
+        <li>
+          就诊时间：{{cardDetail.beginTime}}-
+          {{cardDetail.endTime}}
+        </li>
+        <li>病人姓名：{{cardDetail.patName}}</li>
+        <li>病人卡号：{{cardDetail.patCardNo}}</li>
+        <li>
+          卡号类型：{{cardDetail.patCardType === '1' ? '就诊卡' : '社保卡'}}
+        </li>
+        <li>挂号费用：{{cardDetail.regFee}}</li>
+        <li>当前状态：{{status(cardDetail.visitFlag)}}</li>
+      </ul>
+    </van-dialog>
   </div>
 </template>
 
 <script>
-import util from '@/assets/js/util'
 export default {
   name: 'regOrder',
   data () {
@@ -72,7 +89,9 @@ export default {
       loading: false, // 是否处于加载状态
       finished: false, // 是否已加载完所有数据
       isLoading: false, // 是否处于下拉刷新状态
-      isShowNoData: false
+      isShowNoData: false,
+      detailShow: false,
+      cardDetail: {}
     }
   },
   created () {
@@ -122,10 +141,11 @@ export default {
       return text
     },
     detail (hisOrdNum) {
-      util.http
-        .post('/api/pat/findRegisterInfo', { hisOrdNum })
+      this.$post('/api/pat/findRegisterInfo', { hisOrdNum })
         .then(res => {
-          console.log(res)
+          // this.detailShow = true
+          this.cardDetail = res.data.Records
+          // console.log(res)
           let status
           if (res.data.Records.visitFlag === '0') {
             status = '未报到'
@@ -135,29 +155,34 @@ export default {
             status = '已就诊'
           }
           let text = `
-      <div>
-        <p style="color: #5adba3;">订单详情</p>
-        <p>订单流水号: ${res.data.Records.hisOrdNum}</p>
-        <p>创建时间: ${res.data.Records.createDate}</p>
-        <p>就诊科室：${res.data.Records.deptName}</p>
-        <p>就诊医生：${res.data.Records.doctorName}</p>
-        <p>就诊日期：${res.data.Records.scheduleDate}</p>
-        <p>就诊时间：${res.data.Records.beginTime}-${
-  res.data.Records.endTime
+                <div>
+                  <p style="color: #5adba3;">订单详情</p>
+                  <p>订单订单号: ${res.data.Records.hisOrdNum}</p>
+                  <p>创建时间: ${res.data.Records.createDate}</p>
+                  <p>就诊科室：${res.data.Records.deptName}</p>
+                  <p>就诊医生：${res.data.Records.doctorName}</p>
+                  <p>就诊日期：${res.data.Records.scheduleDate.split(' ')[0]}</p>
+                  <p>就诊时间：${res.data.Records.beginTime.split(' ')[1]}-${
+  res.data.Records.endTime.split(' ')[1]
 }</p>
-        <p>病人姓名：${res.data.Records.patName}</p>
-        <p>病人卡号：${res.data.Records.patCardNo}</p>
-        <p>卡号类型：${
+                  <p>病人姓名：${res.data.Records.patName}</p>
+                  <p>病人卡号：${res.data.Records.patCardNo}</p>
+                  <p>卡号类型：${
   res.data.Records.patCardType === '1' ? '就诊卡' : '社保卡'
 }</p>
-        <p>挂号费用：${res.data.Records.regFee}</p>
-        <p>当前状态：${status}</p>
-      </div>
-      `
-          this.$messagebox('提示', text)
-        })
-        .catch(error => {
-          console.log(error)
+                  <p>挂号费用：${res.data.Records.regFee / 100}</p>
+                  <p>当前状态：${status}</p>
+                </div>
+                `
+          this.$messagebox({title: '提示', message: text, showCancelButton: true, confirmButtonText: '退款'}).then(action => {
+            if (action === 'confirm') { // 确认的回调
+              console.log(1)
+            }
+          }).catch(err => {
+            if (err === 'cancel') { // 取消的回调
+              console.log(2)
+            }
+          })
         })
     },
     timeFormat (time) {

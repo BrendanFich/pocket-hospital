@@ -106,7 +106,7 @@ export default new Router({
       redirect: '/checkIn/cConfirm',
       component: CheckIn,
       children: [
-        { path: 'cConfirm', name: 'gSTime', component: CConfirm },
+        { path: 'cConfirm', name: 'cConfirm', component: CConfirm },
         { path: 'cQueue/:hisOrdNum', name: 'cQueue', component: CQueue }
       ]
     },

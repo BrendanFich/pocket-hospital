@@ -9,7 +9,7 @@ import util from '@/assets/js/util'
 import 'swiper/dist/css/swiper.css'
 import store from './vuex/store'
 import moment from 'moment'
-import { NavBar, PullRefresh, List, Cell } from 'vant'
+import { NavBar, PullRefresh, List, Cell, Dialog } from 'vant'
 
 import VConsole from 'vconsole'
 const vConsole = new VConsole()
@@ -20,6 +20,7 @@ Vue.use(NavBar)
 Vue.use(PullRefresh)
 Vue.use(List)
 Vue.use(Cell)
+Vue.use(Dialog)
 
 Vue.prototype.$post = util.http.post
 Vue.prototype.wxsdk = wxsdk
@@ -30,49 +31,87 @@ Vue.config.productionTip = false
 router.beforeEach((to, from, next) => {
   Indicator.close()
   switch (to.name) {
-    case 'index' :
+    case 'index':
       document.title = '首页'
       break
-
-    case 'sDept' :
+    case 'hospitalInfo':
+      document.title = '医院信息'
+      break
+    case 'doctorIntro':
+      document.title = '医生介绍'
+      break
+    case 'reportsKind':
+      document.title = '报告查询'
+      break
+    case 'examination':
+      document.title = '检查报告'
+      break
+    case 'bodyExam':
+      document.title = '检验报告'
+      break
+    case 'otherReports':
+      document.title = '其他报告'
+      break
+    case 'drugSearch':
+      document.title = '药品查询'
+      break
+    case 'serverPrice':
+      document.title = '医疗服务价格'
+      break
+    case 'parking':
+      document.title = '车位查询'
+      break
+    case 'suggestion':
+      document.title = '意见提交'
+      break
+    case 'nav':
+      document.title = '住院服务'
+      break
+    case 'sSymptom':
+      document.title = '智能导诊'
+      break
+    case 'cConfirm':
+      document.title = '就诊报到'
+      break
+    case 'sDept':
       document.title = '选择科室'
       break
-    case 'sDayDoc' :
+    case 'sDayDoc':
       document.title = '选择医生'
       break
-    case 'sTime' :
+    case 'sTime':
+    case 'gSTime':
       document.title = '选择时间'
       break
-    case 'confirm' :
+    case 'confirm':
       document.title = '选择挂号信息'
       break
-    case 'iHospital' :
+    case 'iHospital':
       document.title = '互联网医院'
       break
-    case 'mine' :
+    case 'mine':
       document.title = '个人中心'
       break
-    case 'cardManage' :
+    case 'cardManage':
       document.title = '就诊卡管理'
       break
-    case 'bindCard' :
+    case 'bindCard':
       document.title = '就诊卡绑定'
       break
-    case 'regOrder' :
+    case 'regOrder':
       document.title = '挂号订单'
       break
-    case 'unpaid' :
-    case 'paid' :
+    case 'unpaid':
+    case 'paid':
     case 'outOrderInfo':
       document.title = '缴费订单'
       break
-    case 'cardInfo' :
+    case 'cardInfo':
       document.title = '就诊卡信息'
       break
     default:
       document.title = '掌上医院'
   }
-  console.log(to.name)
   next()
 })
 /* eslint-disable no-new */

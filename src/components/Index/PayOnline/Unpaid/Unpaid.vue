@@ -13,7 +13,7 @@
             <div class="patCardNo">{{ item.PatCardNo }}</div>
             <div class="serial_number">
               订单号：
-              <span class="value">{{ item.ledgerSn }}</span>
+              <span class="value">{{ item.outPatId }}</span>
             </div>
             <div class="department">
               开单科室：
