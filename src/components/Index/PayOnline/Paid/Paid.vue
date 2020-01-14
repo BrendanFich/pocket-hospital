@@ -47,7 +47,7 @@
       :closeOnClickOverlay="true"
       @confirm="cancelOrder()"
       confirmButtonColor="#09cf74"
-      confirmButtonText='退款'
+      confirmButtonText="退款"
     >
       <ul class="detail">
         <li>
@@ -57,7 +57,8 @@
           <label>卡号：</label><span>{{ payInfo.PatCardNo }}</span>
         </li>
         <li>
-          <label>卡号类型：</label><span>{{ payInfo.patCardType === "1" ? "就诊卡" : "社保卡" }}</span>
+          <label>卡号类型：</label
+          ><span>{{ payInfo.patCardType === "1" ? "就诊卡" : "社保卡" }}</span>
         </li>
         <li>
           <label>订单号：</label><span>{{ payInfo.outPatId }}</span>
@@ -73,7 +74,8 @@
           }}</span>
         </li>
         <li>
-          <label>缴费金额：</label><span>{{  "￥" + payInfo.paymentFee/100 }}</span>
+          <label>缴费金额：</label
+          ><span>{{ "￥" + payInfo.paymentFee / 100 }}</span>
         </li>
         <li>
           <label>开单科室：</label><span>{{ payInfo.paymentDeptName }}</span>
@@ -81,7 +83,6 @@
         <li>
           <label>开单医生：</label><span>{{ payInfo.paymentDoctorName }}</span>
         </li>
-
       </ul>
     </van-dialog>
   </div>

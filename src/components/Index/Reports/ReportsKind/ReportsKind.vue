@@ -14,13 +14,6 @@
         </div>
         <img slot="icon" src="./img/pacsList.png" />
       </mt-cell>
-      <mt-cell class="cell" is-link to='/reports/otherReports'>
-        <div slot="title" class="content">
-          <div class="title">其他报告</div>
-          <div class="description">查看其他报告</div>
-        </div>
-        <img slot="icon" src="./img/otherReports.png" />
-      </mt-cell>
   </div>
 </template>
 

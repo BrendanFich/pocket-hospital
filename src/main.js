@@ -9,7 +9,7 @@ import util from '@/assets/js/util'
 import 'swiper/dist/css/swiper.css'
 import store from './vuex/store'
 import moment from 'moment'
-import { NavBar, PullRefresh, List, Cell, Dialog } from 'vant'
+import { NavBar, PullRefresh, List, Cell, Dialog, Row, Col } from 'vant'
 
 import VConsole from 'vconsole'
 const vConsole = new VConsole()
@@ -21,6 +21,8 @@ Vue.use(PullRefresh)
 Vue.use(List)
 Vue.use(Cell)
 Vue.use(Dialog)
+Vue.use(Row)
+Vue.use(Col)
 
 Vue.prototype.$post = util.http.post
 Vue.prototype.wxsdk = wxsdk
@@ -84,7 +86,7 @@ router.beforeEach((to, from, next) => {
       document.title = '选择时间'
       break
     case 'confirm':
-      document.title = '选择挂号信息'
+      document.title = '确认挂号信息'
       break
     case 'iHospital':
       document.title = '互联网医院'
@@ -105,6 +107,9 @@ router.beforeEach((to, from, next) => {
     case 'paid':
     case 'outOrderInfo':
       document.title = '缴费订单'
+      break
+    case 'reportDetail':
+      document.title = '报告详情'
       break
     case 'cardInfo':
       document.title = '就诊卡信息'

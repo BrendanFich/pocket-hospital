@@ -41,7 +41,7 @@ import Reports from '@/components/Index/Reports/Reports/Reports'
 import ReportsKind from '@/components/Index/Reports/ReportsKind/ReportsKind'
 import BodyExam from '@/components/Index/Reports/BodyExam/BodyExam'
 import Examination from '@/components/Index/Reports/Examination/Examination'
-import OtherReports from '@/components/Index/Reports/OtherReports/OtherReports'
+import ReportDetail from '@/components/Index/Reports/ReportDetail/ReportDetail'
 import DrugSearch from '@/components/Index/DrugSearch/DrugSearch'
 import ServerPrice from '@/components/Index/ServerPrice/ServerPrice'
 import Parking from '@/components/Index/Parking/Parking'
@@ -137,8 +137,8 @@ export default new Router({
       children: [
         { path: 'reportsKind', name: 'reportsKind', component: ReportsKind },
         { path: 'examination', name: 'examination', component: Examination },
-        { path: 'otherReports', name: 'otherReports', component: OtherReports },
-        { path: 'bodyExam', name: 'bodyExam', component: BodyExam }
+        { path: 'bodyExam', name: 'bodyExam', component: BodyExam },
+        { path: 'reportDetail/:inspectId&:checkId', name: 'reportDetail', component: ReportDetail }
       ]
     },
     { path: '/drugSearch', name: 'drugSearch', component: DrugSearch },

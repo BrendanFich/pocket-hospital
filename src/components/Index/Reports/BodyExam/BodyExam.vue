@@ -1,7 +1,7 @@
 <template>
   <!-- 检验报告 -->
   <div class="bodyExam">
-    <mt-cell class="cell" is-link v-for="(item, index) in lisList" :key="index" @click.native="getLisInfo(item.inspectId)">
+    <mt-cell class="cell" is-link v-for="(item, index) in lisList" :key="index" @click.native="linkTo(item.inspectId)">
       <div slot="title" class="content">
         <div class="date">
           <span class="key">开单日期：</span>
@@ -18,17 +18,18 @@
       </div>
       <img slot="icon" src="./img/lisList.png" />
     </mt-cell>
+    <img class="noData" v-if="isShowNoData" src="./img/noData.png" />
   </div>
 </template>
 
 <script>
-import util from '@/assets/js/util'
 
 export default {
   name: 'bodyExam',
   data () {
     return {
-      lisList: []
+      lisList: [],
+      isShowNoData: false
     }
   },
   created () {
@@ -36,33 +37,24 @@ export default {
   },
   methods: {
     getLisList () {
-      util.http
-        .post('/api/report/getLisList', {
-          patCardNo: '1000259326',
-          beginDate: '2016-03-01',
-          endDate: '2017-04-01',
-          patCardType: '1'
-        })
+      this.$post('/api/report/getLisList', {
+        patCardNo: '1000259326',
+        page: 1,
+        size: 10
+      })
         .then(res => {
-          console.log(res)
-          this.lisList = res.data.Records
+          this.lisList = res.data
+          if (res.data.length === 0) {
+            this.isShowNoData = true
+          }
         })
         .catch(error => {
           console.log(error)
         })
     },
-    getLisInfo (inspectId) {
-      util.http
-        .post('/api/report/getLisInfo', {
-          patCardType: '1',
-          patCardNo: '1000259326',
-          inspectId
-        })
-        .then(res => {
-        })
-        .catch(error => {
-          console.log(error)
-        })
+    linkTo (inspectId) {
+      this.$router.push({name: 'reportDetail', params: {inspectId, checkId: ''}})
+      // this.$router.push('/reports/reportDetail/' + inspectId + '&')
     }
   }
 }

@@ -1,9 +1,9 @@
 <template>
   <div class="payOnline">
-    <div class="tabBox">
+    <!-- <div class="tabBox">
       <div class="tab" @click="select('/payOnline/unpaid')" :class="{active: activeIndex === 0}">未付款</div>
       <div class="tab" @click="select('/payOnline/paid')" :class="{active: activeIndex === 1}">已付款</div>
-    </div>
+    </div> -->
     <router-view></router-view>
   </div>
 </template>

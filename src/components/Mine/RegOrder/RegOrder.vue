@@ -45,10 +45,10 @@
             >
             <span
               :class="{
-                noArrival: item.visitFlag === '0',
-                arrivaled: item.visitFlag === '1' || item.visitFlag === '-1'
+                backRegist: item.backRegistInd === '1',
+                noBackRegist: item.backRegistInd === '0'
               }"
-              >{{ status(item.visitFlag) }}</span
+              >{{ status(item.backRegistInd, item.visit_status) }}</span
             >
           </div>
         </div>
@@ -62,7 +62,7 @@
       :closeOnClickOverlay="true"
       @confirm="cancelRegister"
       confirmButtonColor="#09cf74"
-      confirmButtonText="退款"
+      confirmButtonText="退号"
     >
       <ul class="detail">
         <li>
@@ -111,7 +111,7 @@
         </li>
         <li>
           <label>当前状态：</label
-          ><span>{{ status(cardDetail.visitFlag) }}</span>
+          ><span>{{ status(cardDetail.backRegistInd, cardDetail.visit_status) }}</span>
         </li>
       </ul>
     </van-dialog>
@@ -124,7 +124,7 @@ export default {
   data () {
     return {
       orderList: [],
-      size: 0,
+      page: 0,
       loading: false, // 是否处于加载状态
       finished: false, // 是否已加载完所有数据
       isLoading: false, // 是否处于下拉刷新状态
@@ -144,16 +144,16 @@ export default {
     getOrderList () {
       this.$post('/api/pat/findAllRegister', {
         pay_status: '0',
-        page: 1,
-        size: this.size
+        page: this.page,
+        size: 10
       })
         .then(res => {
-          this.orderList = res.data
+          this.orderList = [...this.orderList, ...res.data]
           if (res.data.length === 0) {
             this.isShowNoData = true
           }
           this.loading = false
-          if (res.page.count <= this.size) {
+          if (res.page.totalPage <= res.page.currentPage) {
             this.finished = true
           }
         })
@@ -162,27 +162,20 @@ export default {
         })
     },
     onLoad () {
-      this.size += 8
+      this.page += 1
       this.getOrderList()
     },
-    status (code) {
-      let text = ''
-      switch (code) {
-        case '0':
-          text = '未报到'
-          break
-        case '1':
-          text = '已报到'
-          break
-        case '-1':
-          text = '已就诊'
+    status (backRegistInd, visitStatus) {
+      if (backRegistInd === '1') {
+        return '已退号'
+      } else {
+        return visitStatus
       }
-      return text
     },
     getDetail (hisOrdNum) {
       this.$post('/api/pat/findRegisterInfo', { hisOrdNum })
         .then(res => {
-          this.cardDetail = res.data.Records
+          this.cardDetail = res.data
           this.dialogShow = true
         })
         .catch(err => {
@@ -201,8 +194,14 @@ export default {
       this.$post('/api/register/cancelRegister', {
         hisOrderNum: this.cardDetail.hisOrdNum
       }).then(res => {
-        console.log(res)
+        if (res.code === 0) {
+          this.$toast({ message: '退号成功', duration: 1500, className: 'toast' })
+          this.getOrderList()
+        }
       })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 }
@@ -270,10 +269,10 @@ export default {
       .orderTime
         margin-top: 10px
         background: #5adba3
-      .noArrival
+      .backRegist
         margin-top: 10px
         background: #f69343
-      .arrivaled
+      .noBackRegist
         margin-top: 10px
         background: #5adba3
 .mint-loadmore-bottom

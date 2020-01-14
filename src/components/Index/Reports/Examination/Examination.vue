@@ -1,6 +1,6 @@
 <template>
   <div class="examination">
-    <mt-cell class="cell" is-link v-for="(item, index) in pacsList" :key="index" @click.native="getLisInfo(item.checkId)">
+    <mt-cell class="cell" is-link v-for="(item, index) in pacsList" :key="index" @click.native="linkeTo(item.checkId)">
       <div slot="title" class="content">
         <div class="date">
           <span class="key">开单日期：</span>
@@ -17,16 +17,17 @@
       </div>
       <img slot="icon" src="./img/pacsList.png" />
     </mt-cell>
+    <img class="noData" v-if="isShowNoData" src="./img/noData.png" />
   </div>
 </template>
 
 <script>
-import util from '@/assets/js/util'
 export default {
   name: 'examination',
   data () {
     return {
-      pacsList: []
+      pacsList: [],
+      isShowNoData: false
     }
   },
   created () {
@@ -34,43 +35,23 @@ export default {
   },
   methods: {
     getPacsList () {
-      util.http
-        .post('/api/report/getPacsList', {
-          patCardNo: '1000259326',
-          beginDate: '2016-03-01',
-          endDate: '2017-04-01',
-          patCardType: '1'
-        })
+      this.$post('/api/report/getPacsList', {
+        patCardNo: '1000259326',
+        page: 1,
+        size: 10
+      })
         .then(res => {
-          console.log(res)
-          this.pacsList = res.data.Records
+          this.pacsList = res.data
+          if (res.data.length === 0) {
+            this.isShowNoData = true
+          }
         })
         .catch(error => {
           console.log(error)
         })
     },
-    getLisInfo (checkId) {
-      util.http
-        .post('/api/report/getPacsInfo', {
-          patCardType: '1',
-          patCardNo: '1000259326',
-          checkId: '1153173'
-        })
-        .then(res => {
-          console.log(res)
-          let text = `
-          <div>
-            <p>化验编号: ${res.data.Records[0].checkId}</p>
-            <p>化验类型: ${res.data.Records[0].checkMethod}</p>
-            <p>化验名称：${res.data.Records[0].checkName}</p>
-            <p>门诊名称：${res.data.Records[0].deptName}</p>
-          </div>
-          `
-          this.$messagebox('提示', text)
-        })
-        .catch(error => {
-          console.log(error)
-        })
+    linkeTo (checkId) {
+      this.$router.push({name: 'reportDetail', params: {checkId, inspectId: ''}})
     }
   }
 }
