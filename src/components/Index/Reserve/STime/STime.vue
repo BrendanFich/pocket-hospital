@@ -67,8 +67,8 @@ export default {
     getDocInfo () {
       this.$post('/api/doctor/doc_info', {deptCode: this.$store.state.deptCode, doctorCode: this.$store.state.doctorCode})
         .then(res => {
-          if (res.code === 0 && res.data.Records[0]) {
-            this.docInfo = res.data.Records[0]
+          if (res.code === 0 && res.data[0]) {
+            this.docInfo = res.data[0]
             this.$store.commit('updateDoctorName', this.docInfo.doctorName)
           }
         })

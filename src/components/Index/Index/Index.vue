@@ -61,7 +61,7 @@
           <img src="./img/drugIcon.png" />
           <h3>药品查询</h3>
         </router-link>
-        <router-link class="item" to="/serverPrice">
+        <router-link class="item" to="/serverSearch">
           <img src="./img/serverIcon.png"/>
           <h3>医疗服务价格</h3>
         </router-link>

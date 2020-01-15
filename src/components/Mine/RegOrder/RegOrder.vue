@@ -62,7 +62,7 @@
       :closeOnClickOverlay="true"
       @confirm="cancelRegister"
       confirmButtonColor="#09cf74"
-      confirmButtonText="退号"
+      :confirmButtonText="confirmButtonText"
     >
       <ul class="detail">
         <li>
@@ -111,7 +111,9 @@
         </li>
         <li>
           <label>当前状态：</label
-          ><span>{{ status(cardDetail.backRegistInd, cardDetail.visit_status) }}</span>
+          ><span>{{
+            status(cardDetail.backRegistInd, cardDetail.visit_status)
+          }}</span>
         </li>
       </ul>
     </van-dialog>
@@ -131,6 +133,15 @@ export default {
       isShowNoData: false,
       dialogShow: false,
       cardDetail: {}
+    }
+  },
+  computed: {
+    confirmButtonText () {
+      if (this.cardDetail.backRegistInd === '1') {
+        return '确认'
+      } else {
+        return '退号'
+      }
     }
   },
   created () {
@@ -191,17 +202,24 @@ export default {
     },
     cancelRegister () {
       // console.log(this.cardDetail.hisOrdNum)
-      this.$post('/api/register/cancelRegister', {
-        hisOrderNum: this.cardDetail.hisOrdNum
-      }).then(res => {
-        if (res.code === 0) {
-          this.$toast({ message: '退号成功', duration: 1500, className: 'toast' })
-          this.getOrderList()
-        }
-      })
-        .catch(err => {
-          console.log(err)
+      if (this.cardDetail.backRegistInd === '0') {
+        this.$post('/api/register/cancelRegister', {
+          hisOrderNum: this.cardDetail.hisOrdNum
         })
+          .then(res => {
+            if (res.code === 0) {
+              this.$toast({
+                message: '退号成功',
+                duration: 1500,
+                className: 'toast'
+              })
+              this.getOrderList()
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
     }
   }
 }

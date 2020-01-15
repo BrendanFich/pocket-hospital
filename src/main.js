@@ -6,10 +6,19 @@ import router from './router'
 import '@/assets/js/rem'
 import wxsdk from '@/assets/js/wxsdk'
 import util from '@/assets/js/util'
-import 'swiper/dist/css/swiper.css'
 import store from './vuex/store'
 import moment from 'moment'
-import { NavBar, PullRefresh, List, Cell, Dialog, Row, Col } from 'vant'
+import {
+  NavBar,
+  PullRefresh,
+  List,
+  Cell,
+  Dialog,
+  Row,
+  Col,
+  Search,
+  Tag
+} from 'vant'
 
 import VConsole from 'vconsole'
 const vConsole = new VConsole()
@@ -23,6 +32,8 @@ Vue.use(Cell)
 Vue.use(Dialog)
 Vue.use(Row)
 Vue.use(Col)
+Vue.use(Search)
+Vue.use(Tag)
 
 Vue.prototype.$post = util.http.post
 Vue.prototype.wxsdk = wxsdk
@@ -51,14 +62,13 @@ router.beforeEach((to, from, next) => {
     case 'bodyExam':
       document.title = '检验报告'
       break
-    case 'otherReports':
-      document.title = '其他报告'
-      break
-    case 'drugSearch':
+    case 'drugIndex':
+    case 'drugSearchPage':
       document.title = '药品查询'
       break
-    case 'serverPrice':
-      document.title = '医疗服务价格'
+    case 'serverIndex':
+    case 'ServerSearchPage':
+      document.title = '医疗服务查询'
       break
     case 'parking':
       document.title = '车位查询'

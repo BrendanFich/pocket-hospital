@@ -14,7 +14,8 @@ import Confirm from '@/components/Index/Reserve/Confirm/Confirm'
 import PayOnline from '@/components/Index/PayOnline/PayOnline'
 import Unpaid from '@/components/Index/PayOnline/Unpaid/Unpaid'
 import Paid from '@/components/Index/PayOnline/Paid/Paid'
-import Guidance from '@/components/Index/Guidance/Guidance/Guidance'
+import DocSearchPage from '@/components/Index/Guidance/DocSearchPage/DocSearchPage'
+
 import SSymptom from '@/components/Index/Guidance/SSymptom/SSymptom'
 import GSTime from '@/components/Index/Guidance/GSTime/GSTime'
 import CheckIn from '@/components/Index/CheckIn/CheckIn/CheckIn'
@@ -42,8 +43,12 @@ import ReportsKind from '@/components/Index/Reports/ReportsKind/ReportsKind'
 import BodyExam from '@/components/Index/Reports/BodyExam/BodyExam'
 import Examination from '@/components/Index/Reports/Examination/Examination'
 import ReportDetail from '@/components/Index/Reports/ReportDetail/ReportDetail'
-import DrugSearch from '@/components/Index/DrugSearch/DrugSearch'
-import ServerPrice from '@/components/Index/ServerPrice/ServerPrice'
+
+import DrugIndex from '@/components/Index/DrugSearch/DrugIndex/DrugIndex'
+import DrugSearchPage from '@/components/Index/DrugSearch/DrugSearchPage/DrugSearchPage'
+
+import ServerIndex from '@/components/Index/ServerSearch/ServerIndex/ServerIndex'
+import ServerSearchPage from '@/components/Index/ServerSearch/ServerSearchPage/ServerSearchPage'
 import Parking from '@/components/Index/Parking/Parking'
 import Suggestion from '@/components/Index/Suggestion/Suggestion'
 // iHospital
@@ -95,10 +100,11 @@ export default new Router({
     {
       path: '/guidance',
       redirect: '/guidance/sSymptom',
-      component: Guidance,
+      component: Container,
       children: [
         { path: 'sSymptom', name: 'sSymptom', component: SSymptom },
-        { path: 'gSTime', name: 'gSTime', component: GSTime }
+        { path: 'gSTime', name: 'gSTime', component: GSTime },
+        { path: 'docSearchPage/:tagName', name: 'docSearchPage', component: DocSearchPage }
       ]
     },
     {
@@ -141,8 +147,24 @@ export default new Router({
         { path: 'reportDetail/:inspectId&:checkId', name: 'reportDetail', component: ReportDetail }
       ]
     },
-    { path: '/drugSearch', name: 'drugSearch', component: DrugSearch },
-    { path: '/serverPrice', name: 'serverPrice', component: ServerPrice },
+    {
+      path: '/drugSearch',
+      redirect: '/drugSearch/drugIndex',
+      component: Container,
+      children: [
+        { path: 'drugIndex', name: 'drugIndex', component: DrugIndex },
+        { path: 'drugSearchPage', name: 'drugSearchPage', component: DrugSearchPage }
+      ]
+    },
+    {
+      path: '/serverSearch',
+      redirect: '/serverSearch/serverIndex',
+      component: Container,
+      children: [
+        { path: 'serverIndex', name: 'serverIndex', component: ServerIndex },
+        { path: 'serverSearchPage', name: 'serverSearchPage', component: ServerSearchPage }
+      ]
+    },
     { path: '/parking', name: 'parking', component: Parking },
     { path: '/suggestion', name: 'suggestion', component: Suggestion },
     {
