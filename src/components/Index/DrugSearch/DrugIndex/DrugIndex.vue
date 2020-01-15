@@ -126,6 +126,7 @@ export default {
       font-size: 24px
       line-height: 42px
       color: $color-black
+      flex: 1
     /deep/ .mint-cell-allow-right::after
       width: 15px
       height: 15px

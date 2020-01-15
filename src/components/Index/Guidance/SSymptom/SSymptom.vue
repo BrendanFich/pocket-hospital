@@ -62,14 +62,14 @@ export default {
       isShowNoData: false,
       timer: null,
       searchTags: [
-        { describe: '风湿' },
-        { describe: '骨质' },
-        { describe: '肠道' },
-        { describe: '妇科炎症' },
-        { describe: '风湿' },
-        { describe: '骨质' },
-        { describe: '肠道' },
-        { describe: '妇科炎症' }
+        // { describe: '风湿' },
+        // { describe: '骨质' },
+        // { describe: '肠道' },
+        // { describe: '妇科炎症' },
+        // { describe: '风湿' },
+        // { describe: '骨质' },
+        // { describe: '肠道' },
+        // { describe: '妇科炎症' }
       ],
       searchResult: [],
       docList: [
@@ -108,6 +108,30 @@ export default {
           doctorSkill: '',
           doctorTitle: '副主任医师',
           score: ''
+        },
+        {
+          USER_ID: '10',
+          deptCode: '277',
+          deptName: '肛肠科',
+          doctorCode: '012',
+          doctorIntrodution:
+            '肠道主任医师，曾在中山大学附属研究参与研究，有多年主治经验，擅长治疗各种肠道疾病',
+          doctorName: '刘伟忠',
+          doctorSkill: '',
+          doctorTitle: '副主任医师',
+          score: ''
+        },
+        {
+          USER_ID: '10',
+          deptCode: '277',
+          deptName: '肛肠科',
+          doctorCode: '012',
+          doctorIntrodution:
+            '肠道主任医师，曾在中山大学附属研究参与研究，有多年主治经验，擅长治疗各种肠道疾病',
+          doctorName: '刘伟忠',
+          doctorSkill: '',
+          doctorTitle: '副主任医师',
+          score: ''
         }
       ]
     }
@@ -121,7 +145,7 @@ export default {
     // 调整上拉加载框高度,由于使用rem的原因此处不能只用减120px
   },
   created () {
-    // this.getDescribe()
+    this.getDescribe()
   },
   methods: {
     getDescribe () {
@@ -138,7 +162,7 @@ export default {
     },
     onLoad () {
       this.page += 1
-      // this.getDocList()
+      this.getDocList()
     },
     getDocList () {
       this.$post('/api/doctor/intelligent_guidance', { describe: '', page: this.page, size: 10 })
@@ -159,20 +183,6 @@ export default {
     linkTo (name, params) {
       this.$router.push({ name, params })
     }
-  },
-  watch: {
-    value () {
-      if (this.timer) {
-        clearTimeout(this.timer)
-      }
-      this.timer = setTimeout(() => {
-        if (this.value) {
-          this.searchResult = []
-          this.getSearchResult()
-        }
-        this.timer = null
-      }, 1000)
-    }
   }
 }
 </script>
@@ -184,6 +194,7 @@ export default {
   @include page($color-page-background)
   .search
     background: $color-white
+    height: 260px
     margin-bottom: 20px
     .searchTags
       width: 710px

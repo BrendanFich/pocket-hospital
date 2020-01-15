@@ -10,11 +10,21 @@
         autofocus
       />
     </form>
-    <ul class="resultContent">
-      <li>
-
-      </li>
-    </ul>
+    <div class="resultContent">
+      <mt-cell
+        class="cell list-item"
+        v-for="(item, index) in resultList"
+        :key="index"
+      >
+        <div slot="icon" class="fakePicture"></div>
+        <div slot="title" class="content">
+          <div>药品名称：{{ item.MedicineName }}</div>
+          <div>药品规格：{{ item.Model }}/{{ item.Unit }}</div>
+          <div>药品价格：{{ item.Price }}元</div>
+        </div>
+      </mt-cell>
+      <img class="noData" v-if="isShowNoData" src="./img/noData.png" />
+    </div>
   </div>
 </template>
 
@@ -25,7 +35,8 @@ export default {
     return {
       value: '',
       timer: null,
-      searchResult: ''
+      resultList: [],
+      isShowNoData: false
     }
   },
   methods: {
@@ -35,10 +46,13 @@ export default {
     onCancel () {
       this.$router.go(-1)
     },
-    getSearchResult () {
-      this.$post('/api/doctor/getmedicinal', { medicineName: this.value })
+    getResultList () {
+      this.$post('/api/medicine/list', { medicineName: this.value, page: 1, size: 1000 })
         .then(res => {
-          this.searchResult = res.data.Records
+          this.resultList = res.data
+          if (res.page.count === 0) {
+            this.isShowNoData = true
+          }
         })
         .catch(error => {
           console.log(error)
@@ -52,8 +66,8 @@ export default {
       }
       this.timer = setTimeout(() => {
         if (this.value) {
-          this.searchResult = []
-          this.getSearchResult()
+          this.resultList = []
+          this.getResultList()
         }
         this.timer = null
       }, 500)
@@ -68,67 +82,35 @@ export default {
 .drugSearchPage
   background: $color-page-background
   height: 100vh
-  .searchbar
-    width: 750px
-    height: 120px
-    position: relative
-    input
-      margin: 30px 25px
-      border-radius: 10px
-      padding: 20px 70px
-      width: 560px
-      border: none
-      outline: none
-      font-size: 24px
-    .cancelIcon
-      width: 16px
-      position: absolute
-      top: 55px
-      left: 65px
-    .cancel
-      display: none
-      position: absolute
-      top: 30px
-      right: 50px
-      font-size: 24px
-      border: none
-      background: $color-white
-      outline: none
-      height: 68px
-      margin-left: -10px
-      color: $color-primary
-    .resultList
-      background: $color-white
-      display: none
-      min-height: calc(100vh - 128px)
-      .resultStyle
-        font-size: 24px
-        padding: 20px 30px
-        border-bottom: 1px solid $color-border
-      .resultItem
-        display: flex
-        align-items: center
-        padding: 10px 30px
-        font-size: 20px
-        line-height: 30px
-        border-bottom: 1px solid $color-border
-    .xIcon
-      display: none
-      position: absolute
-      top: 50px
-      right: 130px
-      font-size: 25px
-      background: $color-xIcon-grey
-      border-radius: 50%
-      width: 30px
-      height: 25px
-      text-align: center
-      padding-bottom: 5px
-      color: $color-title-black
-    .show
-      display: block
   .resultContent
+    height: calc( 100vh - 128px )
+    overflow-y: auto
     margin-top: 20px
+    .cell
+      .fakePicture
+        width: 123px
+        height: 123px
+        background: $color-img-grey
+        margin-right: 30px
+      .content
+        font-size: 24px
+        line-height: 42px
+        color: $color-black
+        flex: 1
+      /deep/ .mint-cell-allow-right::after
+        width: 15px
+        height: 15px
+        margin-right: 60px
+      /deep/ .mint-cell-wrapper
+        padding: 0
+    /deep/ .mint-cell-title
+      padding: 27px 80px 27px 40px
+      display: flex
+      justify-content: flex-start
+      align-items: center
+    .noData
+      width: 366px
+      margin: 100px 0 0 200px
 >>>.van-icon.van-icon-search
   color: $color-primary
 >>>.van-search__action
