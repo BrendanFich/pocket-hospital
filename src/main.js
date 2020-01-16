@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import MintUI, { Indicator } from 'mint-ui'
+import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 import App from './App'
 import router from './router'
@@ -17,7 +17,8 @@ import {
   Row,
   Col,
   Search,
-  Tag
+  Tag,
+  Rate
 } from 'vant'
 
 import VConsole from 'vconsole'
@@ -34,6 +35,7 @@ Vue.use(Row)
 Vue.use(Col)
 Vue.use(Search)
 Vue.use(Tag)
+Vue.use(Rate)
 
 Vue.prototype.$post = util.http.post
 Vue.prototype.wxsdk = wxsdk
@@ -42,7 +44,11 @@ moment.locale('zh-cn')
 
 Vue.config.productionTip = false
 router.beforeEach((to, from, next) => {
-  Indicator.close()
+  store.state._axiosPromiseCancel.forEach(e => {
+    e && e()
+  })
+  store._axiosPromiseCancel = []
+  // Indicator.close()
   switch (to.name) {
     case 'index':
       document.title = '首页'

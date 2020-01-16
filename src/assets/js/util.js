@@ -1,8 +1,10 @@
 import axios from 'axios'
 import moment from 'moment'
+import store from '@/vuex/store'
 import { Indicator, Toast } from 'mint-ui'
 import { apiBaseUrl, authUrl } from './config'
 let http = {}
+const CancelToken = axios.CancelToken
 http.ajax = axios.create()
 
 // 请求超时时间
@@ -11,6 +13,9 @@ http.ajax.defaults.timeout = 35000
 // 请求拦截
 http.ajax.interceptors.request.use(
   config => {
+    config.cancelToken = new CancelToken(cancel => {
+      store.commit('changePage', cancel)
+    })
     Indicator.open()
     if (localStorage.token) {
       config.headers.Authorization = localStorage.token
@@ -28,11 +33,11 @@ http.ajax.interceptors.response.use(
     Indicator.close()
     if (res.data.code === 401) {
       localStorage.removeItem('token')
-      Toast({
-        message: 'token过期,重新登录',
-        duration: 1000,
-        className: 'toast'
-      })
+      // Toast({
+      //   message: 'token过期,重新登录',
+      //   duration: 1000,
+      //   className: 'toast'
+      // })
       if (process.env.NODE_ENV === 'production') {
         window.location.href = authUrl
       }
@@ -63,6 +68,12 @@ http.ajax.interceptors.response.use(
       // originalRequest._retry = true
       // return axios.request(originalRequest)
     }
+    if (http.ajax.isCancel(err)) {
+      // 为了终结promise链 就是实际请求 不会走到.catch(rej=>{});这样就不会触发错误提示之类了。
+      return new Promise(() => {})
+    } else {
+      return Promise.reject(err)
+    }
   }
 )
 
@@ -83,7 +94,6 @@ http.post = (url, data) => {
       })
   })
 }
-
 // 时间比较
 const compareTime = pro => {
   return (obj1, obj2) => {

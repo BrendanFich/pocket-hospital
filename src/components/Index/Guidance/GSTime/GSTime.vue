@@ -1,35 +1,43 @@
 <template>
   <div class="gSTime">
     <div class="doctorIntroCard">
-      <img class="avatar" src="./img/avatar100x101.png" />
-      <div class="doctorInfo">
-        <p class="doctorName">{{doctorInfo.doctorName}}</p>
-        <p class="doctorTitle">{{doctorInfo.deptName}} {{doctorInfo.doctorTitle}}</p>
-        <div class="star">
-          <img v-for="n in 5" :key="n" src="./img/starOn.png" />
-        </div>
-        <p class="textIntro">{{doctorInfo.doctorIntrodution ? doctorInfo.doctorIntrodution : '擅长免疫性皮肤病，男性内分泌不平衡，由内分泌引起的各种疾病。'}}</p>
+      <img class="avatar" :src="img" />
+      <div class="docInfo">
+        <p class="doctorName">{{ docInfo.doctorName }}</p>
+        <p class="doctorTitle">
+          {{ docInfo.deptName }} {{ docInfo.doctorTitle }}
+        </p>
+        <van-rate v-model="star" readonly />
+        <p class="textIntro">
+          {{
+            docInfo.doctorIntrodution ? docInfo.doctorIntrodution : "暂无介绍"
+          }}
+        </p>
       </div>
     </div>
-    <week-slider
-      class="week_slider"
-      @dateClick="dateClickhandler"
-      :defaultDate="date"
-      :showYear="false"
-      activeBgColor="#09CF74"
-    ></week-slider>
+    <Week v-on:changeDate="changeDate"></Week>
     <div class="workTime">
       <ul>
-        <li v-for="(item,index) in showWorkTime" :key="index">
+        <li v-for="(item, index) in showWorkTime" :key="index">
           <div @click="linkTo(item)" class="itemContent">
             <div class="time">
               <img src="./img/clock.png" />
-              <span>{{item.beginTime.split(' ')[1]}}-{{item.endTime.split(' ')[1]}}</span>
+              <span
+                >{{ item.beginTime.split(" ")[1] }}-{{
+                  item.endTime.split(" ")[1]
+                }}</span
+              >
             </div>
             <div class="remaining">
-              <span :class="{over: item.leftNum<=0}">剩余 {{item.leftNum}}</span>
-              <span :class="{over: item.leftNum<=0}" class="icon">&gt;</span>
-              <span :class="{overShow: item.leftNum<=0}" class="overMsg">已约满</span>
+              <span :class="{ over: item.leftNum <= 0 }"
+                >剩余 {{ item.leftNum }}</span
+              >
+              <span :class="{ over: item.leftNum <= 0 }" class="icon"
+                >&gt;</span
+              >
+              <span :class="{ overShow: item.leftNum <= 0 }" class="overMsg"
+                >已约满</span
+              >
             </div>
           </div>
         </li>
@@ -39,71 +47,66 @@
 </template>
 
 <script>
-import moment from 'moment'
-import WeekSlider from '@/base/WeekSlider/WeekSlider'
-import util from '@/assets/js/util'
+import Week from '@/base/Week/Week'
 
 export default {
   name: 'gSTime',
   data () {
     return {
-      doctorInfo: {},
-      date: moment(new Date()).format('YYYY-MM-DD'),
-      allworkTime: []
+      docInfo: {},
+      date: '',
+      allworkTime: [],
+      img: ''
     }
   },
   computed: {
     showWorkTime () {
-      return this.allworkTime.filter((item) => {
+      return this.allworkTime.filter(item => {
         return item.scheduleDate.indexOf(this.date) !== -1
       })
+    },
+    star () {
+      return Math.round(this.docInfo.score) / 2
     }
   },
-  components: { WeekSlider },
+  components: { Week },
   created () {
-    this.getDoctorInfo()
-    this.getRegSource()
+    this.getDocInfo()
   },
   methods: {
-    dateClickhandler (e) {
-      this.date = e
+    changeDate (val) {
+      this.date = val
+      this.getRegSource(val)
     },
-    linkTo (item) {
-      let timeFlag
-      if (item.timeFlag === '上午班') {
-        timeFlag = '1'
-      } else if (item.timeFlag === '下午班') {
-        timeFlag = '2'
+    linkTo (leftNum) {
+      if (leftNum <= 0) {
+        return ''
       } else {
-        timeFlag = '3'
-      }
-      if (item.leftNum > 0) {
-        this.$store.commit('changeDate', this.date)
-        this.$store.commit('changeTime', item.scheduleDate.split(' ')[0])
-        this.$store.commit('changeBeginTime', item.beginTime.split(' ')[1])
-        this.$store.commit('changeEndTime', item.endTime.split(' ')[1])
-        this.$store.commit('setPrice', item.Price)
-        this.$store.commit('changeTimeFlag', timeFlag)
-        this.$router.push('/reserve/confirm')
+        return '/reserve/confirm'
       }
     },
-    getDoctorInfo () {
-      util.http
-        .post('/api/doctor/doc_info', { deptCode: this.$route.params.deptCode, doctorCode: this.$route.params.doctorCode })
+    getDocInfo () {
+      this.$post('/api/doctor/doc_info', {
+        deptCode: this.$store.state.deptCode,
+        doctorCode: this.$store.state.doctorCode
+      })
         .then(res => {
-          this.doctorInfo = res.data.Records[0]
+          if (res.code === 0 && res.data[0]) {
+            this.docInfo = res.data[0]
+          }
         })
         .catch(error => {
           console.log(error)
         })
     },
-    getRegSource () {
-      util.http
-        .post('/api/doctor/getRegSource', { deptCode: '173', doctorCode: '020' })
+    getRegSource (date) {
+      this.$post('/api/doctor/getRegSource', {
+        doctorCode: this.$store.state.doctorCode.toString(),
+        deptCode: this.$store.state.deptCode.toString(),
+        date
+      })
         .then(res => {
-          this.allworkTime = res.data.Records.filter(item => {
-            return moment(item.beginTime, 'YYYY-MM-DD HH:mm:ss').valueOf() + 1800000 > Date.parse(new Date())
-          })
+          this.workTimeList = res.data
         })
         .catch(error => {
           console.log(error)
@@ -128,7 +131,7 @@ export default {
       width: 100px
       height: 100px
       margin-right: 24px
-    .doctorInfo
+    .docInfo
       flex: 1
       .doctorName
         font-size: 30px

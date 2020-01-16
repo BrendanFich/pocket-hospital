@@ -1,45 +1,8 @@
-import util from '@/assets/js/util'
-// import { Toast } from 'mint-ui'
-
 const mutations = {
   updateDefaultCard (state, visitName, visitCardNo, socialCardNo) {
     state.visitName = visitName
     state.visitCardNo = visitCardNo
     state.socialCardNo = socialCardNo
-  },
-  updateUserPatInfo (state) {
-    util.http
-      .post('/api/pat/pat_info')
-      .then(res => {
-        state.patInfoNobind = res.data.filter(item => (item.visitCardNo === '') && (item.socialHosCardNO === ''))
-        let patInfoContent = []
-        res.data.filter(item => (item.visitCardNo !== '') || (item.socialHosCardNO !== '')).forEach((item) => {
-          if (item.visitCardNo && !item.socialHosCardNO) {
-            patInfoContent.push(item)
-          }
-          if (!item.visitCardNo && item.socialHosCardNO) {
-            patInfoContent.push(item)
-          }
-          if (item.visitCardNo && item.socialHosCardNO) {
-            let temp = item.socialHosCardNO
-            item.socialHosCardNO = ''
-            patInfoContent.push(item)
-            let newItem = Object.assign({}, item)
-            newItem.socialHosCardNO = temp
-            newItem.visitCardNo = ''
-            patInfoContent.push(newItem)
-          }
-        })
-        state.patInfoBinded = patInfoContent
-        util.http.post('/api/user/vx_info').then(res => {
-          state.userInfo = res.data.info
-        }).catch((error) => {
-          console.log(error)
-        })
-      })
-      .catch(error => {
-        console.log(error)
-      })
   },
   updateDoctorCode (state, doctorCode) {
     state.doctorCode = doctorCode
@@ -67,6 +30,21 @@ const mutations = {
   },
   updateDeptName (state, deptName) {
     state.deptName = deptName
+  },
+  clearRegInfo (state) {
+    state.doctorCode = ''
+    state.doctorName = ''
+    state.timeFlag = ''
+    state.beginTime = ''
+    state.endTime = ''
+    state.Price = ''
+    state.area = ''
+    state.deptCode = ''
+    state.deptName = ''
+    state._axiosPromiseCancel = []
+  },
+  changePage (state, cancel) {
+    state._axiosPromiseCancel = [...state._axiosPromiseCancel, cancel]
   }
 }
 

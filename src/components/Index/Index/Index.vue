@@ -94,7 +94,9 @@ export default {
     return {}
   },
   components: { Tabbar },
-  created () {},
+  created () {
+    this.$store.commit('clearRegInfo')
+  },
   methods: {
     getLocation () {
       console.log('click')

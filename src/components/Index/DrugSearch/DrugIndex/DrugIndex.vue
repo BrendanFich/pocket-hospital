@@ -8,11 +8,10 @@
         <div class="icon"></div>
       </div>
     </div>
-
-      <van-search
-        placeholder="搜索药品名称"
-        @focus='focus'
-      />
+    <van-search
+      placeholder="搜索药品名称"
+      @focus='focus'
+    />
     <div class="list-content" id="list-content">
       <van-list
         v-model="loading"
@@ -22,7 +21,6 @@
       >
         <mt-cell
           class="cell list-item"
-          is-link
           v-for="(item, index) in drugList"
           :key="index"
         >
@@ -52,10 +50,9 @@ export default {
     }
   },
   mounted () {
-    let winHeight = document.documentElement.clientHeight // 视口大小
+    let winHeight = document.documentElement.clientHeight
     document.getElementById('list-content').style.height =
-      winHeight - (308 * Math.min(document.documentElement.clientWidth / 750, 2)) + 'px'
-      // 调整上拉加载框高度,由于使用rem的原因此处不能只用减120px
+      winHeight - (200 * Math.min(document.documentElement.clientWidth / 750, 2) + 54) + 'px'
   },
   methods: {
     focus () {
@@ -65,7 +62,7 @@ export default {
       this.$post('/api/medicine/list', { medicineName: '', page: this.page, size: 10 })
         .then(res => {
           this.drugList = [...this.drugList, ...res.data]
-          if (res.data.length === 0) {
+          if (res.page.count === 0) {
             this.isShowNoData = true
           }
           this.loading = false

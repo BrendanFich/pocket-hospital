@@ -1,13 +1,13 @@
 <template>
   <div class="sSymptom">
     <div class="search">
-      <van-search placeholder="请输入相应症状" @focus="linkTo('docSearchPage',{tagName: ''})" />
+      <van-search placeholder="请输入相应症状" @focus="search('docSearchPage',{tagName: ''})" />
       <div class="searchTags">
         <span
           class="tag"
           v-for="(tag, index) in searchTags"
           :key="index"
-          @click="linkTo('docSearchPage',{tagName: tag.describe})"
+          @click="search('docSearchPage',{tagName: tag.describe})"
           >{{ tag.describe }}</span
         >
       </div>
@@ -20,10 +20,10 @@
         :offset="10"
       >
         <div
-          class="doctorIntroCard"
+          class="doctorIntroCard list-item"
           v-for="(item, index) in docList"
           :key="index"
-          @click="linkTo('gSTime',{})"
+          @click="linkTo(item.deptCode, item.deptName, item.doctorCode, item.doctorName)"
         >
           <div class="baseInfo">
             <div class="left">
@@ -72,77 +72,15 @@ export default {
         // { describe: '妇科炎症' }
       ],
       searchResult: [],
-      docList: [
-        {
-          USER_ID: '7',
-          deptCode: '254',
-          deptName: '骨质增生专科',
-          doctorCode: '006',
-          doctorIntrodution:
-            '骨质增生专科副主任医师，曾在中山大学附属研究参与研究，有多年主治经验，擅长治疗各种骨质疾病',
-          doctorName: '卢梅生',
-          doctorSkill: '',
-          doctorTitle: '副主任医师',
-          score: ''
-        },
-        {
-          USER_ID: '101',
-          deptCode: '301',
-          deptName: '风湿骨痛专科',
-          doctorCode: '108',
-          doctorIntrodution:
-            '风湿骨痛专科副主任医师，曾在中山大学附属研究参与研究，有多年主治经验，擅长治疗各种风湿疾病',
-          doctorName: '袁佳',
-          doctorSkill: '',
-          doctorTitle: '副主任医师',
-          score: ''
-        },
-        {
-          USER_ID: '10',
-          deptCode: '277',
-          deptName: '肛肠科',
-          doctorCode: '012',
-          doctorIntrodution:
-            '肠道主任医师，曾在中山大学附属研究参与研究，有多年主治经验，擅长治疗各种肠道疾病',
-          doctorName: '刘伟忠',
-          doctorSkill: '',
-          doctorTitle: '副主任医师',
-          score: ''
-        },
-        {
-          USER_ID: '10',
-          deptCode: '277',
-          deptName: '肛肠科',
-          doctorCode: '012',
-          doctorIntrodution:
-            '肠道主任医师，曾在中山大学附属研究参与研究，有多年主治经验，擅长治疗各种肠道疾病',
-          doctorName: '刘伟忠',
-          doctorSkill: '',
-          doctorTitle: '副主任医师',
-          score: ''
-        },
-        {
-          USER_ID: '10',
-          deptCode: '277',
-          deptName: '肛肠科',
-          doctorCode: '012',
-          doctorIntrodution:
-            '肠道主任医师，曾在中山大学附属研究参与研究，有多年主治经验，擅长治疗各种肠道疾病',
-          doctorName: '刘伟忠',
-          doctorSkill: '',
-          doctorTitle: '副主任医师',
-          score: ''
-        }
-      ]
+      docList: []
     }
   },
   mounted () {
-    let winHeight = document.documentElement.clientHeight // 视口大小
+    let winHeight = document.documentElement.clientHeight
     document.getElementById('list-content').style.height =
       winHeight -
-      280 * Math.min(document.documentElement.clientWidth / 750, 2) +
+      (280 * Math.min(document.documentElement.clientWidth / 750, 2)) +
       'px'
-    // 调整上拉加载框高度,由于使用rem的原因此处不能只用减120px
   },
   created () {
     this.getDescribe()
@@ -168,7 +106,7 @@ export default {
       this.$post('/api/doctor/intelligent_guidance', { describe: '', page: this.page, size: 10 })
         .then(res => {
           this.docList = [...this.docList, ...res.data]
-          if (res.data.length === 0) {
+          if (res.page.count === 0) {
             this.isShowNoData = true
           }
           this.loading = false
@@ -180,8 +118,15 @@ export default {
           console.log(error)
         })
     },
-    linkTo (name, params) {
-      this.$router.push({ name, params })
+    linkTo (deptCode, deptName, doctorCode, doctorName) {
+      this.$store.commit('updateDeptCode', deptCode)
+      this.$store.commit('updateDeptName', deptName)
+      this.$store.commit('updateDoctorCode', doctorCode)
+      this.$store.commit('updateDoctorName', doctorName)
+      this.$router.push({ name: 'gSTime' })
+    },
+    search (params) {
+      this.$router.push({ name: 'docSearchPage', params })
     }
   }
 }
@@ -208,7 +153,6 @@ export default {
         font-size: 24px
         color: $color-primary
   .list-content
-    height: calc( 100vh - 254px )
     overflow-y: scroll // 很重要
     -webkit-overflow-scrolling : touch // 解决view滑动速度慢或者卡顿问题
     &::-webkit-scrollbar

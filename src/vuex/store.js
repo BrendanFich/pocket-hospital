@@ -4,16 +4,7 @@ import mutations from './mutations'
 
 Vue.use(Vuex)
 let state = {
-  // selectedDeptCode: '',
-  // selectedDeptName: '',
-  // selectedDocCode: '',
-  // selectedDocName: '',
-  // selectedDate: '',
-  // selectedTime: '',
-  // beginTime: '',
-  // endTime: '',
-  // price: '',
-  // timeFlag: '',
+  _axiosPromiseCancel: [],
   doctorCode: '',
   doctorName: '',
   timeFlag: '',
