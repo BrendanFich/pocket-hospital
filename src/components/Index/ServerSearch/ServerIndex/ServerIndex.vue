@@ -43,7 +43,7 @@ export default {
     let winHeight = document.documentElement.clientHeight // 视口大小
     document.getElementById('list-content').style.height =
       winHeight -
-      308 * Math.min(document.documentElement.clientWidth / 750, 2) +
+      (200 * Math.min(document.documentElement.clientWidth / 750, 2) + 54) +
       'px'
     // 调整上拉加载框高度,由于使用rem的原因此处不能只用减120px
   },
@@ -88,6 +88,7 @@ export default {
     width: 100%
     display: block
   .cell
+    border-bottom: 1px solid $color-border
     .fakePicture
       width: 123px
       height: 123px

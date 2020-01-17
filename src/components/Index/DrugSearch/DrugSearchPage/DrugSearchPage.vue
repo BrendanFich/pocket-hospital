@@ -87,6 +87,7 @@ export default {
     overflow-y: auto
     margin-top: 20px
     .cell
+      border-bottom: 1px solid $color-border
       .fakePicture
         width: 123px
         height: 123px

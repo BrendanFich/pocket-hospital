@@ -114,6 +114,7 @@ export default {
         margin-top: 20px
         opacity: 0.75
   .cell
+    border-bottom: 1px solid $color-border
     .fakePicture
       width: 123px
       height: 123px

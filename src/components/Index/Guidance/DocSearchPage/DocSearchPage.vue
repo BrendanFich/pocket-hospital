@@ -15,14 +15,13 @@
         class="doctorIntroCard"
         v-for="(item, index) in resultList"
         :key="index"
-        @click="linkTo('gSTime', {})"
+        @click="linkTo(item.deptCode, item.deptName, item.doctorCode, item.doctorName)"
       >
         <div class="left">
           <img class="avatar" src="./img/avatar100x101.png" />
           <div class="text">
-            <p>医生姓名：{{ item.doctorName }}</p>
-            <p>科室名称：{{ item.deptName }}</p>
-            <p>职称：{{ item.doctorTitle }}</p>
+            <p class="name">{{ item.doctorName }}</p>
+            <p>{{ item.deptName }} {{ item.doctorTitle }}</p>
           </div>
         </div>
         <div class="right">></div>
@@ -40,17 +39,17 @@ export default {
       value: '',
       timer: null,
       resultList: [
-        {
-          deptCode: 572,
-          deptName: '专家门诊',
-          doctorCode: 3676,
-          doctorIntrodution: '',
-          doctorName: 'dctest04',
-          doctorSkill: '',
-          doctorTitle: '眼睛验光师（中技）',
-          hasRegtable: '',
-          score: '9.8'
-        }
+        // {
+        //   deptCode: 572,
+        //   deptName: '专家门诊',
+        //   doctorCode: 3676,
+        //   doctorIntrodution: '',
+        //   doctorName: 'dctest04',
+        //   doctorSkill: '',
+        //   doctorTitle: '眼睛验光师（中技）',
+        //   hasRegtable: '',
+        //   score: '9.8'
+        // }
       ],
       isShowNoData: false
     }
@@ -59,8 +58,12 @@ export default {
     this.value = this.$route.params.tagName
   },
   methods: {
-    linkTo (name, params) {
-      this.$router.push({ name, params })
+    linkTo (deptCode, deptName, doctorCode, doctorName) {
+      this.$store.commit('updateDeptCode', deptCode)
+      this.$store.commit('updateDeptName', deptName)
+      this.$store.commit('updateDoctorCode', doctorCode)
+      this.$store.commit('updateDoctorName', doctorName)
+      this.$router.replace({ name: 'gSTime' })
     },
     onSearch () {},
     onCancel () {
@@ -190,9 +193,12 @@ export default {
           flex-direction: column
           justify-content: center
           p
-            @include font(30px, 400, $color-title-black)
+            @include font(24px, 400, $color-title-black)
+            line-height: 50px
+          .name
+            @include font(30px, 600, $color-title-black)
       .right
-        @include font(30px, 400, $color-title-black)
+        @include font(30px, 400, $color-primary)
   .noData
     width: 366px
     margin-top: 50px

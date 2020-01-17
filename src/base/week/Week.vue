@@ -63,6 +63,7 @@ export default {
   ul
     display: flex
     li
+      background: $color-white
       flex: 1
       display: flex
       flex-direction: column

@@ -1,7 +1,7 @@
 <template>
   <div class="gSTime">
     <div class="doctorIntroCard">
-      <img class="avatar" :src="img" />
+      <div class="avatar"><img :src="getAvatar(docInfo.doctorName)" @error="setDefualtImg"/></div>
       <div class="docInfo">
         <p class="doctorName">{{ docInfo.doctorName }}</p>
         <p class="doctorTitle">
@@ -17,37 +17,34 @@
     </div>
     <Week v-on:changeDate="changeDate"></Week>
     <div class="workTime">
-      <ul>
-        <li v-for="(item, index) in showWorkTime" :key="index">
-          <div @click="linkTo(item)" class="itemContent">
-            <div class="time">
-              <img src="./img/clock.png" />
-              <span
-                >{{ item.beginTime.split(" ")[1] }}-{{
-                  item.endTime.split(" ")[1]
-                }}</span
-              >
-            </div>
-            <div class="remaining">
-              <span :class="{ over: item.leftNum <= 0 }"
-                >剩余 {{ item.leftNum }}</span
-              >
-              <span :class="{ over: item.leftNum <= 0 }" class="icon"
-                >&gt;</span
-              >
-              <span :class="{ overShow: item.leftNum <= 0 }" class="overMsg"
-                >已约满</span
-              >
+      <div class="noSchedule" v-if="noSchedule">当天无排班</div>
+      <div
+          class="item"
+          @click="select(item)"
+          v-for="(item,index) in scheduleList"
+          :key="index"
+        >
+          <div class="doctorInfo">
+            <div class="avatar" slot="icon"><img :src="getAvatar(item.Doctor)" @error="setDefualtImg"/></div>
+            <div class="textInfo">
+              <span class="name">{{item.Doctor}}</span>
+              <br />
+              <span class="title">{{item.EmpTitle}}</span>
             </div>
           </div>
-        </li>
-      </ul>
+          <div class="leftNum">
+            <span v-if="item.leftNum > 0">剩余 {{item.leftNum}}<span class="icon">&gt;</span></span>
+            <span class="overMsg" v-else>已约满</span>
+          </div>
+        </div>
     </div>
   </div>
 </template>
 
 <script>
 import Week from '@/base/Week/Week'
+import { apiBaseUrl } from '@/assets/js/config'
+import defualtImg from './img/greenAvatar.png'
 
 export default {
   name: 'gSTime',
@@ -56,7 +53,9 @@ export default {
       docInfo: {},
       date: '',
       allworkTime: [],
-      img: ''
+      img: '',
+      noSchedule: false,
+      scheduleList: []
     }
   },
   computed: {
@@ -66,7 +65,11 @@ export default {
       })
     },
     star () {
-      return Math.round(this.docInfo.score) / 2
+      if (this.docInfo.score) {
+        return Math.round(this.docInfo.score) / 2
+      } else {
+        return 5
+      }
     }
   },
   components: { Week },
@@ -74,6 +77,12 @@ export default {
     this.getDocInfo()
   },
   methods: {
+    getAvatar (name) {
+      return apiBaseUrl + '/upload/doctor/' + name + '.jpg'
+    },
+    setDefualtImg (e) {
+      e.target.src = defualtImg
+    },
     changeDate (val) {
       this.date = val
       this.getRegSource(val)
@@ -87,8 +96,8 @@ export default {
     },
     getDocInfo () {
       this.$post('/api/doctor/doc_info', {
-        deptCode: this.$store.state.deptCode,
-        doctorCode: this.$store.state.doctorCode
+        deptCode: this.$store.state.deptCode.toString(),
+        doctorCode: this.$store.state.doctorCode.toString()
       })
         .then(res => {
           if (res.code === 0 && res.data[0]) {
@@ -106,11 +115,23 @@ export default {
         date
       })
         .then(res => {
-          this.workTimeList = res.data
+          this.scheduleList = res.data
+          if (res.data.length === 0) {
+            this.noSchedule = true
+          }
         })
         .catch(error => {
           console.log(error)
         })
+    },
+    select (item) {
+      if (item.leftNum > 0) {
+        this.$store.commit('updateDeptCode', item.deptCode)
+        this.$store.commit('updateDoctorCode', item.doctorCode)
+        this.$store.commit('updateTimeFlag', item.timeFlag)
+        this.$store.commit('updateBeginTime', item.beginTime)
+        this.$router.push('/reserve/sTime')
+      }
     }
   }
 }
@@ -120,17 +141,23 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .gSTime
-  @include page($color-page-background)
+  background: $color-page-background
+  height: 100vh
   .doctorIntroCard
     background: $color-white
     height: 195px
     padding: 30px 50px 40px 30px
     border-bottom: 1px solid $color-border
     display: flex
+    margin-bottom: 20px
     .avatar
-      width: 100px
-      height: 100px
-      margin-right: 24px
+      width: 102px
+      height: 102px
+      overflow: hidden
+      margin-right: 20px
+      border-radius: 50%
+      img
+        width: 102px
     .docInfo
       flex: 1
       .doctorName
@@ -141,7 +168,7 @@ export default {
       .doctorTitle
         font-size: 24px
         color: $color-title-black
-        line-height: 34px
+        line-height: 40px
       .star
         padding: 5px 0 10px 0
         img
@@ -149,13 +176,15 @@ export default {
       .textIntro
         font-size: 24px
         line-height: 36px
-        color: $color-title-black
-  .week_slider
-    margin-top: 18px
-    background: $color-white
+        color: $color-word-grey
   .workTime
     background: $color-white
     margin-top: 8px
+    .noSchedule
+      background: $color-page-background
+      text-align: center
+      margin-top: 40px
+      color: $color-word-grey
     ul > li
       padding-left: 31px
       padding-right: 47px
@@ -188,4 +217,6 @@ export default {
           color: $color-title-black
           float: right
           margin-left: 38px
+>>>.van-icon-star
+  font-size: 15px
 </style>

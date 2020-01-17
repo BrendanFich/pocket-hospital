@@ -7,7 +7,7 @@
           class="tag"
           v-for="(tag, index) in searchTags"
           :key="index"
-          @click="search('docSearchPage',{tagName: tag.describe})"
+          @click="search(tag.describe)"
           >{{ tag.describe }}</span
         >
       </div>
@@ -33,14 +33,12 @@
                 <p class="doctorTitle">
                   {{ item.deptName }} {{ item.doctorTitle }}
                 </p>
-                <div class="star">
-                  <img v-for="n in 5" :key="n" src="./img/starOn.png" />
-                </div>
+                <van-rate v-model="item.score" readonly />
               </div>
             </div>
             <div class="right price">
               <img src="./img/communication.png" />
-              <span>{{ item.price ? item.price : 20 }}元</span>
+              <span>{{ item.price || '' }}元</span>
             </div>
           </div>
           <p class="textIntro">{{ item.doctorIntrodution }}</p>
@@ -57,29 +55,23 @@ export default {
     return {
       page: 0,
       loading: false, // 是否处于加载状态
-      finished: true, // 是否已加载完所有数据
+      finished: false, // 是否已加载完所有数据
       isLoading: false, // 是否处于下拉刷新状态
       isShowNoData: false,
       timer: null,
-      searchTags: [
-        // { describe: '风湿' },
-        // { describe: '骨质' },
-        // { describe: '肠道' },
-        // { describe: '妇科炎症' },
-        // { describe: '风湿' },
-        // { describe: '骨质' },
-        // { describe: '肠道' },
-        // { describe: '妇科炎症' }
-      ],
+      searchTags: [],
       searchResult: [],
       docList: []
     }
+  },
+  computed: {
+
   },
   mounted () {
     let winHeight = document.documentElement.clientHeight
     document.getElementById('list-content').style.height =
       winHeight -
-      (280 * Math.min(document.documentElement.clientWidth / 750, 2)) +
+      (180 * Math.min(document.documentElement.clientWidth / 750, 2) + 54) +
       'px'
   },
   created () {
@@ -125,8 +117,8 @@ export default {
       this.$store.commit('updateDoctorName', doctorName)
       this.$router.push({ name: 'gSTime' })
     },
-    search (params) {
-      this.$router.push({ name: 'docSearchPage', params })
+    search (tagName) {
+      this.$router.push({ name: 'docSearchPage', params: {tagName} })
     }
   }
 }
@@ -139,11 +131,11 @@ export default {
   @include page($color-page-background)
   .search
     background: $color-white
-    height: 260px
     margin-bottom: 20px
     .searchTags
       width: 710px
-      padding: 0 20px 20px
+      height: 160px
+      padding: 0 20px
       .tag
         display: inline-block
         padding: 10px 12px
@@ -208,4 +200,6 @@ export default {
   color: $color-primary
 >>>.van-search__content
   background: $color-page-background
+>>>.van-icon-star
+  font-size: 15px
 </style>
