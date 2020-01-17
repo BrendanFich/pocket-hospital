@@ -7,7 +7,7 @@
         show-action
         @search="onSearch"
         @cancel="onCancel"
-        autofocus
+        :autofocus="true"
       />
     </form>
     <ul class="resultContent">
@@ -18,7 +18,8 @@
         @click="linkTo(item.deptCode, item.deptName, item.doctorCode, item.doctorName)"
       >
         <div class="left">
-          <img class="avatar" src="./img/avatar100x101.png" />
+          <!-- <img class="avatar" src="./img/avatar100x101.png" /> -->
+          <div class="avatar"><img :src="getAvatar(item.doctorName)" @error="setDefualtImg"/></div>
           <div class="text">
             <p class="name">{{ item.doctorName }}</p>
             <p>{{ item.deptName }} {{ item.doctorTitle }}</p>
@@ -32,32 +33,28 @@
 </template>
 
 <script>
+import { apiBaseUrl } from '@/assets/js/config'
+import defualtImg from './img/greenAvatar.png'
 export default {
   name: 'docSearchPage',
   data () {
     return {
       value: '',
       timer: null,
-      resultList: [
-        // {
-        //   deptCode: 572,
-        //   deptName: '专家门诊',
-        //   doctorCode: 3676,
-        //   doctorIntrodution: '',
-        //   doctorName: 'dctest04',
-        //   doctorSkill: '',
-        //   doctorTitle: '眼睛验光师（中技）',
-        //   hasRegtable: '',
-        //   score: '9.8'
-        // }
-      ],
+      resultList: [],
       isShowNoData: false
     }
   },
   created () {
-    this.value = this.$route.params.tagName
+    this.value = this.$route.params.tagName === '#' ? '' : this.$route.params.tagName
   },
   methods: {
+    getAvatar (name) {
+      return apiBaseUrl + '/upload/doctor/' + name + '.jpg'
+    },
+    setDefualtImg (e) {
+      e.target.src = defualtImg
+    },
     linkTo (deptCode, deptName, doctorCode, doctorName) {
       this.$store.commit('updateDeptCode', deptCode)
       this.$store.commit('updateDeptName', deptName)
@@ -185,9 +182,13 @@ export default {
       .left
         display: flex
         .avatar
-          width: 100px
-          height: 100px
-          margin-right: 30px
+          width: 102px
+          height: 102px
+          overflow: hidden
+          border-radius: 50%
+          margin-right: 24px
+          img
+            width: 102px
         .text
           display: flex
           flex-direction: column

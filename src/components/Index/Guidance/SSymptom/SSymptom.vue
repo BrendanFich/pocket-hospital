@@ -1,7 +1,7 @@
 <template>
   <div class="sSymptom">
     <div class="search">
-      <van-search placeholder="请输入相应症状" @focus="search('docSearchPage',{tagName: ''})" />
+      <van-search placeholder="请输入相应症状" @focus="search('#')" />
       <div class="searchTags">
         <span
           class="tag"
@@ -27,21 +27,21 @@
         >
           <div class="baseInfo">
             <div class="left">
-              <img class="avatar" src="./img/avatar100x101.png" />
+              <div class="avatar"><img :src="getAvatar(item.doctorName)" @error="setDefualtImg"/></div>
               <div>
                 <p class="doctorName">{{ item.doctorName }}</p>
                 <p class="doctorTitle">
                   {{ item.deptName }} {{ item.doctorTitle }}
                 </p>
-                <van-rate v-model="item.score" readonly />
+                <van-rate :value="Math.round(item.score / 2)" readonly />
               </div>
             </div>
             <div class="right price">
               <img src="./img/communication.png" />
-              <span>{{ item.price || '' }}元</span>
+              <span>{{ item.price ? item.price + '元' : '' }}</span>
             </div>
           </div>
-          <p class="textIntro">{{ item.doctorIntrodution }}</p>
+          <p class="textIntro">{{ item.doctorIntrodution || '暂无介绍'}}</p>
         </div>
       </van-list>
     </div>
@@ -49,6 +49,8 @@
 </template>
 
 <script>
+import { apiBaseUrl } from '@/assets/js/config'
+import defualtImg from './img/greenAvatar.png'
 export default {
   name: 'sSymptom',
   data () {
@@ -78,6 +80,12 @@ export default {
     this.getDescribe()
   },
   methods: {
+    getAvatar (name) {
+      return apiBaseUrl + '/upload/doctor/' + name + '.jpg'
+    },
+    setDefualtImg (e) {
+      e.target.src = defualtImg
+    },
     getDescribe () {
       this.$post('/api/doctor/guidance/describe')
         .then(res => {
@@ -86,9 +94,6 @@ export default {
         .catch(err => {
           console.log(err)
         })
-    },
-    focus (tagName) {
-      this.$router.push({ name: 'docSearchPage', params: { tagName } })
     },
     onLoad () {
       this.page += 1
@@ -161,9 +166,13 @@ export default {
         .left
           display: flex
           .avatar
-            width: 100px
-            height: 100px
+            width: 102px
+            height: 102px
+            overflow: hidden
+            border-radius: 50%
             margin-right: 24px
+            img
+              width: 102px
           div
             .doctorName
               font-size: 30px
@@ -200,6 +209,6 @@ export default {
   color: $color-primary
 >>>.van-search__content
   background: $color-page-background
->>>.van-icon-star
+>>>.van-icon-star,>>>.van-icon-star-o
   font-size: 15px
 </style>
