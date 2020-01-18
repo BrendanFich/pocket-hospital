@@ -7,7 +7,7 @@
         show-action
         @search="onSearch"
         @cancel="onCancel"
-        autofocus
+        :autofocus="isFocus"
       />
     </form>
     <div class="resultContent">
@@ -33,6 +33,7 @@ export default {
   name: 'drugSearchPage',
   data () {
     return {
+      isFocus: true,
       value: '',
       timer: null,
       resultList: [],
@@ -44,6 +45,7 @@ export default {
 
     },
     onCancel () {
+      this.isFocus = false
       this.$router.go(-1)
     },
     getResultList () {

@@ -13,6 +13,7 @@ http.ajax.defaults.timeout = 35000
 // 请求拦截
 http.ajax.interceptors.request.use(
   config => {
+    // 切换页面时，中断之前页面的请求
     config.cancelToken = new CancelToken(cancel => {
       store.commit('changePage', cancel)
     })
@@ -33,13 +34,15 @@ http.ajax.interceptors.response.use(
     Indicator.close()
     if (res.data.code === 401) {
       localStorage.removeItem('token')
-      // Toast({
-      //   message: 'token过期,重新登录',
-      //   duration: 1000,
-      //   className: 'toast'
-      // })
+
       if (process.env.NODE_ENV === 'production') {
         window.location.href = authUrl
+      } else {
+        Toast({
+          message: 'token过期',
+          duration: 1000,
+          className: 'toast'
+        })
       }
     } else if (res.data.code === 500) {
       Toast({
