@@ -73,7 +73,7 @@ router.beforeEach((to, from, next) => {
       document.title = '药品查询'
       break
     case 'serverIndex':
-    case 'ServerSearchPage':
+    case 'serverSearchPage':
       document.title = '医疗服务查询'
       break
     case 'parking':
@@ -87,6 +87,9 @@ router.beforeEach((to, from, next) => {
       break
     case 'sSymptom':
       document.title = '智能导诊'
+      break
+    case 'docSearchPage':
+      document.title = '导诊搜索'
       break
     case 'cConfirm':
       document.title = '就诊报到'

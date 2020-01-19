@@ -167,7 +167,7 @@ export default {
             float: right
             margin-right: 48px
           .icon
-            color: $color-word-grey
+            color: $color-primary
             float: right
             margin-right: 48px
             font-weight: 400

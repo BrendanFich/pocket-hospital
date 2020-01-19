@@ -1,9 +1,4 @@
 const mutations = {
-  updateDefaultCard (state, visitName, visitCardNo, socialCardNo) {
-    state.visitName = visitName
-    state.visitCardNo = visitCardNo
-    state.socialCardNo = socialCardNo
-  },
   updateDoctorCode (state, doctorCode) {
     state.doctorCode = doctorCode
   },

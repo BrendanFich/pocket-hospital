@@ -41,18 +41,15 @@ export default {
   name: 'docSearchPage',
   data () {
     return {
-      value: '',
+      value: this.$route.params.tagName === '#' ? '' : this.$route.params.tagName,
       timer: null,
       resultList: [],
       page: 0,
-      loading: false, // 是否处于加载状态
-      finished: false, // 是否已加载完所有数据
-      isLoading: false, // 是否处于下拉刷新状态
+      loading: false,
+      finished: false,
+      isLoading: false,
       isShowNoData: false
     }
-  },
-  created () {
-    this.value = this.$route.params.tagName === '#' ? '' : this.$route.params.tagName
   },
   mounted () {
     if (this.$route.params.tagName === '#') {
