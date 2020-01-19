@@ -40,12 +40,11 @@ export default {
     }
   },
   mounted () {
-    let winHeight = document.documentElement.clientHeight // 视口大小
+    let winHeight = document.documentElement.clientHeight
     document.getElementById('list-content').style.height =
       winHeight -
       (200 * Math.min(document.documentElement.clientWidth / 750, 2) + 54) +
       'px'
-    // 调整上拉加载框高度,由于使用rem的原因此处不能只用减120px
   },
   methods: {
     focus () {
@@ -84,6 +83,8 @@ export default {
 .serverIndex
   background: $color-page-background
   height: 100vh
+  display: flex
+  flex-direction: column
   img
     width: 100%
     display: block
@@ -111,8 +112,9 @@ export default {
     justify-content: flex-start
     align-items: center
   .list-content
-    overflow-y: scroll // 很重要
-    -webkit-overflow-scrolling : touch // 解决view滑动速度慢或者卡顿问题
+    flex: 1
+    overflow-y: scroll
+    -webkit-overflow-scrolling : touch
     &::-webkit-scrollbar
       display: none
 >>>.van-icon.van-icon-search

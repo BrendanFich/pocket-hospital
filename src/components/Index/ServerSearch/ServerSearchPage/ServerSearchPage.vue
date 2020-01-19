@@ -1,29 +1,32 @@
 <template>
   <div class="serverSearchPage">
-    <form action="/">
-      <van-search
-        v-model="value"
-        placeholder="请输入医疗服务名称"
-        show-action
-        @search="onSearch"
-        @cancel="onCancel"
-        autofocus
-      />
-    </form>
-    <div class="resultContent">
-      <mt-cell
-        class="cell list-item"
-        v-for="(item, index) in resultList"
-        :key="index"
+    <van-search
+      v-model="value"
+      placeholder="请输入医疗服务名称"
+      show-action
+      @cancel="onCancel"
+    />
+    <div class="list-content" id="list-content">
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        @load="onLoad"
+        :offset="10"
       >
-        <div slot="icon" class="fakePicture"></div>
-        <div slot="title" class="content">
-          <div>名称：{{ item.Name }}</div>
-          <div>价格：{{ item.Price }}元</div>
-          <div>单位：{{ item.PriceUnit }}</div>
-        </div>
-      </mt-cell>
-      <img class="noData" v-if="isShowNoData" src="./img/noData.png" />
+        <mt-cell
+          class="cell"
+          v-for="(item, index) in resultList"
+          :key="index"
+        >
+          <div slot="icon" class="fakePicture"></div>
+          <div slot="title" class="content">
+            <div>名称：{{ item.Name }}</div>
+            <div>价格：{{ item.Price }}元</div>
+            <div>单位：{{ item.PriceUnit }}</div>
+          </div>
+        </mt-cell>
+        <img class="noData" v-if="isShowNoData" src="./img/noData.png" />
+      </van-list>
     </div>
   </div>
 </template>
@@ -33,34 +36,53 @@ export default {
   name: 'serverSearchPage',
   data () {
     return {
+      page: 0,
+      loading: false,
+      finished: false,
+      isLoading: false,
+      isShowNoData: false,
       value: '',
       timer: null,
-      resultList: [],
-      isShowNoData: false
+      resultList: []
     }
   },
+  mounted () {
+    document.querySelector('input').focus()
+    let winHeight = document.documentElement.clientHeight
+    document.getElementById('list-content').style.height =
+      winHeight - 54 + 'px'
+  },
   methods: {
-    onSearch () {
-
-    },
     onCancel () {
       this.$router.go(-1)
     },
     getResultList () {
       this.$post('/api/doctor/medicalService', {
         search_key: this.value,
-        page: 1,
-        size: 1000
+        page: this.page,
+        size: 10
       })
         .then(res => {
-          this.resultList = res.data
+          this.resultList = [...this.resultList, ...res.data]
           if (res.page.count === 0) {
             this.isShowNoData = true
+          }
+          this.loading = false
+          if (res.page.totalPage <= res.page.currentPage) {
+            this.finished = true
           }
         })
         .catch(error => {
           console.log(error)
         })
+    },
+    onLoad () {
+      if (this.value) {
+        this.page += 1
+        this.getResultList()
+      } else {
+        this.loading = false
+      }
     }
   },
   watch: {
@@ -71,6 +93,8 @@ export default {
       this.timer = setTimeout(() => {
         if (this.value) {
           this.resultList = []
+          this.page = 1
+          this.isShowNoData = false
           this.getResultList()
         }
         this.timer = null
@@ -86,9 +110,12 @@ export default {
 .serverSearchPage
   background: $color-page-background
   height: 100vh
-  .resultContent
-    height: calc( 100vh - 128px )
+  display: flex
+  flex-direction: column
+  .list-content
+    flex: 1
     overflow-y: auto
+    -webkit-overflow-scrolling : touch
     margin-top: 20px
     .cell
       border-bottom: 1px solid $color-border

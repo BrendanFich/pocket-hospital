@@ -20,7 +20,7 @@
         :offset="10"
       >
         <div
-          class="doctorIntroCard list-item"
+          class="doctorIntroCard"
           v-for="(item, index) in docList"
           :key="index"
           @click="linkTo(item.deptCode, item.deptName, item.doctorCode, item.doctorName)"
@@ -65,9 +65,6 @@ export default {
       searchResult: [],
       docList: []
     }
-  },
-  computed: {
-
   },
   mounted () {
     let winHeight = document.documentElement.clientHeight
@@ -133,7 +130,10 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .sSymptom
-  @include page($color-page-background)
+  background: $color-page-background
+  height: 100vh
+  display: flex
+  flex-direction: column
   .search
     background: $color-white
     margin-bottom: 20px
@@ -145,13 +145,14 @@ export default {
         display: inline-block
         padding: 10px 12px
         margin: 10px 15px
-        border: 1px solid $color-primary
+        border: 2px solid $color-primary
         border-radius: 10px
         font-size: 24px
         color: $color-primary
   .list-content
-    overflow-y: scroll // 很重要
-    -webkit-overflow-scrolling : touch // 解决view滑动速度慢或者卡顿问题
+    flex: 1
+    overflow-y: scroll
+    -webkit-overflow-scrolling : touch
     &::-webkit-scrollbar
       display: none
     .doctorIntroCard

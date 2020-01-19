@@ -88,6 +88,8 @@ export default {
 .drugSearch
   background: $color-page-background
   height: 100vh
+  display: flex
+  flex-direction: column
   .displayCard
     height: 200px
     background: linear-gradient(to right, #47baeb, #65d5f1)
@@ -137,6 +139,7 @@ export default {
     justify-content: flex-start
     align-items: center
   .list-content
+    flex: 1
     overflow-y: scroll // 很重要
     -webkit-overflow-scrolling : touch // 解决view滑动速度慢或者卡顿问题
     &::-webkit-scrollbar
