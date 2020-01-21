@@ -14,6 +14,10 @@ import Confirm from '@/components/Index/Reserve/Confirm/Confirm'
 import PayOnline from '@/components/Index/PayOnline/PayOnline'
 import Unpaid from '@/components/Index/PayOnline/Unpaid/Unpaid'
 import Paid from '@/components/Index/PayOnline/Paid/Paid'
+
+import UnpayList from '@/components/Index/OutpatientPay/UnpayList/UnpayList'
+import UnpayItem from '@/components/Index/OutpatientPay/UnpayItem/UnpayItem'
+
 import DocSearchPage from '@/components/Index/Guidance/DocSearchPage/DocSearchPage'
 
 import SSymptom from '@/components/Index/Guidance/SSymptom/SSymptom'
@@ -64,7 +68,8 @@ import Evaluate from '@/components/IHospital/Evaluate/Evaluate'
 import Mine from '@/components/Mine/Mine/Mine'
 import OutOrderInfo from '@/components/Mine/OutOrderInfo/OutOrderInfo'
 import LiveHosOrder from '@/components/Mine/LiveHosOrder/LiveHosOrder'
-import RegOrder from '@/components/Mine/RegOrder/RegOrder'
+import RegOrderList from '@/components/Mine/RegOrder/RegOrderList/RegOrderList'
+import RegOrderItem from '@/components/Mine/RegOrder/RegOrderItem/RegOrderItem'
 import CardManage from '@/components/Mine/CardManage/CardManage/CardManage'
 import BindCard from '@/components/Mine/CardManage/BindCard/BindCard'
 import CardInfo from '@/components/Mine/CardManage/CardInfo/CardInfo'
@@ -75,16 +80,16 @@ export default new Router({
   // mode: 'history',
   routes: [
     { path: '/', redirect: '/index' },
-    { path: '/index', name: 'index', component: Index },
+    { path: '/index', name: 'index', component: Index, meta: { deepth: 0.5 } },
     { path: '/test', name: 'test', component: Test },
     {
       path: '/reserve',
       redirect: '/reserve/sDept',
       component: Reserve,
       children: [
-        { path: 'sDept', name: 'sDept', component: SDept },
-        { path: 'sDayDoc', name: 'sDayDoc', component: SDayDoc },
-        { path: 'sTime', name: 'sTime', component: STime },
+        { path: 'sDept', name: 'sDept', component: SDept, meta: { deepth: 1, keepAlive: true } },
+        { path: 'sDayDoc', name: 'sDayDoc', component: SDayDoc, meta: { deepth: 2, keepAlive: true } },
+        { path: 'sTime', name: 'sTime', component: STime, meta: { deepth: 3 } },
         { path: 'confirm', name: 'confirm', component: Confirm }
       ]
     },
@@ -95,6 +100,15 @@ export default new Router({
       children: [
         { path: 'unpaid', name: 'unpaid', component: Unpaid },
         { path: 'paid', name: 'paid', component: Paid }
+      ]
+    },
+    {
+      path: '/outpatientPay',
+      redirect: '/outpatientPay/unpayList',
+      component: Container,
+      children: [
+        { path: 'unpayList', name: 'unpayList', component: UnpayList },
+        { path: 'unpayItem/:patCardNo&:hisOrdNum', name: 'unpayItem', component: UnpayItem }
       ]
     },
     {
@@ -195,7 +209,14 @@ export default new Router({
           ]
         },
         { path: 'liveHosOrder', name: 'liveHosOrder', component: LiveHosOrder },
-        { path: 'regOrder', name: 'regOrder', component: RegOrder },
+        {
+          path: 'regOrder',
+          component: Container,
+          children: [
+            { path: '', name: 'regOrderList', component: RegOrderList },
+            { path: 'regOrderItem/:hisOrdNum&:ledgerSn', name: 'regOrderItem', component: RegOrderItem }
+          ]
+        },
         { path: 'outOrderInfo/:ledgerSn', name: 'outOrderInfo', component: OutOrderInfo }
       ]
     }

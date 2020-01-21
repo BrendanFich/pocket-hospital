@@ -19,6 +19,10 @@
               开单科室：
               <span class="value">{{ item.paymentDeptName }}</span>
             </div>
+            <div class="department">
+              类型：
+              <span class="value">{{ item.trade_type }}</span>
+            </div>
           </div>
           <div class="rightInfo">
             <span class="tag" :class="{green: item.paymentStatus === '1', orange: item.paymentStatus === '0'}">{{ statusWord(item.paymentStatus) }}</span>
@@ -86,9 +90,9 @@ export default {
     return {
       unpaidList: [],
       page: 0,
-      loading: false, // 是否处于加载状态
-      finished: false, // 是否已加载完所有数据
-      isLoading: false, // 是否处于下拉刷新状态
+      loading: false,
+      finished: false,
+      isLoading: false,
       isShowNoData: false,
       dialogShow: false,
       ledgerSn: '',
@@ -96,11 +100,9 @@ export default {
     }
   },
   mounted () {
-    let winHeight = document.documentElement.clientHeight // 视口大小
+    let winHeight = document.documentElement.clientHeight
     document.getElementById('list-content').style.height =
       winHeight + 'px'
-      // winHeight - (120 * Math.min(document.documentElement.clientWidth / 750, 2)) + 'px'
-      // 调整上拉加载框高度,由于使用rem的原因此处不能只用减120px
   },
   computed: {
     confirmButtonText () {
@@ -226,13 +228,13 @@ export default {
         font-size: 24px
         color: $color-value-grey
       .serial_number
-        line-height: 48px
+        line-height: 40px
         font-size: 26px
         color: $color-title-black
         .value
           color: $color-word-grey
       .department
-        line-height: 48px
+        line-height: 40px
         font-size: 26px
         color: $color-title-black
     .rightInfo

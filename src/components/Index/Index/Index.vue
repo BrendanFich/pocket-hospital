@@ -10,9 +10,9 @@
         <p>当天挂号、预约挂号</p>
       </router-link>
       <div class="navs1">
-        <router-link class="nav1" to="/payOnline">
+        <router-link class="nav1" to="/outpatientPay">
           <img src="./img/payOnlineBg.png" />
-          <h2>缴费</h2>
+          <h2>门诊缴费</h2>
           <p>在线缴检查费、药费</p>
         </router-link>
       </div>

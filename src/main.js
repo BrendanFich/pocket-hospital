@@ -18,7 +18,9 @@ import {
   Col,
   Search,
   Tag,
-  Rate
+  Rate,
+  Icon,
+  Button
 } from 'vant'
 
 import VConsole from 'vconsole'
@@ -36,6 +38,8 @@ Vue.use(Col)
 Vue.use(Search)
 Vue.use(Tag)
 Vue.use(Rate)
+Vue.use(Icon)
+Vue.use(Button)
 
 Vue.prototype.$post = util.http.post
 Vue.prototype.wxsdk = wxsdk
@@ -106,6 +110,10 @@ router.beforeEach((to, from, next) => {
       break
     case 'confirm':
       document.title = '确认挂号信息'
+      break
+    case 'unpayItem':
+    case 'unpayList':
+      document.title = '待缴费订单'
       break
     case 'iHospital':
       document.title = '互联网医院'

@@ -1,15 +1,25 @@
 <template>
   <div id="app">
-    <router-view/>
+    <router-view></router-view>
+    <BackButton class="icons-warp">
+      <div class="float-icon-item">
+        <van-icon name="arrow-left" @click="$router.go(-1)"/>
+      </div>
+      <div class="float-icon-item">
+        <van-icon name="wap-home-o" @click="backHome"/>
+      </div>
+    </BackButton>
   </div>
 </template>
 
 <script>
 import { authUrl } from '@/assets/js/config'
 import wx from 'weixin-js-sdk'
+import BackButton from '@/base/BackButton/BackButton'
 
 export default {
   name: 'App',
+  components: { BackButton },
   data () {
     return {
       errorMsg: '',
@@ -28,10 +38,9 @@ export default {
     if (this.getUrlParam('msg')) {
       this.errorMsg = decodeURIComponent(this.getUrlParam('msg'))
       console.log(this.errorMsg)
-      this.$messagebox.alert(this.errorMsg, '登录失败')
-        .then(action => {
-          window.location.href = authUrl
-        })
+      this.$messagebox.alert(this.errorMsg, '登录失败').then(action => {
+        window.location.href = authUrl
+      })
     } else {
       window.location.href = window.location.href.split('?')[0]
       let wxSign = window.localStorage.getItem('wxSign')
@@ -51,7 +60,10 @@ export default {
           ]
         })
         wx.error(function (res) {
-          if (res.errMsg.includes('invalid signature') || res.errMsg.includes('config:fail')) {
+          if (
+            res.errMsg.includes('invalid signature') ||
+            res.errMsg.includes('config:fail')
+          ) {
             if (_this.count < 1) {
               _this.getSign()
               _this.count++
@@ -61,7 +73,7 @@ export default {
       } else {
         this.getSign()
       }
-      this.TestToken()
+      this.testToken()
     }
 
     if (localStorage.getItem('store')) {
@@ -78,11 +90,17 @@ export default {
     })
   },
   methods: {
-    TestToken () {
-      this.$post('/api/user/vx_info').then(res => {
-      }).catch((error) => {
-        console.log(error)
-      })
+    backHome () {
+      if (this.$route.name !== 'Index') {
+        this.$router.push('/index')
+      }
+    },
+    testToken () {
+      this.$post('/api/user/vx_info')
+        .then(res => {})
+        .catch(error => {
+          console.log(error)
+        })
     },
     getSign () {
       this.$post('/api/user/vx_sign', { url: location.href.split('#')[0] })
@@ -91,7 +109,12 @@ export default {
 
           window.localStorage.setItem(
             'wxSign',
-            [res.data.appId, res.data.timestamp, res.data.nonceStr, res.data.signature].join('&')
+            [
+              res.data.appId,
+              res.data.timestamp,
+              res.data.nonceStr,
+              res.data.signature
+            ].join('&')
           )
           wx.config({
             debug: false,
@@ -117,6 +140,7 @@ export default {
       return null
     }
   }
+
 }
 </script>
 
@@ -124,6 +148,17 @@ export default {
 #app {
   font-family: "Microsoft YaHei", "Avenir", Helvetica, Arial, sans-serif;
   width: 750px;
+}
+.icons-warp {
+  border-radius: 40px;
+  .float-icon-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 80px;
+    height: 80px;
+  }
 }
 .toast {
   line-height: 60px;

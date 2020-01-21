@@ -8,7 +8,16 @@
     >
       <div v-for="(item, index) in orderList" :key="index">
         <div class="paidTime">下单日期：{{ item.createDate }}</div>
-        <div class="orderCard" @click="getDetail(item.hisOrdNum)">
+        <router-link
+          class="orderCard"
+          :to="{
+            name: 'regOrderItem',
+            params: {
+              hisOrdNum: item.hisOrdNum,
+              ledgerSn: item.psOrdNum
+            }
+          }"
+        >
           <div class="left">
             <img src="./img/orderIcon.png" alt />
             <div class="baseInfo">
@@ -22,10 +31,6 @@
                   >：{{ item.scheduleDate.split(" ")[0] }}</span
                 >
               </div>
-              <!-- <div class="item">
-                <span class="key">院区</span>
-                <span class="value">：{{ item.hostpitalName }}</span>
-              </div> -->
               <div class="item">
                 <span class="key">科室</span>
                 <span class="value">：{{ item.deptName }}</span>
@@ -51,72 +56,10 @@
               >{{ status(item.backRegistInd, item.visit_status) }}</span
             >
           </div>
-        </div>
+        </router-link>
       </div>
     </van-list>
     <img class="noData" v-if="isShowNoData" src="./img/noData.png" />
-    <van-dialog
-      v-model="dialogShow"
-      title="订单详情"
-      show-cancel-button
-      :closeOnClickOverlay="true"
-      @confirm="cancelRegister"
-      confirmButtonColor="#09cf74"
-      :confirmButtonText="confirmButtonText"
-    >
-      <ul class="detail">
-        <li>
-          <label>订单号：</label><span>{{ cardDetail.hisOrdNum }}</span>
-        </li>
-        <li>
-          <label>创建时间：</label
-          ><span>{{
-            cardDetail.createDate && cardDetail.createDate.split(" ")[0]
-          }}</span>
-        </li>
-        <li>
-          <label>就诊科室：</label><span>{{ cardDetail.deptName }}</span>
-        </li>
-        <li>
-          <label>就诊医生：</label><span>{{ cardDetail.doctorName }}</span>
-        </li>
-        <li>
-          <label>就诊日期：</label
-          ><span>{{
-            cardDetail.scheduleDate && cardDetail.scheduleDate.split(" ")[0]
-          }}</span>
-        </li>
-        <li>
-          <label>就诊时间：</label
-          ><span
-            >{{ cardDetail.beginTime && timeFormat(cardDetail.beginTime) }} -
-            {{ cardDetail.endTime && timeFormat(cardDetail.endTime) }}
-          </span>
-        </li>
-        <li>
-          <label>患者：</label><span>{{ cardDetail.patName }}</span>
-        </li>
-        <li>
-          <label>卡号：</label><span>{{ cardDetail.patCardNo }}</span>
-        </li>
-        <li>
-          <label>卡号类型：</label
-          ><span
-            >{{ cardDetail.patCardType === "1" ? "就诊卡" : "社保卡" }}
-          </span>
-        </li>
-        <li>
-          <label>挂号费用：</label
-          ><span>{{ "￥" + cardDetail.regFee / 100 }}</span>
-        </li>
-        <li>
-          <label>当前状态：</label
-          ><span>{{
-            status(cardDetail.backRegistInd, cardDetail.visit_status)
-          }}</span>
-        </li>
-      </ul>
-    </van-dialog>
   </div>
 </template>
 
@@ -127,11 +70,10 @@ export default {
     return {
       orderList: [],
       page: 0,
-      loading: false, // 是否处于加载状态
-      finished: false, // 是否已加载完所有数据
-      isLoading: false, // 是否处于下拉刷新状态
+      loading: false,
+      finished: false,
+      isLoading: false,
       isShowNoData: false,
-      dialogShow: false,
       cardDetail: {}
     }
   },
@@ -148,7 +90,7 @@ export default {
     this.getOrderList()
   },
   mounted () {
-    let winHeight = document.documentElement.clientHeight // 视口大小
+    let winHeight = document.documentElement.clientHeight
     document.getElementById('list-content').style.height = winHeight + 'px'
   },
   methods: {
@@ -183,16 +125,6 @@ export default {
         return visitStatus
       }
     },
-    getDetail (hisOrdNum) {
-      this.$post('/api/pat/findRegisterInfo', { hisOrdNum })
-        .then(res => {
-          this.cardDetail = res.data
-          this.dialogShow = true
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    },
     timeFormat (time) {
       return time
         .split(' ')[1]
@@ -201,7 +133,6 @@ export default {
         .join(':')
     },
     cancelRegister () {
-      // console.log(this.cardDetail.hisOrdNum)
       if (this.cardDetail.backRegistInd === '0') {
         this.$post('/api/register/cancelRegister', {
           hisOrderNum: this.cardDetail.hisOrdNum
