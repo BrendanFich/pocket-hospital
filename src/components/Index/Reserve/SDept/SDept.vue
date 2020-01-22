@@ -1,26 +1,44 @@
 <template>
-  <keep-alive>
-    <div class="sDept">
-      <div class="searchbar">
-        <img class="cancelIcon" src="./img/search.png" alt />
-        <input
-          type="text"
-          v-model="value"
-          placeholder="搜索科室名称"
-          @focus="focus"
+  <div class="sDept">
+    <div class="searchbar">
+      <img class="cancelIcon" src="./img/search.png" alt />
+      <input
+        type="text"
+        v-model="value"
+        placeholder="搜索科室名称"
+        @focus="focus"
+      />
+      <div class="xIcon" :class="{ show: value }" @click="clear">×</div>
+      <button class="cancel" :class="{ show: isShow }" @click="cancel">
+        取消
+      </button>
+      <div class="resultList" :class="{ show: isShow }">
+        <img
+          class="noData"
+          v-if="searchResult.length === 0 && value !== ''"
+          src="./img/noData.png"
         />
-        <div class="xIcon" :class="{ show: value }" @click="clear">×</div>
-        <button class="cancel" :class="{ show: isShow }" @click="cancel">
-          取消
-        </button>
-        <div class="resultList" :class="{ show: isShow }">
-          <img
-            class="noData"
-            v-if="searchResult.length === 0 && value !== ''"
-            src="./img/noData.png"
-          />
+        <div
+          v-for="(item, index) in searchResult"
+          :key="index"
+          @click="select(item.deptCode, item.deptName)"
+        >
+          <mt-cell :title="item.deptName">
+            <img class="icon" src="./img/deptIcon.png" />&gt;
+          </mt-cell>
+        </div>
+      </div>
+    </div>
+
+    <div class="content" :class="{ hidden: isShow }">
+      <mt-navbar v-model="selected" class="left_navbar">
+        <mt-tab-item id="0">全院科室</mt-tab-item>
+      </mt-navbar>
+
+      <mt-tab-container v-model="selected" class="right_container">
+        <mt-tab-container-item id="0">
           <div
-            v-for="(item, index) in searchResult"
+            v-for="(item, index) in deptList"
             :key="index"
             @click="select(item.deptCode, item.deptName)"
           >
@@ -28,34 +46,13 @@
               <img class="icon" src="./img/deptIcon.png" />&gt;
             </mt-cell>
           </div>
-        </div>
-      </div>
-
-      <div class="content" :class="{ hidden: isShow }">
-        <mt-navbar v-model="selected" class="left_navbar">
-          <mt-tab-item id="0">全院科室</mt-tab-item>
-        </mt-navbar>
-
-        <mt-tab-container v-model="selected" class="right_container">
-          <mt-tab-container-item id="0">
-            <div
-              v-for="(item, index) in deptList"
-              :key="index"
-              @click="select(item.deptCode, item.deptName)"
-            >
-              <mt-cell :title="item.deptName">
-                <img class="icon" src="./img/deptIcon.png" />&gt;
-              </mt-cell>
-            </div>
-          </mt-tab-container-item>
-        </mt-tab-container>
-      </div>
+        </mt-tab-container-item>
+      </mt-tab-container>
     </div>
-  </keep-alive>
+  </div>
 </template>
 
 <script>
-// import PinyinEngine from 'pinyin-engine'
 export default {
   name: 'sDept',
   data () {
@@ -68,11 +65,6 @@ export default {
   },
   computed: {
     searchResult () {
-      // if (this.value === '') {
-      //   return []
-      // } else {
-      //   return new PinyinEngine(this.deptList, ['deptName']).query(this.value)
-      // }
       const pingYinMatch = require('pinyin-match')
       if (this.value) {
         let result = []

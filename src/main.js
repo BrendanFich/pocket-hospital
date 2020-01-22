@@ -4,7 +4,7 @@ import 'mint-ui/lib/style.css'
 import App from './App'
 import router from './router'
 import '@/assets/js/rem'
-import wxsdk from '@/assets/js/wxsdk'
+import wx from 'weixin-js-sdk'
 import util from '@/assets/js/util'
 import store from './vuex/store'
 import moment from 'moment'
@@ -20,7 +20,8 @@ import {
   Tag,
   Rate,
   Icon,
-  Button
+  Button,
+  Toast
 } from 'vant'
 
 import VConsole from 'vconsole'
@@ -40,9 +41,15 @@ Vue.use(Tag)
 Vue.use(Rate)
 Vue.use(Icon)
 Vue.use(Button)
+Vue.use(Toast)
 
+Toast.setDefaultOptions('loading', { forbidClick: true, message: '', loadingType: 'spinner' })
+Toast.setDefaultOptions('fail', { forbidClick: true, duration: 1500 })
+Toast.setDefaultOptions('success', { forbidClick: true, duration: 1500 })
+Vue.prototype.$toast = Toast
+Vue.prototype.$dialog = Dialog
 Vue.prototype.$post = util.http.post
-Vue.prototype.wxsdk = wxsdk
+Vue.prototype.$wx = wx
 
 moment.locale('zh-cn')
 

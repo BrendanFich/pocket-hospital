@@ -10,14 +10,12 @@
       />
       <van-cell
         title="预约时间"
-        :value="
-          regInfo.beginTime && timeFormat(regInfo.beginTime)
-          + '-' +
-          regInfo.endTime && timeFormat(regInfo.endTime)
+        :value="timeFormat(regInfo.beginTime,regInfo.endTime)
         "
       />
       <van-cell title="挂号人" :value="regInfo.patName" />
       <van-cell title="挂号费" :value="'¥' + regInfo.regFee / 100" />
+      <van-cell title="排队号" :value="regInfo.visit_display_no" />
     </div>
     <div class="detail">
       <div class="title">缴费详情</div>
@@ -31,9 +29,11 @@
         :value="status()"
       ></van-cell>
     </div>
-    <div class="btnBox">
-      <van-button type="primary" v-if="status() === '未支付'" block round @click="pay">确认支付</van-button>
-      <van-button type="default" v-if="status() === '已支付'" block round @click="cancelRegister">取消预约</van-button>
+    <div class="btnBox" v-if="status() === '未支付'">
+      <van-button type="primary"  block round @click="pay">确认支付</van-button>
+    </div>
+    <div class="btnBox" v-if="status() === '已支付'">
+      <van-button type="default" block round @click="cancelRegister">取消预约</van-button>
     </div>
   </div>
 </template>
@@ -60,10 +60,10 @@ export default {
       if (this.regInfo.backRegistInd === '1') {
         return '已退号'
       } else {
-        if (this.regInfo.visitFlag === '0') {
-          return '未支付'
-        } else if (visitFlag === '1') {
+        if (this.regInfo.visit_id) {
           return '已支付'
+        } else {
+          return '未支付'
         }
       }
     },
@@ -94,12 +94,10 @@ export default {
           console.log(err)
         })
     },
-    timeFormat (time) {
-      return time
-        .split(' ')[1]
-        .split(':')
-        .slice(0, 2)
-        .join(':')
+    timeFormat (beginTime, endTime) {
+      if (beginTime && endTime) {
+        return beginTime.split(' ')[1].split(':').slice(0, 2).join(':') + '-' + endTime.split(' ')[1].split(':').slice(0, 2).join(':')
+      }
     },
     getPayItem () {
       this.$post('/api/pat/findRegisterInfo', {

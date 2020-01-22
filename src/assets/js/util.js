@@ -1,8 +1,8 @@
 import axios from 'axios'
 import moment from 'moment'
 import store from '@/vuex/store'
-import { Indicator, Toast } from 'mint-ui'
 import { apiBaseUrl, authUrl } from './config'
+import { Toast } from 'vant'
 let http = {}
 const CancelToken = axios.CancelToken
 http.ajax = axios.create()
@@ -17,7 +17,7 @@ http.ajax.interceptors.request.use(
     config.cancelToken = new CancelToken(cancel => {
       store.commit('changePage', cancel)
     })
-    Indicator.open()
+    Toast.loading()
     if (localStorage.token) {
       config.headers.Authorization = localStorage.token
     }
@@ -31,7 +31,7 @@ http.ajax.interceptors.request.use(
 // 响应拦截
 http.ajax.interceptors.response.use(
   res => {
-    Indicator.close()
+    Toast.clear()
     if (res.data.code === 401) {
       localStorage.removeItem('token')
 
@@ -54,7 +54,7 @@ http.ajax.interceptors.response.use(
     return res
   },
   err => {
-    Indicator.close()
+    Toast.clear()
     console.error(err)
     // 若请求超时，再请求一次
     let originalRequest = err.config

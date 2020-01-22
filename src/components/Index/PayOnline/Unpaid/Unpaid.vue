@@ -7,7 +7,7 @@
       :offset="10"
     >
       <div class="list-item" v-for="(item, index) in unpaidList" :key="index">
-        <mt-cell @click.native="getDetailInfo(item.ledgerSn)">
+        <mt-cell @click.native="linkTo(item.PatCardNo, item.outPatId, item.ledgerSn, item.trade_type)">
           <div class="leftInfo">
             <div class="name">{{ item.patName }}</div>
             <div class="patCardNo">{{ item.PatCardNo }}</div>
@@ -33,7 +33,7 @@
       </div>
     </van-list>
     <img class="noData" v-if="isShowNoData" src="./img/noData.png" />
-      <van-dialog
+      <!-- <van-dialog
         v-model="dialogShow"
         title="订单详情"
         show-cancel-button
@@ -77,13 +77,11 @@
             <label>订单状态：</label><span>{{ statusWord(detailInfo.paymentStatus) }}</span>
           </li>
       </ul>
-      </van-dialog>
+      </van-dialog> -->
   </div>
 </template>
 
 <script>
-import wx from 'weixin-js-sdk'
-
 export default {
   name: 'paid',
   data () {
@@ -95,7 +93,6 @@ export default {
       isLoading: false,
       isShowNoData: false,
       dialogShow: false,
-      ledgerSn: '',
       detailInfo: {}
     }
   },
@@ -156,42 +153,13 @@ export default {
       this.page += 1
       this.getUnpaidList()
     },
-    getDetailInfo (ledgerSn) {
-      this.ledgerSn = ledgerSn
-      this.$post('/api/doctor/payInfo', { ledgerSn })
-        .then(res => {
-          if (res.code === 0) {
-            this.detailInfo = res.data.Records
-            this.dialogShow = true
-          }
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    },
-    pay () {
-      let self = this
-      this.$post('/api/doctor/payComfirm', { ledgerSn: this.ledgerSn })
-        .then(res => {
-          wx.ready(function () {
-            wx.chooseWXPay({
-              timestamp: res.data.timestamp,
-              nonceStr: res.data.nonceStr,
-              package: res.data.package,
-              signType: res.data.signType,
-              paySign: res.data.paySign,
-              success: res => {
-                self.getUnpaidList()
-              }
-            })
-          })
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    },
-    refund () {
-      console.log('退款')
+    linkTo (patCardNo, hisOrdNum, ledgerSn, tradeType) {
+      if (tradeType === '挂号收费') {
+        this.$router.push({name: 'regOrderItem', params: {hisOrdNum, ledgerSn}})
+      }
+      if (tradeType === '门诊收费') {
+        this.$router.push({name: 'unpayItem', params: {patCardNo, hisOrdNum}})
+      }
     }
   }
 }

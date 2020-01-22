@@ -23,14 +23,14 @@
         </div>
         <span class="linkIcon">></span>
       </li>
-      <li>
+      <li @click="noFinish">
         <div>
           <img src="./img/mealIcon.png" />
           <span class="title">点餐订单</span>
         </div>
         <span class="linkIcon">></span>
       </li>
-      <li @click="linkTo('/iHospital/review')">
+      <li @click="noFinish">
         <div>
           <img src="./img/mineIcon.png" />
           <span class="title">我的就诊</span>
@@ -47,12 +47,12 @@
         <img src="./img/suggestionIcon.png" alt />
         <span>就医反馈</span>
       </div>
-      <div class="item">
+      <div class="item" @click="noFinish">
         <img src="./img/questionIcon.png" alt />
         <span>随访问卷</span>
       </div>
-      <div class="item">
-        <img src="./img/linkIcon.png" @click="linkTo('/test')" alt />
+      <div class="item" @click="noFinish">
+        <img src="./img/linkIcon.png" alt />
         <span>友情链接</span>
       </div>
     </div>
@@ -76,6 +76,9 @@ export default {
   methods: {
     linkTo (url) {
       this.$router.push(url)
+    },
+    noFinish () {
+      this.$toast.fail('尚未开发')
     }
   }
 }

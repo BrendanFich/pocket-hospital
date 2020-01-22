@@ -50,7 +50,7 @@ export default {
         .then(res => {
           if (res.code === 0) {
             this.$toast({ message: '设置成功', duration, className })
-            this.$router.go(-1)
+            this.$router.go(-2)
           }
         })
         .catch(error => {
