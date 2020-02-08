@@ -7,7 +7,7 @@
       :offset="10"
     >
       <div class="list-item" v-for="(item, index) in unpaidList" :key="index">
-        <mt-cell @click.native="linkTo(item.PatCardNo, item.outPatId, item.ledgerSn, item.trade_type)">
+        <mt-cell @click.native="linkTo(item.PatCardNo, item.outPatId, item.ledgerSn, item.trade_type, item.paymentStatus)">
           <div class="leftInfo">
             <div class="name">{{ item.patName }}</div>
             <div class="patCardNo">{{ item.PatCardNo }}</div>
@@ -33,51 +33,6 @@
       </div>
     </van-list>
     <img class="noData" v-if="isShowNoData" src="./img/noData.png" />
-      <!-- <van-dialog
-        v-model="dialogShow"
-        title="订单详情"
-        show-cancel-button
-        :closeOnClickOverlay="true"
-        @confirm="confirm"
-        confirmButtonColor="#09cf74"
-        :confirmButtonText='confirmButtonText'
-      >
-        <ul class="detail">
-          <li>
-            <label>患者：</label><span>{{ detailInfo.patName }}</span>
-          </li>
-          <li>
-            <label>卡号：</label><span>{{ detailInfo.PatCardNo }}</span>
-          </li>
-          <li>
-            <label>卡号类型：</label
-            ><span>{{ detailInfo.patCardType === "1" ? "就诊卡" : "社保卡" }}</span>
-          </li>
-          <li>
-            <label>订单号：</label><span>{{ detailInfo.outPatId }}</span>
-          </li>
-
-          <li>
-            <label>缴费时间：</label
-            ><span>{{
-              detailInfo.paymentDate && detailInfo.paymentDate.split(" ")[0]
-            }}</span>
-          </li>
-          <li>
-            <label>缴费金额：</label
-            ><span>{{ "￥" + detailInfo.paymentFee / 100 }}</span>
-          </li>
-          <li>
-            <label>开单科室：</label><span>{{ detailInfo.paymentDeptName }}</span>
-          </li>
-          <li>
-            <label>开单医生：</label><span>{{ detailInfo.paymentDoctorName }}</span>
-          </li>
-          <li>
-            <label>订单状态：</label><span>{{ statusWord(detailInfo.paymentStatus) }}</span>
-          </li>
-      </ul>
-      </van-dialog> -->
   </div>
 </template>
 
@@ -153,12 +108,12 @@ export default {
       this.page += 1
       this.getUnpaidList()
     },
-    linkTo (patCardNo, hisOrdNum, ledgerSn, tradeType) {
+    linkTo (patCardNo, hisOrdNum, ledgerSn, tradeType, paymentStatus) {
       if (tradeType === '挂号收费') {
         this.$router.push({name: 'regOrderItem', params: {hisOrdNum, ledgerSn}})
       }
       if (tradeType === '门诊收费') {
-        this.$router.push({name: 'unpayItem', params: {patCardNo, hisOrdNum}})
+        this.$router.push({name: 'unpayItem', params: {patCardNo, hisOrdNum, ledgerSn, paymentStatus}})
       }
     }
   }
@@ -209,7 +164,7 @@ export default {
       text-align: center
       .price,.refunding,.tag
         float: right
-        width: 80px
+        min-width: 80px
         padding: 8px 7px
         background: #d8d8d8
         color: #fff

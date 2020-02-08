@@ -1,32 +1,61 @@
 <template>
   <div class="unpayItem">
-    <div class="tableContent">
-      <div class="title">处方单</div>
-      <ul>
-        <li class="tableHead">
-          <span class="column1">项目名称</span>
-          <span class="column2">单价(元)</span>
-          <span class="column3">数量</span>
-          <span class="column3">金额(元)</span>
-        </li>
-        <li class="tableData" v-for="(item, index) in list" :key="index">
-          <span class="column1">{{ item.itemName }}</span>
-          <span class="column2">¥{{ (item.itemPrice/100).toFixed(2) }}</span>
-          <span class="column3">{{ Math.round(item.itemNum) }}</span>
-          <span class="column3 ">¥{{ (item.itemTotalAmt/100).toFixed(2) }}</span>
-        </li>
-      </ul>
+    <div v-if="$route.params.paymentStatus === '0'">
+      <div class="tableContent">
+        <div class="title">处方单</div>
+        <ul>
+          <li class="tableHead">
+            <span class="column1">项目名称</span>
+            <span class="column2">单价(元)</span>
+            <span class="column3">数量</span>
+            <span class="column3">金额(元)</span>
+          </li>
+          <li class="tableData" v-for="(item, index) in list" :key="index">
+            <span class="column1">{{ item.itemName }}</span>
+            <span class="column2">¥{{ (item.itemPrice/100).toFixed(2) }}</span>
+            <span class="column3">{{ Math.round(item.itemNum) }}</span>
+            <span class="column3 ">¥{{ (item.itemTotalAmt/100).toFixed(2) }}</span>
+          </li>
+        </ul>
+      </div>
+      <div class="detail">
+        <div class="title">缴费详情</div>
+        <van-cell title="订单号" :value="this.$route.params.hisOrdNum" />
+        <van-cell title="总金额" :value="'¥' + (allInfo.totalAmt/100).toFixed(2)" />
+        <van-cell title="医保部分金额" :value="'¥' + (allInfo.medInsAmt/100).toFixed(2)" />
+        <van-cell title="自费部分金额" :value="'¥' + (allInfo.selfAmt/100).toFixed(2)"></van-cell>
+      </div>
+      <div class="btnBox">
+        <van-button type="primary" block round @click="pay">确认支付</van-button>
+      </div>
     </div>
-    <div class="detail">
-      <div class="title">缴费详情</div>
-      <van-cell title="订单号" :value="this.$route.params.hisOrdNum" />
-      <van-cell title="总金额" :value="'¥' + (allInfo.totalAmt/100).toFixed(2)" />
-      <van-cell title="医保部分金额" :value="'¥' + (allInfo.medInsAmt/100).toFixed(2)" />
-      <van-cell title="自费部分金额" :value="'¥' + (allInfo.selfAmt/100).toFixed(2)"></van-cell>
+    <div v-else>
+      <div class="tableContent">
+        <div class="title">处方单</div>
+        <ul>
+          <li class="tableHead">
+            <span class="column1">项目名称</span>
+            <span class="column2">单价(元)</span>
+            <span class="column3">数量</span>
+            <span class="column3">金额(元)</span>
+          </li>
+          <li class="tableData" v-for="(item, index) in list" :key="index">
+            <span class="column1">{{ item.item_name }}</span>
+            <span class="column2">¥{{ (item.item_price/100).toFixed(2) }}</span>
+            <span class="column3">{{ Math.round(item.item_num) }}</span>
+            <span class="column3 ">¥{{ (item.payoff_total_fee/100).toFixed(2) }}</span>
+          </li>
+        </ul>
+      </div>
+      <div class="detail">
+        <div class="title">缴费详情</div>
+        <van-cell title="订单号" :value="this.$route.params.hisOrdNum" />
+        <van-cell title="总金额" :value="'¥' + (allInfo.totalAmt/100).toFixed(2)" />
+        <van-cell title="医保部分金额" :value="'¥' + (allInfo.medInsAmt/100).toFixed(2)" />
+        <van-cell title="自费部分金额" :value="'¥' + (allInfo.selfAmt/100).toFixed(2)"></van-cell>
+      </div>
     </div>
-    <div class="btnBox">
-      <van-button type="primary" block round @click="pay">确认支付</van-button>
-    </div>
+
   </div>
 </template>
 
@@ -43,10 +72,25 @@ export default {
     }
   },
   created () {
-    this.getPayItem()
+    if (this.$route.params.paymentStatus === '0') {
+      this.getUnpayItem()
+    } else {
+      this.getPayItem()
+    }
   },
   methods: {
     getPayItem () {
+      this.$post('/api/out_visit/order/items', {
+        ledger_sn: this.$route.params.ledgerSn
+      })
+        .then(res => {
+          this.list = res.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    getUnpayItem () {
       this.$post('/api/out_visit/un_pay_order_item/list', {
         patCardNo: this.$route.params.patCardNo,
         hisOrdNum: this.$route.params.hisOrdNum

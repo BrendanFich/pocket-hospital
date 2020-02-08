@@ -108,7 +108,7 @@ export default new Router({
       component: Container,
       children: [
         { path: 'unpayList', name: 'unpayList', component: UnpayList },
-        { path: 'unpayItem/:patCardNo&:hisOrdNum', name: 'unpayItem', component: UnpayItem }
+        { path: 'unpayItem/:patCardNo&:hisOrdNum&:ledgerSn&:paymentStatus', name: 'unpayItem', component: UnpayItem }
       ]
     },
     {
