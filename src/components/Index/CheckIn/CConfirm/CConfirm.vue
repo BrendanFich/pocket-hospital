@@ -8,7 +8,6 @@
 <script>
 import CustomerInfoCard from '@/base/CustomerInfoCard/CustomerInfoCard'
 import wx from 'weixin-js-sdk'
-import util from '@/assets/js/util'
 export default {
   name: 'cConfirm',
   components: { CustomerInfoCard },
@@ -20,8 +19,7 @@ export default {
     }
   },
   created () {
-    util.http
-      .post('/api/pat/findVisitingRegister')
+    this.$post('/api/pat/findVisitingRegister')
       .then(res => {
         console.log(res)
         this.registerInfo = res.data.Records[0]
@@ -43,20 +41,20 @@ export default {
       let text
       if (this.registerInfo.hisOrdNum) {
         text = `
-      <div>
-        <p>就诊日期：${this.registerInfo.scheduleDate}</p>
-        <p>就诊时间：${this.registerInfo.beginTime} - ${this.registerInfo.beginTime}</p>
-        <p>就诊科室：${this.registerInfo.deptName}</p>
-        <p>就诊医生：${this.registerInfo.doctorName}</p>
-      </div>
+        <span>就诊日期：${this.registerInfo.scheduleDate.split(' ')[0]}</span>
+        <span>就诊时间：${this.registerInfo.beginTime.split(' ')[1]} - ${this.registerInfo.endTime.split(' ')[1]}</span>
+        <span>就诊科室：${this.registerInfo.deptName}</span>
+        <span>就诊医生：${this.registerInfo.doctorName}</span>
       `
       } else {
         text = `<div>请先预约挂号</div>`
       }
-      this.$messagebox.confirm(text).then(action => {
+      this.$dialog.confirm({
+        title: '确认就诊信息',
+        message: text
+      }).then(() => {
         if (this.registerInfo.hisOrdNum) {
-          util.http
-            .post('/api/pat/visitingReport', {hisOrdNum: this.registerInfo.hisOrdNum})
+          this.$post('/api/pat/visitingReport', {hisOrdNum: this.registerInfo.hisOrdNum})
             .then(res => {
               console.log(res)
               if (res.code !== 0) {
@@ -69,6 +67,8 @@ export default {
               console.log(error)
             })
         }
+      }).catch(() => {
+        // on cancel
       })
     }
   }

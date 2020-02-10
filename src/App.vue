@@ -157,7 +157,7 @@ export default {
 }
 body {
   .van-toast {
-    padding: 5px;
+    padding: 10px 15px;
     border-radius: 10px;
   }
 }

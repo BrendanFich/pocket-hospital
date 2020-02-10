@@ -53,9 +53,12 @@
         <van-cell title="总金额" :value="'¥' + (allInfo.totalAmt/100).toFixed(2)" />
         <van-cell title="医保部分金额" :value="'¥' + (allInfo.medInsAmt/100).toFixed(2)" />
         <van-cell title="自费部分金额" :value="'¥' + (allInfo.selfAmt/100).toFixed(2)"></van-cell>
+        <van-cell title="支付状态" :value="statusWord"></van-cell>
+      </div>
+      <div class="btnBox" v-if="statusWord === '未支付'">
+        <van-button type="primary" block round @click="pay">确认支付</van-button>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -76,6 +79,22 @@ export default {
       this.getUnpayItem()
     } else {
       this.getPayItem()
+    }
+  },
+  computed: {
+    statusWord () {
+      switch (this.$route.params.paymentStatus) {
+        case '1' :
+          return '已支付'
+        case '0' :
+          return '未支付'
+        case '2' :
+          return '退款中'
+        case '-2' :
+          return '已退款'
+        case '-1' :
+          return '已完成'
+      }
     }
   },
   methods: {

@@ -149,7 +149,6 @@ export default {
 @import '~assets/sass/mixin'
 .regOrderItem
   background: $color-page-background
-  height: 100vh
   .tableContent
     background: #fff
     .title
