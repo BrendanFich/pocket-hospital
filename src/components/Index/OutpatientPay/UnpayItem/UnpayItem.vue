@@ -77,6 +77,7 @@ export default {
   created () {
     if (this.$route.params.paymentStatus === '0') {
       this.getUnpayItem()
+      this.creatOrder()
     } else {
       this.getPayItem()
     }
@@ -98,6 +99,20 @@ export default {
     }
   },
   methods: {
+    creatOrder () {
+      this.$post('/api/out_visit/order/create', {
+        patCardNo: this.$route.params.patCardNo,
+        hisOrdNum: this.$route.params.hisOrdNum
+      })
+        .then(res => {
+          if (res.code === 0) {
+            console.log('创建订单成功')
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
     getPayItem () {
       this.$post('/api/out_visit/order/items', {
         ledger_sn: this.$route.params.ledgerSn
