@@ -2,7 +2,8 @@
   <div class="unpayList">
     <CustomerInfoCard @visitCardNo="getPatCardNo"></CustomerInfoCard>
     <div class="list">
-      <van-cell center class="item" v-for="(item,index) in list" :key="index" :to="{name: 'unpayItem', params: {patCardNo, hisOrdNum: item.hisOrdNum, ledgerSn: 'ledgerSn', paymentStatus:'0'}}">
+      <van-cell center class="item" v-for="(item,index) in list" :key="index"
+      :to="{name: 'unpayItem', params: {patCardNo, hisOrdNum: item.hisOrdNum}}">
         <div slot="title">诊断日期：{{item.diagDate.split(' ')[0]}}</div>
         <ul class="default" slot="label">
           <li>科室：{{item.deptName}}</li>

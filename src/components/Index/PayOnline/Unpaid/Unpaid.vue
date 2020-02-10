@@ -7,7 +7,16 @@
       :offset="10"
     >
       <div class="list-item" v-for="(item, index) in unpaidList" :key="index">
-        <mt-cell @click.native="linkTo(item.PatCardNo, item.outPatId, item.ledgerSn, item.trade_type, item.paymentStatus)">
+        <mt-cell @click.native="linkTo(
+          item.PatCardNo,
+          item.outPatId,
+          item.ledgerSn,
+          item.trade_type,
+          item.paymentStatus,
+          item.remarks,
+          item.paymentFee,
+          item.original_fee,
+          item.medical_insurance_fee)">
           <div class="leftInfo">
             <div class="name">{{ item.patName }}</div>
             <div class="patCardNo">{{ item.PatCardNo }}</div>
@@ -108,12 +117,17 @@ export default {
       this.page += 1
       this.getUnpaidList()
     },
-    linkTo (patCardNo, hisOrdNum, ledgerSn, tradeType, paymentStatus) {
+    linkTo (patCardNo, hisOrdNum, ledgerSn, tradeType, paymentStatus, remarks, paymentFee, originalFee, medicalInsuranceFee) {
+      console.log(paymentStatus)
       if (tradeType === '挂号收费') {
         this.$router.push({name: 'regOrderItem', params: {hisOrdNum, ledgerSn}})
       }
       if (tradeType === '门诊收费') {
-        this.$router.push({name: 'unpayItem', params: {patCardNo, hisOrdNum, ledgerSn, paymentStatus}})
+        if (paymentStatus === '0') {
+          this.$router.push({name: 'unpayItem', params: {patCardNo, hisOrdNum}})
+        } else {
+          this.$router.push({name: 'paidItem', params: {hisOrdNum, ledgerSn, paymentStatus, remarks: remarks || 'remarks', paymentFee, originalFee: originalFee || 'originalFee', medicalInsuranceFee: medicalInsuranceFee || 'medicalInsuranceFee'}})
+        }
       }
     }
   }

@@ -17,6 +17,7 @@ import Paid from '@/components/Index/PayOnline/Paid/Paid'
 
 import UnpayList from '@/components/Index/OutpatientPay/UnpayList/UnpayList'
 import UnpayItem from '@/components/Index/OutpatientPay/UnpayItem/UnpayItem'
+import PaidItem from '@/components/Index/OutpatientPay/PaidItem/PaidItem'
 
 import DocSearchPage from '@/components/Index/Guidance/DocSearchPage/DocSearchPage'
 
@@ -108,7 +109,8 @@ export default new Router({
       component: Container,
       children: [
         { path: 'unpayList', name: 'unpayList', component: UnpayList },
-        { path: 'unpayItem/:patCardNo&:hisOrdNum&:ledgerSn&:paymentStatus', name: 'unpayItem', component: UnpayItem }
+        { path: 'unpayItem/:patCardNo&:hisOrdNum', name: 'unpayItem', component: UnpayItem },
+        { path: 'paidItem/&:hisOrdNum&:ledgerSn&:paymentStatus&:remarks&:paymentFee&:originalFee&:medicalInsuranceFee', name: 'paidItem', component: PaidItem }
       ]
     },
     {
