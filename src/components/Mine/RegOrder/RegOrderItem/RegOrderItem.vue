@@ -149,6 +149,7 @@ export default {
 @import '~assets/sass/mixin'
 .regOrderItem
   background: $color-page-background
+  height: 100vh
   .tableContent
     background: #fff
     .title
@@ -172,7 +173,7 @@ export default {
       align-items: center
       border-bottom: 1px solid $color-border
   .detail
-    margin-top: 20px
+    padding-top: 20px
     background: #fff
     .title
       padding: 20px 20px

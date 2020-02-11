@@ -126,7 +126,7 @@ export default {
         if (paymentStatus === '0') {
           this.$router.push({name: 'unpayItem', params: {patCardNo, hisOrdNum}})
         } else {
-          this.$router.push({name: 'paidItem', params: {hisOrdNum, ledgerSn, paymentStatus, remarks: remarks || 'remarks', paymentFee, originalFee: originalFee || 'originalFee', medicalInsuranceFee: medicalInsuranceFee || 'medicalInsuranceFee'}})
+          this.$router.push({name: 'paidItem', params: {ledgerSn}})
         }
       }
     }
