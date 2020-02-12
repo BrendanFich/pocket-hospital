@@ -26,8 +26,8 @@
       <van-cell title="支付状态" :value="statusWord(info.paymentStatus)"></van-cell>
     </div>
     <div class="medicineInfo">
-      <div class="greenPoint"></div>
-      {{info.remarks}}
+      <img class="medicineImg" src="./img/medicine.png" alt="">
+      <div class="text">{{info.remarks}}</div>
     </div>
   </div>
 </template>
@@ -131,10 +131,11 @@ export default {
     padding: 20px
     font-size: 28px
     line-height: 38px
-    .greenPoint
-      width: 20px
-      height: 20px
-      background: $color-primary
-      border-radius: 20px
-      display: inline-block
+    display: flex
+    .medicineImg
+      width: 32px
+      height: 32px
+      margin: 4px
+    .text
+      flex: 1
 </style>
