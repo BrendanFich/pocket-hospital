@@ -19,14 +19,15 @@
     </div>
     <div class="detail">
       <div class="title">缴费详情</div>
-      <van-cell title="订单号" :value="this.$route.params.hisOrdNum" />
-      <van-cell title="总金额" :value="'¥' + ($route.params.originalFee/100).toFixed(2)" />
-      <van-cell title="医保部分金额" :value="'¥' + ($route.params.medicalInsuranceFee/100).toFixed(2)" />
-      <van-cell title="自费部分金额" :value="'¥' + ($route.params.paymentFee/100).toFixed(2)"></van-cell>
-      <van-cell title="支付状态" :value="statusWord"></van-cell>
+      <van-cell title="订单号" :value="info.outPatId" />
+      <van-cell title="总金额" :value="info.original_fee && ('¥' + (info.original_fee/100).toFixed(2))" />
+      <van-cell title="医保部分金额" :value="info.medical_insurance_fee && ('¥' + (info.medical_insurance_fee/100).toFixed(2))" />
+      <van-cell title="自费部分金额" :value="info.paymentFee && ('¥' + (info.paymentFee/100).toFixed(2))"></van-cell>
+      <van-cell title="支付状态" :value="statusWord(info.paymentStatus)"></van-cell>
     </div>
     <div class="medicineInfo">
-      {{$route.params.remarks}}
+      <div class="greenPoint"></div>
+      {{info.remarks}}
     </div>
   </div>
 </template>
@@ -38,15 +39,19 @@ export default {
   data () {
     return {
       list: [],
-      ledgerSn: ''
+      info: {}
     }
   },
   created () {
     this.getPayItem()
+    this.getPayOffInfo()
   },
   computed: {
-    statusWord () {
-      switch (this.$route.params.paymentStatus) {
+
+  },
+  methods: {
+    statusWord (paymentStatus) {
+      switch (paymentStatus) {
         case '1' :
           return '已支付'
         case '0' :
@@ -58,15 +63,24 @@ export default {
         case '-1' :
           return '已完成'
       }
-    }
-  },
-  methods: {
+    },
     getPayItem () {
       this.$post('/api/out_visit/order/items', {
         ledger_sn: this.$route.params.ledgerSn
       })
         .then(res => {
           this.list = res.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    getPayOffInfo () {
+      this.$post('/api/user/pay_off/get', {
+        ledger_sn: this.$route.params.ledgerSn
+      })
+        .then(res => {
+          this.info = res.data
         })
         .catch(err => {
           console.log(err)
@@ -81,7 +95,7 @@ export default {
 @import '~assets/sass/mixin'
 .paidItem
   background: $color-page-background
-  height: 100vh
+  min-height: 100vh
   .tableContent
     background: #fff
     .title
@@ -114,7 +128,13 @@ export default {
     .notice
       color: $color-primary
   .medicineInfo
-    margin: 20px
-  .btnBox
-    margin: 40px
+    padding: 20px
+    font-size: 28px
+    line-height: 38px
+    .greenPoint
+      width: 20px
+      height: 20px
+      background: $color-primary
+      border-radius: 20px
+      display: inline-block
 </style>

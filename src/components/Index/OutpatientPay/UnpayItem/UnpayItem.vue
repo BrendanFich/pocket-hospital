@@ -95,7 +95,7 @@ export default {
     wxPay (config) {
       let self = this
       this.$wx.ready(function () {
-        this.$wx.chooseWXPay({
+        self.$wx.chooseWXPay({
           timestamp: config.timestamp,
           nonceStr: config.nonceStr,
           package: config.package,
@@ -119,7 +119,7 @@ export default {
 @import '~assets/sass/mixin'
 .unpayItem
   background: $color-page-background
-  height: 100vh
+  min-height: 100vh
   .tableContent
     background: #fff
     .title
@@ -152,5 +152,5 @@ export default {
     .notice
       color: $color-primary
   .btnBox
-    margin: 40px
+    padding: 40px
 </style>
