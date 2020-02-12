@@ -37,7 +37,7 @@
             v-for="(doctor, dindex) in docList"
             :key="dindex"
           >
-            <img class="avatar" src="./img/avatar100x101.png" />
+            <DocAvatar :name="doctor.doctorName" />
             <div class="doctorInfo">
               <p class="doctorName">{{ doctor.doctorName }}</p>
               <p class="doctorTitle">
@@ -62,8 +62,10 @@
 </template>
 
 <script>
+import DocAvatar from '@/base/DocAvatar/DocAvatar'
 export default {
   name: 'doctorIntro',
+  components: { DocAvatar },
   data () {
     return {
       selected: 0,
@@ -117,13 +119,6 @@ export default {
     margin-top: 50px
   /deep/ .swiper-wrapper
     padding: 0 20px
-  // .swiper-slide
-  //   height: 160px
-  //   display: flex
-  //   justify-content: center
-  //   align-items: center
-  //   flex-direction: column
-
   .content
     width: 100%
     overflow-x: auto
@@ -170,10 +165,6 @@ export default {
     padding: 30px 50px 40px 30px
     border-bottom: 1px solid $color-border
     display: flex
-    .avatar
-      width: 100px
-      height: 100px
-      margin-right: 24px
     .doctorInfo
       flex: 1
       text-align: start

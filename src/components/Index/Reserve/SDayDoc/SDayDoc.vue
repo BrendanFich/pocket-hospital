@@ -15,7 +15,7 @@
           :key="index"
         >
           <div class="doctorInfo">
-            <div class="avatar" slot="icon"><img :src="getAvatar(item.Doctor)" @error="setDefualtImg"/></div>
+            <DocAvatar :name="item.Doctor" />
             <div class="textInfo">
               <span class="name">{{item.Doctor}}</span>
               <br />
@@ -34,10 +34,10 @@
 
 <script>
 import Week from '@/base/Week/Week'
-import { apiBaseUrl } from '@/assets/js/config'
-import defualtImg from './img/greenAvatar.png'
+import DocAvatar from '@/base/DocAvatar/DocAvatar'
 export default {
   name: 'sDayDoc',
+  components: { Week, DocAvatar },
   data () {
     return {
       date: '',
@@ -46,17 +46,11 @@ export default {
   },
   computed: {
   },
-  components: { Week },
+
   methods: {
     changeDate (val) {
       this.date = val
       this.getRegSource(val)
-    },
-    getAvatar (name) {
-      return apiBaseUrl + '/upload/doctor/' + name + '.jpg'
-    },
-    setDefualtImg (e) {
-      e.target.src = defualtImg
     },
     select (item) {
       if (item.leftNum > 0) {
@@ -122,13 +116,6 @@ export default {
           display: flex
           justify-content: start
           align-items: center
-          .avatar
-            width: 102px
-            height: 102px
-            overflow: hidden
-            border-radius: 50%
-            img
-              width: 102px
           .textInfo
             margin-left: 24px
             .name

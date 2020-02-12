@@ -3,7 +3,7 @@
     <div class="doctorInfo">
       <div class="baseInfo">
         <div class="avatar">
-          <img :src="getAvatar(docInfo.doctorName)" @error="setDefualtImg" />
+          <DocAvatar :name="docInfo.doctorName" />
         </div>
         <div class="text">
           <div class="name">{{docInfo.doctorName}}</div>
@@ -35,11 +35,10 @@
 </template>
 
 <script>
-import { apiBaseUrl } from '@/assets/js/config'
-import defualtImg from './img/greenAvatar.png'
-
+import DocAvatar from '@/base/DocAvatar/DocAvatar'
 export default {
   name: 'sTime',
+  components: { DocAvatar },
   data () {
     return {
       docInfo: {},
@@ -53,12 +52,6 @@ export default {
   computed: {
   },
   methods: {
-    getAvatar (name) {
-      return apiBaseUrl + '/upload/doctor/' + name + '.jpg'
-    },
-    setDefualtImg (e) {
-      e.target.src = defualtImg
-    },
     resetTimeFormat (beginTime, endTime) {
       let begin = beginTime.split(' ')[1].toString()
       let end = endTime.split(' ')[1].toString()
@@ -128,14 +121,6 @@ export default {
       display: flex
       justify-content: start
       align-items: center
-      .avatar
-        width: 102px
-        height: 102px
-        overflow: hidden
-        border-radius: 50%
-        img
-          width: 102px
-          margin-right: 20px
       .text
         margin-left: 23px
         .name

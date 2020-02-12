@@ -1,7 +1,7 @@
 <template>
   <div class="gSTime">
     <div class="doctorIntroCard">
-      <div class="avatar"><img :src="getAvatar(docInfo.doctorName)" @error="setDefualtImg"/></div>
+      <DocAvatar :name="docInfo.doctorName" />
       <div class="docInfo">
         <p class="doctorName">{{ docInfo.doctorName }}</p>
         <p class="doctorTitle">
@@ -25,7 +25,7 @@
           :key="index"
         >
           <div class="doctorInfo">
-            <div class="avatar" slot="icon"><img :src="getAvatar(item.Doctor)" @error="setDefualtImg"/></div>
+            <DocAvatar :name="item.Doctor" />
             <div class="textInfo">
               <span class="name">{{item.Doctor}}</span>
               <br />
@@ -43,11 +43,10 @@
 
 <script>
 import Week from '@/base/Week/Week'
-import { apiBaseUrl } from '@/assets/js/config'
-import defualtImg from './img/greenAvatar.png'
-
+import DocAvatar from '@/base/DocAvatar/DocAvatar'
 export default {
   name: 'gSTime',
+  components: { Week, DocAvatar },
   data () {
     return {
       docInfo: {},
@@ -72,17 +71,10 @@ export default {
       }
     }
   },
-  components: { Week },
   created () {
     this.getDocInfo()
   },
   methods: {
-    getAvatar (name) {
-      return apiBaseUrl + '/upload/doctor/' + name + '.jpg'
-    },
-    setDefualtImg (e) {
-      e.target.src = defualtImg
-    },
     changeDate (val) {
       this.date = val
       this.getRegSource(val)
@@ -150,14 +142,6 @@ export default {
     border-bottom: 1px solid $color-border
     display: flex
     margin-bottom: 20px
-    .avatar
-      width: 102px
-      height: 102px
-      overflow: hidden
-      margin-right: 20px
-      border-radius: 50%
-      img
-        width: 102px
     .docInfo
       flex: 1
       .doctorName

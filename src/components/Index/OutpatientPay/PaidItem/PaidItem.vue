@@ -129,7 +129,7 @@ export default {
       color: $color-primary
   .medicineInfo
     padding: 20px
-    font-size: 28px
+    font-size: 30px
     line-height: 38px
     display: flex
     .medicineImg

@@ -27,7 +27,7 @@
         >
           <div class="baseInfo">
             <div class="left">
-              <div class="avatar"><img :src="getAvatar(item.doctorName)" @error="setDefualtImg"/></div>
+              <DocAvatar :name="item.doctorName" />
               <div>
                 <p class="doctorName">{{ item.doctorName }}</p>
                 <p class="doctorTitle">
@@ -49,10 +49,10 @@
 </template>
 
 <script>
-import { apiBaseUrl } from '@/assets/js/config'
-import defualtImg from './img/greenAvatar.png'
+import DocAvatar from '@/base/DocAvatar/DocAvatar'
 export default {
   name: 'sSymptom',
+  components: { DocAvatar },
   data () {
     return {
       page: 0,
@@ -66,6 +66,7 @@ export default {
       docList: []
     }
   },
+
   mounted () {
     let winHeight = document.documentElement.clientHeight
     document.getElementById('list-content').style.height =
@@ -77,12 +78,6 @@ export default {
     this.getDescribe()
   },
   methods: {
-    getAvatar (name) {
-      return apiBaseUrl + '/upload/doctor/' + name + '.jpg'
-    },
-    setDefualtImg (e) {
-      e.target.src = defualtImg
-    },
     getDescribe () {
       this.$post('/api/doctor/guidance/describe')
         .then(res => {
@@ -166,14 +161,6 @@ export default {
         align-items: center
         .left
           display: flex
-          .avatar
-            width: 102px
-            height: 102px
-            overflow: hidden
-            border-radius: 50%
-            margin-right: 24px
-            img
-              width: 102px
           div
             .doctorName
               font-size: 30px
