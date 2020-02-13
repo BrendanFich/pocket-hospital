@@ -32,6 +32,14 @@
                 >
               </div>
               <div class="item">
+                <span class="key">时段</span>
+                <span class="value"
+                  >：{{ timeFormat(item.beginTime) }}-{{
+                timeFormat(item.endTime)
+              }}</span
+                >
+              </div>
+              <div class="item">
                 <span class="key">科室</span>
                 <span class="value">：{{ item.deptName }}</span>
               </div>
@@ -42,12 +50,7 @@
             </div>
           </div>
           <div class="right">
-            <span class="price">{{ item.regFee / 100 }}元</span>
-            <span class="orderTime"
-              >{{ timeFormat(item.beginTime) }}-{{
-                timeFormat(item.endTime)
-              }}</span
-            >
+            <span class="orange">{{ item.regFee / 100 }}元</span>
             <span
               :class="{
                 backRegist: item.backRegistInd === '1',
@@ -55,6 +58,7 @@
               }"
               >{{ status(item.backRegistInd, item.visit_status) }}</span
             >
+            <span class="orange" v-if="status(item.backRegistInd, item.visit_status) === '挂号'">等待支付</span>
           </div>
         </router-link>
       </div>
@@ -208,21 +212,19 @@ export default {
       display: flex
       flex-direction: column
       align-items: flex-end
+      justify-content: center
       span
         color: $color-white
         font-size: 24px
+        line-height: 30px
         padding: 3px 11px
+        margin: 5px 0
         border-radius: 5px
-      .price
+      .orange
         background: #f69343
-      .orderTime
-        margin-top: 10px
-        background: #5adba3
       .backRegist
-        margin-top: 10px
         background: #f69343
       .noBackRegist
-        margin-top: 10px
         background: #5adba3
 .mint-loadmore-bottom
   span
