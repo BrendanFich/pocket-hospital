@@ -7,8 +7,8 @@
             v-for="(item, index) in deptList"
             :key="index"
             class="deptItem"
-            :class="{active: item.deptCode === deptCode}"
             @click="deptCode = item.deptCode"
+            :class="{active: item.deptCode === deptCode}"
           >
             <div class="icon" :style="{ background: color[index % 5] }">
               {{ item.deptName.substring(0, 1) }}
@@ -41,17 +41,11 @@
             <div class="doctorInfo">
               <p class="doctorName">{{ doctor.doctorName }}</p>
               <p class="doctorTitle">
-                {{ doctor.doctorTitle }} {{ doctor.title }}
+                {{ doctor.deptName }} | {{ doctor.doctorTitle }}
               </p>
-              <div class="star">
-                <img v-for="n in doctor.star" :key="n" src="./img/starOn.png" />
-              </div>
+              <van-rate :value="Math.round(item.score / 2)" readonly />
               <p class="textIntro">
-                {{
-                  doctor.doctorIntrodution === null
-                    ? "暂无介绍"
-                    : doctor.doctorIntrodution
-                }}
+                {{ doctor.doctorIntrodution || "暂无介绍" }}
               </p>
             </div>
           </li>
@@ -150,7 +144,12 @@ export default {
           font-size: 20px
           color: $color-value-grey
       .active
-        background: #eee
+        margin-top: 4px
+        border-bottom: 4px solid $color-primary
+        .department
+          color: $color-black
+          font-weight: blod
+
   .title
     text-align: start
     font-size: 24px
@@ -161,13 +160,18 @@ export default {
     overflow-y: auto
     height: calc( 100vh - 248px )
   .doctorIntroCard
-    height: 195px
+    height: 160px
     padding: 30px 50px 40px 30px
     border-bottom: 1px solid $color-border
     display: flex
     .doctorInfo
+      line-height: 30px
       flex: 1
       text-align: start
+      display: -webkit-box
+      -webkit-box-orient: vertical
+      -webkit-line-clamp: 2
+      overflow: hidden
       .doctorName
         font-size: 30px
         color: $color-title-black
@@ -177,11 +181,9 @@ export default {
         font-size: 24px
         color: $color-title-black
         line-height: 34px
-      .star
-        padding: 5px 0 10px 0
-        img
-          width: 20px
       .textIntro
         font-size: 24px
-        color: $color-title-black
+        color: $color-word-grey
+>>>.van-icon-star,>>>.van-icon-star-o
+  font-size: 12px
 </style>

@@ -31,7 +31,7 @@
               <div>
                 <p class="doctorName">{{ item.doctorName }}</p>
                 <p class="doctorTitle">
-                  {{ item.deptName }} {{ item.doctorTitle }}
+                  {{ item.deptName }} | {{ item.doctorTitle }}
                 </p>
                 <van-rate :value="Math.round(item.score / 2)" readonly />
               </div>
@@ -152,7 +152,7 @@ export default {
       display: none
     .doctorIntroCard
       background: $color-white
-      height: 195px
+      height: 160px
       padding: 30px 50px 40px 30px
       border-bottom: 1px solid $color-border
       .baseInfo
@@ -191,6 +191,11 @@ export default {
         font-size: 24px
         color: $color-word-grey
         margin-left: 124px
+        line-height: 30px
+        display: -webkit-box
+        -webkit-box-orient: vertical
+        -webkit-line-clamp: 2
+        overflow: hidden
 >>>.van-icon.van-icon-search
   color: $color-primary
 >>>.van-search__action
@@ -198,5 +203,5 @@ export default {
 >>>.van-search__content
   background: $color-page-background
 >>>.van-icon-star,>>>.van-icon-star-o
-  font-size: 15px
+  font-size: 12px
 </style>
