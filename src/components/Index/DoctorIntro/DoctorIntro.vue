@@ -10,9 +10,10 @@
             @click="deptCode = item.deptCode"
             :class="{active: item.deptCode === deptCode}"
           >
-            <div class="icon" :style="{ background: color[index % 5] }">
-              {{ item.deptName.substring(0, 1) }}
-            </div>
+            <div
+              class="icon"
+              :style="{ background: color[index % 5] }"
+            >{{ item.deptName.substring(0, 1) }}</div>
             <div class="department">{{ item.deptName }}</div>
           </li>
         </ul>
@@ -21,32 +22,16 @@
     <div class="title">医生简介</div>
 
     <mt-tab-container v-model="selected" class="scollBox">
-      <mt-tab-container-item
-        v-for="(item, index) in deptList"
-        :key="index"
-        :id="index"
-      >
-        <img
-          class="noData"
-          v-if="docList.length === 0"
-          src="./img/noData.png"
-        />
+      <mt-tab-container-item v-for="(item, index) in deptList" :key="index" :id="index">
+        <img class="noData" v-if="docList.length === 0" src="./img/noData.png" />
         <ul style="background: #fff;">
-          <li
-            class="doctorIntroCard"
-            v-for="(doctor, dindex) in docList"
-            :key="dindex"
-          >
+          <li class="doctorIntroCard" v-for="(doctor, dindex) in docList" :key="dindex">
             <DocAvatar :name="doctor.doctorName" />
             <div class="doctorInfo">
               <p class="doctorName">{{ doctor.doctorName }}</p>
-              <p class="doctorTitle">
-                {{ doctor.deptName }} | {{ doctor.doctorTitle }}
-              </p>
+              <p class="doctorTitle">{{ doctor.deptName }} | {{ doctor.doctorTitle }}</p>
               <van-rate :value="Math.round(item.score / 2)" readonly />
-              <p class="textIntro">
-                {{ doctor.doctorIntrodution || "暂无介绍" }}
-              </p>
+              <p class="textIntro">{{ doctor.doctorIntrodution || "暂无介绍" }}</p>
             </div>
           </li>
         </ul>

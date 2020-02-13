@@ -1,13 +1,28 @@
 <template>
-  <div class="sDept">
+  <div class="iSDept">
     <div class="searchbar">
       <img class="cancelIcon" src="./img/search.png" alt />
-      <input type="text" v-model="value" placeholder="搜索科室名称" @focus="focus" />
-      <div class="xIcon" :class="{show: value}" @click="clear">×</div>
-      <button class="cancel" :class="{show : isShow}" @click="cancel">取消</button>
-      <div class="resultList" :class="{show : isShow}">
-        <div v-if="searchResult.length===0 && value !== ''" class="noInfo">无相关科室信息</div>
-        <div v-for="(item,index) in searchResult" :key="index" @click="select(item.deptCode, item.deptName)">
+      <input
+        type="text"
+        v-model="value"
+        placeholder="搜索科室名称"
+        @focus="focus"
+      />
+      <div class="xIcon" :class="{ show: value }" @click="clear">×</div>
+      <button class="cancel" :class="{ show: isShow }" @click="cancel">
+        取消
+      </button>
+      <div class="resultList" :class="{ show: isShow }">
+        <img
+          class="noData"
+          v-if="searchResult.length === 0 && value !== ''"
+          src="./img/noData.png"
+        />
+        <div
+          v-for="(item, index) in searchResult"
+          :key="index"
+          @click="select(item.deptCode, item.deptName)"
+        >
           <mt-cell :title="item.deptName">
             <img class="icon" src="./img/deptIcon.png" />&gt;
           </mt-cell>
@@ -15,30 +30,31 @@
       </div>
     </div>
 
-    <div class="content" :class="{hidden: isShow}">
-
+    <div class="content" :class="{ hidden: isShow }">
       <mt-navbar v-model="selected" class="left_navbar">
-        <mt-tab-item id='0'>全院科室</mt-tab-item>
+        <mt-tab-item id="0">全院科室</mt-tab-item>
       </mt-navbar>
 
       <mt-tab-container v-model="selected" class="right_container">
         <mt-tab-container-item id="0">
-          <div v-for="(item,index) in deptList" :key="index" @click="select(item.deptCode, item.deptName)">
+          <div
+            v-for="(item, index) in deptList"
+            :key="index"
+            @click="select(item.deptCode, item.deptName)"
+          >
             <mt-cell :title="item.deptName">
               <img class="icon" src="./img/deptIcon.png" />&gt;
             </mt-cell>
           </div>
         </mt-tab-container-item>
       </mt-tab-container>
-
     </div>
   </div>
 </template>
 
 <script>
-import util from '@/assets/js/util'
 export default {
-  name: 'sDept',
+  name: 'iSDept',
   data () {
     return {
       value: '',
@@ -49,20 +65,29 @@ export default {
   },
   computed: {
     searchResult () {
-      if (this.value === '') {
-        return []
+      const pingYinMatch = require('pinyin-match')
+      if (this.value) {
+        let result = []
+        this.deptList.forEach(element => {
+          let m = pingYinMatch.match(element.deptName, this.value)
+          if (m) {
+            result.push(element)
+          }
+        })
+        return result
       } else {
-        return this.deptList.filter((item) => { return item.deptName.indexOf(this.value) !== -1 })
+        return []
       }
     }
   },
   created () {
-    util.http.post('/api/doctor/allDeptInfo').then(res => {
-      this.deptList = res.data.Records
-      console.log(res.data)
-    }).catch((error) => {
-      console.log(error)
-    })
+    this.$post('/api/doctor/allDeptInfo')
+      .then(res => {
+        this.deptList = res.data
+      })
+      .catch(error => {
+        console.log(error)
+      })
   },
   methods: {
     focus () {
@@ -76,7 +101,10 @@ export default {
       this.value = ''
     },
     select (deptCode, deptName) {
-      this.$router.push({path: '/iHospital/selectDoc/173&内科门诊'})
+      // this.$store.commit('updateArea', '全院')
+      // this.$store.commit('updateDeptCode', deptCode)
+      // this.$store.commit('updateDeptName', deptName)
+      // this.$router.push('/reserve/sDayDoc')
     }
   }
 }
@@ -85,7 +113,7 @@ export default {
 <style lang="sass" scoped>
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
-.sDept
+.iSDept
   @include page($color-page-background)
   .searchbar
     width: 750px
@@ -122,7 +150,7 @@ export default {
       /deep/ .mint-cell-wrapper
         height: 80px
         padding: 0 25px
-        border-bottom: 1px solid $color-border
+        border-bottom: 1px solid #e3e3e3
         .mint-cell-text
           padding-left: 50px
           font-size: 26px
@@ -150,7 +178,7 @@ export default {
       top: 50px
       right: 130px
       font-size: 25px
-      background: $color-xIcon-grey
+      background: #f6f6f6
       border-radius: 50%
       width: 30px
       height: 25px
@@ -159,10 +187,11 @@ export default {
       color: $color-title-black
     .show
       display: block
-    .noInfo
-      padding: 20px
+    .noData
+      width: 366px
+      margin: 100px 200px
   .content
-    min-height: calc(100vh - 128px)
+    height: calc(100vh - 128px)
     width: 100%
     display: flex
     justify-content: center
@@ -171,13 +200,13 @@ export default {
       flex-direction: column
       width: 161px
       flex-wrap: wrap
-      background: $color-page-background
+      background: #f2f2f2
       .mint-tab-item
         width: 161px
         height: 80px
         flex: none
         padding: 0
-        color: #666666
+        color: $color-value-grey
         /deep/ .mint-tab-item-label
           font-size: 26px
           line-height: 80px
@@ -189,13 +218,14 @@ export default {
     .right_container
       width: 589px
       background: $color-white
+      overflow-y: scroll
       .noData
         width: 366px
         margin-top: 50px
       /deep/ .mint-cell-wrapper
         height: 80px
         padding: 0 25px
-        border-bottom: 1px solid $color-border
+        border-bottom: 1px solid #e3e3e3
         .mint-cell-text
           padding-left: 50px
           font-size: 26px

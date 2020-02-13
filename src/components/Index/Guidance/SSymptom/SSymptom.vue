@@ -8,17 +8,11 @@
           v-for="(tag, index) in searchTags"
           :key="index"
           @click="search(tag.describe)"
-          >{{ tag.describe }}</span
-        >
+        >{{ tag.describe }}</span>
       </div>
     </div>
     <div class="list-content" id="list-content">
-      <van-list
-        v-model="loading"
-        :finished="finished"
-        @load="onLoad"
-        :offset="10"
-      >
+      <van-list v-model="loading" :finished="finished" @load="onLoad" :offset="10">
         <div
           class="doctorIntroCard"
           v-for="(item, index) in docList"
@@ -30,9 +24,7 @@
               <DocAvatar :name="item.doctorName" />
               <div>
                 <p class="doctorName">{{ item.doctorName }}</p>
-                <p class="doctorTitle">
-                  {{ item.deptName }} | {{ item.doctorTitle }}
-                </p>
+                <p class="doctorTitle">{{ item.deptName }} | {{ item.doctorTitle }}</p>
                 <van-rate :value="Math.round(item.score / 2)" readonly />
               </div>
             </div>
@@ -92,7 +84,11 @@ export default {
       this.getDocList()
     },
     getDocList () {
-      this.$post('/api/doctor/intelligent_guidance', { describe: '', page: this.page, size: 10 })
+      this.$post('/api/doctor/intelligent_guidance', {
+        describe: '',
+        page: this.page,
+        size: 10
+      })
         .then(res => {
           this.docList = [...this.docList, ...res.data]
           if (res.page.count === 0) {
@@ -115,7 +111,7 @@ export default {
       this.$router.push({ name: 'gSTime' })
     },
     search (tagName) {
-      this.$router.push({ name: 'docSearchPage', params: {tagName} })
+      this.$router.push({ name: 'docSearchPage', params: { tagName } })
     }
   }
 }

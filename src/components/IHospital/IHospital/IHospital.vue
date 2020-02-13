@@ -2,18 +2,18 @@
   <div class="iHospital">
     <img src="./img/ihospitalBg.png" alt />
     <div class="btns">
-      <router-link to="/iHospital/iSDept">
+      <div @click="linkTo('/iHospital/iSDept')">
         <img src="./img/ask.png" />
         <p>在线问诊</p>
-      </router-link>
-      <router-link to="/iHospital/review">
+      </div>
+      <div @click="linkTo('')">
         <img src="./img/review.png" />
         <p>在线复诊</p>
-      </router-link>
-      <router-link to="/iHospital">
+      </div>
+      <div @click="linkTo('')">
         <img src="./img/delivery.png" />
         <p>药物配送</p>
-      </router-link>
+      </div>
     </div>
     <Tabbar></Tabbar>
   </div>
@@ -25,6 +25,15 @@ export default {
   components: { Tabbar },
   data () {
     return {}
+  },
+  methods: {
+    linkTo (path) {
+      if (path) {
+        this.$router.push(path)
+      } else {
+        this.$toast.fail('尚未开发')
+      }
+    }
   }
 }
 </script>
