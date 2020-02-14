@@ -57,7 +57,6 @@
               }"
               >{{ item.visit_status }}</span
             >
-            <!-- <span class="orange" v-if="status(item.backRegistInd, item.visit_status) === '挂号'">等待支付</span> -->
           </div>
         </router-link>
       </div>
