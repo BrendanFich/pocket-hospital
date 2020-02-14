@@ -53,12 +53,11 @@
             <span class="orange">{{ item.regFee / 100 }}元</span>
             <span
               :class="{
-                backRegist: item.backRegistInd === '1',
-                noBackRegist: item.backRegistInd === '0'
+                green: item.visit_status === '挂号'
               }"
-              >{{ status(item.backRegistInd, item.visit_status) }}</span
+              >{{ item.visit_status }}</span
             >
-            <span class="orange" v-if="status(item.backRegistInd, item.visit_status) === '挂号'">等待支付</span>
+            <!-- <span class="orange" v-if="status(item.backRegistInd, item.visit_status) === '挂号'">等待支付</span> -->
           </div>
         </router-link>
       </div>
@@ -220,11 +219,10 @@ export default {
         padding: 3px 11px
         margin: 5px 0
         border-radius: 5px
+        background: #f69343
       .orange
         background: #f69343
-      .backRegist
-        background: #f69343
-      .noBackRegist
+      .green
         background: #5adba3
 .mint-loadmore-bottom
   span
