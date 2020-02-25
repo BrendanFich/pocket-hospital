@@ -1,5 +1,5 @@
 <template>
-  <div class="reserve">
+  <div class="reserve" v-if="isBinded">
     <keep-alive :include="include">
       <!-- 需要缓存的视图组件 -->
       <router-view v-if="$route.meta.keepAlive"> </router-view>
@@ -12,7 +12,8 @@ export default {
   name: 'reserve',
   data () {
     return {
-      include: ['sDept']
+      include: ['sDept'],
+      isBinded: false
     }
   },
   created () {
@@ -20,31 +21,16 @@ export default {
       .then(res => {
         if (res.data.info.visitName === '') {
           this.bindCardNotice()
+        } else {
+          this.isBinded = true
         }
       })
       .catch(error => {
         console.log(error)
       })
   },
-  beforeDestroy () {
-    this.$messagebox.close(false)
-  },
   methods: {
     bindCardNotice () {
-      // let text = `
-      // <div>
-      //   <p style="text-align: center">请先建档绑卡</p>
-      // </div>
-      // `
-      // this.$messagebox
-      //   .confirm(text)
-      //   .then(action => {
-      //     this.$router.replace('/mine/cardManage/bindCard')
-      //   })
-      //   .catch(err => {
-      //     console.log(err)
-      //     this.$router.push('/index')
-      //   })
       this.$dialog.confirm({
         title: '提示',
         message: '请先建档绑卡'

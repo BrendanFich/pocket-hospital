@@ -55,6 +55,7 @@ moment.locale('zh-cn')
 
 Vue.config.productionTip = false
 router.beforeEach((to, from, next) => {
+  Dialog.close()
   store.state._axiosPromiseCancel.forEach(e => {
     e && e()
   })
