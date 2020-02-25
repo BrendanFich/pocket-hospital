@@ -4,6 +4,7 @@ import store from '@/vuex/store'
 import { apiBaseUrl, authUrl } from './config'
 import { Toast } from 'vant'
 let http = {}
+let useApiBaseUrl = process.env.NODE_ENV === 'production' ? apiBaseUrl : 'http://wx.gdqlyt.com.cn'
 const CancelToken = axios.CancelToken
 http.ajax = axios.create()
 
@@ -40,7 +41,7 @@ http.ajax.interceptors.response.use(
       } else {
         Toast({
           message: 'token过期',
-          duration: 1000,
+          duration: 1500,
           className: 'toast'
         })
       }
@@ -84,7 +85,7 @@ http.ajax.interceptors.response.use(
 http.post = (url, data) => {
   return new Promise((resolve, reject) => {
     http.ajax
-      .post(apiBaseUrl + url, data)
+      .post(useApiBaseUrl + url, data)
       .then(res => {
         if (res.status === 200) {
           resolve(res.data)

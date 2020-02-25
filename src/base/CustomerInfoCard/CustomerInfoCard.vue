@@ -16,7 +16,7 @@
         </div>
       </div>
       <router-link to="/mine/cardManage">
-        <span class="changeCard">切换就诊卡></span>
+        <span class="changeCard">就诊卡管理></span>
       </router-link>
     </div>
 
