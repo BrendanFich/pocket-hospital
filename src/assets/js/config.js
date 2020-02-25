@@ -1,5 +1,5 @@
-export const apiBaseUrl = 'http://' + window.location.host
-export const authUrl = 'http://' + window.location.host + '/api/user/wx_authorize'
+export const apiBaseUrl = process.env.NODE_ENV === 'production' ? 'http://' + window.location.host : 'http://wx.gdqlyt.com.cn'
+export const authUrl = process.env.NODE_ENV === 'production' ? 'http://' + window.location.host + '/api/user/wx_authorize' : 'http://wx.gdqlyt.com.cn/api/user/wx_authorize'
 
 export const latitude = 23.090656
 export const longitude = 113.1795

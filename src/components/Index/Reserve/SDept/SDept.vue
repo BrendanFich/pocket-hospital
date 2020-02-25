@@ -83,7 +83,7 @@ export default {
   created () {
     this.$post('/api/doctor/allDeptInfo')
       .then(res => {
-        this.deptList = res.data
+        this.deptList = res
       })
       .catch(error => {
         console.log(error)
