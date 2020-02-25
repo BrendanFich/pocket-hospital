@@ -44,7 +44,7 @@ Vue.use(Button)
 Vue.use(Toast)
 
 Toast.setDefaultOptions('loading', { forbidClick: true, message: '', loadingType: 'spinner', duration: 0 })
-Toast.setDefaultOptions('fail', { forbidClick: true, duration: 2500 })
+Toast.setDefaultOptions('fail', { forbidClick: true, duration: 1000 })
 Toast.setDefaultOptions('success', { forbidClick: true, duration: 1500 })
 Vue.prototype.$toast = Toast
 Vue.prototype.$dialog = Dialog

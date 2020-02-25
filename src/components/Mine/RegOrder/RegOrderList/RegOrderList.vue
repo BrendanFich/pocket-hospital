@@ -104,7 +104,7 @@ export default {
       })
         .then(res => {
           this.orderList = [...this.orderList, ...res.data]
-          if (res.data.length === 0) {
+          if (this.orderList.length === 0) {
             this.isShowNoData = true
           }
           this.loading = false
