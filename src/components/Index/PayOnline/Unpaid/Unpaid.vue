@@ -51,7 +51,7 @@ export default {
   data () {
     return {
       unpaidList: [],
-      page: 0,
+      page: 1,
       loading: false,
       finished: false,
       isLoading: false,
@@ -101,7 +101,7 @@ export default {
       })
         .then(res => {
           this.unpaidList = [...this.unpaidList, ...res.data]
-          if (res.data.length === 0) {
+          if (this.unpaidList.length === 0) {
             this.isShowNoData = true
           }
           this.loading = false

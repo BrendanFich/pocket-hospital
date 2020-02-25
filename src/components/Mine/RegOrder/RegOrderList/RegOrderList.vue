@@ -71,7 +71,7 @@ export default {
   data () {
     return {
       orderList: [],
-      page: 0,
+      page: 1,
       loading: false,
       finished: false,
       isLoading: false,
