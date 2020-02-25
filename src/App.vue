@@ -137,28 +137,27 @@ export default {
 }
 </script>
 
-<style lang="scss">
-#app {
-  font-family: "Microsoft YaHei", "Avenir", Helvetica, Arial, sans-serif;
-  width: 750px;
-}
-.icons-warp {
-  border-radius: 50px;
-  .float-icon-item {
-    border-radius: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    width: 100px;
-    height: 100px;
-    border: none;
-  }
-}
-body {
-  .van-toast {
-    padding: 10px 15px;
-    border-radius: 10px;
-  }
-}
+<style lang="sass">
+@import '~assets/sass/variable'
+@import '~assets/sass/mixin'
+#app
+  font-family: "Microsoft YaHei", "Avenir", Helvetica, Arial, sans-serif
+  width: 750px
+.icons-warp
+  border-radius: 50px
+  .float-icon-item
+    border-radius: 50px
+    display: flex
+    align-items: center
+    justify-content: center
+    position: relative
+    width: 100px
+    height: 100px
+    border: none
+body
+  .van-toast
+    padding: 10px 15px
+    border-radius: 10px
+  .van-dialog__confirm .van-button__text
+    color: $color-primary
 </style>

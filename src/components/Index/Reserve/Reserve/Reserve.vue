@@ -31,20 +31,28 @@ export default {
   },
   methods: {
     bindCardNotice () {
-      let text = `
-      <div>
-        <p style="text-align: center">请先建档绑卡</p>
-      </div>
-      `
-      this.$messagebox
-        .confirm(text)
-        .then(action => {
-          this.$router.replace('/mine/cardManage/bindCard')
-        })
-        .catch(err => {
-          console.log(err)
-          this.$router.push('/index')
-        })
+      // let text = `
+      // <div>
+      //   <p style="text-align: center">请先建档绑卡</p>
+      // </div>
+      // `
+      // this.$messagebox
+      //   .confirm(text)
+      //   .then(action => {
+      //     this.$router.replace('/mine/cardManage/bindCard')
+      //   })
+      //   .catch(err => {
+      //     console.log(err)
+      //     this.$router.push('/index')
+      //   })
+      this.$dialog.confirm({
+        title: '提示',
+        message: '请先建档绑卡'
+      }).then(() => {
+        this.$router.replace('/mine/cardManage/bindCard')
+      }).catch(() => {
+        this.$router.push('/index')
+      })
     }
   },
   watch: {
