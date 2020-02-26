@@ -51,7 +51,7 @@ export default {
   data () {
     return {
       unpaidList: [],
-      page: 1,
+      page: 0,
       loading: false,
       finished: false,
       isLoading: false,

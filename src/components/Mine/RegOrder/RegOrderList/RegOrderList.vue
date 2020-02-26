@@ -71,7 +71,7 @@ export default {
   data () {
     return {
       orderList: [],
-      page: 1,
+      page: 0,
       loading: false,
       finished: false,
       isLoading: false,
@@ -88,9 +88,6 @@ export default {
       }
     }
   },
-  created () {
-    this.getOrderList()
-  },
   mounted () {
     let winHeight = document.documentElement.clientHeight
     document.getElementById('list-content').style.height = winHeight + 'px'
@@ -104,6 +101,7 @@ export default {
       })
         .then(res => {
           this.orderList = [...this.orderList, ...res.data]
+          console.log('TCL: getOrderList -> this.orderLis', this.orderList)
           if (this.orderList.length === 0) {
             this.isShowNoData = true
           }
