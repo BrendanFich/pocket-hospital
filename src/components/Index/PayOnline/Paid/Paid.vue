@@ -247,9 +247,6 @@ export default {
         clear: both
         color: $color-value-grey
         font-size: 24px
-.noData
-  width: 366px
-  margin: 100px 200px
 .mint-loadmore-bottom
   span
     display: inline-block

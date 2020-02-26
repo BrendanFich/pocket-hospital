@@ -88,7 +88,4 @@ export default {
     display: flex
     justify-content: flex-start
     align-items: center
-  .noData
-    width: 366px
-    margin: 100px 0 0 200px
 </style>

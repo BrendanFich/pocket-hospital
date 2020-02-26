@@ -104,7 +104,4 @@ export default {
       .date
         color: $color-word-grey
         font-size: 24px
-  .noData
-        width: 366px
-        margin: 100px 200px
 </style>

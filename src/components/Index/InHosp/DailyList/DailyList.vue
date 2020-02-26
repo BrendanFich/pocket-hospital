@@ -144,9 +144,6 @@ export default {
       .date
         color: $color-word-grey
         font-size: 24px
-  .noData
-        width: 366px
-        margin: 100px 200px
   .btn
     margin: 0 12.5px
     margin-top: 50px

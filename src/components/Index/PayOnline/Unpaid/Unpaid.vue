@@ -205,9 +205,6 @@ export default {
         background: $color-primary
       .orange
         background: #f69343
-.noData
-  width: 366px
-  margin: 100px 200px
 .mint-loadmore-bottom
   span
     display: inline-block

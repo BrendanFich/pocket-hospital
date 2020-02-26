@@ -187,9 +187,6 @@ export default {
       color: $color-title-black
     .show
       display: block
-    .noData
-      width: 366px
-      margin: 100px 200px
   .content
     height: calc(100vh - 128px)
     width: 100%
@@ -219,9 +216,6 @@ export default {
       width: 589px
       background: $color-white
       overflow-y: scroll
-      .noData
-        width: 366px
-        margin-top: 50px
       /deep/ .mint-cell-wrapper
         height: 80px
         padding: 0 25px

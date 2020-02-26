@@ -165,9 +165,6 @@ export default {
             @include font(30px, 600, $color-title-black)
       .right
         @include font(30px, 400, $color-primary)
-  .noData
-    width: 366px
-    margin: 100px 0 0 200px
 >>>.van-icon.van-icon-search
   color: $color-primary
 >>>.van-search__action

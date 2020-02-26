@@ -160,4 +160,7 @@ body
     border-radius: 10px
   .van-dialog__confirm .van-button__text
     color: $color-primary
+  .noData
+    width: 366px
+    margin: 100px 0  0 200px
 </style>

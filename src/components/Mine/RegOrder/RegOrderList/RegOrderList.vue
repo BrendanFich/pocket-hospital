@@ -165,10 +165,6 @@ export default {
   -webkit-overflow-scrolling : touch // 解决view滑动速度慢或者卡顿问题
   &::-webkit-scrollbar
     display: none
-  .noData
-    width: 366px
-    margin-top: 50px
-    margin-left: 200px
   .paidTime
     color: $color-word-grey
     font-size: 24px

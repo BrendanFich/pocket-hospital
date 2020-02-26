@@ -71,7 +71,4 @@ export default {
         color: #fff
         border-radius: 10px
         font-size: 23px
-  .noData
-    width: 366px
-    margin: 100px 200px
 </style>

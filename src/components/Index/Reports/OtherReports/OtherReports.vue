@@ -18,9 +18,6 @@ export default {
 @import '~assets/sass/mixin'
 .otherReports
   @include page($color-page-background)
-  .noData
-    width: 366px
-    margin: 100px 200px
   .cell
     border-bottom: 1px solid $color-border
     .content

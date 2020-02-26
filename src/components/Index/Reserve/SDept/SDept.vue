@@ -187,9 +187,6 @@ export default {
       color: $color-title-black
     .show
       display: block
-    .noData
-      width: 366px
-      margin: 100px 200px
   .content
     height: calc(100vh - 128px)
     width: 100%

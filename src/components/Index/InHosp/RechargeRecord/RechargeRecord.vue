@@ -105,7 +105,4 @@ export default {
       .orderTime
         margin-top: 10px
         background: #5adba3
-  .noData
-    width: 366px
-    margin: 100px 200px
 </style>

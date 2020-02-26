@@ -107,7 +107,4 @@ export default {
       width: 200px
     .unit
       flex: 1
-.noData
-  width: 366px
-  margin: 100px 200px
 </style>

@@ -140,9 +140,6 @@ export default {
       display: flex
       justify-content: flex-start
       align-items: center
-    .noData
-      width: 366px
-      margin: 100px 0 0 200px
 >>>.van-icon.van-icon-search
   color: $color-primary
 >>>.van-search__action
