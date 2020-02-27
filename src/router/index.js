@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 // Index
-
+// import Index from '@/components/Index/Index/Index'
 import SDept from '@/components/Index/Reserve/SDept/SDept'
 import SDayDoc from '@/components/Index/Reserve/SDayDoc/SDayDoc'
 import STime from '@/components/Index/Reserve/STime/STime'
@@ -46,7 +46,6 @@ import ServerIndex from '@/components/Index/ServerSearch/ServerIndex/ServerIndex
 import ServerSearchPage from '@/components/Index/ServerSearch/ServerSearchPage/ServerSearchPage'
 
 // iHospital
-import IHospital from '@/components/IHospital/IHospital/IHospital'
 import Review from '@/components/IHospital/Review/Review'
 import SelectDoc from '@/components/IHospital/SelectDoc/SelectDoc'
 import ISDept from '@/components/IHospital/ISDept/ISDept'
@@ -55,16 +54,24 @@ import Inquiry from '@/components/IHospital/Inquiry/Inquiry'
 import Evaluate from '@/components/IHospital/Evaluate/Evaluate'
 
 // mine
-import Mine from '@/components/Mine/Mine/Mine'
 import OutOrderInfo from '@/components/Mine/OutOrderInfo/OutOrderInfo'
 import LiveHosOrder from '@/components/Mine/LiveHosOrder/LiveHosOrder'
-import RegOrderList from '@/components/Mine/RegOrder/RegOrderList/RegOrderList'
 import RegOrderItem from '@/components/Mine/RegOrder/RegOrderItem/RegOrderItem'
 import CardManage from '@/components/Mine/CardManage/CardManage/CardManage'
 import BindCard from '@/components/Mine/CardManage/BindCard/BindCard'
 import CardInfo from '@/components/Mine/CardManage/CardInfo/CardInfo'
 
 Vue.use(Router)
+const Index = () => import(/* webpackChunkName: "indexchunk" */ '@/components/Index/Index/Index')
+const Reserve = () => import('@/components/Index/Reserve/Reserve/Reserve')
+const PayOnline = () => import('@/components/Index/PayOnline/PayOnline')
+const Container = () => import('@/base/Container/Container')
+const CheckIn = () => import('@/components/Index/CheckIn/CheckIn/CheckIn')
+const InHosp = () => import('@/components/Index/InHosp/InHosp/InHosp')
+const Mine = () => import('@/components/Mine/Mine/Mine')
+const IHospital = () => import('@/components/IHospital/IHospital/IHospital')
+const HospitalInfo = () => import('@/components/Index/HospitalInfo/HospitalInfo')
+const DoctorIntro = () => import('@/components/Index/DoctorIntro/DoctorIntro')
 
 export default new Router({
   // mode: 'history',
@@ -73,12 +80,12 @@ export default new Router({
     {
       path: '/index',
       name: 'index',
-      component: resolve => require(['@/components/Index/Index/Index'], resolve),
+      component: Index,
       meta: { deepth: 0.5 } },
     {
       path: '/reserve',
       redirect: '/reserve/sDept',
-      component: resolve => require(['@/components/Index/Reserve/Reserve/Reserve'], resolve),
+      component: Reserve,
       children: [
         { path: 'sDept', name: 'sDept', component: SDept, meta: { deepth: 1, keepAlive: true } },
         { path: 'sDayDoc', name: 'sDayDoc', component: SDayDoc, meta: { deepth: 2, keepAlive: true } },
@@ -89,7 +96,7 @@ export default new Router({
     {
       path: '/payOnline',
       redirect: '/payOnline/unpaid',
-      component: resolve => require(['@/components/Index/PayOnline/PayOnline'], resolve),
+      component: PayOnline,
       children: [
         { path: 'unpaid', name: 'unpaid', component: Unpaid },
         { path: 'paid', name: 'paid', component: Paid }
@@ -98,7 +105,7 @@ export default new Router({
     {
       path: '/outpatientPay',
       redirect: '/outpatientPay/unpayList',
-      component: resolve => require(['@/base/Container/Container'], resolve),
+      component: Container,
       children: [
         { path: 'unpayList', name: 'unpayList', component: UnpayList },
         { path: 'unpayItem/:patCardNo&:hisOrdNum', name: 'unpayItem', component: UnpayItem },
@@ -108,7 +115,7 @@ export default new Router({
     {
       path: '/guidance',
       redirect: '/guidance/sSymptom',
-      component: resolve => require(['@/base/Container/Container'], resolve),
+      component: Container,
       children: [
         { path: 'sSymptom', name: 'sSymptom', component: SSymptom },
         { path: 'gSTime', name: 'gSTime', component: GSTime },
@@ -118,7 +125,7 @@ export default new Router({
     {
       path: '/checkIn',
       redirect: '/checkIn/cConfirm',
-      component: resolve => require(['@/components/Index/CheckIn/CheckIn/CheckIn'], resolve),
+      component: CheckIn,
       children: [
         { path: 'cConfirm', name: 'cConfirm', component: CConfirm },
         { path: 'cQueue/:hisOrdNum', name: 'cQueue', component: CQueue }
@@ -127,7 +134,7 @@ export default new Router({
     {
       path: '/inHosp',
       redirect: '/inHosp/nav',
-      component: resolve => require(['@/components/Index/InHosp/InHosp/InHosp'], resolve),
+      component: InHosp,
       children: [
         { path: 'nav', name: 'nav', component: Nav },
         { path: 'inHospReg1', name: 'inHospReg1', component: InHospReg1 },
@@ -142,8 +149,8 @@ export default new Router({
         { path: 'rechargeRecord', name: 'rechargeRecord', component: RechargeRecord }
       ]
     },
-    { path: '/hospitalInfo', name: 'hospitalInfo', component: resolve => require(['@/components/Index/HospitalInfo/HospitalInfo'], resolve) },
-    { path: '/doctorIntro', name: 'doctorIntro', component: resolve => require(['@/components/Index/DoctorIntro/DoctorIntro'], resolve) },
+    { path: '/hospitalInfo', name: 'hospitalInfo', component: HospitalInfo },
+    { path: '/doctorIntro', name: 'doctorIntro', component: DoctorIntro },
     {
       path: '/reports',
       redirect: '/reports/reportsKind',
@@ -158,7 +165,7 @@ export default new Router({
     {
       path: '/drugSearch',
       redirect: '/drugSearch/drugIndex',
-      component: resolve => require(['@/base/Container/Container'], resolve),
+      component: Container,
       children: [
         { path: 'drugIndex', name: 'drugIndex', component: DrugIndex },
         { path: 'drugSearchPage', name: 'drugSearchPage', component: DrugSearchPage }
@@ -167,7 +174,7 @@ export default new Router({
     {
       path: '/serverSearch',
       redirect: '/serverSearch/serverIndex',
-      component: resolve => require(['@/base/Container/Container'], resolve),
+      component: Container,
       children: [
         { path: 'serverIndex', name: 'serverIndex', component: ServerIndex },
         { path: 'serverSearchPage', name: 'serverSearchPage', component: ServerSearchPage }
@@ -177,7 +184,7 @@ export default new Router({
     { path: '/suggestion', name: 'suggestion', component: resolve => require(['@/components/Index/Suggestion/Suggestion'], resolve) },
     {
       path: '/iHospital',
-      component: resolve => require(['@/base/Container/Container'], resolve),
+      component: Container,
       children: [
         { path: '', component: IHospital },
         { path: 'iSDept', name: 'iSDept', component: ISDept },
@@ -190,12 +197,12 @@ export default new Router({
     },
     {
       path: '/mine',
-      component: resolve => require(['@/base/Container/Container'], resolve),
+      component: Container,
       children: [
         { path: '', name: 'mine', component: Mine },
         {
           path: 'cardManage',
-          component: resolve => require(['@/base/Container/Container'], resolve),
+          component: Container,
           children: [
             { path: '', name: 'cardManage', component: CardManage },
             { path: 'bindCard', name: 'bindCard', component: BindCard },
@@ -205,9 +212,9 @@ export default new Router({
         { path: 'liveHosOrder', name: 'liveHosOrder', component: LiveHosOrder },
         {
           path: 'regOrder',
-          component: resolve => require(['@/base/Container/Container'], resolve),
+          component: Container,
           children: [
-            { path: '', name: 'regOrderList', component: RegOrderList },
+            { path: '', name: 'regOrderList', component: resolve => require(['@/components/Mine/RegOrder/RegOrderList/RegOrderList'], resolve) },
             { path: 'regOrderItem/:hisOrdNum&:ledgerSn', name: 'regOrderItem', component: RegOrderItem }
           ]
         },

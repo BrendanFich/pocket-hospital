@@ -61,7 +61,6 @@
 </template>
 
 <script>
-import CustomerInfoCard from '@/base/CustomerInfoCard/CustomerInfoCard'
 import Tabbar from '@/base/Tabbar/Tabbar'
 
 export default {
@@ -72,7 +71,7 @@ export default {
   },
   created () {
   },
-  components: { CustomerInfoCard, Tabbar },
+  components: { CustomerInfoCard: () => import('@/base/CustomerInfoCard/CustomerInfoCard'), Tabbar },
   methods: {
     linkTo (url) {
       this.$router.push(url)

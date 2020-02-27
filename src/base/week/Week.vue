@@ -15,7 +15,8 @@
 </template>
 
 <script>
-import moment from 'moment'
+import dayjs from 'dayjs'
+
 export default {
   props: {},
   data () {
@@ -25,28 +26,48 @@ export default {
     }
   },
   computed: {},
-  mounted () {
-  },
+  mounted () {},
   created () {
     for (let i = 0; i < 7; i++) {
       let dateItem = [
-        moment()
-          .add(i, 'days')
-          .format('dd'),
-        moment()
+        this.getDay(i),
+        dayjs()
+          .locale('zh-cn')
           .add(i, 'days')
           .format('DD'),
-        moment()
+        dayjs()
+          .locale('zh-cn')
           .add(i, 'days')
           .format('YYYY-MM-DD')
       ]
       this.dateList.push(dateItem)
     }
-    this.selectedDate = moment().format('YYYY-MM-DD')
+    this.selectedDate = dayjs().format('YYYY-MM-DD')
   },
   methods: {
     select (dateItem) {
       this.selectedDate = dateItem[2]
+    },
+    getDay (i) {
+      let temp = dayjs()
+        .add(i, 'days')
+        .day()
+      switch (temp) {
+        case 1:
+          return '一'
+        case 2:
+          return '二'
+        case 3:
+          return '三'
+        case 4:
+          return '四'
+        case 5:
+          return '五'
+        case 6:
+          return '六'
+        case 0:
+          return '日'
+      }
     }
   },
   watch: {

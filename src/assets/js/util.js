@@ -1,5 +1,4 @@
 import axios from 'axios'
-import moment from 'moment'
 import store from '@/vuex/store'
 import { apiBaseUrl, authUrl } from './config'
 import { Toast } from 'vant'
@@ -97,21 +96,6 @@ http.post = (url, data) => {
       })
   })
 }
-// 时间比较
-const compareTime = pro => {
-  return (obj1, obj2) => {
-    let val1 = moment(obj1[pro], 'YYYY-MM-DD HH:mm:ss').valueOf()
-    let val2 = moment(obj2[pro], 'YYYY-MM-DD HH:mm:ss').valueOf()
-    if (val1 < val2) {
-      return 1
-    } else if (val1 > val2) {
-      return -1
-    } else {
-      return 0
-    }
-  }
-}
 export default {
-  http,
-  compareTime
+  http
 }

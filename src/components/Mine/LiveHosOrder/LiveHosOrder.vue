@@ -69,7 +69,6 @@
 </template>
 
 <script>
-import util from '@/assets/js/util'
 import wx from 'weixin-js-sdk'
 
 export default {
@@ -87,20 +86,18 @@ export default {
   },
   methods: {
     getUnpaidList () {
-      util.http
-        .post('/api/invisit/getVisitPayInfo')
+      this.$post('/api/invisit/getVisitPayInfo')
         .then(res => {
-          this.unpaid = res.data.Records.sort(util.compareTime('paymentDate'))
+          this.unpaid = res.data.Records
         })
         .catch(error => {
           console.log(error)
         })
     },
     getPaidList () {
-      util.http
-        .post('/api/invisit/payInfoList')
+      this.$post('/api/invisit/payInfoList')
         .then(res => {
-          this.paid = res.data.Records.sort(util.compareTime('paymentDate'))
+          this.paid = res.data.Records
         })
         .catch(error => {
           console.log(error)
@@ -108,8 +105,7 @@ export default {
     },
     pay (ledgerSn) {
       this.$messagebox.confirm('请确认支付').then(action => {
-        util.http
-          .post('/api/doctor/payComfirm', {ledgerSn})
+        this.$post('/api/doctor/payComfirm', {ledgerSn})
           .then(res => {
             this.wxPay(res.data.Records)
           })

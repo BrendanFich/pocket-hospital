@@ -16,10 +16,9 @@
 </template>
 
 <script>
-import CustomerInfoCard from '@/base/CustomerInfoCard/CustomerInfoCard'
 import util from '@/assets/js/util'
 export default {
-  components: { CustomerInfoCard },
+  components: { CustomerInfoCard: () => import('@/base/CustomerInfoCard/CustomerInfoCard') },
   data () {
     return {
       totalFee: null,

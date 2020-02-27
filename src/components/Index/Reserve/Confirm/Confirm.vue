@@ -34,11 +34,10 @@
 </template>
 
 <script>
-import CustomerInfoCard from '@/base/CustomerInfoCard/CustomerInfoCard'
 import wx from 'weixin-js-sdk'
 export default {
   name: 'confirm',
-  components: { CustomerInfoCard },
+  components: { CustomerInfoCard: () => import('@/base/CustomerInfoCard/CustomerInfoCard') },
   data () {
     return {
       patCardNo: '',

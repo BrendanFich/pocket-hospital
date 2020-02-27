@@ -30,7 +30,6 @@
 </template>
 
 <script>
-import util from '@/assets/js/util'
 export default {
   components: {},
   data () {
@@ -42,10 +41,9 @@ export default {
   watch: {},
   methods: {
     getRechargeRecord () {
-      util.http
-        .post('/api/invisit/findRecharge')
+      this.$post('/api/invisit/findRecharge')
         .then(res => {
-          this.recordList = res.data.Records.sort(util.compareTime('paymentDate'))
+          this.recordList = res.data.Records
         })
         .catch(error => {
           console.log(error)

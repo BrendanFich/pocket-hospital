@@ -20,14 +20,14 @@
 </template>
 
 <script>
-import moment from 'moment'
+import dayjs from 'dayjs'
 export default {
   name: 'inquiry',
   components: {},
   data () {
     return {
       msg: '',
-      time: moment().format('YYYY-MM-DD HH:mm'),
+      time: dayjs().format('YYYY-MM-DD HH:mm'),
       msgList: [
         {
           identity: 'doctor',

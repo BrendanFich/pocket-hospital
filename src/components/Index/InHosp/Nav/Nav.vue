@@ -3,13 +3,13 @@
     <img src="./img/hosptalBg.png" class="hospBg" />
     <div class="content">
       <ul>
-        <li @click="register">
+        <!-- <li @click="register">
           <img src="./img/enter.png" alt class="icon" />
           <div class="navInfo">
             <div class="navName">入院登记</div>
             <div class="navIntro">进行入院资料登记</div>
           </div>
-        </li>
+        </li> -->
         <li @click="linkTo('/mine/liveHosOrder')">
           <img src="./img/hosptalPay.png" alt class="icon" />
           <div class="navInfo">
@@ -31,13 +31,13 @@
             <div class="navIntro">总清单查询</div>
           </div>
         </li>
-        <li @click="linkTo('/inHosp/outCount')">
+        <!-- <li @click="linkTo('/inHosp/outCount')">
           <img src="./img/outPay.png" alt class="icon" />
           <div class="navInfo">
             <div class="navName">出院结算</div>
             <div class="navIntro">出院金额结算</div>
           </div>
-        </li>
+        </li> -->
       </ul>
     </div>
   </div>
@@ -86,22 +86,23 @@ export default {
     width: 750px
   .content
     position: absolute
-    top: 229px
+    top: 350px
     left: 57px
     width: 626px
     margin: 0 auto
     background: $color-white
-    border-radius: 10px
+    border-radius: 20px
     ul
       margin-left: 40px
       margin-right: 40px
-      padding-bottom: 110px
     li
       display: flex
       justify-content: flex-start
       align-items: center
-      height: 137px
+      height: 157px
       border-bottom: 1px solid $color-title-grey
+      &:last-child
+        border: none
       .icon
         width: 69px
         margin-right: 30px

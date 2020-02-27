@@ -1,16 +1,17 @@
 <template>
   <div class="cConfirm">
     <CustomerInfoCard></CustomerInfoCard>
-    <mt-button class="confirmBtn" type="primary" @click="confirm">就诊报到</mt-button>
+    <mt-button class="confirmBtn" type="primary" @click="confirm"
+      >就诊报到</mt-button
+    >
   </div>
 </template>
 
 <script>
-import CustomerInfoCard from '@/base/CustomerInfoCard/CustomerInfoCard'
 import wx from 'weixin-js-sdk'
 export default {
   name: 'cConfirm',
-  components: { CustomerInfoCard },
+  components: { CustomerInfoCard: () => import('@/base/CustomerInfoCard/CustomerInfoCard') },
   data () {
     return {
       latitude: null,
@@ -42,34 +43,48 @@ export default {
       if (this.registerInfo.hisOrdNum) {
         text = `
         <span>就诊日期：${this.registerInfo.scheduleDate.split(' ')[0]}</span>
-        <span>就诊时间：${this.registerInfo.beginTime.split(' ')[1]} - ${this.registerInfo.endTime.split(' ')[1]}</span>
+        <span>就诊时间：${this.registerInfo.beginTime.split(' ')[1]} - ${
+  this.registerInfo.endTime.split(' ')[1]
+}</span>
         <span>就诊科室：${this.registerInfo.deptName}</span>
         <span>就诊医生：${this.registerInfo.doctorName}</span>
       `
       } else {
         text = `<div>请先预约挂号</div>`
       }
-      this.$dialog.confirm({
-        title: '确认就诊信息',
-        message: text
-      }).then(() => {
-        if (this.registerInfo.hisOrdNum) {
-          this.$post('/api/pat/visitingReport', {hisOrdNum: this.registerInfo.hisOrdNum})
-            .then(res => {
-              console.log(res)
-              if (res.code !== 0) {
-                self.$toast({ message: res.msg, duration: 1500, className: 'toast' })
-              } else {
-                self.$router.push({name: 'cQueue', params: {hisOrdNum: this.registerInfo.hisOrdNum}})
-              }
+      this.$dialog
+        .confirm({
+          title: '确认就诊信息',
+          message: text
+        })
+        .then(() => {
+          if (this.registerInfo.hisOrdNum) {
+            this.$post('/api/pat/visitingReport', {
+              hisOrdNum: this.registerInfo.hisOrdNum
             })
-            .catch(error => {
-              console.log(error)
-            })
-        }
-      }).catch(() => {
-        // on cancel
-      })
+              .then(res => {
+                console.log(res)
+                if (res.code !== 0) {
+                  self.$toast({
+                    message: res.msg,
+                    duration: 1500,
+                    className: 'toast'
+                  })
+                } else {
+                  self.$router.push({
+                    name: 'cQueue',
+                    params: { hisOrdNum: this.registerInfo.hisOrdNum }
+                  })
+                }
+              })
+              .catch(error => {
+                console.log(error)
+              })
+          }
+        })
+        .catch(() => {
+          // on cancel
+        })
     }
   }
 }

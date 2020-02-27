@@ -18,10 +18,9 @@
 </template>
 
 <script>
-import CustomerInfoCard from '@/base/CustomerInfoCard/CustomerInfoCard'
 export default {
   name: 'unpayList',
-  components: { CustomerInfoCard },
+  components: { CustomerInfoCard: () => import('@/base/CustomerInfoCard/CustomerInfoCard') },
   data () {
     return {
       patCardNo: '',

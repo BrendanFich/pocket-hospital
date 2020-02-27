@@ -7,7 +7,7 @@ import '@/assets/js/rem'
 import wx from 'weixin-js-sdk'
 import util from '@/assets/js/util'
 import store from './vuex/store'
-import moment from 'moment'
+
 import {
   NavBar,
   PullRefresh,
@@ -24,9 +24,9 @@ import {
   Toast
 } from 'vant'
 
-import VConsole from 'vconsole'
-const vConsole = new VConsole()
-console.log(vConsole.version)
+// import VConsole from 'vconsole'
+// const vConsole = new VConsole()
+// console.log(vConsole.version)
 
 Vue.use(MintUI)
 Vue.use(NavBar)
@@ -50,8 +50,6 @@ Vue.prototype.$toast = Toast
 Vue.prototype.$dialog = Dialog
 Vue.prototype.$post = util.http.post
 Vue.prototype.$wx = wx
-
-moment.locale('zh-cn')
 
 Vue.config.productionTip = false
 router.beforeEach((to, from, next) => {
