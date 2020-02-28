@@ -1,7 +1,7 @@
 <template>
   <div class="cardInfo" v-if="cardInfo">
     <h2>就诊卡信息</h2>
-    <mt-field label="卡类型" v-model="cardInfo.PatIdType" :disableClear="true" :readonly="true"></mt-field>
+    <mt-field label="卡类型" v-model="cardType" :disableClear="true" :readonly="true"></mt-field>
     <mt-field label="姓名" v-model="cardInfo.patName" :readonly="true" :disableClear="true"></mt-field>
     <mt-field label="卡号" v-model="$route.params.cardNo" :readonly="true" :disableClear="true"></mt-field>
     <mt-field
@@ -23,7 +23,8 @@ export default {
   name: 'cardInfo',
   data () {
     return {
-      cardInfo: {}
+      cardInfo: {},
+      cardType: '院内就诊卡'
     }
   },
   created () {

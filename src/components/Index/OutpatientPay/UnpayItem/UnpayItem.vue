@@ -7,13 +7,13 @@
           <span class="column1">项目名称</span>
           <span class="column2">单价(元)</span>
           <span class="column3">数量</span>
-          <span class="column3">金额(元)</span>
+          <span class="column4">金额(元)</span>
         </li>
         <li class="tableData" v-for="(item, index) in list" :key="index">
           <span class="column1">{{ item.itemName }}</span>
           <span class="column2">¥{{ (item.itemPrice/100).toFixed(2) }}</span>
           <span class="column3">{{ Math.round(item.itemNum) }}</span>
-          <span class="column3 ">¥{{ (item.itemTotalAmt/100).toFixed(2) }}</span>
+          <span class="column4 ">¥{{ (item.itemTotalAmt/100).toFixed(2) }}</span>
         </li>
       </ul>
     </div>
@@ -130,16 +130,24 @@ export default {
       @include font(25px, 400, $color-value-grey)
     .tableData
       @include font(25px, 400, $color-black)
+      &:nth-child(2n+2)
+        background: #EEFFEE
     span
       padding: 20px
     .column1
-      width: 200px
-    .column2,.column3,.column4
       flex: 1
+    .column2
+      width: 100px
+      text-align: right
+    .column3
+      width: 50px
       text-align: center
+    .column4
+      min-width: 100px
+      text-align: right
     li
       display: flex
-      justify-content: space-between
+      justify-content: end
       align-items: center
       border-bottom: 1px solid $color-border
   .detail

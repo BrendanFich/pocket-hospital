@@ -6,30 +6,107 @@
           <DocAvatar :name="docInfo.doctorName" />
         </div>
         <div class="text">
-          <div class="name">{{docInfo.doctorName}}</div>
-          <div class="department">{{docInfo.deptName}}</div>
+          <div class="name">
+            {{ docInfo.doctorName }}
+            <span class="title"
+              >(诊金:{{ workTimeList[0] && workTimeList[0].Price }}元)</span
+            >
+          </div>
+          <div class="department">
+            {{ docInfo.deptName }} | {{ docInfo.doctorTitle }}
+          </div>
+          <van-rate
+            :value="Math.round((docInfo.score === '' ? 10 : docInfo.score) / 2)"
+            readonly
+            style="margin-top:5px"
+          />
         </div>
       </div>
       <div class="intro">
-        {{(docInfo.doctorIntrodution === "" || docInfo.doctorIntrodution === null) ? '暂无简介' : docInfo.doctorIntrodution}}
+        简介：{{
+          docInfo.doctorIntrodution === "" || docInfo.doctorIntrodution === null
+            ? "暂无"
+            : docInfo.doctorIntrodution
+        }}
       </div>
     </div>
-    <div class="workTime">
-      <ul>
-        <li v-for="(item,index) in workTimeList" :key="index">
-          <div class="itemContent" @click="select(item)">
-            <div class="time">
-              <img src="./img/clock.png" />
-              <span>{{resetTimeFormat(item.beginTime, item.endTime)}}</span>
+    <div v-if="morningList.length > 0">
+      <div class="TimeLabel">上午班</div>
+      <div class="workTime">
+        <ul>
+          <li v-for="(item, index) in morningList" :key="index">
+            <div class="itemContent" @click="select(item)">
+              <div class="time">
+                <img src="./img/clock.png" />
+                <span>{{ resetTimeFormat(item.beginTime, item.endTime) }}</span>
+              </div>
+              <div class="leftNum">
+                <span :class="{ over: item.leftNum <= 0 }"
+                  >剩余 {{ item.leftNum }}</span
+                >
+                <span :class="{ over: item.leftNum <= 0 }" class="icon"
+                  >&gt;</span
+                >
+                <span :class="{ overShow: item.leftNum <= 0 }" class="overMsg"
+                  >已约满</span
+                >
+              </div>
             </div>
-            <div class="leftNum">
-              <span :class="{over: item.leftNum<=0}">剩余 {{item.leftNum}}</span>
-              <span :class="{over: item.leftNum<=0}" class="icon">&gt;</span>
-              <span :class="{overShow: item.leftNum<=0}" class="overMsg">已约满</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div v-if="afternoonList.length > 0">
+      <div class="TimeLabel">下午班</div>
+      <div class="workTime">
+        <ul>
+          <li v-for="(item, index) in afternoonList" :key="index">
+            <div class="itemContent" @click="select(item)">
+              <div class="time">
+                <img src="./img/clock.png" />
+                <span>{{ resetTimeFormat(item.beginTime, item.endTime) }}</span>
+              </div>
+              <div class="leftNum">
+                <span :class="{ over: item.leftNum <= 0 }"
+                  >剩余 {{ item.leftNum }}</span
+                >
+                <span :class="{ over: item.leftNum <= 0 }" class="icon"
+                  >&gt;</span
+                >
+                <span :class="{ overShow: item.leftNum <= 0 }" class="overMsg"
+                  >已约满</span
+                >
+              </div>
             </div>
-          </div>
-        </li>
-      </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div v-if="nightList.length > 0">
+      <div class="TimeLabel">晚班</div>
+      <div class="workTime">
+        <ul>
+          <li v-for="(item, index) in nightList" :key="index">
+            <div class="itemContent" @click="select(item)">
+              <div class="time">
+                <img src="./img/clock.png" />
+                <span>{{ resetTimeFormat(item.beginTime, item.endTime) }}</span>
+              </div>
+              <div class="leftNum">
+                <span :class="{ over: item.leftNum <= 0 }"
+                  >剩余 {{ item.leftNum }}</span
+                >
+                <span :class="{ over: item.leftNum <= 0 }" class="icon"
+                  >&gt;</span
+                >
+                <span :class="{ overShow: item.leftNum <= 0 }" class="overMsg"
+                  >已约满</span
+                >
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </template>
@@ -50,6 +127,33 @@ export default {
     this.getRegSource()
   },
   computed: {
+    morningList () {
+      return this.workTimeList.length !== 0
+        ? this.workTimeList.filter(
+          item =>
+            item.beginTime.split(' ')[1].split(':')[0] > 6 &&
+              item.beginTime.split(' ')[1].split(':')[0] < 12
+        )
+        : []
+    },
+    afternoonList () {
+      return this.workTimeList.length !== 0
+        ? this.workTimeList.filter(
+          item =>
+            item.beginTime.split(' ')[1].split(':')[0] >= 12 &&
+              item.beginTime.split(' ')[1].split(':')[0] < 18
+        )
+        : []
+    },
+    nightList () {
+      return this.workTimeList.length !== 0
+        ? this.workTimeList.filter(
+          item =>
+            item.beginTime.split(' ')[1].split(':')[0] >= 18 &&
+              item.beginTime.split(' ')[1].split(':')[0] < 6
+        )
+        : []
+    }
   },
   methods: {
     resetTimeFormat (beginTime, endTime) {
@@ -58,7 +162,10 @@ export default {
       return begin + '-' + end
     },
     getDocInfo () {
-      this.$post('/api/doctor/doc_info', {deptCode: this.$store.state.deptCode, doctorCode: this.$store.state.doctorCode})
+      this.$post('/api/doctor/doc_info', {
+        deptCode: this.$store.state.deptCode,
+        doctorCode: this.$store.state.doctorCode
+      })
         .then(res => {
           if (res.code === 0 && res.data[0]) {
             this.docInfo = res.data[0]
@@ -117,15 +224,20 @@ export default {
     flex-direction: column
     .baseInfo
       width: 690px
-      margin: 19px 0 25px 0
+      margin: 19px 0 10px 0
       display: flex
       justify-content: start
       align-items: center
       .text
         margin-left: 23px
         .name
+          padding-top: 10px
           font-size: 30px
           color: $color-title-black
+          font-weight: bold
+        .title
+          font-size: 24px
+          color: $color-title-grey
           font-weight: bold
         .department
           margin-top: 12px
@@ -133,12 +245,16 @@ export default {
           font-weight: 400
           color: $color-word-grey
     .intro
+      margin-left: 20px
       margin-bottom: 24px
       width: 690px
       font-size: 24px
       line-height: 36px
       font-weight: 400
       color: $color-title-black
+  .TimeLabel
+    margin: 20px 30px
+    @include font(28px, 400, #999)
   .workTime
     background: $color-white
     margin-top: 8px
@@ -174,4 +290,6 @@ export default {
           color: $color-word-grey
           float: right
           margin-left: 38px
+>>>.van-icon-star,>>>.van-icon-star-o
+  font-size: 14px
 </style>

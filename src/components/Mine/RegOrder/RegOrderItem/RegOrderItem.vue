@@ -17,7 +17,7 @@
       <van-cell title="挂号费" :value="'¥' + regInfo.regFee / 100" />
       <van-cell title="排队号" :value="regInfo.visit_display_no" />
     </div>
-    <div class="detail">
+    <div class="detail" style="margin-top:15px">
       <div class="title">缴费详情</div>
       <van-cell
         title="医院名称"
@@ -40,7 +40,6 @@
 
 <script>
 import wx from 'weixin-js-sdk'
-
 export default {
   name: 'regOrderItem',
   data () {
@@ -173,7 +172,6 @@ export default {
       align-items: center
       border-bottom: 1px solid $color-border
   .detail
-    padding-top: 20px
     background: #fff
     .title
       padding: 20px 20px

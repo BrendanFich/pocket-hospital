@@ -3,14 +3,7 @@
     <img src="./img/hosptalBg.png" class="hospBg" />
     <div class="content">
       <ul>
-        <!-- <li @click="register">
-          <img src="./img/enter.png" alt class="icon" />
-          <div class="navInfo">
-            <div class="navName">入院登记</div>
-            <div class="navIntro">进行入院资料登记</div>
-          </div>
-        </li> -->
-        <li @click="linkTo('/mine/liveHosOrder')">
+        <li @click="linkTo('/inHosp/recharge')">
           <img src="./img/hosptalPay.png" alt class="icon" />
           <div class="navInfo">
             <div class="navName">预交金缴纳</div>
@@ -31,21 +24,12 @@
             <div class="navIntro">总清单查询</div>
           </div>
         </li>
-        <!-- <li @click="linkTo('/inHosp/outCount')">
-          <img src="./img/outPay.png" alt class="icon" />
-          <div class="navInfo">
-            <div class="navName">出院结算</div>
-            <div class="navIntro">出院金额结算</div>
-          </div>
-        </li> -->
       </ul>
     </div>
   </div>
 </template>
 
 <script>
-import util from '@/assets/js/util'
-
 export default {
   components: {},
   data () {
@@ -56,20 +40,6 @@ export default {
   methods: {
     linkTo (url) {
       this.$router.push(url)
-    },
-    register () {
-      util.http
-        .post('/api/invisit/getInPatInfo')
-        .then(res => {
-          if (res.data.curVisitStatus === '1') {
-            this.$router.push('/inHosp/regInfo')
-          } else {
-            this.$router.push('/inHosp/inHospReg1')
-          }
-        })
-        .catch(error => {
-          console.log(error)
-        })
     }
   },
   created () {}

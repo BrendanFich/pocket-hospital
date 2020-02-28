@@ -1,55 +1,85 @@
 <template>
-  <div class="dailyList">
-    <div class="list">
-      <img class="noData" v-if="totalFee.length === 0" src="./img/noData.png" />
-      <mt-cell v-for="(item,index) in totalFee" :key="index">
-        <div class="leftInfo">
-          <div class="name">床位号</div>
-          <div class="medical_card">{{item.BedNo}}</div>
-          <div class="serial_number">
-            结算类别：
-            <span class="value">{{item.SettleType}}</span>
-          </div>
-          <div class="department">
-            科室：
-            <span class="value">{{item.DeptName}}</span>
-          </div>
+  <div class="outCount">
+    <CustomerInfoCard
+      @visitName="getVisitName"
+      @patIdNo="getPatIdNo"
+    ></CustomerInfoCard>
+    <div v-show="resOver">
+      <div class="notice" v-if="isInpat">暂无该病人住院信息</div>
+      <div v-else>
+        <div class="showBalance">
+          <ul>
+            <li>住院号：{{ inPatInfo && inPatInfo.CardNo }}</li>
+            <li>住院天数：{{ inPatInfo && inHosDays(inPatInfo.AdmitDT) }}</li>
+            <li>入院日时间：{{ inPatInfo && inPatInfo.AdmitDT }}</li>
+          </ul>
         </div>
-        <div class="rightInfo">
-          <div class="price unPaid">{{item.ItemTotalFee}}</div>
-          <div class="date">{{item.date}}</div>
+        <div class="summary">
+          <ul>
+            <li>预交总金额：{{ inPatInfo && inPatInfo.DepositTotal }}</li>
+            <li>总金额：{{ inPatInfo && inPatInfo.CostTotal }}</li>
+            <li>预交金金额：{{ inPatInfo && inPatInfo.CostLeft }}</li>
+          </ul>
         </div>
-      </mt-cell>
+        <van-button class="btn" type="primary" block @click="recharge"
+          >预交金缴纳</van-button
+        >
+      </div>
     </div>
+
   </div>
 </template>
 
 <script>
-import util from '@/assets/js/util'
+import dayjs from 'dayjs'
 export default {
-  components: {},
+  components: {
+    CustomerInfoCard: () => import('@/base/CustomerInfoCard/CustomerInfoCard')
+  },
   data () {
     return {
-      totalFee: []
+      inPatInfo: null,
+      patIdNo: '',
+      visitName: '',
+      isInpat: true,
+      resOver: false
     }
   },
   computed: {},
-  watch: {},
   methods: {
-    getListInfo () {
-      util.http
-        .post('/api/invisit/getVisitDaliySum')
+    inHosDays (AdmitDT) {
+      return dayjs().diff(dayjs(AdmitDT), 'days')
+    },
+    recharge () {
+      this.$router.push('/inHosp/recharge')
+    },
+    getInPatInfo (patName, idCardNo) {
+      this.$post('/api/invisit/getInPatInfo', {
+        pat_name: patName,
+        id_card_no: idCardNo
+      })
         .then(res => {
-          console.log(res)
-          this.totalFee = res.data.Records.Records
+          this.resOver = true
+          this.inPatInfo = res.data
+          if (res.data.CardNo) {
+            this.isInpat = false
+          }
         })
         .catch(error => {
           console.log(error)
         })
+    },
+    getPatIdNo (val) {
+      this.patIdNo = val
+    },
+    getVisitName (val) {
+      this.visitName = val
     }
   },
-  created () {
-    this.getListInfo()
+  watch: {
+    patIdNo () {
+      this.getInPatInfo(this.visitName, this.patIdNo)
+    }
   }
 }
 </script>
@@ -57,51 +87,36 @@ export default {
 <style lang="sass" scoped>
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
-.dailyList
+.outCount
   @include page($color-page-background)
-  /deep/ .mint-cell-value
-    width: 750px
-    justify-content: space-between
-  /deep/ .mint-cell-wrapper
-    border-bottom: 1px solid $color-border
-    padding: 28px 45px 30px 41px
-  .list
-    .leftInfo
-      .name
-        display: inline-block
-        margin-right: 13px
-        line-height: 66px
+  .notice
+    color: #999
+    margin-top: 100px
+    text-align: center
+  .summary, .showBalance
+    background: url("img/allTotalBg.png") no-repeat
+    width: 720px
+    background-size: 100% 100%
+    color: $color-white
+    margin: 0 auto
+    margin-top: 28px
+    border-radius: 15px
+    ul
+      padding: 40px
+      display: flex
+      flex-wrap: wrap
+      align-items: center
+      li
+        padding-right: 10px
+        min-width: 310px
+        height: 78px
+        line-height: 78px
         font-size: 30px
-        color: $color-primary
-        font-weight: bold
-      .medical_card
-        display: inline-block
-        font-size: 24px
-        color: $color-value-grey
-      .serial_number
-        line-height: 48px
-        font-size: 26px
-        color: $color-title-black
-
-      .department
-        line-height: 48px
-        font-size: 26px
-        color: $color-title-black
-      .value
-          color: $color-primary
-    .rightInfo
-      text-align:end
-      .price
-        display: inline-block
-        padding: 12px 10px
-        background: $color-primary
-        color: $color-white
-        border-radius: 10px
-        font-size: 26px
-        margin-bottom: 16px
-      .unPaid
-        background: $color-primary
-      .date
-        color: $color-word-grey
-        font-size: 24px
+        &:last-child
+          width: 100%
+  .btn
+    width: 720px
+    margin: 0 auto
+    margin-top: 38px
+    border-radius: 15px
 </style>

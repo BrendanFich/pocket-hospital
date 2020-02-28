@@ -91,7 +91,10 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .doctorIntro
-  @include page($color-page-background)
+  background: $color-page-background
+  height: 100vh
+  display: flex
+  flex-direction: column
   text-align: center
   .noData
     width: 366px
@@ -99,6 +102,7 @@ export default {
   /deep/ .swiper-wrapper
     padding: 0 20px
   .content
+    flex: 1
     width: 100%
     overflow-x: auto
     &::-webkit-scrollbar
@@ -144,6 +148,9 @@ export default {
   .scollBox
     overflow-y: auto
     height: calc( 100vh - 248px )
+    .noData
+      width: 366px
+      margin: 100px 0  0 60px
   .doctorIntroCard
     height: 160px
     padding: 30px 50px 40px 30px

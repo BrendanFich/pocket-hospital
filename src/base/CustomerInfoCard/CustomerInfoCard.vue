@@ -30,6 +30,8 @@ export default {
     return {
       visitName: '',
       visitCardNo: '',
+      patIdNo: '',
+      inPatId: '',
       isShowBandTips: false
     }
   },
@@ -50,8 +52,12 @@ export default {
         if (res.code === 0) {
           this.visitName = res.data.info.visitName
           this.visitCardNo = res.data.info.visitCardNo
+          this.inPatId = res.data.info.pat_list.filter(item => item.visitCardNo === this.visitCardNo)[0].patId
+          this.patIdNo = res.data.info.pat_list.filter(item => item.visitCardNo === this.visitCardNo)[0].patIdNo
           this.$emit('visitName', res.data.info.visitName)
           this.$emit('visitCardNo', res.data.info.visitCardNo)
+          this.$emit('patIdNo', this.patIdNo)
+          this.$emit('inPatId', this.inPatId)
           if (res.data.info.visitName === '') {
             this.isShowBandTips = true
           }

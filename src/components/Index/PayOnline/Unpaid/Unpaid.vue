@@ -204,7 +204,7 @@ export default {
       .green
         background: $color-primary
       .orange
-        background: #f69343
+        background: $color-orange
 .mint-loadmore-bottom
   span
     display: inline-block

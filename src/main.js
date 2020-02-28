@@ -21,12 +21,14 @@ import {
   Rate,
   Icon,
   Button,
-  Toast
+  Toast,
+  Field,
+  TreeSelect
 } from 'vant'
 
-// import VConsole from 'vconsole'
-// const vConsole = new VConsole()
-// console.log(vConsole.version)
+import VConsole from 'vconsole'
+const vConsole = new VConsole()
+console.log(vConsole.version)
 
 Vue.use(MintUI)
 Vue.use(NavBar)
@@ -42,6 +44,8 @@ Vue.use(Rate)
 Vue.use(Icon)
 Vue.use(Button)
 Vue.use(Toast)
+Vue.use(Field)
+Vue.use(TreeSelect)
 
 Toast.setDefaultOptions('loading', { forbidClick: true, message: '', loadingType: 'spinner', duration: 0 })
 Toast.setDefaultOptions('fail', { forbidClick: true, duration: 1000 })

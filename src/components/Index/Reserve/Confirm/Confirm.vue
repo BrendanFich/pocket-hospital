@@ -24,8 +24,8 @@
           <span class="value">{{$store.state.beginTime.split(' ')[1]+ '-' + $store.state.endTime.split(' ')[1]}}</span>
         </li>
         <li>
-          <span class="key">诊查费</span>
-          <span class="value">{{$store.state.Price}}</span>
+          <span class="key">诊金</span>
+          <span class="value">{{$store.state.Price}}元</span>
         </li>
       </ul>
     </div>
@@ -78,7 +78,7 @@ export default {
             self.$router.go(-4)
           },
           cancel: function (res) {
-            self.$toast({ message: '挂号成功，请及时支付挂号费', duration: 1500, className: 'toast' })
+            self.$toast({ message: '请及时支付挂号费', duration: 1500, className: 'toast' })
             self.$router.go(-4)
           }
         })

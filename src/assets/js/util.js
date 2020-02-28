@@ -30,6 +30,8 @@ http.ajax.interceptors.request.use(
 // 响应拦截
 http.ajax.interceptors.response.use(
   res => {
+    console.log()
+
     Toast.clear()
     if (res.data.code === 401) {
       localStorage.removeItem('token')
@@ -44,11 +46,13 @@ http.ajax.interceptors.response.use(
         })
       }
     } else if (res.data.code === 500) {
-      Toast({
-        message: res.data.msg,
-        duration: 1000,
-        className: 'toast'
-      })
+      if (res.request.responseURL.indexOf('getInPatInfo') === -1) {
+        Toast({
+          message: res.data.msg,
+          duration: 1500,
+          className: 'toast'
+        })
+      }
     }
     return res
   },

@@ -1,71 +1,121 @@
 <template>
   <div class="recharge">
-    <h1>充值金额</h1>
-    <mt-field label="￥" type="number" v-model="value"></mt-field>
-    <mt-button type="primary" class="btn" @click.native="getWxConig">确认充值</mt-button>
+    <CustomerInfoCard
+      @visitName="getVisitName"
+      @patIdNo="getPatIdNo"
+      @inPatId="getinPatId"
+    ></CustomerInfoCard>
+    <div v-show="resOver">
+      <div class="notice" v-if="isInpat">无该病人住院信息，无法预交费</div>
+      <div v-else>
+        <div class="tip">充值金额</div>
+        <van-field v-model="number" type="number" label="缴纳金额(元)" clearable/>
+        <div class="tip">或选择缴纳金额(元)</div>
+        <div class="tagsContent">
+          <div class="tag" @click="selectNumber(1000)">1000</div>
+          <div class="tag" @click="selectNumber(3000)">3000</div>
+          <div class="tag" @click="selectNumber(5000)">5000</div>
+        </div>
+        <van-button class="btn" type="primary" block @click="getWxConig">立即充值</van-button>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
-import wx from 'weixin-js-sdk'
-import util from '@/assets/js/util'
 export default {
-  components: {},
+  components: {
+    CustomerInfoCard: () => import('@/base/CustomerInfoCard/CustomerInfoCard')
+  },
   data () {
     return {
       regInfo: {},
-      value: null
+      number: null,
+      patIdNo: '',
+      visitName: '',
+      inPatId: '',
+      isInpat: true,
+      resOver: false
     }
   },
-  watch: {},
   methods: {
+    getPatIdNo (val) {
+      this.patIdNo = val
+    },
+    getVisitName (val) {
+      this.visitName = val
+    },
+    getinPatId (val) {
+      this.inPatId = val
+    },
+    selectNumber (number) {
+      this.number = number
+    },
+    getInPatInfo (patName, idCardNo) {
+      this.$post('/api/invisit/getInPatInfo', {
+        pat_name: patName,
+        id_card_no: idCardNo
+      })
+        .then(res => {
+          this.resOver = true
+          this.inPatInfo = res.data
+          if (res.data.CardNo) {
+            this.isInpat = false
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
     getWxConig () {
-      let money = Number(this.value)
-      if (this.value === null || this.value === '' || money === 0) {
-
+      let money = Number(this.number)
+      if (this.number === null || this.number === '') {
+        this.$toast('请输入充值金额')
       } else if (money < 0.01) {
-        this.$toast({ message: '至少充值0.01元', duration: 1500, className: 'toast' })
+        this.$toast('至少充值0.01元')
       } else if (money > 20000) {
-        this.$toast({ message: '每日最多充值2万', duration: 1500, className: 'toast' })
+        this.$toast('每日最多充值2万')
       } else {
-        util.http
-          .post('/api/invisit/payRecharge', {money: money * 100})
+        this.$post('/api/invisit/payRecharge', {
+          pat_name: this.visitName,
+          id_card_no: this.patIdNo,
+          pat_id: Number(this.inPatId),
+          money: money * 100})
           .then(res => {
-            this.wxPay(res.data.Records)
+            this.pay(res.data.LedgerSn)
           })
           .catch(error => {
             console.log(error)
           })
       }
     },
-    wxPay (config) {
-      wx.ready(function () {
-        wx.chooseWXPay({
-          timestamp: config.timestamp,
-          nonceStr: config.nonceStr,
-          package: config.package,
-          signType: config.signType,
-          paySign: config.paySign,
-          success: function (res) {
-            this.$router.go(-1)
-          }
+    pay (ledgerSn) {
+      let self = this
+      this.$post('/api/doctor/payComfirm', { ledgerSn })
+        .then(res => {
+          self.$wx.ready(function () {
+            self.$wx.chooseWXPay({
+              timestamp: res.data.timestamp,
+              nonceStr: res.data.nonceStr,
+              package: res.data.package,
+              signType: res.data.signType,
+              paySign: res.data.paySign,
+              success: function (res) {
+                self.$router.go(-1)
+                self.$toast('充值成功')
+              }
+            })
+          })
         })
-      })
+        .catch(error => {
+          console.log(error)
+        })
     }
   },
-  created () {
-    util.http
-      .post('/api/invisit/getInPatInfo')
-      .then(res => {
-        if (res.data.hisOrdNum === '') {
-          this.$router.push('/inHosp/inHospReg1')
-        } else {
-          this.regInfo = res.data
-        }
-      })
-      .catch(error => {
-        console.log(error)
-      })
+  watch: {
+    patIdNo () {
+      this.getInPatInfo(this.visitName, this.patIdNo)
+    }
   }
 }
 </script>
@@ -75,24 +125,29 @@ export default {
 @import '~assets/sass/mixin'
 .recharge
   @include page($color-page-background)
-  h1
-    color: $color-word-grey;
-    font-size: 24px;
-    padding: 25px 30px;
-  >>>.mint-cell-wrapper
-    font-size: 1.5rem;
-    line-height: 100px;
-    .mint-cell-text
-      padding-bottom: 10px;
-      margin-left: 30px;
-    .mintui
-      font-size: 1rem;
-      margin-right: 10px;
+  .notice
+    color: #999
+    margin-top: 100px
+    text-align: center
+  .tip
+    color: $color-word-grey
+    font-size: 28px
+    padding: 25px 30px
+  .tagsContent
+    margin: 0 auto
+    display: flex
+    justify-content: space-between
+    align-items: center
+    width: 720px
+    .tag
+      color: $color-primary
+      padding: 20px 50px
+      border-radius: 15px
+      border: 1px solid $color-primary
+      background: white
   .btn
-    margin: 0 12.5px;
-    margin-top: 92px;
-    width: 725px;
-    height: 80px;
-    background: $color-primary;
-    font-size: 30px;
+    width: 720px
+    margin: 0 auto
+    margin-top: 38px
+    border-radius: 15px
 </style>

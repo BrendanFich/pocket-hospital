@@ -32,17 +32,17 @@
 
     <div class="content" :class="{ hidden: isShow }">
       <mt-navbar v-model="selected" class="left_navbar">
-        <mt-tab-item id="0">全院科室</mt-tab-item>
+        <mt-tab-item :id="index" v-for="(item, index) in leftList" :key="index">{{item}}</mt-tab-item>
       </mt-navbar>
 
       <mt-tab-container v-model="selected" class="right_container">
-        <mt-tab-container-item id="0">
+        <mt-tab-container-item :id="index" v-for="(item, index) in rightList" :key="index">
           <div
-            v-for="(item, index) in deptList"
-            :key="index"
-            @click="select(item.deptCode, item.deptName)"
+            v-for="(item2, index2) in item"
+            :key="index2"
+            @click="select(item2.deptCode, item2.deptName)"
           >
-            <mt-cell :title="item.deptName">
+            <mt-cell :title="item2.deptName">
               <img class="icon" src="./img/deptIcon.png" />&gt;
             </mt-cell>
           </div>
@@ -58,12 +58,35 @@ export default {
   data () {
     return {
       value: '',
-      selected: '0',
+      selected: 0,
       deptList: [],
       isShow: false
     }
   },
   computed: {
+    leftList () {
+      let leftList = []
+      this.deptList.forEach(item => {
+        if (leftList.indexOf(item.shortName) === -1) {
+          leftList.push(item.shortName)
+        }
+      })
+      return leftList
+    },
+    rightList () {
+      let rightList = []
+      this.leftList.forEach(item => {
+        let tempArr = []
+        this.deptList.forEach(item2 => {
+          if (item2.shortName === item) {
+            tempArr.push({ deptName: item2.deptName, deptCode: item2.deptCode })
+          }
+        })
+        rightList.push(tempArr)
+      })
+      console.log('TCL: rightList -> rightList', rightList)
+      return rightList
+    },
     searchResult () {
       const pingYinMatch = require('pinyin-match')
       if (this.value) {

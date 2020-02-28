@@ -9,39 +9,25 @@ import STime from '@/components/Index/Reserve/STime/STime'
 import Confirm from '@/components/Index/Reserve/Confirm/Confirm'
 import Unpaid from '@/components/Index/PayOnline/Unpaid/Unpaid'
 import Paid from '@/components/Index/PayOnline/Paid/Paid'
-
 import UnpayList from '@/components/Index/OutpatientPay/UnpayList/UnpayList'
 import UnpayItem from '@/components/Index/OutpatientPay/UnpayItem/UnpayItem'
 import PaidItem from '@/components/Index/OutpatientPay/PaidItem/PaidItem'
-
 import DocSearchPage from '@/components/Index/Guidance/DocSearchPage/DocSearchPage'
-
 import SSymptom from '@/components/Index/Guidance/SSymptom/SSymptom'
 import GSTime from '@/components/Index/Guidance/GSTime/GSTime'
 import CQueue from '@/components/Index/CheckIn/CQueue/CQueue'
 import CConfirm from '@/components/Index/CheckIn/CConfirm/CConfirm'
-
 // 住院模块
 import Nav from '@/components/Index/InHosp/Nav/Nav'
 import DailyList from '@/components/Index/InHosp/DailyList/DailyList'
-import InHospReg1 from '@/components/Index/InHosp/InHospReg1/InHospReg1'
-import InHospReg2 from '@/components/Index/InHosp/InHospReg2/InHospReg2'
-import OutCount from '@/components/Index/InHosp/OutCount/OutCount'
-import Balance from '@/components/Index/InHosp/Balance/Balance'
 import FeeTotal from '@/components/Index/InHosp/FeeTotal/FeeTotal'
-import InHospInfo from '@/components/Index/InHosp/InHospInfo/InHospInfo'
-import RegInfo from '@/components/Index/InHosp/RegInfo/RegInfo'
 import Recharge from '@/components/Index/InHosp/Recharge/Recharge'
-import RechargeRecord from '@/components/Index/InHosp/RechargeRecord/RechargeRecord'
-
 import ReportsKind from '@/components/Index/Reports/ReportsKind/ReportsKind'
 import BodyExam from '@/components/Index/Reports/BodyExam/BodyExam'
 import Examination from '@/components/Index/Reports/Examination/Examination'
 import ReportDetail from '@/components/Index/Reports/ReportDetail/ReportDetail'
-
 import DrugIndex from '@/components/Index/DrugSearch/DrugIndex/DrugIndex'
 import DrugSearchPage from '@/components/Index/DrugSearch/DrugSearchPage/DrugSearchPage'
-
 import ServerIndex from '@/components/Index/ServerSearch/ServerIndex/ServerIndex'
 import ServerSearchPage from '@/components/Index/ServerSearch/ServerSearchPage/ServerSearchPage'
 
@@ -137,16 +123,9 @@ export default new Router({
       component: InHosp,
       children: [
         { path: 'nav', name: 'nav', component: Nav },
-        { path: 'inHospReg1', name: 'inHospReg1', component: InHospReg1 },
-        { path: 'inHospReg2', name: 'inHospReg2', component: InHospReg2 },
         { path: 'dailyList', name: 'dailyList', component: DailyList },
-        { path: 'outCount', name: 'outCount', component: OutCount },
-        { path: 'balance', name: 'balance', component: Balance },
         { path: 'feeTotal', name: 'feeTotal', component: FeeTotal },
-        { path: 'inHospInfo', name: 'inHospInfo', component: InHospInfo },
-        { path: 'regInfo', name: 'regInfo', component: RegInfo },
-        { path: 'recharge', name: 'recharge', component: Recharge },
-        { path: 'rechargeRecord', name: 'rechargeRecord', component: RechargeRecord }
+        { path: 'recharge', name: 'recharge', component: Recharge }
       ]
     },
     { path: '/hospitalInfo', name: 'hospitalInfo', component: HospitalInfo },
