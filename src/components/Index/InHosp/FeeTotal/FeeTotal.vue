@@ -91,6 +91,7 @@ export default {
   @include page($color-page-background)
   .notice
     color: #999
+    font-size: 24px
     margin-top: 100px
     text-align: center
   .summary, .showBalance

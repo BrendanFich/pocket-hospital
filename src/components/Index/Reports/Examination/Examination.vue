@@ -31,12 +31,17 @@ export default {
     }
   },
   created () {
-    this.getPacsList()
+    this.getPatInfo()
   },
   methods: {
-    getPacsList () {
+    getPatInfo () {
+      this.$post('/api/user/vx_info').then(res => {
+        this.getPacsList(res.data.info.visitCardNo)
+      })
+    },
+    getPacsList (patCardNo) {
       this.$post('/api/report/getPacsList', {
-        patCardNo: '1000259326',
+        patCardNo,
         page: 1,
         size: 10
       })
@@ -50,6 +55,22 @@ export default {
           console.log(error)
         })
     },
+    // getPacsList () {
+    //   this.$post('/api/report/getPacsList', {
+    //     patCardNo: '1000259326',
+    //     page: 1,
+    //     size: 10
+    //   })
+    //     .then(res => {
+    //       this.pacsList = res.data
+    //       if (res.data.length === 0) {
+    //         this.isShowNoData = true
+    //       }
+    //     })
+    //     .catch(error => {
+    //       console.log(error)
+    //     })
+    // },
     linkeTo (checkId) {
       this.$router.push({name: 'reportDetail', params: {checkId, inspectId: ''}})
     }

@@ -4,10 +4,6 @@
     <div class="orderInfo">
       <ul>
         <li>
-          <span class="key">院区</span>
-          <span class="value">{{registerInfo.hostpitalName}}</span>
-        </li>
-        <li>
           <span class="key">科室</span>
           <span class="value">{{registerInfo.deptName}}</span>
         </li>
@@ -17,26 +13,26 @@
         </li>
         <li>
           <span class="key">就诊日期</span>
-          <span class="value">{{registerInfo.scheduleDate}}</span>
+          <span class="value">{{registerInfo.scheduleDate.split(' ')[0]}}</span>
         </li>
         <li>
           <span class="key">时间段</span>
-          <span class="value">{{registerInfo.beginTime}} - {{registerInfo.endTime}}</span>
+          <span class="value">{{registerInfo.beginTime.split(' ')[1]}} - {{registerInfo.endTime.split(' ')[1]}}</span>
         </li>
         <li>
           <span class="key">诊查费</span>
-          <span class="value">{{registerInfo.regFee}}元</span>
+          <span class="value">{{registerInfo.regFee/100}}元</span>
         </li>
         <li>
-          <span class="key">报到时间</span>
-          <span class="value"></span>
+          <span class="key">状态</span>
+          <span class="value">{{registerInfo.visit_status}}</span>
         </li>
       </ul>
     </div>
-    <div class="queueBefore">
+    <!-- <div class="queueBefore">
       <span class="key">前方还有</span>
       <span class="value"></span>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -57,7 +53,7 @@ export default {
   },
   created () {
     util.http.post('/api/pat/findRegisterInfo', {hisOrdNum: this.$route.params.hisOrdNum}).then(res => {
-      this.registerInfo = res.data.Records
+      this.registerInfo = res.data
       console.log(res)
     }).catch((error) => {
       console.log(error)

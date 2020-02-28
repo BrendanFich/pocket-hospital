@@ -33,12 +33,17 @@ export default {
     }
   },
   created () {
-    this.getLisList()
+    this.getPatInfo()
   },
   methods: {
-    getLisList () {
+    getPatInfo () {
+      this.$post('/api/user/vx_info').then(res => {
+        this.getLisList(res.data.info.visitCardNo)
+      })
+    },
+    getLisList (patCardNo) {
       this.$post('/api/report/getLisList', {
-        patCardNo: '1000259326',
+        patCardNo,
         page: 1,
         size: 10
       })
