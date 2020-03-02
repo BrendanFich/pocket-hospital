@@ -133,8 +133,7 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .gSTime
-  background: $color-page-background
-  height: 100vh
+  @include main()
   .doctorIntroCard
     background: $color-white
     height: 195px

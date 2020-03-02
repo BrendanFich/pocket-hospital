@@ -51,7 +51,7 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .unpayList
-  @include page($color-page-background)
+  @include main()
   width: 100%
   .list
     margin-top: 20px

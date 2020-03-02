@@ -2,7 +2,7 @@
   <div class="iHospital">
     <img src="./img/ihospitalBg.png" alt />
     <div class="btns">
-      <div @click="linkTo('/iHospital/iSDept')">
+      <div @click="linkTo('')">
         <img src="./img/ask.png" />
         <p>在线问诊</p>
       </div>
@@ -15,14 +15,11 @@
         <p>药物配送</p>
       </div>
     </div>
-    <Tabbar></Tabbar>
   </div>
 </template>
 
 <script>
-import Tabbar from '@/base/Tabbar/Tabbar'
 export default {
-  components: { Tabbar },
   data () {
     return {}
   },

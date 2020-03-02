@@ -129,10 +129,12 @@ export default {
 @import '~assets/sass/mixin'
 .docSearchPage
   background: $color-page-background
-  height: 100vh
+  padding-top: 80px
+  height: calc(100vh - 80px)
   display: flex
   flex-direction: column
   .list-content
+    margin-bottom: 90px
     flex: 1
     overflow-y: auto
     -webkit-overflow-scrolling : touch

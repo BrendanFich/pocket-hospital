@@ -11,14 +11,14 @@
           <ul>
             <li>住院号：{{ inPatInfo && inPatInfo.CardNo }}</li>
             <li>住院天数：{{ inPatInfo && inHosDays(inPatInfo.AdmitDT) }}</li>
-            <li>入院日时间：{{ inPatInfo && inPatInfo.AdmitDT }}</li>
+            <li>入院日时间：{{ inPatInfo && inPatInfo.AdmitDT.split(' ')[0] }}</li>
           </ul>
         </div>
         <div class="summary">
           <ul>
             <li>预交总金额：{{ inPatInfo && inPatInfo.DepositTotal }}</li>
             <li>总金额：{{ inPatInfo && inPatInfo.CostTotal }}</li>
-            <li>预交金金额：{{ inPatInfo && inPatInfo.CostLeft }}</li>
+            <li>预交金余额：{{ inPatInfo && inPatInfo.CostLeft }}</li>
           </ul>
         </div>
         <van-button class="btn" type="primary" block @click="recharge"
@@ -88,7 +88,7 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .outCount
-  @include page($color-page-background)
+  @include main()
   .notice
     color: #999
     font-size: 24px

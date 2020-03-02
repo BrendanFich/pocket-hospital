@@ -35,11 +35,6 @@ export default {
       value: '',
       isShow: false,
       isEmpty: true
-      // searchResult: {
-      //   doctors: [{ name: '陈外', department: '骨科门诊', title: '主治医师' },
-      //     { name: '陈外', department: '骨科门诊', title: '主治医师' }],
-      //   departments: []
-      // }
     }
   },
   mounted () {

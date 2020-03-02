@@ -1,19 +1,23 @@
 <template>
   <div id="app">
-    <router-view></router-view>
-    <BackButton class="icons-warp">
+    <Header />
+    <router-view class="middleContent"></router-view>
+    <!-- <BackButton class="icons-warp">
       <van-button icon="arrow-left" type="default" class="float-icon-item" @click="$router.go(-1)" />
       <van-button icon="wap-home-o" type="default" class="float-icon-item" @click="backHome" />
-    </BackButton>
+    </BackButton> -->
+    <Tabbar />
   </div>
 </template>
 
 <script>
 import { authUrl } from '@/assets/js/config'
 import BackButton from '@/base/BackButton/BackButton'
+import Tabbar from '@/base/Tabbar/Tabbar'
+import Header from '@/base/Header/Header'
 export default {
   name: 'App',
-  components: { BackButton },
+  components: { BackButton, Header, Tabbar },
   data () {
     return {
       timestamp: '',

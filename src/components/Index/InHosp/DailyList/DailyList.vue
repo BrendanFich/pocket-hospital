@@ -126,13 +126,7 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .dailyList
-  @include page($color-page-background)
-  /deep/ .mint-cell-value
-    width: 750px
-    justify-content: space-between
-  /deep/ .mint-cell-wrapper
-    border-bottom: 1px solid $color-border
-    padding: 28px 45px 30px 41px
+  @include main()
   .list
     .orderInfo
       background: $color-white

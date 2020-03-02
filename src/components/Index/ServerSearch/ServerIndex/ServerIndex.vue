@@ -81,8 +81,7 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .serverIndex
-  background: $color-page-background
-  height: 100vh
+  @include main()
   display: flex
   flex-direction: column
   img
@@ -112,6 +111,7 @@ export default {
     justify-content: flex-start
     align-items: center
   .list-content
+    margin-bottom: 90px
     flex: 1
     overflow-y: scroll
     -webkit-overflow-scrolling : touch

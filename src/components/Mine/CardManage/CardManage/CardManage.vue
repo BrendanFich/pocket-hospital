@@ -8,7 +8,7 @@
       <span class="linkIcon">></span>
     </div>
 
-    <h2>就诊卡管理</h2>
+    <h2>已绑定就诊卡</h2>
     <ul class="cardList">
       <router-link
         class="customerInfoCard"
@@ -79,7 +79,7 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .cardManage
-  @include page($color-page-background)
+  @include main()
   h2
     color: $color-word-grey
     font-size: 24px

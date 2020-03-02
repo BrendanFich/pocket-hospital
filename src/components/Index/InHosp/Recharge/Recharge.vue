@@ -124,7 +124,7 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .recharge
-  @include page($color-page-background)
+  @include main()
   .notice
     color: #999
     font-size: 24px

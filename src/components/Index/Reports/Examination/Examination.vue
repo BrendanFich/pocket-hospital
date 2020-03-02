@@ -55,24 +55,8 @@ export default {
           console.log(error)
         })
     },
-    // getPacsList () {
-    //   this.$post('/api/report/getPacsList', {
-    //     patCardNo: '1000259326',
-    //     page: 1,
-    //     size: 10
-    //   })
-    //     .then(res => {
-    //       this.pacsList = res.data
-    //       if (res.data.length === 0) {
-    //         this.isShowNoData = true
-    //       }
-    //     })
-    //     .catch(error => {
-    //       console.log(error)
-    //     })
-    // },
     linkeTo (checkId) {
-      this.$router.push({name: 'reportDetail', params: {checkId, inspectId: ''}})
+      this.$router.push({name: 'reportDetail', params: {checkId, inspectId: '$'}})
     }
   }
 }
@@ -82,7 +66,7 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .examination
-  @include page($color-page-background)
+  @include main()
   .cell
     border-bottom: 1px solid $color-border
     .content

@@ -21,14 +21,14 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .parking
-  @include page($color-page-background)
+  @include main()
   img
     width: 750px
   .btns
     margin: 0 auto
     width: 618px
     position: absolute
-    top: 327px
+    top: 390px
     left: 66px
     display: flex
     justify-content: space-between

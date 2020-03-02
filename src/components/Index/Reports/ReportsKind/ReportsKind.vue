@@ -33,7 +33,7 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .reportsKind
-  @include page($color-page-background)
+  @include main()
   .cell
     border-bottom: 1px solid $color-border
     .content

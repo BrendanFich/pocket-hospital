@@ -1,6 +1,5 @@
 <template>
   <div class="cardInfo" v-if="cardInfo">
-    <h2>就诊卡信息</h2>
     <mt-field label="卡类型" v-model="cardType" :disableClear="true" :readonly="true"></mt-field>
     <mt-field label="姓名" v-model="cardInfo.patName" :readonly="true" :disableClear="true"></mt-field>
     <mt-field label="卡号" v-model="$route.params.cardNo" :readonly="true" :disableClear="true"></mt-field>
@@ -79,7 +78,7 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .cardInfo
-  @include page($color-page-background)
+  @include main()
   h2
     color: $color-word-grey
     font-size: 24px

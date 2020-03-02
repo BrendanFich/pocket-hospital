@@ -64,7 +64,7 @@ export default {
       })
         .then(res => {
           this.resultList = [...this.resultList, ...res.data]
-          if (res.page.count === 0) {
+          if (this.resultList === 0) {
             this.isShowNoData = true
           }
           this.loading = false
@@ -108,11 +108,11 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .drugSearchPage
-  background: $color-page-background
-  height: 100vh
+  @include main()
   display: flex
   flex-direction: column
   .list-content
+    margin-bottom: 90px
     flex: 1
     overflow-y: auto
     -webkit-overflow-scrolling : touch

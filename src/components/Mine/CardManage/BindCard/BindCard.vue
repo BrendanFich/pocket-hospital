@@ -104,7 +104,7 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .bindCard
-  @include page($color-page-background)
+  @include main()
   h2
     color: $color-word-grey
     font-size: 24px

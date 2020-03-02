@@ -91,8 +91,7 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .doctorIntro
-  background: $color-page-background
-  height: 100vh
+  @include main()
   display: flex
   flex-direction: column
   text-align: center
@@ -147,7 +146,7 @@ export default {
     margin-left: 30px
   .scollBox
     overflow-y: auto
-    height: calc( 100vh - 248px )
+    margin-bottom: 80px
     .noData
       width: 366px
       margin: 100px 0  0 60px

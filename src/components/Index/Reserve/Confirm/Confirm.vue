@@ -120,7 +120,7 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .confirm
-  @include page($color-page-background)
+  @include main()
   .orderInfo
     margin-top: 22px
     background: $color-white

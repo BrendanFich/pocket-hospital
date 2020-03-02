@@ -29,10 +29,9 @@
         </li>
       </ul>
     </div>
-    <!-- <div class="queueBefore">
-      <span class="key">前方还有</span>
-      <span class="value"></span>
-    </div> -->
+    <div class="queueBefore">
+      您前面还有10人在候诊,请耐心等待!
+    </div>
   </div>
 </template>
 
@@ -85,6 +84,8 @@ export default {
       color: $color-value-grey
       font-size: 30px
   .queueBefore
-    margin-top: 85px
-    background: $color-white
+    margin-top: 50px
+    color: #666
+    font-size: 30px
+    text-align: center
 </style>

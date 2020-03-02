@@ -93,7 +93,15 @@ export default {
           params: { hisOrdNum }
         })
       } else if (visitStatus === '挂号') {
-        this.getVisitingReport(hisOrdNum)
+        this.$dialog
+          .confirm({
+            message: '是否确认报到'
+          })
+          .then(() => {
+            this.getVisitingReport(hisOrdNum)
+          })
+          .catch(() => {
+          })
       }
     },
     timeFormat (time) {
@@ -116,6 +124,7 @@ export default {
       this.$post('/api/pat/visitingReport', { hisOrdNum })
         .then(res => {
           if (res.code === 0) {
+            this.$toast('报到成功')
             this.$router.push({
               name: 'cQueue',
               params: { hisOrdNum }
@@ -186,7 +195,7 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .cConfirm
-  @include page($color-page-background)
+  @include main()
   .paidTime
     color: $color-word-grey
     font-size: 24px

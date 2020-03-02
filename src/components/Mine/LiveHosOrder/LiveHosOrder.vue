@@ -1,133 +1,67 @@
 <template>
-  <div class="liveHosOrder">
-
-    <mt-navbar v-model="selected">
-      <mt-tab-item id="1" @click.native="getUnpaidList">未付款</mt-tab-item>
-      <mt-tab-item id="2" @click.native="getPaidList">已付款</mt-tab-item>
-    </mt-navbar>
-
-    <mt-tab-container v-model="selected">
-      <mt-tab-container-item id="1">
-        <img class="noData" v-if="unpaid.length === 0" src="./img/noData.png" />
-        <div v-for="(item,index) in unpaid" :key="index" >
-          <div class="paidTime">下单日期：{{item.paymentDate}}</div>
-          <div class="orderCard" @click="pay(item.ledgerSn)">
-            <div class="left">
-              <img src="./img/money.png" alt />
-              <div class="baseInfo">
-                <div>
-                  <span class="name">{{item.patName}}</span>
-                  <span class="num">{{item.PatCardNo}}</span>
-                </div>
-                <div class="item">
-                  <span class="key">院区</span>
-                  <span class="value">：全院</span>
-                </div>
-                <div class="item">
-                  <span class="key">类型</span>
-                  <span class="value">: 住院费预交金</span>
-                </div>
-              </div>
+  <div class="list-content" id="list-content">
+    <div v-for="(item, index) in orderList" :key="index">
+      <div class="paidTime">下单日期：{{ item.paymentDate }}</div>
+      <div
+        class="orderCard"
+      >
+        <div class="left">
+          <img src="./img/money.png" alt />
+          <div class="baseInfo">
+            <div>
+              <span class="name">{{ item.patName }}</span>
+              <span class="num">{{ item.PatCardNo }}</span>
             </div>
-            <div class="right">
-              <span class="price">{{item.paymentFee/100}}元</span>
+            <div class="item">
+              <span class="key">院区</span>
+              <span class="value">：全院</span>
+            </div>
+            <div class="item">
+              <span class="key">类型</span>
+              <span class="value">: 住院费预交金</span>
             </div>
           </div>
         </div>
-      </mt-tab-container-item>
-      <mt-tab-container-item id="2">
-        <img class="noData" v-if="paid.length === 0" src="./img/noData.png" />
-        <div v-for="(item,index) in paid" :key="index">
-          <div class="paidTime">下单日期：{{item.paymentDate}}</div>
-          <div class="orderCard">
-            <div class="left">
-              <img src="./img/money.png" alt />
-              <div class="baseInfo">
-                <div>
-                  <span class="name">{{item.patName}}</span>
-                  <span class="num">{{item.PatCardNo}}</span>
-                </div>
-                <div class="item">
-                  <span class="key">院区</span>
-                  <span class="value">：全院</span>
-                </div>
-                <div class="item">
-                  <span class="key">类型</span>
-                  <span class="value">: 住院费预交金</span>
-                </div>
-              </div>
-            </div>
-            <div class="right">
-              <span class="price">{{item.paymentFee/100}}元</span>
-            </div>
+        <div class="right">
+          <span class="orange">{{ item.paymentFee / 100 }}元</span>
+          <span
+            :class="{
+              green: item.paymentStatus === '0'
+            }"
+            >{{item.paymentStatus ? '已支付' : '未支付'}}</span
+          >
         </div>
-        </div>
-      </mt-tab-container-item>
-    </mt-tab-container>
-
+      </div>
+    </div>
+    <img class="noData" v-if="isShowNoData" src="./img/noData.png" />
   </div>
 </template>
 
 <script>
-import wx from 'weixin-js-sdk'
-
 export default {
-  name: 'liveHosOrder',
+  name: 'regOrder',
   data () {
     return {
-      selected: '1',
-      payInfoList: [],
-      unpaid: [],
-      paid: []
+      orderList: [],
+      isShowNoData: false,
+      cardDetail: {}
     }
   },
   created () {
-    this.getUnpaidList()
+    this.getOrderList()
   },
   methods: {
-    getUnpaidList () {
+    getOrderList () {
       this.$post('/api/invisit/getVisitPayInfo')
         .then(res => {
-          this.unpaid = res.data.Records
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    },
-    getPaidList () {
-      this.$post('/api/invisit/payInfoList')
-        .then(res => {
-          this.paid = res.data.Records
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    },
-    pay (ledgerSn) {
-      this.$messagebox.confirm('请确认支付').then(action => {
-        this.$post('/api/doctor/payComfirm', {ledgerSn})
-          .then(res => {
-            this.wxPay(res.data.Records)
-          })
-          .catch(error => {
-            console.log(error)
-          })
-      })
-    },
-    wxPay (config) {
-      let self = this
-      wx.ready(function () {
-        wx.chooseWXPay({
-          timestamp: config.timeStamp,
-          nonceStr: config.nonceStr,
-          package: config.package,
-          signType: config.signType,
-          paySign: config.paySign,
-          success: function (res) {
-            self.getUnpaidList()
+          this.orderList = res.data.Records
+          if (this.orderList.length === 0) {
+            this.isShowNoData = true
           }
         })
-      })
+        .catch(error => {
+          console.log(error)
+        })
     }
   }
 }
@@ -136,29 +70,22 @@ export default {
 <style lang="sass" scoped>
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
-.liveHosOrder
-  @include page($color-page-background)
-  .mint-navbar
-    .mint-tab-item
-      padding: 31px 0
-      /deep/ .mint-tab-item-label
-        color: $color-word-grey
-        font-size: 26px
-    .mint-tab-item.is-selected
-      text-decoration: none
-      margin: 0
-      border: none
-      background: $color-primary
-      /deep/ .mint-tab-item-label
-        color: $color-white
+.list-content
+  background: $color-page-background
+  height: calc(100vh - 180px)
+  margin: 90px 0
+  overflow-y: scroll // 很重要
+  -webkit-overflow-scrolling : touch // 解决view滑动速度慢或者卡顿问题
+  &::-webkit-scrollbar
+    display: none
   .paidTime
     color: $color-word-grey
     font-size: 24px
     padding: 25px 30px
   .orderCard
-    height: 107px
+    height: 170px
     background: $color-white
-    padding: 30px 50px 30px 40px
+    padding: 0 50px 0 40px
     display: flex
     justify-content: space-between
     align-items: center
@@ -167,7 +94,7 @@ export default {
       justify-content: flex-start
       align-items: center
       img
-        width: 47px
+        width: 43px
         margin-right: 30px
       .baseInfo
         font-size: 24px
@@ -190,17 +117,41 @@ export default {
       display: flex
       flex-direction: column
       align-items: flex-end
+      justify-content: center
       span
         color: $color-white
         font-size: 24px
+        line-height: 30px
         padding: 3px 11px
+        margin: 5px 0
         border-radius: 5px
-      .price
         background: #f69343
-        min-width: 80px
-        height: 28px
-        text-align: center
-      .orderTime
-        margin-top: 10px
+      .orange
+        background: #f69343
+      .green
         background: #5adba3
+.mint-loadmore-bottom
+  span
+    display: inline-block
+    transition: .2s linear
+    vertical-align: middle
+    span.is-rotate
+      transform: rotate(180deg)
+>>>.van-dialog__header
+  padding-top: 15px
+  color: $color-primary
+.detail
+  margin-top: 25px
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  >li
+    display: flex
+    height: 50px
+    label
+      width: 200px
+      color: #999
+    span
+      width: 250px
 </style>

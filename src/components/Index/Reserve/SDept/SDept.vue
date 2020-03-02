@@ -32,11 +32,20 @@
 
     <div class="content" :class="{ hidden: isShow }">
       <mt-navbar v-model="selected" class="left_navbar">
-        <mt-tab-item :id="index" v-for="(item, index) in leftList" :key="index">{{item}}</mt-tab-item>
+        <mt-tab-item
+          :id="index"
+          v-for="(item, index) in leftList"
+          :key="index"
+          >{{ item }}</mt-tab-item
+        >
       </mt-navbar>
 
       <mt-tab-container v-model="selected" class="right_container">
-        <mt-tab-container-item :id="index" v-for="(item, index) in rightList" :key="index">
+        <mt-tab-container-item
+          :id="index"
+          v-for="(item, index) in rightList"
+          :key="index"
+        >
           <div
             v-for="(item2, index2) in item"
             :key="index2"
@@ -84,7 +93,6 @@ export default {
         })
         rightList.push(tempArr)
       })
-      console.log('TCL: rightList -> rightList', rightList)
       return rightList
     },
     searchResult () {
@@ -140,9 +148,11 @@ export default {
   @include page($color-page-background)
   .searchbar
     width: 750px
-    position: relative
+    position: fixed
+    top: 80px
+    left: 0
     input
-      margin: 30px 25px
+      margin: 20px 25px
       border-radius: 10px
       padding: 20px 70px
       width: 560px
@@ -152,12 +162,12 @@ export default {
     .cancelIcon
       width: 16px
       position: absolute
-      top: 55px
+      top: 45px
       left: 65px
     .cancel
       display: none
       position: absolute
-      top: 30px
+      top: 20px
       right: 50px
       font-size: 24px
       border: none
@@ -198,7 +208,7 @@ export default {
     .xIcon
       display: none
       position: absolute
-      top: 50px
+      top: 40px
       right: 130px
       font-size: 25px
       background: #f6f6f6
@@ -211,7 +221,10 @@ export default {
     .show
       display: block
   .content
-    height: calc(100vh - 128px)
+    margin-top: 192px
+    position: absolute
+    top: 0
+    height: calc(100vh - 290px)
     width: 100%
     display: flex
     justify-content: center
@@ -238,7 +251,7 @@ export default {
     .right_container
       width: 589px
       background: $color-white
-      overflow-y: scroll
+      overflow-y: auto
       .noData
         width: 366px
         margin-top: 50px

@@ -86,8 +86,7 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .drugSearch
-  background: $color-page-background
-  height: 100vh
+  @include main()
   display: flex
   flex-direction: column
   .displayCard
@@ -139,6 +138,7 @@ export default {
     justify-content: flex-start
     align-items: center
   .list-content
+    margin-bottom: 90px
     flex: 1
     overflow-y: scroll // 很重要
     -webkit-overflow-scrolling : touch // 解决view滑动速度慢或者卡顿问题

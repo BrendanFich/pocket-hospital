@@ -50,7 +50,7 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .suggestion
-  @include page($color-page-background)
+  @include main()
   text-align: center
   .textarea
     width: 726px

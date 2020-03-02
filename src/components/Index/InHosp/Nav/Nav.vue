@@ -50,13 +50,13 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .nav
-  @include page($color-page-background)
+  @include main()
   position: relative
   .hospBg
     width: 750px
   .content
     position: absolute
-    top: 350px
+    top: 400px
     left: 57px
     width: 626px
     margin: 0 auto

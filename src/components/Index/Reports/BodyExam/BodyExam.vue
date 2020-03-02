@@ -3,17 +3,17 @@
   <div class="bodyExam">
     <mt-cell class="cell" is-link v-for="(item, index) in lisList" :key="index" @click.native="linkTo(item.inspectId)">
       <div slot="title" class="content">
-        <div class="date">
+        <!-- <div class="date">
           <span class="key">开单日期：</span>
           <span class="value">{{item.reportTime}}</span>
-        </div>
+        </div> -->
         <div class="number">
           <span class="key">化验编号：</span>
           <span class="value">{{item.inspectId}}</span>
         </div>
         <div class="name">
-          <span class="key">化验名称：</span>
-          <span class="value highlight">{{item.inspectName}}</span>
+          <div class="key">化验名称：</div>
+          <div class="value highlight">{{item.inspectName}}</div>
         </div>
       </div>
       <img slot="icon" src="./img/lisList.png" />
@@ -58,7 +58,7 @@ export default {
         })
     },
     linkTo (inspectId) {
-      this.$router.push({name: 'reportDetail', params: {inspectId, checkId: ''}})
+      this.$router.push({name: 'reportDetail', params: {inspectId, checkId: '$'}})
       // this.$router.push('/reports/reportDetail/' + inspectId + '&')
     }
   }
@@ -69,7 +69,9 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .bodyExam
-  @include page($color-page-background)
+  height: calc(100% - 90px)
+  background: $color-page-background
+  margin: 90px 0
   .cell
     border-bottom: 1px solid $color-border
     .content
@@ -94,4 +96,9 @@ export default {
     display: flex
     justify-content: flex-start
     align-items: center
+    .name
+      display: flex
+      max-width: 450px
+      .value
+        flex: 1
 </style>

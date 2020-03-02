@@ -56,13 +56,10 @@
         <span>友情链接</span>
       </div>
     </div>
-    <Tabbar></Tabbar>
   </div>
 </template>
 
 <script>
-import Tabbar from '@/base/Tabbar/Tabbar'
-
 export default {
   name: 'mine',
   data () {
@@ -71,7 +68,7 @@ export default {
   },
   created () {
   },
-  components: { CustomerInfoCard: () => import('@/base/CustomerInfoCard/CustomerInfoCard'), Tabbar },
+  components: { CustomerInfoCard: () => import('@/base/CustomerInfoCard/CustomerInfoCard') },
   methods: {
     linkTo (url) {
       this.$router.push(url)

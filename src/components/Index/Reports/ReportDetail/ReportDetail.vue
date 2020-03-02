@@ -79,8 +79,7 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .reportDetail
-  background: $color-page-background
-  min-height: 100vh
+  @include main()
   ul
     margin: 0 20px
     display: flex

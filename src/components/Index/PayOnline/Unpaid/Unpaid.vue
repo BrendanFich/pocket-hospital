@@ -138,6 +138,7 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .list-content
+  margin: 80px 0 90px 0
   overflow-y: scroll // 很重要
   -webkit-overflow-scrolling : touch // 解决view滑动速度慢或者卡顿问题
   &::-webkit-scrollbar

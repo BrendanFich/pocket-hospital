@@ -101,7 +101,6 @@ export default {
       })
         .then(res => {
           this.orderList = [...this.orderList, ...res.data]
-          console.log('TCL: getOrderList -> this.orderLis', this.orderList)
           if (this.orderList.length === 0) {
             this.isShowNoData = true
           }
@@ -118,39 +117,12 @@ export default {
       this.page += 1
       this.getOrderList()
     },
-    status (backRegistInd, visitStatus) {
-      if (backRegistInd === '1') {
-        return '已退号'
-      } else {
-        return visitStatus
-      }
-    },
     timeFormat (time) {
       return time
         .split(' ')[1]
         .split(':')
         .slice(0, 2)
         .join(':')
-    },
-    cancelRegister () {
-      if (this.cardDetail.backRegistInd === '0') {
-        this.$post('/api/register/cancelRegister', {
-          hisOrderNum: this.cardDetail.hisOrdNum
-        })
-          .then(res => {
-            if (res.code === 0) {
-              this.$toast({
-                message: '退号成功',
-                duration: 1500,
-                className: 'toast'
-              })
-              this.getOrderList()
-            }
-          })
-          .catch(err => {
-            console.log(err)
-          })
-      }
     }
   }
 }
@@ -160,7 +132,8 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .list-content
-  background: $color-page-background
+  @include main()
+  margin-bottom: 90px
   overflow-y: scroll // 很重要
   -webkit-overflow-scrolling : touch // 解决view滑动速度慢或者卡顿问题
   &::-webkit-scrollbar

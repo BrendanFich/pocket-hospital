@@ -215,7 +215,9 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .sTime
-  @include page($color-page-background)
+  min-height: calc(100vh - 180px)
+  margin: 90px 0
+  background: $color-page-background
   .doctorInfo
     background: $color-white
     display: flex

@@ -22,7 +22,7 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .hospitalInfo
-  @include page($color-page-background)
+  @include main()
   img
     width: 750px
   article

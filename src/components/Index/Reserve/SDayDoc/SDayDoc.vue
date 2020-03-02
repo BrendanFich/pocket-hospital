@@ -85,6 +85,7 @@ export default {
 .sDayDoc
   @include page($color-white)
   .container
+    padding-top: 80px
     .selectedInfo
       height: 100px
       display: flex
@@ -155,6 +156,4 @@ export default {
             float: right
             margin-right: 48px
             font-weight: 400
-  /deep/.mt-tabbar
-    height: 98px
 </style>

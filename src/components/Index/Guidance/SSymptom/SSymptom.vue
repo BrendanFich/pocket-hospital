@@ -121,8 +121,7 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .sSymptom
-  background: $color-page-background
-  height: 100vh
+  @include main()
   display: flex
   flex-direction: column
   .search

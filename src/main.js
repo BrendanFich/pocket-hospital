@@ -26,9 +26,9 @@ import {
   TreeSelect
 } from 'vant'
 
-import VConsole from 'vconsole'
-const vConsole = new VConsole()
-console.log(vConsole.version)
+// import VConsole from 'vconsole'
+// const vConsole = new VConsole()
+// console.log(vConsole.version)
 
 Vue.use(MintUI)
 Vue.use(NavBar)
@@ -63,97 +63,7 @@ router.beforeEach((to, from, next) => {
   })
   store._axiosPromiseCancel = []
   // Indicator.close()
-  switch (to.name) {
-    case 'index':
-      document.title = '首页'
-      break
-    case 'hospitalInfo':
-      document.title = '医院信息'
-      break
-    case 'doctorIntro':
-      document.title = '医生介绍'
-      break
-    case 'reportsKind':
-      document.title = '报告查询'
-      break
-    case 'examination':
-      document.title = '检查报告'
-      break
-    case 'bodyExam':
-      document.title = '检验报告'
-      break
-    case 'drugIndex':
-    case 'drugSearchPage':
-      document.title = '药品查询'
-      break
-    case 'serverIndex':
-    case 'serverSearchPage':
-      document.title = '医疗服务查询'
-      break
-    case 'parking':
-      document.title = '车位查询'
-      break
-    case 'suggestion':
-      document.title = '意见提交'
-      break
-    case 'nav':
-      document.title = '住院服务'
-      break
-    case 'sSymptom':
-      document.title = '智能导诊'
-      break
-    case 'docSearchPage':
-      document.title = '导诊搜索'
-      break
-    case 'cConfirm':
-      document.title = '就诊报到'
-      break
-    case 'sDept':
-      document.title = '选择科室'
-      break
-    case 'sDayDoc':
-      document.title = '选择医生'
-      break
-    case 'sTime':
-    case 'gSTime':
-      document.title = '选择时间'
-      break
-    case 'confirm':
-      document.title = '确认挂号信息'
-      break
-    case 'unpayItem':
-    case 'unpayList':
-      document.title = '待缴费订单'
-      break
-    case 'iHospital':
-      document.title = '互联网医院'
-      break
-    case 'mine':
-      document.title = '个人中心'
-      break
-    case 'cardManage':
-      document.title = '就诊卡管理'
-      break
-    case 'bindCard':
-      document.title = '就诊卡绑定'
-      break
-    case 'regOrder':
-      document.title = '挂号订单'
-      break
-    case 'unpaid':
-    case 'paid':
-    case 'outOrderInfo':
-      document.title = '缴费订单'
-      break
-    case 'reportDetail':
-      document.title = '报告详情'
-      break
-    case 'cardInfo':
-      document.title = '就诊卡信息'
-      break
-    default:
-      document.title = '掌上医院'
-  }
+
   next()
 })
 /* eslint-disable no-new */
