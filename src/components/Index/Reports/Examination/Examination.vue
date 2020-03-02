@@ -41,7 +41,7 @@ export default {
     },
     getPacsList (patCardNo) {
       this.$post('/api/report/getPacsList', {
-        patCardNo,
+        patCardNo, // 1000259326
         page: 1,
         size: 10
       })

@@ -12,8 +12,8 @@
         <div class="itemName">
           {{ item.itemName }}
         </div>
-        <div class="result" :class="{ overRange: item.abnormal === '1' }">
-          {{ item.result }}
+        <div class="result" :class="{ overRange: item.result.indexOf('↓') !== -1 || item.result.indexOf('↑') !== -1 }">
+          {{ (item.result.indexOf('↓') !== -1 || item.result.indexOf('↑') !== -1) ? item.result.substr(1) : item.result}}
         </div>
         <div class="refRange">
           {{ item.refRange }}
@@ -79,9 +79,12 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .reportDetail
-  @include main()
+  background: $color-page-background
+  min-height: calc(100% - 180px)
+  margin: 90px 0
   ul
     margin: 0 20px
+    padding-bottom: 10px
     display: flex
     flex-direction: column
     li
@@ -99,7 +102,7 @@ export default {
       width: 230px
       margin-right: 10px
     .result
-      width: 110px
+      width: 130px
     .overRange
       color: #f69343
     .refRange
