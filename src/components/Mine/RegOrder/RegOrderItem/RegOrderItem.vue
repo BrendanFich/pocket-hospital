@@ -148,7 +148,10 @@ export default {
 @import '~assets/sass/mixin'
 .regOrderItem
   background: $color-page-background
-  height: 100vh
+  height: calc(100vh - 98px)
+  overflow: auto
+  &::-webkit-scrollbar
+    display: none
   .tableContent
     background: #fff
     .title
@@ -180,5 +183,5 @@ export default {
     .notice
       color: $color-primary
   .btnBox
-    margin: 40px
+    padding: 40px 40px 28px
 </style>
