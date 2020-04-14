@@ -23,7 +23,9 @@ import {
   Button,
   Toast,
   Field,
-  TreeSelect
+  TreeSelect,
+  Sidebar,
+  SidebarItem
 } from 'vant'
 
 // import VConsole from 'vconsole'
@@ -46,6 +48,8 @@ Vue.use(Button)
 Vue.use(Toast)
 Vue.use(Field)
 Vue.use(TreeSelect)
+Vue.use(Sidebar)
+Vue.use(SidebarItem)
 
 Toast.setDefaultOptions('loading', { forbidClick: true, message: '', loadingType: 'spinner', duration: 0 })
 Toast.setDefaultOptions('fail', { forbidClick: true, duration: 1000 })

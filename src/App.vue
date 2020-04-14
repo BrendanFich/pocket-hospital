@@ -2,10 +2,6 @@
   <div id="app">
     <Header />
     <router-view class="middleContent"></router-view>
-    <!-- <BackButton class="icons-warp">
-      <van-button icon="arrow-left" type="default" class="float-icon-item" @click="$router.go(-1)" />
-      <van-button icon="wap-home-o" type="default" class="float-icon-item" @click="backHome" />
-    </BackButton> -->
     <Tabbar />
   </div>
 </template>
@@ -29,7 +25,6 @@ export default {
   created () {
     if (this.getUrlParam('token')) {
       window.localStorage.setItem('token', this.getUrlParam('token'))
-      console.log(this.getUrlParam('token'))
       window.location.href = window.location.href.split('?')[0]
     }
     if (this.getUrlParam('msg')) {
@@ -90,11 +85,6 @@ export default {
     })
   },
   methods: {
-    backHome () {
-      if (this.$route.name !== 'index') {
-        this.$router.push('/index')
-      }
-    },
     testToken () {
       this.$post('/api/user/vx_info')
         .then(res => {})
@@ -167,4 +157,9 @@ body
   .noData
     width: 366px
     margin: 100px 0  0 200px
+  .van-sidebar-item--select
+    background: $color-primary
+    border: none
+  .van-sidebar-item
+    padding: 13px
 </style>

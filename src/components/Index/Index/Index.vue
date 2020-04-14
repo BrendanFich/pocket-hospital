@@ -99,7 +99,6 @@ export default {
   },
   methods: {
     getLocation () {
-      console.log('click')
       wx.ready(function () {
         wx.openLocation({
           latitude,

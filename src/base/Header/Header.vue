@@ -122,8 +122,6 @@ export default {
   },
   watch: {
     $route (val) {
-      console.log(val)
-
       this.setTitle()
     }
   }

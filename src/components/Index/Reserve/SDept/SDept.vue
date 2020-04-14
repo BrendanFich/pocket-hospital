@@ -23,23 +23,27 @@
           :key="index"
           @click="select(item.deptCode, item.deptName)"
         >
-          <mt-cell :title="item.deptName">
-            <img class="icon" src="./img/deptIcon.png" />&gt;
-          </mt-cell>
+          <van-cell :title="item.deptName" value=">">
+            <template v-slot:icon>
+              <img class="icon" src="./img/deptIcon.png" />
+            </template>
+          </van-cell>
         </div>
       </div>
     </div>
 
     <div class="content" :class="{ hidden: isShow }">
-      <mt-navbar v-model="selected" class="left_navbar">
+      <!-- <mt-navbar v-model="selected" class="left_navbar">
         <mt-tab-item
           :id="index"
           v-for="(item, index) in leftList"
           :key="index"
           >{{ item }}</mt-tab-item
         >
-      </mt-navbar>
-
+      </mt-navbar> -->
+      <van-sidebar v-model="selected" class="left_navbar">
+        <van-sidebar-item v-for="(item, index) in leftList" :key="index" :title="item" />
+      </van-sidebar>
       <mt-tab-container v-model="selected" class="right_container">
         <mt-tab-container-item
           :id="index"
@@ -51,9 +55,12 @@
             :key="index2"
             @click="select(item2.deptCode, item2.deptName)"
           >
-            <mt-cell :title="item2.deptName">
-              <img class="icon" src="./img/deptIcon.png" />&gt;
-            </mt-cell>
+            <van-cell :title="item2.deptName" value=">">
+              <template v-slot:icon>
+                <img class="icon" src="./img/deptIcon.png" />
+              </template>
+            </van-cell>
+
           </div>
         </mt-tab-container-item>
       </mt-tab-container>
@@ -66,6 +73,7 @@ export default {
   name: 'sDept',
   data () {
     return {
+      activeKey: 0,
       value: '',
       selected: 0,
       deptList: [],
@@ -205,6 +213,12 @@ export default {
         font-size: 20px
         line-height: 30px
         border-bottom: 1px solid $color-border
+    .van-cell
+      border-bottom: 1px solid #e3e3e3
+    .icon
+      width: 20px
+      height: 28px
+      margin: 10px
     .xIcon
       display: none
       position: absolute
@@ -255,20 +269,12 @@ export default {
       .noData
         width: 366px
         margin-top: 50px
-      /deep/ .mint-cell-wrapper
-        height: 80px
-        padding: 0 25px
+      .van-cell
         border-bottom: 1px solid #e3e3e3
-        .mint-cell-text
-          padding-left: 50px
-          font-size: 26px
-          color: $color-title-black
-        .mint-cell-value
-          .icon
-            position: absolute
-            left: 32px
-            top: 27px
-            width: 20px
+      .icon
+        width: 20px
+        height: 28px
+        margin: 10px
   .hidden
     display: none
 </style>

@@ -43,34 +43,29 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
-.tabbar {
-  width: 100%;
-  background: #fff;
-  position: fixed;
-  bottom: 0;
-  border-top: 1px solid #ededed;
-  height: 98px;
-  display: flex;
-  .router-link-active {
-    text-decoration: none;
-  }
-  .tab {
-    width: 250px;
-    height: 98px;
-    color: #cccccc;
-    font-size: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    img {
-      width: 34px;
-      margin-bottom: 12px;
-    }
-  }
-  .active {
-    color: #09cf74;
-  }
-}
+<style lang="sass" scoped>
+.tabbar
+  width: 100%
+  background: #fff
+  position: fixed
+  bottom: 0
+  border-top: 1px solid #ededed
+  height: 98px
+  display: flex
+  .router-link-active
+    text-decoration: none
+  .tab
+    width: 250px
+    height: 98px
+    color: #cccccc
+    font-size: 20px
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    img
+      width: 34px
+      margin-bottom: 12px
+  .active
+    color: #09cf74
 </style>
