@@ -23,6 +23,7 @@ export default {
     }
   },
   created () {
+    this.getConfig()
     if (this.getUrlParam('token')) {
       window.localStorage.setItem('token', this.getUrlParam('token'))
       window.location.href = window.location.href.split('?')[0]
@@ -85,6 +86,15 @@ export default {
     })
   },
   methods: {
+    getConfig () {
+      this.$post('/api/web/config')
+        .then(res => {
+          document.title = res.data.web_title
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
     testToken () {
       this.$post('/api/user/vx_info')
         .then(res => {})
