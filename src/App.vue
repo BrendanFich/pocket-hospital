@@ -11,6 +11,8 @@ import { authUrl } from '@/assets/js/config'
 import BackButton from '@/base/BackButton/BackButton'
 import Tabbar from '@/base/Tabbar/Tabbar'
 import Header from '@/base/Header/Header'
+import VConsole from 'vconsole'
+let vConsole = ''
 export default {
   name: 'App',
   components: { BackButton, Header, Tabbar },
@@ -90,6 +92,10 @@ export default {
       this.$post('/api/web/config')
         .then(res => {
           document.title = res.data.web_title
+          if (res.is_debug) {
+            vConsole = new VConsole()
+            console.log(vConsole.version)
+          }
         })
         .catch(error => {
           console.log(error)

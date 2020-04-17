@@ -28,10 +28,6 @@ import {
   SidebarItem
 } from 'vant'
 
-// import VConsole from 'vconsole'
-// const vConsole = new VConsole()
-// console.log(vConsole.version)
-
 Vue.use(MintUI)
 Vue.use(NavBar)
 Vue.use(PullRefresh)
