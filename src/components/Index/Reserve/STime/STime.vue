@@ -9,7 +9,7 @@
           <div class="name">
             {{ docInfo.doctorName }}
             <span class="title"
-              >(诊金:{{ workTimeList[0] && workTimeList[0].Price }}元)</span
+              >(诊金:{{ workTimeList[0] && workTimeList[0].Price/100 }}元)</span
             >
           </div>
           <div class="department">

@@ -19,7 +19,7 @@
             <div class="textInfo">
               <span class="name">{{item.Doctor}}</span>
               <br />
-              <span class="title">{{item.EmpTitle}}(诊金:{{item.Price}}元)</span>
+              <span class="title">{{item.EmpTitle}}(诊金:{{item.Price/100}}元)</span>
             </div>
           </div>
           <div class="leftNum">

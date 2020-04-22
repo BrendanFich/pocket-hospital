@@ -25,7 +25,7 @@
         </li>
         <li>
           <span class="key">诊金</span>
-          <span class="value">{{$store.state.Price}}元</span>
+          <span class="value">{{$store.state.Price/100}}元</span>
         </li>
       </ul>
     </div>
