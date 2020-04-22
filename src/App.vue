@@ -92,7 +92,7 @@ export default {
       this.$post('/api/web/config')
         .then(res => {
           document.title = res.data.web_title
-          if (res.is_debug) {
+          if (res.data.is_debug) {
             vConsole = new VConsole()
             console.log(vConsole.version)
           }
