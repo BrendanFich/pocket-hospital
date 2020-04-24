@@ -31,9 +31,10 @@
     </div>
     <div class="btnBox" v-if="status() === '未支付'">
       <van-button type="primary"  block round @click="pay">确认支付</van-button>
+      <!-- <van-button  block round @click="cancelRegister" style="margin-top:15px">退号</van-button> 挂号未支付的不能退号-->
     </div>
     <div class="btnBox" v-if="status() === '已支付'">
-      <van-button type="default" block round @click="cancelRegister">取消预约</van-button>
+      <van-button type="default" block round @click="cancelRegister">退号</van-button>
     </div>
   </div>
 </template>
@@ -148,6 +149,7 @@ export default {
 @import '~assets/sass/mixin'
 .regOrderItem
   background: $color-page-background
+  padding-top: 90px
   height: calc(100vh - 98px)
   overflow: auto
   &::-webkit-scrollbar

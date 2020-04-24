@@ -4,5 +4,7 @@
   </div>
 </template>
 
-<style lang='scss' scoped>
+<style lang='sass' scoped>
+.reports
+  height: calc(100vh - 90px)
 </style>

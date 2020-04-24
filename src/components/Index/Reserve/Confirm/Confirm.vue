@@ -30,6 +30,7 @@
       </ul>
     </div>
     <mt-button class="confirmBtn" type="primary" @click="confirm">确认挂号</mt-button>
+    <!-- <van-button type="primary"  block round @click="confirm">确认挂号</van-button> -->
   </div>
 </template>
 

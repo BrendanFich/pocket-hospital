@@ -15,8 +15,12 @@ export default {
   created () {
     this.setTitle()
   },
+  mounted () {
+
+  },
   methods: {
     setTitle () {
+      console.log(this.$route.name)
       switch (this.$route.name) {
         case 'index':
           this.title = ''
@@ -115,6 +119,10 @@ export default {
         case 'liveHosOrder':
           this.title = '住院预交金订单'
           break
+        case 'regOrderItem':
+          this.title = '挂号详情'
+          break
+
         default:
           this.title = ''
       }
