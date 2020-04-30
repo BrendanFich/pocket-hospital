@@ -86,7 +86,12 @@ export default {
         if (res.code === 0) {
           let visitName = res.data.info.visitName
           let visitCardNo = res.data.info.visitCardNo
-          let patIdNo = res.data.info.pat_list.filter(item => item.visitCardNo === visitCardNo)[0].patIdNo
+          let patIdNo
+          if (res.data.info.pat_list.length > 0) {
+            patIdNo = res.data.info.pat_list.filter(item => item.visitCardNo === visitCardNo)[0].patIdNo
+          } else {
+            patIdNo = ''
+          }
           this.$post('/api/invisit/getInPatInfo', {
             pat_name: visitName,
             id_card_no: patIdNo

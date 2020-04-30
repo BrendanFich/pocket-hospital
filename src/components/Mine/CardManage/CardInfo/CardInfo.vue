@@ -29,7 +29,11 @@ export default {
   created () {
     this.$post('/api/user/vx_info').then(res => {
       if (res.code === 0) {
-        this.cardInfo = res.data.info.pat_list.filter(item => item.visitCardNo === this.$route.params.cardNo)[0]
+        if (res.data.info.pat_list.length > 0) {
+          this.cardInfo = res.data.info.pat_list.filter(item => item.visitCardNo === this.$route.params.cardNo)[0]
+        } else {
+          this.cardInfo = ''
+        }
         this.visitCardNo = res.data.info.visitCardNo
       }
     }).catch((error) => {
