@@ -1,4 +1,7 @@
 const mutations = {
+  updateDefaultNo (state, defaultNo) {
+    state.defaultNo = defaultNo
+  },
   updateDoctorCode (state, doctorCode) {
     state.doctorCode = doctorCode
   },

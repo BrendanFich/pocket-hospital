@@ -5,6 +5,7 @@ import mutations from './mutations'
 Vue.use(Vuex)
 let state = {
   _axiosPromiseCancel: [],
+  defaultNo: '',
   doctorCode: '',
   doctorName: '',
   timeFlag: '',

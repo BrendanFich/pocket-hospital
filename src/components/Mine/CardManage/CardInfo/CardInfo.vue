@@ -53,6 +53,7 @@ export default {
         })
         .then(res => {
           if (res.code === 0) {
+            this.$store.commit('updateDefaultNo', this.$route.params.cardNo)
             this.$toast({ message: '设置成功', duration, className })
             this.$router.go(-2)
           }

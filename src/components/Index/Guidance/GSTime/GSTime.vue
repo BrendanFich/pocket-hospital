@@ -54,7 +54,8 @@ export default {
       allworkTime: [],
       img: '',
       noSchedule: false,
-      scheduleList: []
+      scheduleList: [],
+      defaultCardNo: ''
     }
   },
   computed: {
@@ -73,8 +74,18 @@ export default {
   },
   created () {
     this.getDocInfo()
+    this._getDefualtCardNo()
   },
   methods: {
+    _getDefualtCardNo () {
+      this.$post('/api/user/vx_info').then(res => {
+        if (res.code === 0) {
+          this.defaultCardNo = res.data.info.visitCardNo
+        }
+      }).catch((error) => {
+        console.log(error)
+      })
+    },
     changeDate (val) {
       this.date = val
       this.getRegSource(val)
@@ -104,6 +115,7 @@ export default {
       this.$post('/api/doctor/getRegSource', {
         doctorCode: this.$store.state.doctorCode.toString(),
         deptCode: this.$store.state.deptCode.toString(),
+        patCardNo: this.$store.state.defaultNo,
         date
       })
         .then(res => {

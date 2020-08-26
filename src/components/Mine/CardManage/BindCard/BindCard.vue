@@ -64,101 +64,102 @@
 
 <script>
 export default {
-  name: "bindCard",
-  data() {
+  name: 'bindCard',
+  data () {
     return {
       sheetVisible: false,
-      paperwork: "二代身份证",
-      phone: "",
-      patIdNo: "",
-      patName: "",
-      address: "",
-      birthday: "",
-      patSex: "",
+      paperwork: '二代身份证',
+      phone: '',
+      patIdNo: '',
+      patName: '',
+      address: '',
+      birthday: '',
+      patSex: '',
       actions: [
         {
-          name: "男",
+          name: '男',
           method: () => {
-            this.patSex = "男";
+            this.patSex = '男'
           }
         },
         {
-          name: "女",
+          name: '女',
           method: () => {
-            this.patSex = "女";
+            this.patSex = '女'
           }
         }
       ]
-    };
+    }
   },
-  created() {},
+  created () {},
   computed: {
-    cardType() {
-      return this.cardTypeWord === "就诊卡" ? "1" : "2";
+    cardType () {
+      return this.cardTypeWord === '就诊卡' ? '1' : '2'
     }
   },
   methods: {
-    showOption() {
-      this.sheetVisible = true;
+    showOption () {
+      this.sheetVisible = true
     },
-    handleClick() {
-      const duration = 1500;
-      const className = "toast";
-      const p = /(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}$)/;
-      const phoneReg = /^1[3456789]\d{9}$/;
+    handleClick () {
+      const duration = 1500
+      const className = 'toast'
+      const p = /(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$)|(^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}$)/
+      const phoneReg = /^1[3456789]\d{9}$/
       let reqData = {
         patName: this.patName,
         phone: this.phone,
         patIdNo: this.patIdNo,
         address: this.address,
         patSex: this.patSex,
-        patIdType: "1",
+        patIdType: '1',
         birthday: this.birthday
-      };
+      }
       if (!this.patName) {
-        this.$toast({ message: "请输入姓名", duration, className });
+        this.$toast({ message: '请输入姓名', duration, className })
       } else if (!p.test(this.patIdNo)) {
-        this.$toast({ message: "身份证号格式错误", duration, className });
+        this.$toast({ message: '身份证号格式错误', duration, className })
       } else if (!phoneReg.test(this.phone)) {
-        this.$toast({ message: "手机号格式错误", duration, className });
+        this.$toast({ message: '手机号格式错误', duration, className })
       } else {
-        this.$post("/api/pat/bindCard/auto", reqData)
+        this.$post('/api/pat/bindCard/auto', reqData)
           .then(res => {
-            console.log(res);
+            console.log(res)
             if (res.code === 0) {
-              this.$toast({ message: "绑定成功", duration, className });
-              this.$router.go(-1);
+              this.$toast({ message: '绑定成功', duration, className })
+              this.$router.go(-1)
             }
           })
           .catch(error => {
-            console.log(error);
-          });
+            console.log(error)
+          })
       }
     }
   },
   watch: {
-    patIdNo(val) {
+    patIdNo (val) {
       if (val.length === 15) {
         this.birthday =
-          "19" +
+          '19' +
           val.substring(6, 8) +
-          "-" +
+          '-' +
           val.substring(8, 10) +
-          "-" +
-          val.substring(10, 12);
+          '-' +
+          val.substring(10, 12)
       } else if (val.length === 18) {
         this.birthday =
           val.substring(6, 10) +
-          "-" +
+          '-' +
           val.substring(10, 12) +
-          "-" +
-          val.substring(12, 14);
+          '-' +
+          val.substring(12, 14)
+        this.patSex = (val[15] % 2) === 0 ? '女' : '男'
       } else {
-        this.birthday = "";
+        this.birthday = ''
       }
     }
   }
-};
+}
 </script>
 
 <style lang="sass" scoped>

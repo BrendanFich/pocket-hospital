@@ -103,7 +103,9 @@ export default {
     },
     testToken () {
       this.$post('/api/user/vx_info')
-        .then(res => {})
+        .then(res => {
+          this.$store.commit('updateDefaultNo', res.data.data.info.visitCardNo)
+        })
         .catch(error => {
           console.log(error)
         })
