@@ -35,8 +35,8 @@ export default {
     },
     getOrderList () {
       this.$post('/api/out_visit/un_pay_order/list', {patCardNo: this.patCardNo}).then(res => {
-        this.list = res.data
-        if (res.data.length === 0) {
+        this.list = res.data.filter(i => i.hisOrdNum)
+        if (this.list.length === 0) {
           this.isShowNoData = true
         }
       }).catch(err => {
