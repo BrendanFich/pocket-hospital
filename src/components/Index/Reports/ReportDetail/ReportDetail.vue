@@ -36,7 +36,7 @@ export default {
     }
   },
   created () {
-    if (this.$route.params.inspectId) {
+    if (this.$route.params.checkId === '$') {
       this.getLisItems()
     } else {
       this.getPacsItems()

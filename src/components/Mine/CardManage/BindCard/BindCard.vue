@@ -153,7 +153,7 @@ export default {
           val.substring(10, 12) +
           '-' +
           val.substring(12, 14)
-        this.patSex = (val[15] % 2) === 0 ? '女' : '男'
+        this.patSex = (val[16] % 2) === 0 ? '女' : '男'
       } else {
         this.birthday = ''
       }

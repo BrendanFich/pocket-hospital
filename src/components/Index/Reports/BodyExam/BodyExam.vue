@@ -33,7 +33,11 @@ export default {
     }
   },
   created () {
-    this.getPatInfo()
+    if (this.$store.state.defaultNo) {
+      this.getLisList(this.$store.state.defaultNo)
+    } else {
+      this.getPatInfo()
+    }
   },
   methods: {
     getPatInfo () {
