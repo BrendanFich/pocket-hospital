@@ -7,13 +7,13 @@
         <span>首页</span>
       </div>
     </router-link>
-    <router-link to="/iHospital">
+    <!-- <router-link to="/iHospital">
       <div class="tab" :class="{active: isShow2}">
         <img src="./img/hospitalOn.png" v-show="isShow2" />
         <img src="./img/hospitalOff.png" v-show="!isShow2" />
         <span>互联网医院</span>
       </div>
-    </router-link>
+    </router-link> -->
     <router-link to="/mine">
       <div class="tab" :class="{active: isShow3}">
         <img src="./img/mineOn.png" v-show="isShow3" />
@@ -55,7 +55,7 @@ export default {
   .router-link-active
     text-decoration: none
   .tab
-    width: 250px
+    width: 375px
     height: 98px
     color: #cccccc
     font-size: 20px

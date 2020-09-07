@@ -9,7 +9,9 @@
           <div class="name">
             {{ docInfo.doctorName }}
             <span class="title"
-              >(诊金:{{ workTimeList[0] && workTimeList[0].Price/100 }}元)</span
+              >(诊金:{{
+                workTimeList[0] && workTimeList[0].Price / 100
+              }}元)</span
             >
           </div>
           <div class="department">
@@ -22,92 +24,111 @@
           />
         </div>
       </div>
-      <div class="intro">
-        简介：{{
-          docInfo.doctorIntrodution === "" || docInfo.doctorIntrodution === null
-            ? "暂无"
-            : docInfo.doctorIntrodution
-        }}
-      </div>
     </div>
-    <div v-if="morningList.length > 0">
-      <div class="TimeLabel">上午班</div>
-      <div class="workTime">
-        <ul>
-          <li v-for="(item, index) in morningList" :key="index">
-            <div class="itemContent" @click="select(item)">
-              <div class="time">
-                <img src="./img/clock.png" />
-                <span>{{ resetTimeFormat(item.beginTime, item.endTime) }}</span>
-              </div>
-              <div class="leftNum">
-                <span :class="{ over: item.leftNum <= 0 }"
-                  >剩余 {{ item.leftNum }}</span
-                >
-                <span :class="{ over: item.leftNum <= 0 }" class="icon"
-                  >&gt;</span
-                >
-                <span :class="{ overShow: item.leftNum <= 0 }" class="overMsg"
-                  >已约满</span
-                >
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div v-if="afternoonList.length > 0">
-      <div class="TimeLabel">下午班</div>
-      <div class="workTime">
-        <ul>
-          <li v-for="(item, index) in afternoonList" :key="index">
-            <div class="itemContent" @click="select(item)">
-              <div class="time">
-                <img src="./img/clock.png" />
-                <span>{{ resetTimeFormat(item.beginTime, item.endTime) }}</span>
-              </div>
-              <div class="leftNum">
-                <span :class="{ over: item.leftNum <= 0 }"
-                  >剩余 {{ item.leftNum }}</span
-                >
-                <span :class="{ over: item.leftNum <= 0 }" class="icon"
-                  >&gt;</span
-                >
-                <span :class="{ overShow: item.leftNum <= 0 }" class="overMsg"
-                  >已约满</span
-                >
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div v-if="nightList.length > 0">
-      <div class="TimeLabel">晚班</div>
-      <div class="workTime">
-        <ul>
-          <li v-for="(item, index) in nightList" :key="index">
-            <div class="itemContent" @click="select(item)">
-              <div class="time">
-                <img src="./img/clock.png" />
-                <span>{{ resetTimeFormat(item.beginTime, item.endTime) }}</span>
-              </div>
-              <div class="leftNum">
-                <span :class="{ over: item.leftNum <= 0 }"
-                  >剩余 {{ item.leftNum }}</span
-                >
-                <span :class="{ over: item.leftNum <= 0 }" class="icon"
-                  >&gt;</span
-                >
-                <span :class="{ overShow: item.leftNum <= 0 }" class="overMsg"
-                  >已约满</span
-                >
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
+    <van-tabs v-model="active" color="#09cf74">
+      <van-tab title="挂号">
+        <div v-if="morningList.length > 0">
+          <div class="TimeLabel">上午班</div>
+          <div class="workTime">
+            <ul>
+              <li v-for="(item, index) in morningList" :key="index">
+                <div class="itemContent" @click="select(item)">
+                  <div class="time">
+                    <img src="./img/clock.png" />
+                    <span>{{
+                      resetTimeFormat(item.beginTime, item.endTime)
+                    }}</span>
+                  </div>
+                  <div class="leftNum">
+                    <span :class="{ over: item.leftNum <= 0 }"
+                      >剩余 {{ item.leftNum }}</span
+                    >
+                    <span :class="{ over: item.leftNum <= 0 }" class="icon"
+                      >&gt;</span
+                    >
+                    <span
+                      :class="{ overShow: item.leftNum <= 0 }"
+                      class="overMsg"
+                      >已约满</span
+                    >
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div v-if="afternoonList.length > 0">
+          <div class="TimeLabel">下午班</div>
+          <div class="workTime">
+            <ul>
+              <li v-for="(item, index) in afternoonList" :key="index">
+                <div class="itemContent" @click="select(item)">
+                  <div class="time">
+                    <img src="./img/clock.png" />
+                    <span>{{
+                      resetTimeFormat(item.beginTime, item.endTime)
+                    }}</span>
+                  </div>
+                  <div class="leftNum">
+                    <span :class="{ over: item.leftNum <= 0 }"
+                      >剩余 {{ item.leftNum }}</span
+                    >
+                    <span :class="{ over: item.leftNum <= 0 }" class="icon"
+                      >&gt;</span
+                    >
+                    <span
+                      :class="{ overShow: item.leftNum <= 0 }"
+                      class="overMsg"
+                      >已约满</span
+                    >
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div v-if="nightList.length > 0">
+          <div class="TimeLabel">晚班</div>
+          <div class="workTime">
+            <ul>
+              <li v-for="(item, index) in nightList" :key="index">
+                <div class="itemContent" @click="select(item)">
+                  <div class="time">
+                    <img src="./img/clock.png" />
+                    <span>{{
+                      resetTimeFormat(item.beginTime, item.endTime)
+                    }}</span>
+                  </div>
+                  <div class="leftNum">
+                    <span :class="{ over: item.leftNum <= 0 }"
+                      >剩余 {{ item.leftNum }}</span
+                    >
+                    <span :class="{ over: item.leftNum <= 0 }" class="icon"
+                      >&gt;</span
+                    >
+                    <span
+                      :class="{ overShow: item.leftNum <= 0 }"
+                      class="overMsg"
+                      >已约满</span
+                    >
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </van-tab>
+      <van-tab title="介绍">
+        <div class="intro">
+          {{
+            docInfo.doctorIntrodution === "" ||
+            docInfo.doctorIntrodution === null
+              ? "暂无"
+              : docInfo.doctorIntrodution
+          }}
+        </div>
+      </van-tab>
+    </van-tabs>
   </div>
 </template>
 
@@ -118,6 +139,7 @@ export default {
   components: { DocAvatar },
   data () {
     return {
+      active: 0,
       docInfo: {},
       workTimeList: []
     }
@@ -225,6 +247,7 @@ export default {
     justify-content: center
     align-items: center
     flex-direction: column
+    margin-bottom: 2px
     .baseInfo
       width: 690px
       margin: 19px 0 10px 0
@@ -247,14 +270,13 @@ export default {
           font-size: 24px
           font-weight: 400
           color: $color-word-grey
-    .intro
-      margin-left: 20px
-      margin-bottom: 24px
-      width: 690px
-      font-size: 24px
-      line-height: 36px
-      font-weight: 400
-      color: $color-title-black
+  .intro
+    padding: 20px
+    width: 690px
+    font-size: 30px
+    line-height: 36px
+    font-weight: 400
+    color: $color-title-black
   .TimeLabel
     margin: 20px 30px
     @include font(28px, 400, #999)

@@ -26,13 +26,13 @@
         <img src="./img/woman.png" />
       </router-link>
       <div class="right">
-        <router-link class="nav2" to="/checkIn">
+        <!-- <router-link class="nav2" to="/checkIn">
           <div>
             <h2>就诊报到</h2>
             <p>报到后获取排队信息</p>
           </div>
           <img src="./img/checkIn.png" />
-        </router-link>
+        </router-link> -->
         <router-link class="nav2" to="/inHosp/nav">
           <div>
             <h2>住院服务</h2>
@@ -181,13 +181,13 @@ export default {
       justify-content: center
       align-items: center
       .nav2:first-child
-        border-bottom: 1px solid $color-border
+        // border-bottom: 1px solid $color-border
       .nav2
-        height: 124px
-        width: 100%
-        display: flex
-        justify-content: center
-        align-items: center
+        width: 324px
+        height: 247px
+        padding: 32px 0 0 39px
+        position: relative
+        border-right: 1px solid $color-border
         h2
           font-size: 30px
           color: $color-value-grey
@@ -196,9 +196,27 @@ export default {
           margin-top: 10px
           font-size: 18px
           color: $color-word-grey
-          margin-right: 50px
         > img
-          width: 72px
+          position: absolute
+          right: 20px
+          bottom: 20px
+          width: 120px
+        // height: 124px
+        // width: 100%
+        // display: flex
+        // justify-content: center
+        // align-items: center
+        // h2
+        //   font-size: 30px
+        //   color: $color-value-grey
+        //   font-weight: bold
+        // p
+        //   margin-top: 10px
+        //   font-size: 18px
+        //   color: $color-word-grey
+        //   margin-right: 50px
+        // > img
+        //   width: 72px
   .navs3
     width: 100%
     padding-bottom: 98px

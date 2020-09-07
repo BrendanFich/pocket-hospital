@@ -25,7 +25,9 @@ import {
   Field,
   TreeSelect,
   Sidebar,
-  SidebarItem
+  SidebarItem,
+  Tab,
+  Tabs
 } from 'vant'
 
 Vue.use(MintUI)
@@ -46,6 +48,8 @@ Vue.use(Field)
 Vue.use(TreeSelect)
 Vue.use(Sidebar)
 Vue.use(SidebarItem)
+Vue.use(Tab)
+Vue.use(Tabs)
 
 Toast.setDefaultOptions('loading', { forbidClick: true, message: '', loadingType: 'spinner', duration: 0 })
 Toast.setDefaultOptions('fail', { forbidClick: true, duration: 1000 })
