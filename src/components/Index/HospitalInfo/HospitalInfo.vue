@@ -1,6 +1,7 @@
 <template>
   <div class="hospitalInfo">
-    <img src="./img/hosp.png" />
+    <!-- <img src="./img/hosp.png" /> -->
+    <DocAvatar name="hospital"/>
     <article>
       {{introduce}}
     </article>
@@ -8,8 +9,11 @@
 </template>
 
 <script>
+import DocAvatar from '@/base/DocAvatar/DocAvatar'
+
 export default {
   name: 'hospitalInfo',
+  components: { DocAvatar },
   data () {
     return {
       introduce: ''
@@ -23,7 +27,7 @@ export default {
       this.$post('/api/hosp/introduce')
         .then(res => {
           console.log(res)
-          this.introduce = res.data
+          this.introduce = '\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0' + res.data.trim()
         })
         .catch(err => {
           console.log(err)
@@ -41,9 +45,9 @@ export default {
   img
     width: 750px
   article
-    width: 750px
+    width: 650px
     background: $color-white
-    padding: 50px 0
+    padding: 50px 50px
     color: $color-title-black
     font-size: 24px
     line-height: 36px

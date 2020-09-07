@@ -2,7 +2,7 @@
   <div class="sTime">
     <div class="doctorInfo">
       <div class="baseInfo">
-        <div class="avatar">
+        <div class="avatar" v-if="docInfo.doctorName">
           <DocAvatar :name="docInfo.doctorName" />
         </div>
         <div class="text">
