@@ -80,7 +80,7 @@ export default {
 @import '~assets/sass/mixin'
 .reportDetail
   background: $color-page-background
-  min-height: calc(100% - 180px)
+  min-height: calc(100% - 90px)
   margin: 90px 0
   ul
     margin: 0 20px

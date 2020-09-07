@@ -75,7 +75,7 @@ export default {
 .bodyExam
   height: calc(100% - 90px)
   background: $color-page-background
-  margin: 90px 0
+  margin-top: 90px
   .cell
     border-bottom: 1px solid $color-border
     .content
@@ -96,6 +96,8 @@ export default {
       margin-right: 60px
     /deep/ .mint-cell-wrapper
       padding: 0
+    &:last-child
+      margin-bottom: 98px
   /deep/ .mint-cell-title
     display: flex
     justify-content: flex-start

@@ -89,6 +89,8 @@ export default {
       margin-right: 60px
     /deep/ .mint-cell-wrapper
       padding: 0
+    &:last-child
+      margin-bottom: 98px
   /deep/ .mint-cell-title
     display: flex
     justify-content: flex-start
