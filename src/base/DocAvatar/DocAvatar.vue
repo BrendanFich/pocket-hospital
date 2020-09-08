@@ -20,7 +20,6 @@ export default {
   },
   methods: {
     getAvatar (name) {
-      alert(name)
       return apiBaseUrl + '/upload/doctor/' + name + '.jpg'
     },
     setDefualtImg (e) {

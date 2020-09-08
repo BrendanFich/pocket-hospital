@@ -123,7 +123,7 @@
           {{
             docInfo.doctorIntrodution === "" ||
             docInfo.doctorIntrodution === null
-              ? "暂无"
+              ? "暂无介绍"
               : docInfo.doctorIntrodution
           }}
         </div>
