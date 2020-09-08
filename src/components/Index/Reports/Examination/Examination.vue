@@ -1,11 +1,11 @@
 <template>
   <div class="examination">
-    <mt-cell class="cell" is-link v-for="(item, index) in pacsList" :key="index" @click.native="linkeTo(item.checkId)">
+    <mt-cell class="cell" is-link v-for="(item, index) in pacsList" :key="index" @click.native="linkeTo(item)">
       <div slot="title" class="content">
-        <div class="date">
+        <!-- <div class="date">
           <span class="key">开单日期：</span>
           <span class="value">{{item.reportTime}}</span>
-        </div>
+        </div> -->
         <div class="number">
           <span class="key">化验编号：</span>
           <span class="value">{{item.checkId}}</span>
@@ -31,7 +31,11 @@ export default {
     }
   },
   created () {
-    this.getPatInfo()
+    if (this.$store.state.defaultNo) {
+      this.getLisList(this.$store.state.defaultNo)
+    } else {
+      this.getPatInfo()
+    }
   },
   methods: {
     getPatInfo () {
@@ -55,8 +59,9 @@ export default {
           console.log(error)
         })
     },
-    linkeTo (checkId) {
-      this.$router.push({name: 'reportDetail', params: {checkId, inspectId: '$'}})
+    linkeTo (item) {
+      localStorage.setItem('jcdetail', JSON.stringify(item))
+      this.$router.push({name: 'reportDetail', params: {checkId: item.checkId, inspectId: '$'}})
     }
   }
 }
@@ -71,7 +76,7 @@ export default {
     border-bottom: 1px solid $color-border
     .content
       width: 450px
-      padding: 37px 0 37px 50px
+      padding: 47px 0 27px 50px
       height: 105px
       font-size: 24px
       line-height: 34px

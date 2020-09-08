@@ -23,7 +23,7 @@
         </div>
         <span class="linkIcon">></span>
       </li>
-      <li @click="noFinish">
+      <!-- <li @click="noFinish">
         <div>
           <img src="./img/mealIcon.png" />
           <span class="title">点餐订单</span>
@@ -36,7 +36,7 @@
           <span class="title">我的就诊</span>
         </div>
         <span class="linkIcon">></span>
-      </li>
+      </li> -->
     </ul>
     <div class="others">
       <div class="item" @click="linkTo('/reports')">
@@ -47,14 +47,14 @@
         <img src="./img/suggestionIcon.png" alt />
         <span>就医反馈</span>
       </div>
-      <div class="item" @click="noFinish">
+      <!-- <div class="item" @click="noFinish">
         <img src="./img/questionIcon.png" alt />
         <span>随访问卷</span>
       </div>
       <div class="item" @click="noFinish">
         <img src="./img/linkIcon.png" alt />
         <span>友情链接</span>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

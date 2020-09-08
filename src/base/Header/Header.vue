@@ -102,7 +102,12 @@ export default {
           this.title = '缴费订单'
           break
         case 'reportDetail':
-          this.title = '报告详情'
+          if (this.$route.params.checkId === '$') {
+            this.title = '检验报告详情'
+          } else {
+            this.title = '检查报告详情'
+          }
+
           break
         case 'cardInfo':
           this.title = '就诊卡信息'

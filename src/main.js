@@ -13,6 +13,7 @@ import {
   PullRefresh,
   List,
   Cell,
+  CellGroup,
   Dialog,
   Row,
   Col,
@@ -35,6 +36,7 @@ Vue.use(NavBar)
 Vue.use(PullRefresh)
 Vue.use(List)
 Vue.use(Cell)
+Vue.use(CellGroup)
 Vue.use(Dialog)
 Vue.use(Row)
 Vue.use(Col)
@@ -49,6 +51,7 @@ Vue.use(TreeSelect)
 Vue.use(Sidebar)
 Vue.use(SidebarItem)
 Vue.use(Tab)
+Vue.use(Tabs)
 Vue.use(Tabs)
 
 Toast.setDefaultOptions('loading', { forbidClick: true, message: '', loadingType: 'spinner', duration: 0 })
