@@ -1,6 +1,7 @@
 <template>
   <div class="nav">
-    <img src="./img/hosptalBg.png" class="hospBg" />
+    <!-- <img src="./img/hosptalBg.png" class="hospBg" /> -->
+    <DocAvatar name="hospital"/>
     <div class="content">
       <ul>
         <li @click="linkTo('/inHosp/recharge')">
@@ -30,8 +31,9 @@
 </template>
 
 <script>
+import DocAvatar from '@/base/DocAvatar/DocAvatar'
 export default {
-  components: {},
+  components: { DocAvatar },
   data () {
     return {}
   },
@@ -56,7 +58,7 @@ export default {
     width: 750px
   .content
     position: absolute
-    top: 400px
+    top: 500px
     left: 57px
     width: 626px
     margin: 0 auto
