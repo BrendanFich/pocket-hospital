@@ -47,13 +47,14 @@ export default {
   article
     width: 650px
     background: $color-white
-    padding: 50px 50px
+    padding: 20px 50px 30px
     color: $color-title-black
     font-size: 24px
     line-height: 36px
     word-wrap: break-word
     overflow: hidden
     text-overflow: ellipsis
+    margin-bottom: 98px
     p
       margin: 0 50px
 </style>

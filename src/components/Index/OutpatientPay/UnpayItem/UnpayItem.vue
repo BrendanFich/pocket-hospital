@@ -128,8 +128,11 @@ export default {
       border-bottom: 5px solid $color-primary
     .tableHead
       @include font(25px, 400, $color-value-grey)
+      line-height: 34px
+      padding-top: 20px
     .tableData
       @include font(25px, 400, $color-black)
+      line-height: 32px
       &:nth-child(2n+2)
         background: #EEFFEE
     span
@@ -161,4 +164,5 @@ export default {
       color: $color-primary
   .btnBox
     padding: 40px
+    margin-bottom: 98px
 </style>

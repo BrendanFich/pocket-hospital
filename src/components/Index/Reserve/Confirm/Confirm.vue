@@ -29,18 +29,23 @@
         </li>
       </ul>
     </div>
-    <mt-button class="confirmBtn" type="primary" @click="confirm">确认挂号</mt-button>
-    <!-- <van-button type="primary"  block round @click="confirm">确认挂号</van-button> -->
+    <!-- <div class="count-down-tip" v-if="ledgerSn">请在{{ `${day}天 ${hr}小时 ${min}分钟 ${sec}分钟` }}内支付完成</div> -->
+    <count-down :endTime="endTime" endText="已经结束了" :callback="callback"></count-down>
+    <mt-button class="confirmBtn" type="primary" @click="confirm" v-if="!ledgerSn">确认预约</mt-button>
+    <mt-button class="confirmBtn" type="primary" @click="payComfirm" v-if="ledgerSn">确认支付</mt-button>
   </div>
 </template>
 
 <script>
+import CountDown from '@/base/CountDown/CountDown'
 import wx from 'weixin-js-sdk'
 export default {
   name: 'confirm',
-  components: { CustomerInfoCard: () => import('@/base/CustomerInfoCard/CustomerInfoCard') },
+  components: { CustomerInfoCard: () => import('@/base/CustomerInfoCard/CustomerInfoCard'), CountDown },
   data () {
     return {
+      endTime: Date.parse(new Date()) + 15 * 60 * 1000,
+      ledgerSn: '',
       patCardNo: '',
       visitName: '',
       visitCardNo: '',
@@ -49,14 +54,18 @@ export default {
     }
   },
   methods: {
+    callback () {
+
+    },
     getVisitName (visitName) {
       this.visitName = visitName
     },
     getVisitCardNo (visitCardNo) {
       this.visitCardNo = visitCardNo
     },
-    payComfirm (ledgerSn) {
-      this.$post('/api/doctor/payComfirm', {ledgerSn})
+    payComfirm () {
+      this.countdown()
+      this.$post('/api/doctor/payComfirm', {ledgerSn: this.ledgerSn})
         .then(res => {
           console.log(res)
           this.wxPay(res.data)
@@ -96,11 +105,12 @@ export default {
         .then(res => {
           if (res.code === 0) {
             this.$toast({
-              message: '提交成功',
+              message: '预约成功',
               duration: 1000,
               className: 'toast'
             })
-            this.payComfirm(res.data.LedgerSn)
+            this.ledgerSn = res.data.LedgerSn
+            // this.payComfirm(res.data.LedgerSn)
           } else {
             this.$toast({
               message: res.msg,
@@ -112,6 +122,9 @@ export default {
         .catch(error => {
           console.log(error)
         })
+    },
+    timeFormat (param) {
+      return param < 10 ? '0' + param : param
     }
   }
 }
