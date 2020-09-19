@@ -1,7 +1,7 @@
 <template>
   <div class="serverIndex">
     <img src="./img/serverPriceBg.png" />
-    <van-search placeholder="搜索药品名称" @focus="focus" />
+    <van-search placeholder="搜索医疗服务" @focus="focus" />
     <div class="list-content" id="list-content">
       <van-list
         v-model="loading"

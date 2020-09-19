@@ -3,10 +3,10 @@
   <div class="bodyExam">
     <mt-cell class="cell" is-link v-for="(item, index) in lisList" :key="index" @click.native="linkTo(item.inspectId)">
       <div slot="title" class="content">
-        <!-- <div class="date">
-          <span class="key">开单日期：</span>
+        <div class="date">
+          <span class="key">报告日期：</span>
           <span class="value">{{item.reportTime}}</span>
-        </div> -->
+        </div>
         <div class="number">
           <span class="key">化验编号：</span>
           <span class="value">{{item.inspectId}}</span>
