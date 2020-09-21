@@ -61,6 +61,7 @@ const DoctorIntro = () => import('@/components/Index/DoctorIntro/DoctorIntro')
 
 export default new Router({
   // mode: 'history',
+  base: '/weixin/',
   routes: [
     { path: '/', redirect: '/index' },
     {
