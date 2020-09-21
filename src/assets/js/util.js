@@ -2,6 +2,8 @@ import axios from 'axios'
 import store from '@/vuex/store'
 import { apiBaseUrl, authUrl } from './config'
 import { Toast } from 'vant'
+
+alert('前缀：' + apiBaseUrl)
 let http = {}
 const CancelToken = axios.CancelToken
 http.ajax = axios.create()
@@ -85,6 +87,7 @@ http.ajax.interceptors.response.use(
 
 // post
 http.post = (url, data) => {
+  console.log(apiBaseUrl + url)
   return new Promise((resolve, reject) => {
     http.ajax
       .post(apiBaseUrl + url, data)
