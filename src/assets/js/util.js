@@ -3,7 +3,6 @@ import store from '@/vuex/store'
 import { apiBaseUrl, authUrl } from './config'
 import { Toast } from 'vant'
 
-alert('前缀：' + apiBaseUrl)
 let http = {}
 const CancelToken = axios.CancelToken
 http.ajax = axios.create()

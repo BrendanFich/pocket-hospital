@@ -13,7 +13,6 @@ import Tabbar from '@/base/Tabbar/Tabbar'
 import Header from '@/base/Header/Header'
 import VConsole from 'vconsole'
 let vConsole = ''
-vConsole = new VConsole()
 export default {
   name: 'App',
   components: { BackButton, Header, Tabbar },
