@@ -139,8 +139,7 @@ export default {
         color: $color-value-grey
         font-size: 30px
   .confirmBtn
-    margin: 0 12.5px
-    margin-top: 92px
+    margin: 92px 12.5px 180px
     width: 725px
     height: 80px
     background: $color-primary

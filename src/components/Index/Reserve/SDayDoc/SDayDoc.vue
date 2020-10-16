@@ -104,6 +104,7 @@ export default {
         font-weight: bold
     .doctorItems
       width: 100%
+      margin-bottom: 98px
       .item
         height: 120px
         display: flex

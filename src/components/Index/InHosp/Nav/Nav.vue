@@ -62,6 +62,7 @@ export default {
     left: 57px
     width: 626px
     margin: 0 auto
+    margin-bottom: 140px
     background: $color-white
     border-radius: 20px
     ul
