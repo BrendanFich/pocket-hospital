@@ -8,7 +8,7 @@ const CancelToken = axios.CancelToken
 http.ajax = axios.create()
 
 // 请求超时时间
-http.ajax.defaults.timeout = 35000
+http.ajax.defaults.timeout = 15000
 
 // 请求拦截
 http.ajax.interceptors.request.use(

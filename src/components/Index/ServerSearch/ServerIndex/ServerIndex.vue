@@ -22,6 +22,7 @@
           </div>
         </mt-cell>
       </van-list>
+      <img class="noData" v-if="isShowNoData" src="./img/noData.png" />
     </div>
   </div>
 </template>

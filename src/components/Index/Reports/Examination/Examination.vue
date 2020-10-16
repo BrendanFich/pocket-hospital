@@ -1,22 +1,31 @@
 <template>
   <div class="examination">
-    <mt-cell class="cell" is-link v-for="(item, index) in pacsList" :key="index" @click.native="linkeTo(item)">
-      <div slot="title" class="content">
-        <div class="date">
-          <span class="key">报告日期：</span>
-          <span class="value">{{item.reportTime}}</span>
-        </div>
-        <div class="number">
-          <span class="key">化验编号：</span>
-          <span class="value">{{item.checkId}}</span>
-        </div>
-        <div class="name">
-          <span class="key">化验名称：</span>
-          <span class="value highlight">{{item.checkName}}</span>
-        </div>
-      </div>
-      <img slot="icon" src="./img/pacsList.png" />
-    </mt-cell>
+    <div class="list-content" id="list-content">
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        @load="onLoad"
+        :offset="10"
+      >
+        <mt-cell class="cell" is-link v-for="(item, index) in pacsList" :key="index" @click.native="linkeTo(item)">
+          <div slot="title" class="content">
+            <div class="date">
+              <span class="key">报告日期：</span>
+              <span class="value">{{item.reportTime}}</span>
+            </div>
+            <div class="number">
+              <span class="key">化验编号：</span>
+              <span class="value">{{item.checkId}}</span>
+            </div>
+            <div class="name">
+              <span class="key">化验名称：</span>
+              <span class="value highlight">{{item.checkName}}</span>
+            </div>
+          </div>
+          <img slot="icon" src="./img/pacsList.png" />
+        </mt-cell>
+      </van-list>
+    </div>
     <img class="noData" v-if="isShowNoData" src="./img/noData.png" />
   </div>
 </template>
@@ -27,37 +36,42 @@ export default {
   data () {
     return {
       pacsList: [],
+      page: 0,
+      loading: false, // 是否处于加载状态
+      finished: false, // 是否已加载完所有数据
+      isLoading: false, // 是否处于下拉刷新状态
       isShowNoData: false
     }
   },
-  created () {
-    if (this.$store.state.defaultNo) {
-      this.getLisList(this.$store.state.defaultNo)
-    } else {
-      this.getPatInfo()
-    }
+  mounted () {
+    let winHeight = document.documentElement.clientHeight
+    document.getElementById('list-content').style.height =
+      winHeight - 54 + 'px'
   },
   methods: {
-    getPatInfo () {
-      this.$post('/api/user/vx_info').then(res => {
-        this.getPacsList(res.data.info.visitCardNo)
-      })
-    },
-    getPacsList (patCardNo) {
+    getPacsList () {
       this.$post('/api/report/getPacsList', {
-        patCardNo, // 1000259326
-        page: 1,
+        patCardNo: this.$store.state.defaultNo,
+        page: this.page,
         size: 10
       })
         .then(res => {
-          this.pacsList = res.data
+          this.pacsList = [...this.pacsList, ...res.data]
           if (res.data.length === 0) {
             this.isShowNoData = true
+          }
+          this.loading = false
+          if (res.page.totalPage <= res.page.currentPage) {
+            this.finished = true
           }
         })
         .catch(error => {
           console.log(error)
         })
+    },
+    onLoad () {
+      this.page += 1
+      this.getPacsList()
     },
     linkeTo (item) {
       localStorage.setItem('jcdetail', JSON.stringify(item))
@@ -96,6 +110,13 @@ export default {
       padding: 0
     &:last-child
       margin-bottom: 98px
+  .list-content
+    margin-bottom: 90px
+    flex: 1
+    overflow-y: scroll
+    -webkit-overflow-scrolling : touch
+    &::-webkit-scrollbar
+      display: none
   /deep/ .mint-cell-title
     display: flex
     justify-content: flex-start

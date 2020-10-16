@@ -1,69 +1,90 @@
 <template>
   <!-- 检验报告 -->
   <div class="bodyExam">
-    <mt-cell class="cell" is-link v-for="(item, index) in lisList" :key="index" @click.native="linkTo(item.inspectId)">
-      <div slot="title" class="content">
-        <div class="date">
-          <span class="key">报告日期：</span>
-          <span class="value">{{item.reportTime}}</span>
-        </div>
-        <div class="number">
-          <span class="key">化验编号：</span>
-          <span class="value">{{item.inspectId}}</span>
-        </div>
-        <div class="name">
-          <div class="key">化验名称：</div>
-          <div class="value highlight">{{item.inspectName}}</div>
-        </div>
-      </div>
-      <img slot="icon" src="./img/lisList.png" />
-    </mt-cell>
+    <div class="list-content" id="list-content">
+      <van-list
+        v-model="loading"
+        :finished="finished"
+        @load="onLoad"
+        :offset="10"
+      >
+        <mt-cell
+          class="cell"
+          is-link
+          v-for="(item, index) in lisList"
+          :key="index"
+          @click.native="linkTo(item.inspectId)"
+        >
+          <div slot="title" class="content">
+            <div class="date">
+              <span class="key">报告日期：</span>
+              <span class="value">{{ item.reportTime }}</span>
+            </div>
+            <div class="number">
+              <span class="key">化验编号：</span>
+              <span class="value">{{ item.inspectId }}</span>
+            </div>
+            <div class="name">
+              <div class="key">化验名称：</div>
+              <div class="value highlight">{{ item.inspectName }}</div>
+            </div>
+          </div>
+          <img slot="icon" src="./img/lisList.png" />
+        </mt-cell>
+      </van-list>
+    </div>
     <img class="noData" v-if="isShowNoData" src="./img/noData.png" />
   </div>
 </template>
 
 <script>
-
 export default {
   name: 'bodyExam',
   data () {
     return {
       lisList: [],
+      page: 0,
+      loading: false, // 是否处于加载状态
+      finished: false, // 是否已加载完所有数据
+      isLoading: false, // 是否处于下拉刷新状态
       isShowNoData: false
     }
   },
-  created () {
-    if (this.$store.state.defaultNo) {
-      this.getLisList(this.$store.state.defaultNo)
-    } else {
-      this.getPatInfo()
-    }
+  mounted () {
+    let winHeight = document.documentElement.clientHeight
+    document.getElementById('list-content').style.height =
+      winHeight - 54 + 'px'
   },
   methods: {
-    getPatInfo () {
-      this.$post('/api/user/vx_info').then(res => {
-        this.getLisList(res.data.info.visitCardNo)
-      })
-    },
-    getLisList (patCardNo) {
+    getLisList () {
       this.$post('/api/report/getLisList', {
-        patCardNo,
-        page: 1,
+        patCardNo: this.$store.state.defaultNo,
+        page: this.page,
         size: 10
       })
         .then(res => {
-          this.lisList = res.data
+          this.lisList = [...this.lisList, ...res.data]
           if (res.data.length === 0) {
             this.isShowNoData = true
+          }
+          this.loading = false
+          if (res.page.totalPage <= res.page.currentPage) {
+            this.finished = true
           }
         })
         .catch(error => {
           console.log(error)
         })
     },
+    onLoad () {
+      this.page += 1
+      this.getLisList()
+    },
     linkTo (inspectId) {
-      this.$router.push({name: 'reportDetail', params: {inspectId, checkId: '$'}})
-      // this.$router.push('/reports/reportDetail/' + inspectId + '&')
+      this.$router.push({
+        name: 'reportDetail',
+        params: { inspectId, checkId: '$' }
+      })
     }
   }
 }
@@ -98,6 +119,13 @@ export default {
       padding: 0
     &:last-child
       margin-bottom: 98px
+  .list-content
+    margin-bottom: 90px
+    flex: 1
+    overflow-y: scroll
+    -webkit-overflow-scrolling : touch
+    &::-webkit-scrollbar
+      display: none
   /deep/ .mint-cell-title
     display: flex
     justify-content: flex-start
