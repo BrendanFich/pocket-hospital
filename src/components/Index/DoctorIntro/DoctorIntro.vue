@@ -25,18 +25,35 @@
       <mt-tab-container-item v-for="(item, index) in deptList" :key="index" :id="index">
         <img class="noData" v-if="docList.length === 0" src="./img/noData.png" />
         <ul style="background: #fff;">
-          <li class="doctorIntroCard" v-for="(doctor, dindex) in docList" :key="dindex">
-            <DocAvatar :name="doctor.doctorName" />
+          <li class="doctorIntroCard" v-for="(doctor, dindex) in docList" :key="dindex" @click="showAllInfo(doctor)">
+            <DocAvatar :name="doctor.doctorName" style="margin-left: 20px"/>
             <div class="doctorInfo">
               <p class="doctorName">{{ doctor.doctorName }}</p>
               <p class="doctorTitle">{{ doctor.deptName }} | {{ doctor.doctorTitle }}</p>
-              <van-rate :value="Math.round(item.score / 2)" readonly />
+              <van-rate :value="Math.round(doctor.score / 2)" readonly />
               <p class="textIntro">{{ doctor.doctorIntrodution || "暂无介绍" }}</p>
             </div>
           </li>
         </ul>
       </mt-tab-container-item>
     </mt-tab-container>
+    <van-dialog
+      v-model="dialogShow"
+      v-if="dialogShow"
+      title="医生简介"
+      show-cancel-button
+      :closeOnClickOverlay="true"
+      confirmButtonColor="#09cf74"
+      confirmButtonText="确定"
+    >
+      <DocAvatar :name="doctor.doctorName" :marginLeft="20"/>
+      <div class="doctorInfo">
+        <p class="doctorName">{{ doctor.doctorName }}</p>
+        <p class="doctorTitle">{{ doctor.deptName }} | {{ doctor.doctorTitle }}</p>
+        <van-rate :value="Math.round(doctor.score / 2)" readonly />
+        <p class="textIntro">{{ doctor.doctorIntrodution || "暂无介绍" }}</p>
+      </div>
+    </van-dialog>
   </div>
 </template>
 
@@ -51,7 +68,9 @@ export default {
       color: ['#E3B461', '#E36A61', '#98E361', '#61E3B4', '#619BE3'],
       deptList: [],
       docList: [],
-      deptCode: ''
+      deptCode: '',
+      dialogShow: false,
+      doctor: {}
     }
   },
   created () {
@@ -82,6 +101,10 @@ export default {
         .catch(error => {
           console.log(error)
         })
+    },
+    showAllInfo (doctor) {
+      this.doctor = doctor
+      this.dialogShow = true
     }
   }
 }
@@ -137,7 +160,6 @@ export default {
         .department
           color: $color-black
           font-weight: blod
-
   .title
     text-align: start
     font-size: 24px
@@ -174,6 +196,23 @@ export default {
         line-height: 34px
       .textIntro
         font-size: 24px
+        color: $color-word-grey
+  .van-dialog__content
+    padding: 30px
+    border-bottom: 1px solid $color-border
+    display: flex
+    font-size: 16px
+    .doctorInfo
+      margin: 20px
+      line-height: 24px
+      flex: 1
+      text-align: start
+      .doctorName
+        color: $color-title-black
+        font-weight: bold
+      .doctorTitle
+        color: $color-title-black
+      .textIntro
         color: $color-word-grey
 >>>.van-icon-star,>>>.van-icon-star-o
   font-size: 12px

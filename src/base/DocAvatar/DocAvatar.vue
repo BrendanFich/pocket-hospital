@@ -1,5 +1,5 @@
 <template>
-  <div :class="{docAvatar: name !== 'hospital'}" >
+  <div :class="{docAvatar: name !== 'hospital'}" :style="'margin-left:' + marginLeft + 'px'">
     <img :src="getAvatar(name)" @error="setDefualtImg"/>
   </div>
 </template>
@@ -16,7 +16,11 @@ export default {
     }
   },
   props: {
-    name: String
+    name: String,
+    marginLeft: {
+      type: Number,
+      default: 0
+    }
   },
   methods: {
     getAvatar (name) {

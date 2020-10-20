@@ -31,12 +31,9 @@ http.ajax.interceptors.request.use(
 // 响应拦截
 http.ajax.interceptors.response.use(
   res => {
-    console.log()
-
     Toast.clear()
     if (res.data.code === 401) {
       localStorage.removeItem('token')
-
       if (process.env.NODE_ENV === 'production') {
         window.location.href = authUrl
       } else {
@@ -54,6 +51,12 @@ http.ajax.interceptors.response.use(
           className: 'toast'
         })
       }
+    } else if (res.data.code === 404) {
+      Toast({
+        message: '出错了',
+        duration: 1500,
+        className: 'toast'
+      })
     }
     return res
   },
