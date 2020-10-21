@@ -1,14 +1,18 @@
 <template>
   <div class="dailyList">
     <div class="list">
-      <img class="noData" v-if="dailyListInfo === {}" src="./img/noData.png" />
+      <div class="orderInfo">
+        <ul>
+          <li>
+          <span class="key">费用日期</span>
+          <span class="value">{{ dateformat }}</span>
+          </li>
+        </ul>
+      </div>
+      <img class="noData" v-if="dailyListInfo.length === 0" src="./img/noData.png"/>
       <div v-for="(item, index) in dailyListInfo" :key="index">
         <div class="orderInfo">
           <ul>
-            <li>
-            <span class="key">费用日期</span>
-            <span class="value">{{ item.itemDate }}</span>
-            </li>
             <li>
               <span class="key">住院科室</span>
               <span class="value">{{ item.deptName }}</span>
@@ -103,7 +107,11 @@ export default {
       defaultDate: ''
     }
   },
-  watch: {},
+  computed: {
+    dateformat () {
+      return dayjs(this.date).format('YYYY-MM-DD')
+    }
+  },
   methods: {
     moneyComputed (val) {
       return (Number(val) / 100).toFixed(2)
@@ -130,11 +138,13 @@ export default {
                 id_card_no: this.patIdNo
               })
                 .then(res => {
-                  this.inVisitId = res.data.InVisitId
-                  if (res.data.CardNo) {
+                  if (res.code === 0) {
+                    this.inVisitId = res.data.InVisitId
+                    resolve()
+                  } else {
+                    this.dailyListInfo = []
                     this.$toast('无住院信息')
                   }
-                  resolve()
                 })
                 .catch(error => {
                   console.log(error)
@@ -147,7 +157,10 @@ export default {
       })
     },
     getVisitDaliyOne (date) {
-      console.log(date)
+      if (!this.inVisitId) {
+        this.$toast('无住院信息')
+        return
+      }
       this.$post('/api/invisit/getVisitDaliyOne', {
         pat_card_no: this.visitCardNo,
         pat_card_type: '1',
@@ -201,10 +214,11 @@ export default {
 .dailyList
   @include main()
   .list
+    margin-bottom: 228px
     .orderInfo
       background: $color-white
       ul > li
-        height: 88px
+        height: 78px
         padding: 0 54px 0 43px
         display: flex
         justify-content: space-between
@@ -217,8 +231,12 @@ export default {
           color: $color-value-grey
           font-size: 30px
   .footer
-    margin-bottom: 98px
+    background: #f2f2f2
+    height: 90px
     padding: 20px
+    position: fixed
+    bottom: 98px
+    width: calc(100% - 40px)
     display: flex
     justify-content: space-between
     align-items: center
