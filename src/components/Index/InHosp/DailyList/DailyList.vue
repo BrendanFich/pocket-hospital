@@ -161,6 +161,10 @@ export default {
         this.$toast('无住院信息')
         return
       }
+      if (dayjs(dayjs().format('YYYY-MM-DD')).isBefore(date)) {
+        this.$toast('未生成' + date + '清单')
+        return
+      }
       this.$post('/api/invisit/getVisitDaliyOne', {
         pat_card_no: this.visitCardNo,
         pat_card_type: '1',
