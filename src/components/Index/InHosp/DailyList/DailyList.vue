@@ -63,7 +63,7 @@
         </div>
       </div>
     </div>
-    <div class="footer" v-if="dailyListInfo.length>0">
+    <div class="footer">
       <van-button icon="arrow-left" type="primary" @click="beforeDate"
         >前一天</van-button
       >
