@@ -131,6 +131,7 @@ export default {
       width: 710px
       height: 160px
       padding: 0 20px
+      overflow: auto
       .tag
         display: inline-block
         padding: 10px 12px

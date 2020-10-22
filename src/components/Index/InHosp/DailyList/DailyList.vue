@@ -218,7 +218,7 @@ export default {
 .dailyList
   @include main()
   .list
-    margin-bottom: 228px
+    margin-bottom: 260px
     .orderInfo
       background: $color-white
       ul > li
