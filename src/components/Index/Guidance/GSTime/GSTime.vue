@@ -3,15 +3,17 @@
     <div class="doctorIntroCard">
       <DocAvatar :name="docInfo.doctorName" />
       <div class="docInfo">
-        <p class="doctorName">{{ docInfo.doctorName }}</p>
+        <p class="doctorName">{{ docInfo.doctorName }}史诗撒所</p>
         <p class="doctorTitle">
           {{ docInfo.deptName }} {{ docInfo.doctorTitle }}
+          史诗撒所
         </p>
         <van-rate v-model="star" readonly />
         <p class="textIntro">
           {{
             docInfo.doctorIntrodution ? docInfo.doctorIntrodution : "暂无介绍"
           }}
+          暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍暂无介绍
         </p>
       </div>
     </div>
@@ -148,13 +150,18 @@ export default {
   @include main()
   .doctorIntroCard
     background: $color-white
-    height: 195px
+    height: 210px
     padding: 30px 50px 40px 30px
     border-bottom: 1px solid $color-border
     display: flex
     margin-bottom: 20px
     .docInfo
       flex: 1
+      text-align: start
+      display: -webkit-box
+      -webkit-box-orient: vertical
+      -webkit-line-clamp: 3
+      overflow: hidden
       .doctorName
         font-size: 30px
         color: $color-title-black
