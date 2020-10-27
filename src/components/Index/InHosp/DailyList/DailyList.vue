@@ -28,56 +28,56 @@
           </ul>
         </div>
       </div>
-      <van-tabs v-model="active" color="#09cf74" swipeable v-if="!noData">
-        <van-tab title="合计">
+      <van-tabs v-model="active" color="#09cf74" swipeable @click="clickTab">
+        <van-tab title="合计" class="orderInfo">
           <ul>
             <li>
               <span class="key">费用总金额</span>
-              <span class="value">{{ moneyComputed(dailyListInfo.totalFee) }}</span>
+              <span class="value">{{ dailyListInfo.totalFee }}</span>
             </li>
             <li>
               <span class="key">甲类金额</span>
-              <span class="value">{{ moneyComputed(dailyListInfo.feeA) }}</span>
+              <span class="value">{{ dailyListInfo.feeA }}</span>
             </li>
             <li>
               <span class="key">乙类金额</span>
-              <span class="value">{{ moneyComputed(dailyListInfo.feeB) }}</span>
+              <span class="value">{{ dailyListInfo.feeB }}</span>
             </li>
             <li>
               <span class="key">丙类金额</span>
-              <span class="value">{{ moneyComputed(dailyListInfo.bedFee) }}</span>
+              <span class="value">{{ dailyListInfo.bedFee }}</span>
             </li>
             <li>
               <span class="key">西药费</span>
-              <span class="value">{{ moneyComputed(dailyListInfo.westMedFee) }}</span>
+              <span class="value">{{ dailyListInfo.westMedFee }}</span>
             </li>
             <li>
               <span class="key">成药费</span>
-              <span class="value">{{ moneyComputed(dailyListInfo.readyMedFee) }}</span>
+              <span class="value">{{ dailyListInfo.readyMedFee }}</span>
             </li>
             <li>
               <span class="key">草药费</span>
-              <span class="value">{{ moneyComputed(dailyListInfo.herbMedFee) }}</span>
+              <span class="value">{{ dailyListInfo.herbMedFee }}</span>
             </li>
             <li>
               <span class="key">诊疗费</span>
-              <span class="value">{{ moneyComputed(dailyListInfo.treatFee) }}</span>
+              <span class="value">{{ dailyListInfo.treatFee }}</span>
             </li>
             <li>
               <span class="key" style="font-weight: bold">合计</span>
               <span class="value" style="font-weight: bold">{{
-                moneyComputed(dailyListInfo.itemTotalFee)
+                dailyListInfo.itemTotalFee
               }}</span>
             </li>
           </ul>
         </van-tab>
         <van-tab title="明细">
-          <ul style="margin-top: 5px; background: #fff">
+          <!-- <ul style="margin-top: 5px; background: #fff">
             <li v-for="(item, index) in detail" :key="index">
               <span class="key">{{item.ChargeStandardNm}}</span>
               <span class="value">{{ item.Amt }}</span>
             </li>
-          </ul>
+          </ul> -->
           <ul class="table">
             <li class="tableHead">
               <span class="column1">项目名称</span>
@@ -85,12 +85,21 @@
               <span class="column3">数量</span>
               <span class="column4">金额(元)</span>
             </li>
-            <li class="tableData" v-for="(item, index) in detail" :key="index">
-              <span class="column1">{{ item.ChargeStandardNm }}</span>
-              <span class="column2">¥{{ item.Price }}</span>
-              <span class="column3">{{ item.Quantity }}</span>
-              <span class="column4 ">¥{{ item.Amt }}</span>
-            </li>
+            <div class="list-content" id="list-content">
+              <van-list
+                v-model="loading"
+                :finished="finished"
+                @load="onLoad"
+                :offset="10"
+              >
+                <li class="tableData" v-for="(item, index) in detail" :key="index">
+                  <span class="column1">{{ item.ChargeStandardNm }}</span>
+                  <span class="column2">¥{{ Number(item.Price).toFixed(2) }}</span>
+                  <span class="column3">{{ Number(item.Quantity).toFixed(2) }}</span>
+                  <span class="column4 ">¥{{ Number(item.Amt).toFixed(2) }}</span>
+                </li>
+              </van-list>
+            </div>
           </ul>
         </van-tab>
       </van-tabs>
@@ -135,8 +144,28 @@ export default {
       defaultEnd: '',
       defaultDate: '',
       noData: false,
-      detail: []
+      detail: [],
+      page: 1,
+      loading: false,
+      finished: false,
+      isLoading: false
     }
+  },
+  async created () {
+    this.date = dayjs()
+    this.defaultDate = this.date.toDate()
+    this.defaultStart = dayjs()
+      .subtract(1, 'y')
+      .toDate()
+    this.defaultEnd = dayjs()
+      .add(1, 'y')
+      .toDate()
+    await this.getInfo()
+    this.getVisitDaliyOne(dayjs(this.date).format('YYYY-MM-DD'))
+    this._getDetail()
+  },
+  mounted () {
+
   },
   computed: {
     dateformat () {
@@ -144,8 +173,22 @@ export default {
     }
   },
   methods: {
-    moneyComputed (val) {
-      return (Number(val) / 100).toFixed(2)
+    clickTab (name) {
+      if (name) {
+        this.$nextTick(() => {
+          let winHeight = document.querySelector('.van-tabs').clientHeight
+          let footerHeight = document.querySelector('.footer').clientHeight
+          console.log(document.querySelector('.van-tabs'))
+          console.log(document.querySelector('.footer'))
+          console.log(winHeight)
+          console.log(footerHeight)
+          document.getElementById('list-content').style.height =
+          winHeight -
+        (40 * 2 * Math.min(document.documentElement.clientWidth / 750, 2) + 44 +
+        2 * Math.min(footerHeight / 750, 2)) +
+        'px'
+        })
+      }
     },
     back () {
       this.$router.go(-1)
@@ -238,32 +281,28 @@ export default {
       this.$post('/api/invisit/getVisitDaliyOneDetail', {
         in_visit_id: this.inVisitId,
         begin: date,
-        end: date
+        end: date,
+        page: this.page,
+        size: 10
       })
         .then(res => {
           if (res.code === 0) {
-            this.detail = res.data
-          } else {
-            this.detail = []
+            this.detail = [...this.detail, ...res.data]
+            this.loading = false
+            if (res.page.totalPage <= res.page.currentPage) {
+              this.finished = true
+              console.log(this.finished)
+            }
           }
         })
         .catch(error => {
           console.log(error)
         })
+    },
+    onLoad () {
+      this.page += 1
+      this._getDetail()
     }
-  },
-  async created () {
-    this.date = dayjs()
-    this.defaultDate = this.date.toDate()
-    this.defaultStart = dayjs()
-      .subtract(1, 'y')
-      .toDate()
-    this.defaultEnd = dayjs()
-      .add(1, 'y')
-      .toDate()
-    await this.getInfo()
-    this.getVisitDaliyOne(dayjs(this.date).format('YYYY-MM-DD'))
-    this._getDetail()
   }
 
 }
@@ -276,31 +315,28 @@ export default {
   @include main()
   .list
     height: calc(100% - 140px)
-    ul > li
-      height: 78px
-      padding: 0 54px 0 43px
-      display: flex
-      justify-content: space-between
-      align-items: center
-      border-bottom: 1px solid $color-border
-      .key
-        color: $color-title-black
-        font-size: 30px
-      .value
-        color: $color-value-grey
-        font-size: 30px
     .top
-      height: 28%
-      .orderInfo
-        background: $color-white
-        margin-bottom: 20px
+      margin-bottom: 20px
+    .orderInfo
+      background: $color-white
+      ul > li
+        height: 78px
+        padding: 0 54px 0 43px
+        display: flex
+        justify-content: space-between
+        align-items: center
+        border-bottom: 1px solid $color-border
+        .key
+          color: $color-title-black
+          font-size: 30px
+        .value
+          color: $color-value-grey
+          font-size: 30px
     .van-tabs
       height: 66%
       background: $color-white
       /deep/ .van-tabs__content
         border-top: 5px solid #f2f2f2
-        height: calc(100% - 46px)
-        overflow: auto
     .footer
       height: 6%
       padding-bottom: 98px
@@ -314,33 +350,40 @@ export default {
         height: 32px
         border-radius: 5px
         line-height: 18px
+  #list-content
+    flex: 1
+    overflow-y: scroll
+    -webkit-overflow-scrolling : touch
+    &::-webkit-scrollbar
+      display: none
   .table
     .tableHead
       @include font(25px, 400, $color-value-grey)
       line-height: 34px
     .tableData
       @include font(25px, 400, $color-black)
-      line-height: 32px
+      line-height: 40px
       &:nth-child(2n+2)
         background: #EEFFEE
     span
-      padding: 20px
+      padding: 20px 15px
     .column1
       flex: 1
     .column2
-      width: 100px
+      width: 120px
       text-align: right
     .column3
-      width: 50px
+      width: 70px
       text-align: center
     .column4
-      min-width: 100px
+      min-width: 120px
       text-align: right
     li
       display: flex
       justify-content: end
       align-items: center
       border-bottom: 1px solid $color-border
+      padding: 0
   .noData
     width: 280px
     margin: 0 auto
