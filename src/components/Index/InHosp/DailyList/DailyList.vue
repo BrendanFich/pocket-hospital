@@ -333,10 +333,12 @@ export default {
           color: $color-value-grey
           font-size: 30px
     .van-tabs
-      height: 66%
+      height: 60%
       background: $color-white
       /deep/ .van-tabs__content
         border-top: 5px solid #f2f2f2
+        height: calc(100% - 46px)
+        overflow: auto
     .footer
       height: 6%
       padding-bottom: 98px
