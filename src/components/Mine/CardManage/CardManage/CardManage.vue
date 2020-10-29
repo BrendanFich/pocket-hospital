@@ -87,6 +87,7 @@ export default {
   .cardList
     overflow-y: auto
     max-height: 1200px
+    margin-bottom: 98px
     .customerInfoCard
       border-bottom: 1px solid #f2f2f2
       padding: 47px 50px 46px 31px

@@ -29,6 +29,7 @@
         </li>
       </ul>
     </div>
+    <div class="notice">温馨提示：微信暂不支持医保结算！</div>
     <mt-button class="confirmBtn" type="primary" @click="confirm">确认挂号</mt-button>
   </div>
 </template>
@@ -85,31 +86,40 @@ export default {
       })
     },
     confirm () {
-      let configdata = {
-        beginTime: this.$store.state.beginTime,
-        patCardNo: this.visitCardNo,
-        deptCode: this.$store.state.deptCode.toString(),
-        doctorCode: this.$store.state.doctorCode.toString()
-      }
-      this.$post('/api/doctor/register', configdata)
-        .then(res => {
-          if (res.code === 0) {
-            this.$toast({
-              message: '提交成功',
-              duration: 1000,
-              className: 'toast'
-            })
-            this.payComfirm(res.data.LedgerSn)
-          } else {
-            this.$toast({
-              message: res.msg,
-              duration: 1000,
-              className: 'toast'
-            })
+      this.$dialog.confirm({
+        title: '温馨提示',
+        message: '微信端目前只支持自费病人，暂不支持医保结算！如需医保缴费，请前往窗口处排队处理！'
+      })
+        .then(() => {
+          let configdata = {
+            beginTime: this.$store.state.beginTime,
+            patCardNo: this.visitCardNo,
+            deptCode: this.$store.state.deptCode.toString(),
+            doctorCode: this.$store.state.doctorCode.toString()
           }
+          this.$post('/api/doctor/register', configdata)
+            .then(res => {
+              if (res.code === 0) {
+                this.$toast({
+                  message: '提交成功',
+                  duration: 1000,
+                  className: 'toast'
+                })
+                this.payComfirm(res.data.LedgerSn)
+              } else {
+                this.$toast({
+                  message: res.msg,
+                  duration: 1000,
+                  className: 'toast'
+                })
+              }
+            })
+            .catch(error => {
+              console.log(error)
+            })
         })
-        .catch(error => {
-          console.log(error)
+        .catch(() => {
+          // on cancel
         })
     }
   }
@@ -138,8 +148,11 @@ export default {
       .value
         color: $color-value-grey
         font-size: 30px
+  .notice
+    font-size: 30px
+    margin: 30px
   .confirmBtn
-    margin: 92px 12.5px 180px
+    margin: 0 12.5px 180px
     width: 725px
     height: 80px
     background: $color-primary

@@ -65,10 +65,10 @@
           <img src="./img/serverIcon.png"/>
           <h3>医疗服务价格</h3>
         </router-link>
-        <!-- <router-link class="item" to="/parking">
+        <router-link class="item" to="/parking">
           <img src="./img/parkIcon.png" />
           <h3>车位查询</h3>
-        </router-link> -->
+        </router-link>
         <router-link class="item" to="/suggestion">
           <img src="./img/suggestion.png" />
           <h3>意见提交</h3>
@@ -76,8 +76,6 @@
         <div class="item" to="/index" @click="getLocation">
           <img src="./img/guidance.png" />
           <h3>来院导航</h3>
-        </div>
-        <div class="item">
         </div>
       </div>
     </div>
@@ -182,6 +180,25 @@ export default {
       flex-wrap: wrap
       justify-content: center
       align-items: center
+      // .nav2:first-child
+      //   border-bottom: 2px solid $color-border
+      // .nav2
+      //   height: 124px
+      //   width: 100%
+      //   display: flex
+      //   justify-content: center
+      //   align-items: center
+      //   h2
+      //     font-size: 30px
+      //     color: $color-value-grey
+      //     font-weight: bold
+      //   p
+      //     margin-top: 10px
+      //     font-size: 18px
+      //     color: $color-word-grey
+      //     margin-right: 50px
+      //   > img
+      //     width: 72px
       .nav2:first-child
         // border-bottom: 1px solid $color-border
       .nav2
@@ -189,7 +206,6 @@ export default {
         height: 247px
         padding: 32px 0 0 39px
         position: relative
-        border-right: 1px solid $color-border
         h2
           font-size: 30px
           color: $color-value-grey
@@ -203,22 +219,6 @@ export default {
           right: 20px
           bottom: 20px
           width: 120px
-        // height: 124px
-        // width: 100%
-        // display: flex
-        // justify-content: center
-        // align-items: center
-        // h2
-        //   font-size: 30px
-        //   color: $color-value-grey
-        //   font-weight: bold
-        // p
-        //   margin-top: 10px
-        //   font-size: 18px
-        //   color: $color-word-grey
-        //   margin-right: 50px
-        // > img
-        //   width: 72px
   .navs3
     width: 100%
     padding-bottom: 98px
