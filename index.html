@@ -6,6 +6,31 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no">
   <title></title>
   <link rel="shortcut icon" href="#" />
+  <style>
+
+  </style>
+  <script>
+    (function() {
+        if (typeof window.WeixinjsBridge == "object" && typeof WeixinjsBridge.invoke == "function") {
+          alert('ss')
+            handleFontSize();
+        } else {
+            if (document.addEventListener) {
+                document.addEventListener("WeixinJSBridgeReady", handleFontSize, false);
+            } else if (document.attachEvent) {
+                document.attachEvent("WeixinJSBridgeReady", handleFontSize);
+                document.attachEvent("onWeixinJSBridgeReady", handleFontSize);  }
+        }
+        function handleFontSize() {
+            // 设置网页字体为默认大小
+            WeixinJSBridge.invoke('setFontSizeCallback', { 'fontSize' : 16 });
+            // 重写设置网页字体大小的事件
+            WeixinJSBridge.on('menu:setfont', function() {
+                WeixinJSBridge.invoke('setFontSizeCallback', { 'fontSize' : 16 });
+            });
+        }
+    })();
+  </script>
 </head>
 
 <body>

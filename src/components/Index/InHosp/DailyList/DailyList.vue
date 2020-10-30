@@ -33,40 +33,40 @@
           <ul>
             <li>
               <span class="key">费用总金额</span>
-              <span class="value">{{ dailyListInfo.totalFee }}</span>
+              <span class="value">{{ (Number(dailyListInfo.totalFee)/100).toFixed(2) }}</span>
             </li>
             <li>
               <span class="key">甲类金额</span>
-              <span class="value">{{ dailyListInfo.feeA }}</span>
+              <span class="value">{{ (Number(dailyListInfo.feeA)/100).toFixed(2) }}</span>
             </li>
             <li>
               <span class="key">乙类金额</span>
-              <span class="value">{{ dailyListInfo.feeB }}</span>
+              <span class="value">{{ (Number(dailyListInfo.feeB)/100).toFixed(2) }}</span>
             </li>
             <li>
               <span class="key">丙类金额</span>
-              <span class="value">{{ dailyListInfo.bedFee }}</span>
+              <span class="value">{{ (Number(dailyListInfo.bedFee)/100).toFixed(2) }}</span>
             </li>
             <li>
               <span class="key">西药费</span>
-              <span class="value">{{ dailyListInfo.westMedFee }}</span>
+              <span class="value">{{ (Number(dailyListInfo.westMedFee)/100).toFixed(2) }}</span>
             </li>
             <li>
               <span class="key">成药费</span>
-              <span class="value">{{ dailyListInfo.readyMedFee }}</span>
+              <span class="value">{{ (Number(dailyListInfo.readyMedFee)/100).toFixed(2) }}</span>
             </li>
             <li>
               <span class="key">草药费</span>
-              <span class="value">{{ dailyListInfo.herbMedFee }}</span>
+              <span class="value">{{ (Number(dailyListInfo.herbMedFee)/100).toFixed(2) }}</span>
             </li>
             <li>
               <span class="key">诊疗费</span>
-              <span class="value">{{ dailyListInfo.treatFee }}</span>
+              <span class="value">{{ (Number(dailyListInfo.treatFee)/100).toFixed(2) }}</span>
             </li>
             <li>
               <span class="key" style="font-weight: bold">合计</span>
               <span class="value" style="font-weight: bold">{{
-                dailyListInfo.itemTotalFee
+                (Number(dailyListInfo.itemTotalFee)/100).toFixed(2)
               }}</span>
             </li>
           </ul>
@@ -145,7 +145,7 @@ export default {
       defaultDate: '',
       noData: false,
       detail: [],
-      page: 1,
+      page: 0,
       loading: false,
       finished: false,
       isLoading: false
@@ -162,7 +162,6 @@ export default {
       .toDate()
     await this.getInfo()
     this.getVisitDaliyOne(dayjs(this.date).format('YYYY-MM-DD'))
-    this._getDetail()
   },
   mounted () {
 
@@ -174,21 +173,15 @@ export default {
   },
   methods: {
     clickTab (name) {
-      if (name) {
-        this.$nextTick(() => {
-          let winHeight = document.querySelector('.van-tabs').clientHeight
-          let footerHeight = document.querySelector('.footer').clientHeight
-          console.log(document.querySelector('.van-tabs'))
-          console.log(document.querySelector('.footer'))
-          console.log(winHeight)
-          console.log(footerHeight)
-          document.getElementById('list-content').style.height =
-          winHeight -
-        (40 * 2 * Math.min(document.documentElement.clientWidth / 750, 2) + 44 +
-        2 * Math.min(footerHeight / 750, 2)) +
-        'px'
-        })
-      }
+      if (!name) return
+      if (!this.inVisitId) return
+      this.$nextTick(() => {
+        let winHeight = document.querySelector('.van-tabs').clientHeight
+        let footerHeight = document.querySelector('.footer').clientHeight
+        document.getElementById('list-content').style.height =
+        winHeight - (40 * 2 * Math.min(document.documentElement.clientWidth / 750, 2) + 44 +
+          2 * Math.min(footerHeight / 750, 2)) + 'px'
+      })
     },
     back () {
       this.$router.go(-1)
@@ -283,7 +276,7 @@ export default {
         begin: date,
         end: date,
         page: this.page,
-        size: 10
+        size: 30
       })
         .then(res => {
           if (res.code === 0) {

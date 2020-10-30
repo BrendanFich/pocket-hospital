@@ -25,6 +25,7 @@ export default {
     }
   },
   created () {
+    console.log(window.WeixinjsBridge)
     this.getConfig()
     if (this.getUrlParam('token')) {
       window.localStorage.setItem('token', this.getUrlParam('token'))
@@ -237,6 +238,9 @@ body
     height: 100px
     border: none
 body
+  -webkit-text-size-adjust: 100% !important
+  text-size-adjust: 100% !important
+  -moz-text-size-adjust: 100% !important
   .van-toast
     padding: 10px 15px
     border-radius: 10px
