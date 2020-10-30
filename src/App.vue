@@ -25,7 +25,6 @@ export default {
     }
   },
   created () {
-    console.log(window.WeixinjsBridge)
     this.getConfig()
     if (this.getUrlParam('token')) {
       window.localStorage.setItem('token', this.getUrlParam('token'))

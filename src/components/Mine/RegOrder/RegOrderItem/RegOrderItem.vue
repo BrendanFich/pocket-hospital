@@ -112,23 +112,29 @@ export default {
     },
     pay () {
       let self = this
-      this.$post('/api/doctor/payComfirm', { ledgerSn: this.$route.params.ledgerSn })
-        .then(res => {
-          wx.ready(function () {
-            wx.chooseWXPay({
-              timestamp: res.data.timestamp,
-              nonceStr: res.data.nonceStr,
-              package: res.data.package,
-              signType: res.data.signType,
-              paySign: res.data.paySign,
-              success: res => {
-                self.getPayItem()
-              }
+      this.$dialog.confirm({
+        title: '温馨提示',
+        message: '微信端目前只支持自费病人，暂不支持医保结算！如需医保缴费，请前往窗口处排队处理！'
+      })
+        .then(() => {
+          this.$post('/api/doctor/payComfirm', { ledgerSn: this.$route.params.ledgerSn })
+            .then(res => {
+              wx.ready(function () {
+                wx.chooseWXPay({
+                  timestamp: res.data.timestamp,
+                  nonceStr: res.data.nonceStr,
+                  package: res.data.package,
+                  signType: res.data.signType,
+                  paySign: res.data.paySign,
+                  success: res => {
+                    self.getPayItem()
+                  }
+                })
+              })
             })
-          })
-        })
-        .catch(error => {
-          console.log(error)
+            .catch(error => {
+              console.log(error)
+            })
         })
     },
     payComfirm (ledgerSn) {
