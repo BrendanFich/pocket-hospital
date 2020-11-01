@@ -58,8 +58,14 @@ export default {
     payComfirm (ledgerSn) {
       this.$post('/api/doctor/payComfirm', {ledgerSn})
         .then(res => {
-          console.log(res)
-          this.wxPay(res.data)
+          if (res.code === 0) {
+            if (res.data.paySign && res.data.nonceStr && res.data.package && res.data.signType && res.data.paySign) {
+              this.wxPay(res.data)
+            } else {
+              this.$toast({ message: '挂号成功', duration: 1500, className: 'toast' })
+              this.$router.go(-4)
+            }
+          }
         })
         .catch(error => {
           console.log(error)
