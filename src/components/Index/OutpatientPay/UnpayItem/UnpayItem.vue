@@ -42,25 +42,10 @@ export default {
   },
   created () {
     this.getUnpayItem()
-    this.creatOrder()
   },
   computed: {
   },
   methods: {
-    creatOrder () {
-      this.$post('/api/out_visit/order/create', {
-        patCardNo: this.$route.params.patCardNo,
-        hisOrdNum: this.$route.params.hisOrdNum
-      })
-        .then(res => {
-          if (res.code === 0) {
-            console.log('创建订单成功')
-          }
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    },
     getUnpayItem () {
       this.$post('/api/out_visit/un_pay_order_item/list', {
         patCardNo: this.$route.params.patCardNo,
@@ -80,7 +65,9 @@ export default {
         hisOrdNum: this.$route.params.hisOrdNum
       })
         .then(res => {
-          this.payComfirm(res.data.LedgerSn)
+          if (res.code === 0 && res.data.LedgerSn) {
+            this.payComfirm(res.data.LedgerSn)
+          }
         })
     },
     payComfirm (ledgerSn) {
