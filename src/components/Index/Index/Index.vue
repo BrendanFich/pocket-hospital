@@ -99,12 +99,13 @@ export default {
   },
   methods: {
     getLocation () {
+      let _this = this
       wx.ready(function () {
         wx.openLocation({
-          latitude: this.$store.state.gpsLatitude,
-          longitude: this.$store.state.gpsLongitude,
-          name: this.$store.state.gpsName,
-          address: this.$store.state.gpsAddress,
+          latitude: _this.$store.state.gpsLatitude,
+          longitude: _this.$store.state.gpsLongitude,
+          name: _this.$store.state.gpsName,
+          address: _this.$store.state.gpsAddress,
           scale: 18
         })
       })
