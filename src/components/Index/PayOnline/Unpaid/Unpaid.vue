@@ -102,7 +102,7 @@ export default {
         .then(res => {
           res.data.map(i => {
             if (i.his_transaction_id.includes('IV')) {
-              i.invoice = '(发票号：' + i.his_transaction_id.split('IV')[0] + ')'
+              i.invoice = '(发票号：' + i.his_transaction_id.split('IV')[1] + ')'
             } else {
               i.invoice = ''
             }
