@@ -44,11 +44,11 @@ const mutations = {
   changePage (state, cancel) {
     state._axiosPromiseCancel = [...state._axiosPromiseCancel, cancel]
   },
-  setLocation (state, gpsAddress, gpsLatitude, gpsLongitude, gpsName) {
-    state.gpsAddress = gpsAddress
-    state.gpsLatitude = gpsLatitude
-    state.gpsLongitude = gpsLongitude
-    state.gpsName = gpsName
+  setLocation (state, data) {
+    state.gpsAddress = data.gps_address
+    state.gpsLatitude = data.gps_latitude
+    state.gpsLongitude = data.gps_longitude
+    state.gpsName = data.gps_name
   }
 }
 
