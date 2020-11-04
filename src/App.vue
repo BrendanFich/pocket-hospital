@@ -21,11 +21,12 @@ export default {
       timestamp: '',
       nonceStr: '',
       signature: '',
-      count: 0
+      count: 0,
+      debug: false
     }
   },
-  created () {
-    this.getConfig()
+  async created () {
+    await this.getConfig()
     if (this.getUrlParam('token')) {
       window.localStorage.setItem('token', this.getUrlParam('token'))
       window.location.href = window.location.href.split('?')[0]
@@ -46,7 +47,7 @@ export default {
       let self = this
       if (wxSign) {
         this.$wx.config({
-          debug: false,
+          debug: this.debug,
           appId: wxSign.split('&')[0],
           timestamp: wxSign.split('&')[1],
           nonceStr: wxSign.split('&')[2],
@@ -89,18 +90,22 @@ export default {
   },
   methods: {
     getConfig () {
-      this.$post('/api/web/config')
-        .then(res => {
-          document.title = res.data.web_title
-          this.$store.commit('setLocation', res.data.gps_address, res.data.gps_latitude, res.data.gps_longitude, res.data.gps_name)
-          if (res.data.is_debug) {
-            vConsole = new VConsole()
-            console.log(vConsole.version)
-          }
-        })
-        .catch(error => {
-          console.log(error)
-        })
+      return new Promise((resolve, reject) => {
+        this.$post('/api/web/config')
+          .then(res => {
+            document.title = res.data.web_title
+            this.$store.commit('setLocation', res.data.gps_address, res.data.gps_latitude, res.data.gps_longitude, res.data.gps_name)
+            this.debug = res.data.is_debug
+            if (res.data.is_debug) {
+              vConsole = new VConsole()
+              console.log(vConsole.version)
+            }
+            resolve()
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      })
     },
     testToken () {
       this.$post('/api/user/vx_info')
@@ -124,7 +129,7 @@ export default {
             ].join('&')
           )
           this.$wx.config({
-            debug: false,
+            debug: this.debug,
             appId: res.data.appId,
             timestamp: res.data.timestamp,
             nonceStr: res.data.nonceStr,
