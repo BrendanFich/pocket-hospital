@@ -14,7 +14,11 @@ let state = {
   Price: '',
   area: '',
   deptCode: '',
-  deptName: ''
+  deptName: '',
+  gpsAddress: '',
+  gpsLatitude: '',
+  gpsLongitude: '',
+  gpsName: ''
 }
 
 export default new Vuex.Store({

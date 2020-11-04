@@ -65,10 +65,10 @@
           <img src="./img/serverIcon.png"/>
           <h3>医疗服务价格</h3>
         </router-link>
-        <router-link class="item" to="/parking">
+        <!-- <router-link class="item" to="/parking">
           <img src="./img/parkIcon.png" />
           <h3>车位查询</h3>
-        </router-link>
+        </router-link> -->
         <router-link class="item" to="/suggestion">
           <img src="./img/suggestion.png" />
           <h3>意见提交</h3>
@@ -77,6 +77,7 @@
           <img src="./img/guidance.png" />
           <h3>来院导航</h3>
         </div>
+        <div class="item"></div>
       </div>
     </div>
     <!-- <Tabbar></Tabbar> -->
@@ -86,7 +87,6 @@
 <script>
 import Tabbar from '@/base/Tabbar/Tabbar'
 import wx from 'weixin-js-sdk'
-import { latitude, longitude, hospitalName, address } from '@/assets/js/config'
 
 export default {
   name: 'index',
@@ -101,10 +101,10 @@ export default {
     getLocation () {
       wx.ready(function () {
         wx.openLocation({
-          latitude,
-          longitude,
-          name: hospitalName,
-          address,
+          latitude: this.$store.state.gpsLatitude,
+          longitude: this.$store.state.gpsLongitude,
+          name: this.$store.state.gpsName,
+          address: this.$store.state.gpsAddress,
           scale: 18
         })
       })

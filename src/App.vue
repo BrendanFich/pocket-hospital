@@ -92,6 +92,7 @@ export default {
       this.$post('/api/web/config')
         .then(res => {
           document.title = res.data.web_title
+          this.$store.commit('setLocation', res.data.gps_address, res.data.gps_latitude, res.data.gps_longitude, res.data.gps_name)
           if (res.data.is_debug) {
             vConsole = new VConsole()
             console.log(vConsole.version)

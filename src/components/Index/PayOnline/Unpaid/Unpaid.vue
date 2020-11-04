@@ -30,7 +30,7 @@
             </div>
             <div class="department">
               类型：
-              <span class="value">{{ item.trade_type }}</span>
+              <span class="value">{{ item.trade_type }}{{ item.invoice }}</span>
             </div>
           </div>
           <div class="rightInfo">
@@ -100,6 +100,13 @@ export default {
         size: 10
       })
         .then(res => {
+          res.data.map(i => {
+            if (i.his_transaction_id.includes('IV')) {
+              i.invoice = '(发票号：' + i.his_transaction_id.split('IV')[0] + ')'
+            } else {
+              i.invoice = ''
+            }
+          })
           this.unpaidList = [...this.unpaidList, ...res.data]
           if (this.unpaidList.length === 0) {
             this.isShowNoData = true
