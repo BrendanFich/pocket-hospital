@@ -26,7 +26,6 @@ export default {
     }
   },
   async created () {
-    await this.getConfig()
     if (this.getUrlParam('token')) {
       window.localStorage.setItem('token', this.getUrlParam('token'))
       window.location.href = window.location.href.split('?')[0]
@@ -45,6 +44,7 @@ export default {
       window.location.href = window.location.href.split('?')[0]
       let wxSign = window.localStorage.getItem('wxSign')
       let self = this
+      await this.getConfig()
       if (wxSign) {
         this.$wx.config({
           debug: this.debug,
