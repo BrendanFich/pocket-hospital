@@ -15,6 +15,22 @@ const env = process.env.NODE_ENV === 'testing'
   ? require('../config/test.env')
   : require('../config/prod.env')
 
+const formatDate = function (date) {  
+  var y = date.getFullYear()
+  var m = date.getMonth() + 1
+  m = m < 10 ? ('0' + m) : m
+  var d = date.getDate()
+  d = d < 10 ? ('0' + d) : d
+  var h = date.getHours()
+  var minute = date.getMinutes()
+  minute = minute < 10 ? ('0' + minute) : minute
+  var second= date.getSeconds()
+  second = minute < 10 ? ('0' + second) : second
+  return y + '-' + m + '-' + d+' '+h+':'+minute+':'+ second
+}
+const packageDate = formatDate(new Date())
+console.log(new Date());
+console.log(packageDate);
 const webpackConfig = merge(baseWebpackConfig, {
   module: {
     rules: utils.styleLoaders({
@@ -32,7 +48,8 @@ const webpackConfig = merge(baseWebpackConfig, {
   plugins: [
     // http://vuejs.github.io/vue-loader/en/workflow/production.html
     new webpack.DefinePlugin({
-      'process.env': env
+      'process.env': env,
+      packageDate: JSON.stringify(packageDate)
     }),
     new UglifyJsPlugin({
       uglifyOptions: {

@@ -56,6 +56,9 @@
         <span>友情链接</span>
       </div> -->
     </div>
+    <div class="package-date" style="text-align: center;color: #ccc">
+      版本：{{packageDate}}
+    </div>
   </div>
 </template>
 
@@ -64,9 +67,11 @@ export default {
   name: 'mine',
   data () {
     return {
+      packageDate: ''
     }
   },
   created () {
+    this.packageDate = packageDate
   },
   components: { CustomerInfoCard: () => import('@/base/CustomerInfoCard/CustomerInfoCard') },
   methods: {
