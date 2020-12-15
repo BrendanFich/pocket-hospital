@@ -3,10 +3,9 @@
     <div class="doctorIntroCard">
       <DocAvatar :name="docInfo.doctorName" />
       <div class="docInfo">
-        <p class="doctorName">{{ docInfo.doctorName }}史诗撒所</p>
+        <p class="doctorName">{{ docInfo.doctorName }}</p>
         <p class="doctorTitle">
           {{ docInfo.deptName }} {{ docInfo.doctorTitle }}
-          史诗撒所
         </p>
         <van-rate v-model="star" readonly />
         <p class="textIntro">
