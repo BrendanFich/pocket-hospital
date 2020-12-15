@@ -56,8 +56,8 @@
         <span>友情链接</span>
       </div> -->
     </div>
-    <div class="package-date" style="text-align: center;color: #ccc">
-      版本：{{packageDate}}
+    <div class="package-date">
+      版本信息：{{packageDate}}
     </div>
   </div>
 </template>
@@ -131,4 +131,8 @@ export default {
       span
         font-size: 24px
         color: $color-value-grey
+  .package-date
+    text-align: center
+    color: #ccc
+    font-size: 20px
 </style>
