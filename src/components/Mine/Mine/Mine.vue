@@ -2,6 +2,13 @@
   <div class="mine">
     <CustomerInfoCard></CustomerInfoCard>
     <ul class="orderList">
+      <li @click="toHeathCard">
+        <div>
+          <img src="./img/mineIcon.png" />
+          <span class="title">我的健康卡</span>
+        </div>
+        <span class="linkIcon">></span>
+      </li>
       <li @click="linkTo('/mine/regOrder')">
         <div>
           <img src="./img/regOrderIcon.png" />
@@ -23,20 +30,6 @@
         </div>
         <span class="linkIcon">></span>
       </li>
-      <!-- <li @click="noFinish">
-        <div>
-          <img src="./img/mealIcon.png" />
-          <span class="title">点餐订单</span>
-        </div>
-        <span class="linkIcon">></span>
-      </li>
-      <li @click="noFinish">
-        <div>
-          <img src="./img/mineIcon.png" />
-          <span class="title">我的就诊</span>
-        </div>
-        <span class="linkIcon">></span>
-      </li> -->
     </ul>
     <div class="others">
       <div class="item" @click="linkTo('/reports')">
@@ -67,7 +60,8 @@ export default {
   name: 'mine',
   data () {
     return {
-      packageDate: ''
+      packageDate: '',
+      showListHtml: false
     }
   },
   created () {
@@ -78,8 +72,31 @@ export default {
     linkTo (url) {
       this.$router.push(url)
     },
-    noFinish () {
-      this.$toast.fail('尚未开发')
+    async toHeathCard () {
+      let list = await this._getHealthCardList()
+      let a = list.join(';')
+      console.log(a)
+      window.location.href = 'http://qlyt.zhangfb.cn:8091/web/cardlist?cardList=' + a
+      // window.location.href = 'http://192.168.1.123:8082/list.html?cardList=' + a // 调试
+    },
+    _getHealthCardList () {
+      return new Promise((resolve, reject) => {
+        this.$post('/api/user/health_card')
+          .then(res => {
+            console.log(res.data)
+            if (res.data.length > 0) {
+              resolve(res.data.map(i => {
+                return JSON.stringify({
+                  name: i.patName,
+                  idCard: i.patIdNo,
+                  qrCodeText: i.visitCardNo
+                }).replace(/\"/g, '*')
+              }))
+            } else {
+              resolve('')
+            }
+          })
+      })
     }
   }
 }
