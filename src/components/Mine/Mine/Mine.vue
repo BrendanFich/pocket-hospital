@@ -1,57 +1,60 @@
 <template>
   <div class="mine">
-    <CustomerInfoCard></CustomerInfoCard>
-    <ul class="orderList">
-      <li @click="toHeathCard">
-        <div>
-          <img src="./img/mineIcon.png" />
-          <span class="title">我的健康卡</span>
+    <template v-if="!iframeVisible">
+      <CustomerInfoCard></CustomerInfoCard>
+      <ul class="orderList">
+        <li @click="toHeathCard">
+          <div>
+            <img src="./img/mineIcon.png" />
+            <span class="title">我的健康卡</span>
+          </div>
+          <span class="linkIcon">></span>
+        </li>
+        <li @click="linkTo('/mine/regOrder')">
+          <div>
+            <img src="./img/regOrderIcon.png" />
+            <span class="title">挂号订单</span>
+          </div>
+          <span class="linkIcon">></span>
+        </li>
+        <li @click="linkTo('/payOnline')">
+          <div>
+            <img src="./img/payOnlineIcon.png" />
+            <span class="title">缴费订单</span>
+          </div>
+          <span class="linkIcon">></span>
+        </li>
+        <li @click="linkTo('/mine/liveHosOrder')">
+          <div>
+            <img src="./img/liveHosOrderIcon.png" />
+            <span class="title">住院预交金订单</span>
+          </div>
+          <span class="linkIcon">></span>
+        </li>
+      </ul>
+      <div class="others">
+        <div class="item" @click="linkTo('/reports')">
+          <img src="./img/myReportIcon.png" alt />
+          <span>我的报告</span>
         </div>
-        <span class="linkIcon">></span>
-      </li>
-      <li @click="linkTo('/mine/regOrder')">
-        <div>
-          <img src="./img/regOrderIcon.png" />
-          <span class="title">挂号订单</span>
+        <div class="item" @click="linkTo('/suggestion')">
+          <img src="./img/suggestionIcon.png" alt />
+          <span>就医反馈</span>
         </div>
-        <span class="linkIcon">></span>
-      </li>
-      <li @click="linkTo('/payOnline')">
-        <div>
-          <img src="./img/payOnlineIcon.png" />
-          <span class="title">缴费订单</span>
+        <!-- <div class="item" @click="noFinish">
+          <img src="./img/questionIcon.png" alt />
+          <span>随访问卷</span>
         </div>
-        <span class="linkIcon">></span>
-      </li>
-      <li @click="linkTo('/mine/liveHosOrder')">
-        <div>
-          <img src="./img/liveHosOrderIcon.png" />
-          <span class="title">住院预交金订单</span>
-        </div>
-        <span class="linkIcon">></span>
-      </li>
-    </ul>
-    <div class="others">
-      <div class="item" @click="linkTo('/reports')">
-        <img src="./img/myReportIcon.png" alt />
-        <span>我的报告</span>
+        <div class="item" @click="noFinish">
+          <img src="./img/linkIcon.png" alt />
+          <span>友情链接</span>
+        </div> -->
       </div>
-      <div class="item" @click="linkTo('/suggestion')">
-        <img src="./img/suggestionIcon.png" alt />
-        <span>就医反馈</span>
+      <div class="package-date">
+        版本信息：{{packageDate}}
       </div>
-      <!-- <div class="item" @click="noFinish">
-        <img src="./img/questionIcon.png" alt />
-        <span>随访问卷</span>
-      </div>
-      <div class="item" @click="noFinish">
-        <img src="./img/linkIcon.png" alt />
-        <span>友情链接</span>
-      </div> -->
-    </div>
-    <div class="package-date">
-      版本信息：{{packageDate}}
-    </div>
+    </template>
+    <iframe v-else :src="iframeSrc" style="width: 100%;height: 500px;" frameborder="0"></iframe>
   </div>
 </template>
 
@@ -61,7 +64,8 @@ export default {
   data () {
     return {
       packageDate: '',
-      showListHtml: false
+      iframeVisible: false,
+      iframeSrc: ''
     }
   },
   created () {
@@ -76,8 +80,10 @@ export default {
       let list = await this._getHealthCardList()
       let a = list.join(';')
       console.log(a)
-      window.location.href = 'http://qlyt.zhangfb.cn:8091/web/cardlist?cardList=' + a
+      // window.location.href = 'http://qlyt.zhangfb.cn:8091/web/cardlist?cardList=' + a
       // window.location.href = 'http://192.168.1.123:8082/list.html?cardList=' + a // 调试
+      this.iframeSrc = 'static/list.html?cardList=' + a
+      this.iframeVisible = true
     },
     _getHealthCardList () {
       return new Promise((resolve, reject) => {

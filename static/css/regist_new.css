@@ -1,0 +1,316 @@
+.wrap {
+    width: 100%;
+    height: 100%;
+    background: #F2F2F2;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+    font-family: 'PingFangSC-Regular';
+    font-size: 0.3rem;
+}
+
+textarea {
+    border: none;
+    resize: none;
+    height: 150px;
+}
+
+.form {
+    font-size: 0.3rem;
+    border-top: 1px solid #f4f4f4;
+    border-bottom: 1px solid #f4f4f4;
+    background: #fff;
+}
+
+.form-patid {
+    margin-top: 0.2rem;
+}
+
+.form .form-element {
+    display: flex;
+    margin-left: 0.3rem;
+    border-bottom: 1px solid #f4f4f4;
+}
+
+.form .form-element:last-child {
+    border: none;
+}
+
+.form .form-element .label {
+    min-width: 1.8rem;
+    height: 1rem;
+    line-height: 1rem;
+    padding-right: 0.2rem;
+}
+
+.form .form-element .input-block {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    font-size: 0.28rem;
+
+}
+
+.form .form-element .input-block .address {
+    line-height: 0.4rem;
+    height: 0.8rem;
+    width: 100%;
+}
+
+.form .form-element .text-area {
+    padding: .3rem 0;
+}
+
+.form .form-element .input-block input {
+    border: none;
+    background: none;
+    display: block;
+    line-height: 0.7rem;
+    height: 0.7rem;
+    margin-right: 0.4rem;
+    width: 100%;
+    font-size: 0.28rem;
+}
+
+.form .form-element .input-block input:disabled {
+    -webkit-text-fill-color: #000;
+    -webkit-opacity: 1;
+    color: #000;
+    opacity: 1;
+}
+
+.form .form-element .valid-btn {
+    display: block;
+    width: 1.8rem;
+    height: 1rem;
+    line-height: 1rem;
+    border-left: 1px solid #f4f4f4;
+    text-align: center;
+    color: #09cf74;
+    font-size: 0.28rem;
+}
+
+.form .form-element .upload-idcard {
+    display: block;
+    width: 2rem;
+    height: 1rem;
+    text-align: center;
+    color: #09cf74;
+    font-size: 0.24rem;
+    display: flex;
+    align-items: center;
+}
+
+.form .form-element .upload-idcard .photo-pic {
+    height: auto;
+    width: 0.4rem;
+    margin-right: 0.14rem;
+}
+
+.tips {
+    font-size: 0.26rem;
+    color: #888888;
+    width: 7rem;
+    margin: 0.2rem auto;
+}
+
+::-webkit-input-placeholder {
+    /* WebKit, Blink, Edge */
+    color: #b2b2b2;
+}
+
+:-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: #b2b2b2;
+}
+
+::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: #b2b2b2;
+}
+
+:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: #b2b2b2;
+}
+
+input:disabled::placeholder {
+    color: #b2b2b2;
+    -webkit-text-fill-color: #b2b2b2;
+}
+
+.form .form-element .input-block .mask {
+    display: none;
+}
+
+.form .form-element .input-block .mask.active {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.form .form-element .input-block .select-block {
+    display: block;
+    width: 100%;
+    height: 5.2rem;
+    background-color: #fff;
+    position: absolute;
+    bottom: 0;
+    overflow: scroll;
+}
+
+.form .form-element .input-block .select {
+    position: absolute;
+    height: 1.2rem;
+    width: 100%;
+    bottom: 2rem;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+
+.form .form-element .input-block .select-block>p {
+    text-align: center;
+    line-height: 1rem;
+    color: rgba(0, 0, 0, 0.4);
+    font-size: 0.3rem;
+}
+
+.form .form-element .input-block .select-block>p.select {
+    line-height: 1.2rem;
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 0.35rem;
+}
+
+.select-nation:after,
+.select-id-type:after,
+.select-gender:after,
+.select-relation:after,
+.select-birthday:after,
+.select-address:after {
+    content: '';
+    display: block;
+    width: 0.27rem;
+    height: 0.25rem;
+    border-top: 0.03rem solid #b2b2b2;
+    border-right: 0.03rem solid #b2b2b2;
+    transform: rotate(45deg);
+    margin-right: 0.4rem;
+    margin-left: -0.2rem;
+}
+
+/* link */
+.other-btn {
+    font-size: 0.26rem;
+    color: #09cf74;
+    text-align: center;
+    width: 6.7rem;
+    display: block;
+    margin: 0.2rem auto 0.15rem;
+}
+
+.next-btn {
+    display: block;
+    border: none;
+    width: 6.7rem;
+    height: 0.94rem;
+    line-height: 0.94rem;
+    text-align: center;
+    color: #fff;
+    background: #09cf74;
+    font-size: 0.36rem;
+    margin: 0.5rem auto 0.15rem;
+    border-radius: 0.1rem;
+}
+
+.next-btn[disabled] {
+    background: rgba(32, 84, 209, .5);
+}
+
+
+.loading-mask {
+    width: 100%;
+    height: 100%;
+    background: rgba(5, 5, 5, 0.3);
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    position: absolute;
+    top: 0;
+}
+
+.loading-mask.show {
+    display: flex;
+}
+
+.loading-mask .loading {
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: rgba(0, 0, 0, 0.4);
+    color: #000;
+    border-radius: 0.1rem;
+}
+
+.loading-mask .loading img {
+    width: 1rem;
+    height: 1rem;
+    margin: 0.35rem 0.75rem;
+}
+
+.loading-mask .loading p {
+    color: #fff;
+    text-align: center;
+}
+
+.mask {
+    width: 100%;
+    height: 100%;
+    background: rgba(5, 5, 5, 0.3);
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.mask.show {
+    display: flex
+}
+
+.mask .alert {
+    width: 6rem;
+    height: 3.5rem;
+    background: #fff;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.mask .alert .text p {
+    padding: .8rem 1rem;
+    text-align: center;
+    color: #999;
+}
+
+.mask .alert .operation {
+    height: .8rem;
+    border-top: 1px solid #f4f4f4;
+    display: flex;
+}
+
+.mask .alert .confirm-btn {
+    display: block;
+    flex: 1;
+    font-size: .36rem;
+    color: #222;
+    text-align: center;
+    line-height: .8rem;
+}

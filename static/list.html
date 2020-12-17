@@ -1,0 +1,205 @@
+<html>
+<head>
+    <title>电子健康卡</title>
+    <script
+            type="text/javascript"
+            src="https://js.aq.qq.com/js/aq_common.js"
+    ></script>
+    <meta charset="utf-8"/>
+    <meta name="format-detection" content="telephone=no"/>
+    <meta
+            name="viewport"
+            content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"
+    />
+    <meta name="mobile-web-app-capable" content="yes"/>
+    <meta
+            name="apple-mobile-web-app-status-bar-style"
+            content="black-translucent"
+    />
+    <link rel="stylesheet" type="text/css" href="css/base.css"/>
+    <link rel="stylesheet" type="text/css" href="css/weui.min.css"/>
+    <script type="text/javascript">
+        document.write('<link rel="stylesheet" type="text/css" href="css/list.css?timestamp='
+            + new Date().getTime() + '" type="text/javascript" charset="utf-8"><\/script>');
+    </script>
+</head>
+
+<body>
+<div class="wrap">
+    <div class="cardlist" id="cardlist"></div>
+    <div class="button">
+        <div class="addbtn" id="addcard">+ 添加健康卡</div>
+        <p class="tips" id="tips"></p>
+    </div>
+</div>
+<div class="card-qrcode-dialog" style="display: none">
+    <div class="weui-mask"></div>
+    <div class="weui-dialog">
+        <div class="weui-dialog__hd">
+            <strong class="weui-dialog__title">电子健康码</strong>
+        </div>
+        <div class="weui-dialog__bd" style="margin: 0 auto">
+            <div class="weui-dialog-qrcode"></div>
+            <p style="font-size: 0.4rem; font-weight: 800; padding: 0.1rem" class="weui-dialog-name">
+                陈俊坚
+            </p>
+            <p>挂号就诊时出示凭证</p>
+        </div>
+        <div class="weui-dialog__ft">
+            <a
+                    href="javascript:;"
+                    class="weui-dialog__btn weui-dialog__btn_primary"
+            >关闭</a
+            >
+        </div>
+    </div>
+</div>
+</body>
+<script type="text/javascript" src="js/common.js"></script>
+<script type="text/javascript" src="js/jweixin-1.4.0.js"></script>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/jquery.qrcode.js"></script>
+<script type="text/javascript" src="js/qrcode.js"></script>
+<script type="text/javascript" src="js/weui.min.js"></script>
+<script>
+    ;(function () {
+        const debug = false
+        if (debug) {
+            buildcardlist([
+                {
+                    name: '用户姓名',
+                    cardType: '2',
+                    idCard: '4401**********4225',
+                    qrCodeText: '2',
+                    phone1: '2',
+                },
+                {
+                    name: '用户姓名',
+                    cardType: '2',
+                    idCard: '4401**********4225',
+                    qrCodeText: '2',
+                    phone1: '2',
+                }
+            ])
+        } else {
+            var list = init()
+            for (var i = 0; i < list.length; i++) {
+                $(`.qrcode${i}`).qrcode({
+                    width: '200', //宽高设置已被css样式覆盖，此处设置无效
+                    height: '200',
+                    render: 'canvas',
+                    text: $(`.qrcode${i}`).attr('data-qrcode'),
+                    background: '#ffffff', //二维码的后景色
+                    foreground: '#000000', //二维码的前景色
+                    src: 'img/logo_.png' //二维码中间的图片
+                });
+            }
+        }
+        $('#addcard').on('click', function () {
+            window.top.location.href = '{{.addcard_url}}'
+        })
+    })()
+    function init() {
+        var list = getQueryString('cardList').replace(/\*/g, '"').split(';').map(i=>{
+            return JSON.parse(i)
+        })
+        console.log(list)
+        buildcardlist(list)
+        return list
+    }
+
+    function buildcardlist(list) {
+        var length = 0
+        var listhtml = ''
+        if (list.length >= 5) {
+            length = 5
+            $('#addcard').hide()
+        } else {
+            length = list.length
+
+            $('#tips').html('您还可以添加' + (5 - list.length) + '张健康卡')
+        }
+
+        if (length === 0) {
+            $('#cardlist').css('background', 'transparent')
+            listhtml =
+                '<div class="emptycard"><img src="img/nocard.png"/><p>暂无健康卡</p></div>'
+        } else {
+            for (var i = 0; i < length; i++) {
+                listhtml =
+                    listhtml +
+                    '<a href="personal.html?name=' +
+                    list[i].name +
+                    '&cardType=' +
+                    list[i].cardType +
+                    '&idCard=' +
+                    list[i].idCard +
+                    '&qrCodeText=' +
+                    list[i].qrCodeText +
+                    '&phone=' +
+                    list[i].phone1 +
+                    '" class="card-face-container">' +
+                    `<img class="card-bg" src="img/cardnewbg.png" alt="" />
+                <div class="card-top-info">
+                    <div class="card-top-org">广东省卫生健康委员会</div>
+                    <div class="card-top-title">
+                        <img src="img/icon2.png" alt="" />
+                        <span>电子健康卡</span>
+                    </div>
+                </div>
+                <div class="card-detail-info">
+                    <div class="card-user-info">
+                        <span class="card-user-name">${list[i].name}</span>
+                        <span class="card-user-id">${hiddenSomeNum(list[i].idCard)}</span>
+                    </div>
+                    <div class="card-qrcode">
+                        <div class="qrcode${i}" data-qrcode="${list[i].qrCodeText}" data-name="${list[i].name}"></div>
+                    </div>
+                </div>\
+                <div class="card-footer">\
+                    中华人民共和国国家卫生健康委员会监制\
+                </div>` +
+                    '</a>'
+            }
+        }
+        $('#cardlist').html(listhtml)
+        $('.card-qrcode').on('click', function (e) {
+            if (e.preventDefault) {
+                e.preventDefault()
+            }
+            console.log(e.currentTarget.children[0]);
+            $('.weui-dialog-qrcode').text('')
+            $('.weui-dialog-qrcode').qrcode({
+                width: '200', //宽高设置已被css样式覆盖，此处设置无效
+                height: '200',
+                render: 'canvas',
+                text: e.currentTarget.children[0].getAttribute('data-qrcode'),
+                background: '#ffffff', //二维码的后景色
+                foreground: '#000000', //二维码的前景色
+                src: 'img/logo_.png' //二维码中间的图片
+            });
+            $('.weui-dialog-name').text(e.currentTarget.children[0].getAttribute('data-name'))
+            $('.card-qrcode-dialog').show()
+        })
+        $('.weui-dialog__btn').on('click', function (e) {
+            $('.card-qrcode-dialog').hide()
+        })
+    }
+
+    //获取url参数
+    function getQueryString(name) {
+        var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)') // 匹配目标参数
+        var result = window.location.search.substr(1).match(reg) // 对querystring匹配目标参数
+        if (result != null) {
+            return decodeURIComponent(result[2])
+        } else {
+            return null
+        }
+    }
+
+    // 身份证脱敏
+    function hiddenSomeNum(idNo) {
+        return idNo.replace(/^(.{4})(?:\d+)(.{4})$/,  "$1**********$2")
+    }
+</script>
+</html>

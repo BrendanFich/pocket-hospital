@@ -1,0 +1,167 @@
+html {
+    background: #f4f4f4;
+}
+
+.wrap {
+    width: 100%;
+    height: 99%;
+    padding-top: 1%;
+    background: #f4f4f4;
+}
+
+.qrcode-block {
+    width: 100%;
+    height: 4.5rem;
+    background: #fff;
+    margin-bottom: .25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.qrcode-block .qrcode-logo {
+    height: 0.98rem;
+    width: auto;
+    position: absolute;
+    z-index: 10;
+}
+
+.qrcode-block .qrcode {
+    width: 3.45rem;
+    height: 3.45rem;
+}
+
+.qrcode-block .qrcode canvas {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.text-block {
+    padding: .05rem .4rem;
+    width: 100%;
+    background: #fff;
+    margin: .25rem auto;
+}
+
+.text-element {
+    display: flex;
+    height: .96rem;
+    width: 100%;
+    line-height: .96rem;
+    font-size: .32rem;
+}
+
+.text-element.border {
+    border-bottom: .01rem solid #f4f4f4;
+}
+
+.text-element .label {
+    font-size: .3rem;
+    color: #2B2B2B;
+    min-width: 1.4rem;
+}
+
+.text-element .value {
+    font-size: .28rem;
+    color: #B3B3B3;
+    margin-left: .8rem;
+}
+
+.text-element .idcard-link {
+    display: none;
+    color: #D0021B;
+}
+
+.operation {
+    margin-top: .68rem;
+}
+
+.operation .button {
+    width: 6.9rem;
+    height: .94rem;
+    line-height: 1rem;
+    font-size: .36rem;
+    color: #fff;
+    background: #2054D1;
+    border-radius: .1rem;
+    display: block;
+    margin: .2rem auto;
+    text-align: center;
+}
+
+.operation .link {
+    display: block;
+    font-size: .26rem;
+    color: #2054D1;
+    text-align: center;
+}
+
+.mask {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    left: 0;
+    top: 0;
+    z-index: 2;
+}
+
+.popwindow {
+    width: 6rem;
+    height: 3.5rem;
+    background: #fff;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+}
+
+.popwindow .text {
+    flex: 1;
+}
+
+.popwindow .text h5 {
+    line-height: 1.2rem;
+    font-size: .36rem;
+    color: #000;
+    text-align: center;
+}
+
+.popwindow .text p {
+    padding: 0 1rem;
+    text-align: center;
+    color: #999;
+}
+
+.popwindow .operation {
+    height: .8rem;
+    border-top: 1px solid #f4f4f4;
+    display: flex;
+}
+
+.popwindow .operation .line {
+    width: 1px;
+    height: 100%;
+    background: #f4f4f4;
+}
+
+.popwindow .operation .unbind {
+    display: block;
+    flex: 1;
+    font-size: .36rem;
+    color: #222;
+    text-align: center;
+    line-height: .8rem;
+}
+
+.popwindow .operation .cancel {
+    display: block;
+    flex: 1;
+    font-size: .36rem;
+    color: #3c45be;
+    text-align: center;
+    line-height: .8rem;
+}

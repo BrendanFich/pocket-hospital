@@ -1,0 +1,112 @@
+html,
+body {
+    background: #f4f4f4;
+    font-family: PingFangSC-Medium, 'PINGFANG MEDIUM';
+}
+
+.wrap {
+    background: #f4f4f4;
+    width: 100%;
+    min-height: 99%;
+    padding-top: 1%
+}
+
+.card-face-container {
+    height: 3.5rem;
+    width: 6.2rem;
+    margin: 0 auto;
+    position: relative;
+    color: #000000;
+}
+
+.card-face-container .card-bg {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+
+.card-face-container .card-top-info {
+    position: absolute;
+    top: .23rem;
+    width: calc(100% - .27rem - .34rem);
+    padding: 0 .27rem 0 .34rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-face-container .card-top-info .card-top-org {
+    font-size: .18rem;
+    line-height: .25rem;
+}
+
+.card-face-container .card-top-info .card-top-title {
+    display: flex;
+    align-items: center;
+    font-size: .3rem;
+    line-height: .42rem;
+    color: #2B2B2B;
+}
+
+.card-face-container .card-top-info .card-top-title img {
+    height: .55rem;
+    width: .55rem;
+    margin-right: .08rem;
+}
+
+.card-face-container .card-detail-info {
+    position: absolute;
+    top: 1.24rem;
+    width: calc(100% - .34rem - .15rem);
+    padding: 0 .15rem 0 .34rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.card-face-container .card-detail-info .card-user-info {
+    font-size: .36rem;
+    color: #2B2B2B;
+}
+
+.card-face-container .card-detail-info .card-user-info .card-user-name {
+    height: .5rem;
+}
+
+.card-face-container .card-detail-info .card-user-info .card-user-id {
+    font-size: .3rem;
+    line-height: .3rem;
+    display: block;
+    padding-top: .12rem;
+}
+
+.card-face-container .card-detail-info .card-qrcode {
+    background: #FFFFFF;
+    padding: .04rem;
+    position: relative;
+}
+
+.card-face-container .card-detail-info .card-qrcode .card-qrcode-logo {
+    height: .44rem;
+    width: .44rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.card-face-container .card-detail-info .card-qrcode img {
+    height: 1.54rem;
+    width: 1.54rem;
+}
+
+.card-face-container .card-footer {
+    position: absolute;
+    font-size: .18rem;
+    bottom: .16rem;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    letter-spacing: 0;
+    line-height: .25rem;
+}
