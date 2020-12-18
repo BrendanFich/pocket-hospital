@@ -64,6 +64,7 @@
 <script>
     ;(function () {
         const debug = false
+        console.log(window.vueData);
         if (debug) {
             buildcardlist([
                 {
@@ -96,7 +97,7 @@
             }
         }
         $('#addcard').on('click', function () {
-            window.top.location.href = '{{.addcard_url}}'
+            window.top.location.href = getQueryString('url')
         })
     })()
     function init() {

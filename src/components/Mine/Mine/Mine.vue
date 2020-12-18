@@ -1,7 +1,7 @@
 <template>
   <div class="mine">
     <template v-if="!iframeVisible">
-      <CustomerInfoCard></CustomerInfoCard>
+      <CustomerInfoCard @defualtCard="getCardInfo"></CustomerInfoCard>
       <ul class="orderList">
         <li @click="toHeathCard">
           <div>
@@ -65,7 +65,8 @@ export default {
     return {
       packageDate: '',
       iframeVisible: false,
-      iframeSrc: ''
+      iframeSrc: '',
+      cardInfo: {}
     }
   },
   created () {
@@ -78,11 +79,10 @@ export default {
     },
     async toHeathCard () {
       let list = await this._getHealthCardList()
-      let a = list.join(';')
-      console.log(a)
+      let cardUrl = await this._getCardUrl()
       // window.location.href = 'http://qlyt.zhangfb.cn:8091/web/cardlist?cardList=' + a
       // window.location.href = 'http://192.168.1.123:8082/list.html?cardList=' + a // 调试
-      this.iframeSrc = 'static/list.html?cardList=' + a
+      this.iframeSrc = 'static/list.html?cardList=' + list.join(';') + '&url=' + cardUrl
       this.iframeVisible = true
     },
     _getHealthCardList () {
@@ -95,7 +95,8 @@ export default {
                 return JSON.stringify({
                   name: i.patName,
                   idCard: i.patIdNo,
-                  qrCodeText: i.visitCardNo
+                  qrCodeText: i.visitCardNo,
+                  phone: this.cardInfo.patMobile
                 }).replace(/\"/g, '*')
               }))
             } else {
@@ -103,6 +104,19 @@ export default {
             }
           })
       })
+    },
+    _getCardUrl () {
+      return new Promise((resolve, reject) => {
+        this.$post('/api/health/addcard/geturl')
+          .then(res => {
+            console.log(res.data)
+            resolve(res.data)
+          })
+      })
+    },
+    getCardInfo (cardInfo) {
+      console.log(cardInfo)
+      this.cardInfo = cardInfo
     }
   }
 }
