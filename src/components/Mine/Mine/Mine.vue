@@ -1,9 +1,9 @@
 <template>
   <div class="mine">
-    <template v-if="!iframeVisible">
-      <CustomerInfoCard @defualtCard="getCardInfo"></CustomerInfoCard>
+      <CustomerInfoCard></CustomerInfoCard>
       <ul class="orderList">
-        <li @click="toHeathCard">
+        <!-- <li @click="toHeathCard"> -->
+        <li @click="linkTo('/mine/heathCardList')">
           <div>
             <img src="./img/mineIcon.png" />
             <span class="title">我的健康卡</span>
@@ -53,8 +53,6 @@
       <div class="package-date">
         版本信息：{{packageDate}}
       </div>
-    </template>
-    <iframe v-else :src="iframeSrc" style="width: 100%;height: 500px;" frameborder="0"></iframe>
   </div>
 </template>
 
@@ -64,8 +62,6 @@ export default {
   data () {
     return {
       packageDate: '',
-      iframeVisible: false,
-      iframeSrc: '',
       cardInfo: {}
     }
   },
@@ -76,47 +72,6 @@ export default {
   methods: {
     linkTo (url) {
       this.$router.push(url)
-    },
-    async toHeathCard () {
-      let list = await this._getHealthCardList()
-      let cardUrl = await this._getCardUrl()
-      // window.location.href = 'http://qlyt.zhangfb.cn:8091/web/cardlist?cardList=' + a
-      // window.location.href = 'http://192.168.1.123:8082/list.html?cardList=' + a // 调试
-      this.iframeSrc = 'static/list.html?cardList=' + list.join(';') + '&url=' + cardUrl
-      this.iframeVisible = true
-    },
-    _getHealthCardList () {
-      return new Promise((resolve, reject) => {
-        this.$post('/api/user/health_card')
-          .then(res => {
-            console.log(res.data)
-            if (res.data.length > 0) {
-              resolve(res.data.map(i => {
-                return JSON.stringify({
-                  name: i.patName,
-                  idCard: i.patIdNo,
-                  qrCodeText: i.visitCardNo,
-                  phone: this.cardInfo.patMobile
-                }).replace(/\"/g, '*')
-              }))
-            } else {
-              resolve('')
-            }
-          })
-      })
-    },
-    _getCardUrl () {
-      return new Promise((resolve, reject) => {
-        this.$post('/api/health/addcard/geturl')
-          .then(res => {
-            console.log(res.data)
-            resolve(res.data)
-          })
-      })
-    },
-    getCardInfo (cardInfo) {
-      console.log(cardInfo)
-      this.cardInfo = cardInfo
     }
   }
 }
