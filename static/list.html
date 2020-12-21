@@ -101,7 +101,7 @@
         })
     })()
     function init() {
-        var list = getQueryString('cardList') ? getQueryString('cardList').replace(/\*/g, '"').split(';').map(i=>{
+        var list = getQueryString('cardList').length > 0 ? getQueryString('cardList').replace(/\*/g, '"').split(';').map(i=>{
             return JSON.parse(i)
         }) : []
         console.log(list)

@@ -19,7 +19,7 @@ export default {
     let cardUrl = await this._getCardUrl()
     // window.location.href = 'http://qlyt.zhangfb.cn:8091/web/cardlist?cardList=' + a
     // window.location.href = 'http://192.168.1.123:8082/list.html?cardList=' + a // 调试
-    this.iframeSrc = 'static/list.html?timestamp=' + new Date().getTime() + '&cardList=' + (list && list.join(';')) + '&url=' + cardUrl
+    this.iframeSrc = 'static/list.html?timestamp=' + new Date().getTime() + '&cardList=' + list.join(';') + '&url=' + cardUrl
   },
   methods: {
     _getDefaultCardInfo () {
@@ -48,7 +48,7 @@ export default {
                 }).replace(/\"/g, '*')
               }))
             } else {
-              resolve('')
+              resolve([])
             }
           })
       })
