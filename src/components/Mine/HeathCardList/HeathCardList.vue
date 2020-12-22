@@ -14,6 +14,10 @@ export default {
     }
   },
   async created () {
+    if (this.getQueryString('nc')) {
+      await this._commitWx(JSON.parse(decodeURI(atob(this.getQueryString('nc')))))
+      this.$router.replace({ query: {} })
+    }
     this.defualtCard = await this._getDefaultCardInfo()
     let list = await this._getHealthCardList()
     let cardUrl = await this._getCardUrl()
@@ -22,6 +26,15 @@ export default {
     this.iframeSrc = 'static/list.html?timestamp=' + new Date().getTime() + '&cardList=' + list.join(';') + '&url=' + cardUrl
   },
   methods: {
+    _commitWx (req) {
+      return new Promise((resolve, reject) => {
+        this.$post('/api/pat/bindCard/fresh', req).then(res => {
+          if (res.code === 0) {
+            resolve(res.data)
+          }
+        })
+      })
+    },
     _getDefaultCardInfo () {
       return new Promise((resolve, reject) => {
         this.$post('/api/user/vx_info').then(res => {
@@ -61,6 +74,15 @@ export default {
             resolve(res.data)
           })
       })
+    },
+    getQueryString (name) {
+      var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)') // 匹配目标参数
+      var result = window.location.search.substr(1).match(reg) // 对querystring匹配目标参数
+      if (result != null) {
+        return decodeURIComponent(result[2])
+      } else {
+        return null
+      }
     }
   }
 }
