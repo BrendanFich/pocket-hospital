@@ -14,12 +14,15 @@ export default {
     }
   },
   async created () {
-    if (this.getQueryString('nc')) {
-      await this._commitWx(JSON.parse(decodeURI(atob(this.getQueryString('nc')))))
+    alert(this.$route.query.nc)
+    if (this.$route.query.nc) {
+      await this._commitWx(JSON.parse(decodeURI(atob(this.$route.query.nc))))
       this.$router.replace({ query: {} })
     }
     this.defualtCard = await this._getDefaultCardInfo()
     let list = await this._getHealthCardList()
+    console.log('=============')
+    console.log(list)
     let cardUrl = await this._getCardUrl()
     // window.location.href = 'http://qlyt.zhangfb.cn:8091/web/cardlist?cardList=' + a
     // window.location.href = 'http://192.168.1.123:8082/list.html?cardList=' + a // 调试
@@ -27,10 +30,13 @@ export default {
   },
   methods: {
     _commitWx (req) {
+      req.PatientId = req.PatientId.toString()
       return new Promise((resolve, reject) => {
         this.$post('/api/pat/bindCard/fresh', req).then(res => {
           if (res.code === 0) {
             resolve(res.data)
+          } else {
+            resolve()
           }
         })
       })
@@ -74,15 +80,6 @@ export default {
             resolve(res.data)
           })
       })
-    },
-    getQueryString (name) {
-      var reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)') // 匹配目标参数
-      var result = window.location.search.substr(1).match(reg) // 对querystring匹配目标参数
-      if (result != null) {
-        return decodeURIComponent(result[2])
-      } else {
-        return null
-      }
     }
   }
 }
