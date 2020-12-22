@@ -97,6 +97,7 @@
             }
         }
         $('#addcard').on('click', function () {
+            alert(getQueryString('url'))
             window.top.location.href = getQueryString('url')
         })
     })()
