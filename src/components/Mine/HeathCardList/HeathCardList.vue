@@ -14,15 +14,12 @@ export default {
     }
   },
   async created () {
-    alert(this.$route.query.nc)
     if (this.$route.query.nc) {
       await this._commitWx(JSON.parse(decodeURI(atob(this.$route.query.nc))))
       this.$router.replace({ query: {} })
     }
     this.defualtCard = await this._getDefaultCardInfo()
     let list = await this._getHealthCardList()
-    console.log('=============')
-    console.log(list)
     let cardUrl = await this._getCardUrl()
     // window.location.href = 'http://qlyt.zhangfb.cn:8091/web/cardlist?cardList=' + a
     // window.location.href = 'http://192.168.1.123:8082/list.html?cardList=' + a // 调试
