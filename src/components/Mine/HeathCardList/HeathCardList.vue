@@ -9,7 +9,7 @@ export default {
   name: 'heathCardList',
   data () {
     return {
-      defualtCard: {},
+      patMobile: {},
       iframeSrc: ''
     }
   },
@@ -18,7 +18,7 @@ export default {
       await this._commitWx(JSON.parse(decodeURI(atob(this.$route.query.nc))))
       this.$router.replace({ query: {} })
     }
-    this.defualtCard = await this._getDefaultCardInfo()
+    this.patMobile = await this._getDefaultCardMobile()
     let list = await this._getHealthCardList()
     let cardUrl = await this._getCardUrl()
     // window.location.href = 'http://qlyt.zhangfb.cn:8091/web/cardlist?cardList=' + a
@@ -38,13 +38,11 @@ export default {
         })
       })
     },
-    _getDefaultCardInfo () {
+    _getDefaultCardMobile () {
       return new Promise((resolve, reject) => {
         this.$post('/api/user/vx_info').then(res => {
           if (res.code === 0) {
-            if (res.data.info.pat_list.length > 0) {
-              resolve(res.data.info.pat_list.filter(item => item.visitCardNo === res.data.info.visitCardNo)[0])
-            }
+            resolve(res.data.info.patMobile)
           }
         })
       })
@@ -60,7 +58,7 @@ export default {
                   name: i.patName,
                   idCard: i.patIdNo,
                   qrCodeText: i.visitCardNo,
-                  phone: this.defualtCard.patMobile ? this.defualtCard.patMobile : ''
+                  phone: this.patMobile
                 }).replace(/\"/g, '*')
               }))
             } else {
