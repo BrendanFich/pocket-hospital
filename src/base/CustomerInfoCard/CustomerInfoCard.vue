@@ -10,8 +10,7 @@
       <div>
         <img src="./img/greenAvatar.png" />
         <div class="textInfo">
-          <span class="name">{{visitName}}</span>
-          <span class="status">默认</span>
+          <span class="name">{{visitName}} <span class="status">默认</span></span>
           <p class="cardNumber">就诊卡号：{{visitCardNo}}</p>
         </div>
       </div>
@@ -95,7 +94,10 @@ export default {
         margin-right: 30px;
       }
       .textInfo {
-        display: block;
+        display: flex;
+        align-items: start;
+        flex-direction: column;
+        justify-content: space-around;
         .name {
           color: #666666;
           font-size: 30px;
@@ -110,6 +112,8 @@ export default {
           border-radius: 5px;
         }
         .cardNumber {
+          word-wrap:break-word;
+          width: 360px;
           margin-top: 12px;
           font-size: 24px;
           color: #999999;
