@@ -89,10 +89,16 @@ http.ajax.interceptors.response.use(
 
 // post
 http.post = (url, data) => {
-  console.log(apiBaseUrl + url)
+  let reqUrl
+  if (url.indexOf('http') !== -1) {
+    reqUrl = url
+  } else {
+    reqUrl = apiBaseUrl + url
+  }
+  console.log(data)
   return new Promise((resolve, reject) => {
     http.ajax
-      .post(apiBaseUrl + url, data)
+      .post(reqUrl, data)
       .then(res => {
         if (res.status === 200) {
           resolve(res.data)

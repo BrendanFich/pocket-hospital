@@ -1,52 +1,24 @@
 <template>
   <div class="cardManage">
-    <div class="addCard" @click="linkTo('/mine/cardManage/bindCard')" >
-      <div>
-        <img src="./img/build.png" />
-        <span class="title">添加就诊人</span>
-      </div>
-      <span class="linkIcon">></span>
+    <div class="btns">
+      <van-button type="info" class="addBtn" color="linear-gradient(to right, #45bcec, #63d4f2)" @click="linkTo('/mine/cardManage/bindCard')">绑定就诊卡</van-button>
+      <van-button type="info" class="addBtn" color="linear-gradient(to right, #33cab9, #2ce794)" @click="toBandCardHtml">绑定健康卡</van-button>
     </div>
-
-    <h2>已绑定就诊卡</h2>
+    <h2 v-if="bindedCardList.length > 0">已绑定卡列表</h2>
     <ul class="cardList">
-      <router-link
+      <li
         class="customerInfoCard"
         v-for="(item, index) in bindedCardList"
-        tag="li"
-        :to="{
-          name: 'cardInfo',
-          params: {
-            cardNo: item.visitCardNo
-          }
-        }"
         :key="index"
       >
-        <div>
-          <img src="./img/greenAvatar.png" />
-          <div class="textInfo">
-            <span class="name">{{ item.patName }}</span>
-            <p class="cardNumber">
-              就诊卡：{{ item.visitCardNo }}
-            </p>
-          </div>
-        </div>
-        <span
-          class="status"
-          v-if="
-            item.visitCardNo === defaultCardNo
-          "
-          >默认</span
-        >
-        <span class="isLink" v-else>></span>
-      </router-link>
+        <HealthCard :cardInfo="item" :class="{defualt: item.isDefualt}"></HealthCard>
+      </li>
     </ul>
-
+    <div class="emptycard" v-if="bindedCardList.length === 0"><img src="./img/nocard.png"/><p>暂无绑卡</p></div>
   </div>
 </template>
 
 <script>
-
 export default {
   name: 'cardManage',
   data () {
@@ -55,17 +27,34 @@ export default {
       defaultCardNo: ''
     }
   },
+  components: { HealthCard: () => import('@/base/HealthCard/HealthCard') },
   computed: {
   },
   methods: {
     linkTo (path) {
       this.$router.push(path)
+    },
+    toBandCardHtml () {
+      this.$post('/api/health/addcard/geturl')
+        .then(res => {
+          if (res.code === 0) {
+            window.location = res.data
+          } else {
+            alert('获取跳转地址失败')
+          }
+        })
     }
   },
   created () {
     this.$post('/api/user/vx_info').then(res => {
       if (res.code === 0) {
         this.bindedCardList = res.data.info.pat_list
+        let index = res.data.info.pat_list.findIndex(i => {
+          return i.visitCardNo === res.data.info.visitCardNo
+        })
+        if (index !== -1) {
+          this.bindedCardList[index].isDefualt = true
+        }
         this.defaultCardNo = res.data.info.visitCardNo
       }
     }).catch((error) => {
@@ -82,66 +71,47 @@ export default {
   @include main()
   h2
     color: $color-word-grey
-    font-size: 24px
-    padding: 25px 30px
+    font-size: 28px
+    padding: 20px 30px 5px 50px
   .cardList
     overflow-y: auto
-    max-height: 1200px
     margin-bottom: 98px
+    background: $color-page-background
     .customerInfoCard
-      border-bottom: 1px solid #f2f2f2
-      padding: 47px 50px 46px 31px
-      background: $color-white
-      display: flex
-      align-items: center
-      justify-content: space-between
-      div
-        display: flex
-        align-items: center
-        img
-          width: 104px
-          margin-right: 30px
-        .textInfo
-          display: block
-          .name
-            color: $color-value-grey
-            font-size: 30px
-            font-weight: bold
-          .cardNumber
-            margin-top: 12px
-            font-size: 24px
-            color: $color-word-grey
-      .changeCard
-        color: $color-primary
-        font-size: 24px
-      .status
-        margin-left: 17px
-        font-size: 24px
-        color: $color-white
-        background: #f69343
-        padding: 3px 12px
-        border-radius: 5px
-      .isLink
-        color: #5adba3
-        font-size: 24px
-  .addCard
-    background: $color-white
-    height: 100px
-    padding: 0 54px 0 43px
+      width: 6.2rem * 3.3
+      margin: .3rem * 3.3 auto
+      .defualt
+        // border-width: 3px 3px 3px 60px
+        border-width: 3px
+        border-style: solid
+        border-color:  #f69343
+        border-radius: .165rem * 3.3
+        overflow: hidden
+  .btns
+    margin-top: 20px
     display: flex
-    justify-content: space-between
+    justify-content: space-around
     align-items: center
-    border-bottom: 1px solid $color-border
-    > div
-      display: flex
-      align-items: center
-      > img
-        width: 30px
-        margin-right: 30px
-    .title
-      color: $color-value-grey
-      font-size: 24px
-    .linkIcon
-      color: $color-title-grey
-      font-size: 24px
+    .addBtn
+      width: 300px
+      margin: 10px
+      border-radius: 10px
+  .emptycard
+    display: block
+    width: 620px
+    height: 350px
+    margin: 0 auto
+    border-radius: 50px
+    position: relative
+  .emptycard img
+    margin: 100px auto 20px
+    display: block
+    width: 150px
+    height: 220px
+  .emptycard p
+    width: 100%
+    text-align: center
+    font-size: 30px
+    line-height: 80px
+    color: #aaa
 </style>

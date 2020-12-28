@@ -1,7 +1,7 @@
 <template>
   <div class="customerInfoCard">
     <div class="firstUse" v-if="isShowBandTips">
-      <router-link class="text" to="/mine/cardManage/bindCard">
+      <router-link class="text" to="/mine/cardManage">
         添加就诊人，点击绑定
       </router-link>
     </div>
@@ -11,11 +11,11 @@
         <img src="./img/greenAvatar.png" />
         <div class="textInfo">
           <span class="name">{{visitName}} <span class="status">默认</span></span>
-          <p class="cardNumber">就诊卡号：{{visitCardNo}}</p>
+          <p class="cardNumber">{{visitCardNo.length === 64 ? '健康卡号：' : '就诊卡号：'}}{{visitCardNo}}</p>
         </div>
       </div>
       <router-link to="/mine/cardManage">
-        <span class="changeCard">就诊卡管理></span>
+        <span class="changeCard">就诊人管理></span>
       </router-link>
     </div>
 
@@ -112,7 +112,7 @@ export default {
           border-radius: 5px;
         }
         .cardNumber {
-          word-wrap:break-word;
+          word-wrap: break-word;
           width: 360px;
           margin-top: 12px;
           font-size: 24px;

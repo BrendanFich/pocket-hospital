@@ -18,7 +18,8 @@ let state = {
   gpsAddress: '',
   gpsLatitude: '',
   gpsLongitude: '',
-  gpsName: ''
+  gpsName: '',
+  healthCardBaseUrl: ''
 }
 
 export default new Vuex.Store({

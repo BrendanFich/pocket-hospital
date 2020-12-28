@@ -57,6 +57,36 @@
             </ul>
           </div>
         </div>
+        <div v-if="noonList.length > 0">
+          <div class="TimeLabel">中午班</div>
+          <div class="workTime">
+            <ul>
+              <li v-for="(item, index) in noonList" :key="index">
+                <div class="itemContent" @click="select(item)">
+                  <div class="time">
+                    <img src="./img/clock.png" />
+                    <span>{{
+                      resetTimeFormat(item.beginTime, item.endTime)
+                    }}</span>
+                  </div>
+                  <div class="leftNum">
+                    <span :class="{ over: item.leftNum <= 0 }"
+                      >剩余 {{ item.leftNum }}</span
+                    >
+                    <span :class="{ over: item.leftNum <= 0 }" class="icon"
+                      >&gt;</span
+                    >
+                    <span
+                      :class="{ overShow: item.leftNum <= 0 }"
+                      class="overMsg"
+                      >已约满</span
+                    >
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
         <div v-if="afternoonList.length > 0">
           <div class="TimeLabel">下午班</div>
           <div class="workTime">
@@ -152,29 +182,26 @@ export default {
     morningList () {
       return this.workTimeList.length !== 0
         ? this.workTimeList.filter(
-          item =>
-            item.beginTime.split(' ')[1].split(':')[0] > 6 &&
-              item.beginTime.split(' ')[1].split(':')[0] < 12
-        )
-        : []
+          item => item.timeFlag === '上午班'
+        ) : []
+    },
+    noonList () {
+      return this.workTimeList.length !== 0
+        ? this.workTimeList.filter(
+          item => item.timeFlag === '中午班'
+        ) : []
     },
     afternoonList () {
       return this.workTimeList.length !== 0
         ? this.workTimeList.filter(
-          item =>
-            item.beginTime.split(' ')[1].split(':')[0] >= 12 &&
-              item.beginTime.split(' ')[1].split(':')[0] < 18
-        )
-        : []
+          item => item.timeFlag === '下午班'
+        ) : []
     },
     nightList () {
       return this.workTimeList.length !== 0
         ? this.workTimeList.filter(
-          item =>
-            item.beginTime.split(' ')[1].split(':')[0] >= 18 &&
-              item.beginTime.split(' ')[1].split(':')[0] < 6
-        )
-        : []
+          item => item.timeFlag === '晚班'
+        ) : []
     }
   },
   methods: {

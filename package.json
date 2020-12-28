@@ -18,6 +18,7 @@
     "dayjs": "^1.8.21",
     "mint-ui": "^2.2.13",
     "pinyin-match": "^1.0.9",
+    "qrcodejs2": "0.0.2",
     "vant": "^2.5.4",
     "vconsole": "^3.3.4",
     "vue": "^2.5.2",

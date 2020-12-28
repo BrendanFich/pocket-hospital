@@ -36,6 +36,7 @@
                 </div>
             </div>
             <div class="operation">
+                <a class="button" id="setDefault">设为默认卡</a>
                 <a class="button" id="entercard">进入卡包</a>
                 <a class="link" id="openpopwindow">解绑电子健康卡 ></a>
             </div>
@@ -96,11 +97,27 @@
                     if (res.retcode === 0) {
                         window.location.href = 'list.html';
                     } else {
-                        alert(res.retmsg);
+                        weui.toast(res.retmsg)
                     }
                 }
             });
         });
+        $('#setDefault').click(function() {
+            $.ajax({
+                url: 'https://healthcarddemo.tengmed.com/index.php?c=healthcard&a=getOrderIdByOutAppId',
+                data: {
+                    patCardNo: getQueryString('qrCodeText'),
+                    patName: getQueryString('name')
+                },
+                dataType: 'json',
+                type: 'post',
+                success: function(res) {
+                    if (res.code === 0) {
+                        weui.toast('切换成功')
+                    }
+                }
+            });
+        })
         $('#entercard').click(function() {
             $.ajax({
                 url: 'https://healthcarddemo.tengmed.com/index.php?c=healthcard&a=getOrderIdByOutAppId',

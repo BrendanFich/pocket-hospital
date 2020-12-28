@@ -49,6 +49,9 @@ const mutations = {
     state.gpsLatitude = data.gps_latitude
     state.gpsLongitude = data.gps_longitude
     state.gpsName = data.gps_name
+  },
+  setHealthCardBaseUrl (state, data) {
+    state.healthCardBaseUrl = data.gdcard_url
   }
 }
 

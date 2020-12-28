@@ -16,7 +16,6 @@ export default {
   async created () {
     if (this.$route.query.nc) {
       await this._commitWx(JSON.parse(decodeURI(atob(this.$route.query.nc))))
-      this.$router.replace({ query: {} })
     }
     this.defualtCard = await this._getDefaultCardInfo()
     let list = await this._getHealthCardList()

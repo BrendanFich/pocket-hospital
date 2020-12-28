@@ -187,7 +187,7 @@ export default new Router({
           children: [
             { path: '', name: 'cardManage', component: CardManage },
             { path: 'bindCard', name: 'bindCard', component: BindCard },
-            { path: 'cardInfo/:cardNo', name: 'cardInfo', component: CardInfo }
+            { path: 'cardInfo/:visitCardType&:patName&:patSex&:visitCardNo&:patIdNo&:patMobile&:patId', name: 'cardInfo', component: CardInfo }
           ]
         },
         { path: 'liveHosOrder', name: 'liveHosOrder', component: LiveHosOrder },

@@ -90,7 +90,7 @@ export default {
           this.title = ''
           break
         case 'cardManage':
-          this.title = '就诊卡管理'
+          this.title = '就诊人管理'
           break
         case 'bindCard':
           this.title = '就诊卡绑定'
