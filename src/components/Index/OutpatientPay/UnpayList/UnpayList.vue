@@ -1,6 +1,6 @@
 <template>
   <div class="unpayList">
-    <CustomerInfoCard @visitCardNo="getPatCardNo"></CustomerInfoCard>
+    <CustomerInfoCard @visitCardNo="getPatCardNo" @defualtCard="defualtCard"></CustomerInfoCard>
     <div class="list">
       <van-cell center class="item" v-for="(item,index) in list" :key="index"
       :to="{name: 'unpayItem', params: {patCardNo, hisOrdNum: item.hisOrdNum}}">
@@ -25,7 +25,8 @@ export default {
     return {
       patCardNo: '',
       list: [],
-      isShowNoData: false
+      isShowNoData: false,
+      patCardType: ''
     }
   },
   methods: {
@@ -33,8 +34,14 @@ export default {
       this.patCardNo = val
       this.getOrderList()
     },
+    defualtCard (val) {
+      this.patCardType = val.visitCardType
+    },
     getOrderList () {
-      this.$post('/api/out_visit/un_pay_order/list', {patCardNo: this.patCardNo}).then(res => {
+      this.$post('/api/out_visit/un_pay_order/list', {
+        patCardNo: this.patCardNo,
+        patCardType: this.patCardType
+      }).then(res => {
         this.list = res.data.filter(i => i.hisOrdNum)
         if (this.list.length === 0) {
           this.isShowNoData = true
