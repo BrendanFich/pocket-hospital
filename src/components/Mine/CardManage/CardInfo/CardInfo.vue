@@ -38,6 +38,11 @@ export default {
   },
   created () {
     this.cardInfo = this.$route.params
+    if (this.cardInfo.visitCardType.indexOf('电子健康卡') === -1) {
+      this.$nextTick(() => {
+        this.bindQRCode(this.$route.params.visitCardNo)
+      })
+    }
     this.refreshCode(false)
     if (this.cardInfo.visitCardType.indexOf('电子健康卡') !== -1 && this.$store.state.autoFreshQrcode) {
       this.timer = setInterval(() => { this.refreshCode() }, 3 * 60 * 1000)
@@ -106,7 +111,7 @@ export default {
           if (res.code === 0) {
             this.$store.commit('updateDefaultNo', this.cardInfo.visitCardNo)
             this.$toast({ message: '设置成功', duration: 1500, className: 'toast' })
-            this.$router.go(-2)
+            this.$router.go(-1)
           }
         })
         .catch(error => {
