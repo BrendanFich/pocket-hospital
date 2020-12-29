@@ -17,7 +17,7 @@
       </template>
     </van-field> -->
     <van-button type="info" class="btn" color="#59dca4" @click="setDefault">设为默认</van-button>
-    <van-button type="info" class="btn" color="#658cfe" @click="toCardBag">进入卡包</van-button>
+    <van-button type="info" class="btn" color="#658cfe" @click="toCardBag" v-if="cardInfo.visitCardType.includes('健康卡')">进入卡包</van-button>
     <van-button type="default" class="btn redBtn" @click="untie">解绑</van-button>
   </div>
 </template>
@@ -31,13 +31,14 @@ export default {
       cardInfo: {},
       cardType: '院内就诊卡',
       qrcodeText: '',
+      qrcodeColor: '',
       timer: null,
       isDefualt: true
     }
   },
   created () {
     this.cardInfo = this.$route.params
-    this.qrcodeText = this.cardInfo.visitCardNo
+    this.refreshCode(false)
     if (this.cardInfo.visitCardType.indexOf('电子健康卡') !== -1 && this.$store.state.autoFreshQrcode) {
       this.timer = setInterval(() => { this.refreshCode() }, 3 * 60 * 1000)
     }
@@ -51,7 +52,7 @@ export default {
     }
   },
   methods: {
-    refreshCode () {
+    refreshCode (tip = true) {
       if (this.cardInfo.visitCardType.indexOf('电子健康卡') === -1) return
       this.$post(this.$store.state.healthCardBaseUrl + '/web/qrcodequery', {
         healthCardId: this.cardInfo.visitCardNo,
@@ -62,9 +63,9 @@ export default {
         .then(res => {
           if (res.code === 0) {
             this.$refs.qrCodeDiv.innerHTML = ''
+            this.qrcodeColor = res.data.color
             this.qrcodeText = res.data.qrCodeText
-            // this.qrcodeColor = res.data.color
-            this.$toast({ message: '刷新成功', duration: 1500, className: 'toast' })
+            tip && this.$toast({ message: '刷新成功', duration: 1500, className: 'toast' })
           }
         })
         .catch(error => {
@@ -73,12 +74,24 @@ export default {
         })
     },
     bindQRCode (qrcodeText) {
+      let colorDark
+      if (this.qrcodeColor === 0) {
+        colorDark = '#333333'
+      } else if (this.qrcodeColor === 1) {
+        colorDark = '#6bb169'
+      } else if (this.qrcodeColor === 2) {
+        colorDark = '#f5c443'
+      } else if (this.qrcodeColor === 3) {
+        colorDark = '#e93423'
+      } else {
+        colorDark = '#333333'
+      }
       let width = document.getElementById('qrCode').clientWidth
       return new QRCode(this.$refs.qrCodeDiv, {
         text: qrcodeText,
         width: width,
         height: width,
-        colorDark: '#333333', // 二维码颜色
+        colorDark, // 二维码颜色
         colorLight: '#ffffff', // 二维码背景色
         correctLevel: QRCode.CorrectLevel.L// 容错率，L/M/H
       })
@@ -193,7 +206,7 @@ export default {
     font-size: 24px
     padding: 25px 40px
   >>>.van-cell__value
-    min-width: 70%
+    min-width: 83%
   >>>.van-cell:not(:last-child)::after
     right: 16px
   >>>.van-field__label

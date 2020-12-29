@@ -82,7 +82,7 @@ export default {
       margin: .3rem * 3.3 auto
       .defualt
         // border-width: 3px 3px 3px 60px
-        border-width: 3px
+        border-width: 4px
         border-style: solid
         border-color:  #f69343
         border-radius: .165rem * 3.3
