@@ -50,8 +50,11 @@ const mutations = {
     state.gpsLongitude = data.gps_longitude
     state.gpsName = data.gps_name
   },
-  setHealthCardBaseUrl (state, data) {
-    state.healthCardBaseUrl = data.gdcard_url
+  setHealthCardBaseUrl (state, gdcardUrl) {
+    state.healthCardBaseUrl = gdcardUrl
+  },
+  setAutoFreshQrcode (state, autoFreshQrcode) {
+    state.autoFreshQrcode = autoFreshQrcode
   }
 }
 

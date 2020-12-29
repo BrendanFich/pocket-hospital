@@ -3,13 +3,13 @@
       <CustomerInfoCard></CustomerInfoCard>
       <ul class="orderList">
         <!-- <li @click="toHeathCard"> -->
-        <li @click="linkTo('/mine/heathCardList')">
+        <!-- <li @click="linkTo('/mine/heathCardList')">
           <div>
             <img src="./img/mineIcon.png" />
             <span class="title">我的健康卡</span>
           </div>
           <span class="linkIcon">></span>
-        </li>
+        </li> -->
         <li @click="linkTo('/mine/regOrder')">
           <div>
             <img src="./img/regOrderIcon.png" />

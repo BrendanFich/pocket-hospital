@@ -46,7 +46,6 @@ import RegOrderItem from '@/components/Mine/RegOrder/RegOrderItem/RegOrderItem'
 import CardManage from '@/components/Mine/CardManage/CardManage/CardManage'
 import BindCard from '@/components/Mine/CardManage/BindCard/BindCard'
 import CardInfo from '@/components/Mine/CardManage/CardInfo/CardInfo'
-import HeathCardList from '@/components/Mine/HeathCardList/HeathCardList'
 
 Vue.use(Router)
 const Index = () => import(/* webpackChunkName: "indexchunk" */ '@/components/Index/Index/Index')
@@ -191,7 +190,6 @@ export default new Router({
           ]
         },
         { path: 'liveHosOrder', name: 'liveHosOrder', component: LiveHosOrder },
-        { path: 'HeathCardList', name: 'heathCardList', component: HeathCardList },
         {
           path: 'regOrder',
           component: Container,

@@ -95,7 +95,8 @@ export default {
           .then(res => {
             document.title = res.data.web_title
             this.$store.commit('setLocation', res.data)
-            this.$store.commit('setHealthCardBaseUrl', res.data)
+            this.$store.commit('setHealthCardBaseUrl', res.data.gdcard_url)
+            this.$store.commit('setAutoFreshQrcode', res.data.auto_fresh_qrcode)
             this.debug = res.data.is_debug
             if (res.data.is_debug) {
               vConsole = new VConsole()

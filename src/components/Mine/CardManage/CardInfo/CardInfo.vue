@@ -6,13 +6,18 @@
     <van-cell-group>
       <van-cell title="卡类型" :value="cardInfo.visitCardType" />
       <van-cell title="卡号" :value="cardInfo.visitCardNo"/>
-      <van-cell title="姓名" :value="cardInfo.patName"/>
+      <van-cell title="姓名" :value="hiddenSomeName(cardInfo.patName)"/>
       <van-cell title="性别" :value="cardInfo.patSex"/>
-      <van-cell title="证件号码" :value="cardInfo.patIdNo"/>
-      <van-cell title="手机号" :value="cardInfo.patMobile"/>
+      <van-cell title="证件号码" :value="hiddenSomeNum(cardInfo.patIdNo)"/>
+      <van-cell title="手机号" :value="hiddenSomePhone(cardInfo.patMobile)"/>
     </van-cell-group>
-
-    <van-button type="info" class="btn" color="linear-gradient(to right, #33cab9, #2ce794)" @click="setDefault">设为默认</van-button>
+    <!-- <van-field name="switch" label="设为默认就诊人">
+      <template #input>
+        <van-switch v-model="isDefualt" size="20" />
+      </template>
+    </van-field> -->
+    <van-button type="info" class="btn" color="#59dca4" @click="setDefault">设为默认</van-button>
+    <van-button type="info" class="btn" color="#658cfe" @click="toCardBag">进入卡包</van-button>
     <van-button type="default" class="btn redBtn" @click="untie">解绑</van-button>
   </div>
 </template>
@@ -26,16 +31,14 @@ export default {
       cardInfo: {},
       cardType: '院内就诊卡',
       qrcodeText: '',
-      timer: null
+      timer: null,
+      isDefualt: true
     }
   },
   created () {
     this.cardInfo = this.$route.params
-    this.cardInfo.patIdNo = this.hiddenSomeNum(this.cardInfo.patIdNo)
-    this.cardInfo.patName = this.hiddenSomeName(this.cardInfo.patName)
-    this.cardInfo.patMobile = this.hiddenSomePhone(this.cardInfo.patMobile)
     this.qrcodeText = this.cardInfo.visitCardNo
-    if (this.cardInfo.visitCardType.indexOf('电子健康卡') !== -1) {
+    if (this.cardInfo.visitCardType.indexOf('电子健康卡') !== -1 && this.$store.state.autoFreshQrcode) {
       this.timer = setInterval(() => { this.refreshCode() }, 3 * 60 * 1000)
     }
   },
@@ -50,17 +53,17 @@ export default {
   methods: {
     refreshCode () {
       if (this.cardInfo.visitCardType.indexOf('电子健康卡') === -1) return
-      let idType = this.cardInfo.patIdType === ' ' ? '01' : this.cardInfo.patIdType
       this.$post(this.$store.state.healthCardBaseUrl + '/web/qrcodequery', {
         healthCardId: this.cardInfo.visitCardNo,
-        idType,
+        idType: this.cardInfo.patIdType,
         idNumber: this.cardInfo.patIdNo,
-        codeType: '0'
+        codeType: '0' // 0动态码 1静态码
       })
         .then(res => {
           if (res.code === 0) {
             this.$refs.qrCodeDiv.innerHTML = ''
             this.qrcodeText = res.data.qrCodeText
+            // this.qrcodeColor = res.data.color
             this.$toast({ message: '刷新成功', duration: 1500, className: 'toast' })
           }
         })
@@ -96,6 +99,36 @@ export default {
         .catch(error => {
           console.log(error)
         })
+    },
+    async toCardBag () {
+      let orderId = await this.getOrderId()
+      this.$post('/api/health/cardbag/geturl', {orderId})
+        .then(res => {
+          if (res.code === 0) {
+            window.location.href = res.data
+          } else {
+            this.$toast({ message: res.msg, duration: 1500, className: 'toast' })
+          }
+        })
+        .catch(error => {
+          this.$toast({ message: error, duration: 1500, className: 'toast' })
+        })
+    },
+    getOrderId () {
+      return new Promise((resolve, reject) => {
+        this.$post(this.$store.state.healthCardBaseUrl + '/web/cardbagorderid', {
+          qrCodeText: this.qrcodeText
+        })
+          .then(res => {
+            if (res.code === 0) {
+              resolve(res.data.orderId)
+            } else {
+              this.$toast({ message: res.msg, duration: 1500, className: 'toast' })
+            }
+          }).catch(error => {
+            this.$toast({ message: error, duration: 1500, className: 'toast' })
+          })
+      })
     },
     untie () {
       this.$post('/api/pat/cancelCard', {
@@ -161,28 +194,16 @@ export default {
     padding: 25px 40px
   >>>.van-cell__value
     min-width: 70%
-  .van-cell:not(:last-child)::after
+  >>>.van-cell:not(:last-child)::after
     right: 16px
-  .selectItem
-    position: relative
-    .isLink
-      color: #5adba3
-      font-size: 30px
-      position: absolute
-      top: 27px
-      right: 66px
-  /deep/ .mint-actionsheet-listitem
-    height: 80px
-    font-size: 30px
-    line-height: 80px
-  .attention
-    margin-top: 40px
-    p
-      width: 670px
-      margin: 0 auto
-      font-size: 24px
-      color: $color-word-grey
-      line-height: 36px
+  >>>.van-field__label
+    width: 120px
+  >>>.van-field__control--custom
+    justify-content: flex-end
+    .van-switch
+      margin-right: 16px
+    .van-switch--on
+      background-color: #2ce794
   .btn
     margin-top: 30px
     margin-left: 50px

@@ -29,7 +29,8 @@ import {
   SidebarItem,
   Tab,
   Tabs,
-  Calendar
+  Calendar,
+  Switch
 } from 'vant'
 
 Vue.use(MintUI)
@@ -55,6 +56,7 @@ Vue.use(Tab)
 Vue.use(Tabs)
 Vue.use(Tabs)
 Vue.use(Calendar)
+Vue.use(Switch)
 
 Toast.setDefaultOptions('loading', { forbidClick: true, message: '', loadingType: 'spinner', duration: 0 })
 Toast.setDefaultOptions('fail', { forbidClick: true, duration: 1000 })
