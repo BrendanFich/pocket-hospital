@@ -1,5 +1,6 @@
 <template>
-  <div class="health-card" @click="toCardInfo">
+  <div class="health-card" @click="toCardInfo" :class="{defualt: isDefualt}">
+    <div class="status" v-if="isDefualt">默认</div>
     <img class="card-bg" src="./img/cardnewbg.png" alt="" />
     <div class="card-top-info">
       <div class="card-top-org">广东省卫生健康委员会</div>
@@ -33,6 +34,10 @@ export default {
     cardInfo: {
       type: Object,
       required: true
+    },
+    isDefualt: {
+      type: Boolean,
+      required: false
     }
   },
   computed: {},
@@ -90,12 +95,30 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+.defualt
+  // border-width: 3px 3px 3px 60px
+  border-width: 5px
+  border-style: solid
+  border-color:  #f69343
+  border-radius: 0 .165rem * 3.3 .165rem * 3.3
+  margin-top: 20px
 .health-card
   display: block
   height: 3.5rem * 3.3
   width: 6.2rem * 3.3
   position: relative
   color: #000000
+  .status
+    position: absolute
+    top: -40px
+    left: -5px
+    padding: 5px 5px 5px 20px
+    font-size: 24px
+    line-height: 30px
+    color: #ffffff
+    background: #f69343
+    border-radius: .165rem * 3.3 .165rem * 3.3 0 0
+    width: 62px
   .card-bg
     height: 100%
     width: 100%

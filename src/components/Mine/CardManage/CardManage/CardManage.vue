@@ -11,7 +11,7 @@
         v-for="(item, index) in bindedCardList"
         :key="index"
       >
-        <HealthCard :cardInfo="item" :class="{defualt: item.isDefualt}"></HealthCard>
+        <HealthCard :cardInfo="item" :isDefualt="item.isDefualt"></HealthCard>
       </li>
     </ul>
     <div class="emptycard" v-if="bindedCardList.length === 0"><img src="./img/nocard.png"/><p>暂无绑卡</p></div>
@@ -79,14 +79,7 @@ export default {
     background: $color-page-background
     .customerInfoCard
       width: 6.2rem * 3.3
-      margin: .3rem * 3.3 auto
-      .defualt
-        // border-width: 3px 3px 3px 60px
-        border-width: 4px
-        border-style: solid
-        border-color:  #f69343
-        border-radius: .165rem * 3.3
-        overflow: hidden
+      margin: .4rem * 3.3 auto
   .btns
     margin-top: 20px
     display: flex
