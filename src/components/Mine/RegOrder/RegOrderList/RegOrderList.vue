@@ -18,45 +18,48 @@
             }
           }"
         >
-          <div class="left">
-            <img src="./img/orderIcon.png" alt />
+          <img src="./img/orderIcon.png" alt />
+          <div class="right">
             <div class="baseInfo">
+              <span class="name">{{ item.patName }}</span>
+              <span class="num">{{ item.patCardNo }}</span>
+            </div>
+            <div class="detail">
               <div>
-                <span class="name">{{ item.patName }}</span>
-                <span class="num">{{ item.patCardNo }}</span>
+                <div class="item">
+                  <span class="key">日期：</span>
+                  <span class="value"
+                    >{{ item.scheduleDate.split(" ")[0] }}</span
+                  >
+                </div>
+                <div class="item">
+                  <span class="key">科室：</span>
+                  <span class="value">{{ item.deptName }}</span>
+                </div>
+                <div class="item">
+                  <span class="key">金额：</span>
+                  <span class="value">{{ item.regFee / 100 }}元</span>
+                </div>
               </div>
-              <div class="item">
-                <span class="key">日期</span>
-                <span class="value"
-                  >：{{ item.scheduleDate.split(" ")[0] }}</span
-                >
-              </div>
-              <div class="item">
-                <span class="key">时段</span>
-                <span class="value"
-                  >：{{ timeFormat(item.beginTime) }}-{{
-                timeFormat(item.endTime)
-              }}</span
-                >
-              </div>
-              <div class="item">
-                <span class="key">科室</span>
-                <span class="value">：{{ item.deptName }}</span>
-              </div>
-              <div class="item">
-                <span class="key">医生</span>
-                <span class="value">：{{ item.doctorName }}</span>
+              <div>
+                <div class="item">
+                  <span class="key">时段</span>
+                  <span class="value"
+                    >：{{ timeFormat(item.beginTime) }}-{{
+                  timeFormat(item.endTime)
+                }}</span
+                  >
+                </div>
+                <div class="item">
+                  <span class="key">医生：</span>
+                  <span class="value">{{ item.doctorName }}</span>
+                </div>
+                <div class="item">
+                  <span class="key">状态：</span>
+                  <span class="value"> {{ item.visit_status }} </span>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="right">
-            <span class="orange">{{ item.regFee / 100 }}元</span>
-            <span
-              :class="{
-                green: item.visit_status === '挂号'
-              }"
-              >{{ item.visit_status }}</span
-            >
           </div>
         </router-link>
       </div>
@@ -143,53 +146,53 @@ export default {
     font-size: 24px
     padding: 25px 30px
   .orderCard
-    height: 170px
+    height: 154px
     background: $color-white
     padding: 30px 50px 30px 40px
     display: flex
     justify-content: space-between
     align-items: center
-    .left
+    img
+      width: 43px
+      margin-right: 30px
+    .right
+      flex: 1
       display: flex
-      justify-content: flex-start
-      align-items: center
-      img
-        width: 43px
-        margin-right: 30px
+      justify-content: center
+      flex-direction: column
+      align-items: start
       .baseInfo
-        font-size: 24px
-        line-height: 36px
-        .key
-          color: $color-word-grey
-        .value
-          color: $color-value-grey
         .name
           color: #5adba3
           font-size: 26px
           font-weight: bold
-          line-height: 50px
         .num
           font-size: 24px
           color: $color-title-grey
           display: inline-block
+          line-height: 100%
           margin-left: 12px
-    .right
-      display: flex
-      flex-direction: column
-      align-items: flex-end
-      justify-content: center
-      span
-        color: $color-white
+          max-width: 280px
+          overflow: hidden
+          text-overflow: ellipsis
+          white-space: nowrap
+      .detail
         font-size: 24px
-        line-height: 30px
-        padding: 3px 11px
-        margin: 5px 0
-        border-radius: 5px
-        background: #f69343
-      .orange
-        background: #f69343
-      .green
-        background: #5adba3
+        line-height: 36px
+        display: flex
+        flex-direction: row
+        justify-content: space-between
+        align-items: start
+        width: 100%
+        margin-top: 10px
+        .key
+          color: $color-word-grey
+        .value
+          color: $color-value-grey
+        .orange
+          color: #f69343
+        .green
+          color: #5adba3
 .mint-loadmore-bottom
   span
     display: inline-block
