@@ -14,21 +14,24 @@
         <span class="card-user-name">{{hiddenSomeName(cardInfo.patName)}}</span>
         <span class="card-user-id">{{hiddenSomeNum(cardInfo.patIdNo)}}</span>
       </div>
-      <div class="card-qrcode">
-        <div id="qrCode" ref="qrCodeDiv"></div>
-      </div>
+      <vue-qr :logoSrc="imageUrl" :text="text" :margin="0" style="width: 5rem"></vue-qr>
     </div>
     <div class="card-footer">中华人民共和国国家卫生健康委员会监制</div>
   </div>
 </template>
 
 <script>
-import QRCode from 'qrcodejs2'
+import vueQr from 'vue-qr'
 export default {
   name: 'HealthCard',
   data () {
     return {
+      imageUrl: require('./img/logo_.png'),
+      text: ''
     }
+  },
+  components: {
+    vueQr
   },
   props: {
     cardInfo: {
@@ -43,7 +46,7 @@ export default {
   computed: {},
   created () {
     this.$nextTick(function () {
-      this.bindQRCode()
+      this.text = this.cardInfo.visitCardNo
     })
   },
   methods: {
@@ -61,19 +64,6 @@ export default {
       this.$router.push({
         name: 'cardInfo',
         params
-      })
-    },
-    bindQRCode () {
-      let width = document.getElementById('qrCode').clientWidth
-      return new QRCode(this.$refs.qrCodeDiv, {
-        text: this.cardInfo.visitCardNo,
-        width: width,
-        height: width,
-        colorDark: '#333333', // 二维码颜色
-        colorLight: '#ffffff', // 二维码背景色
-        correctLevel: QRCode.CorrectLevel.L, // 容错率，L/M/H
-        logoSrc: '/img/logo_.png',
-        logoScale: '500'
       })
     },
     // 身份证脱敏
@@ -187,7 +177,12 @@ export default {
       #qrCode
         height: 1.54rem * 3.3
         width: 1.54rem * 3.3
-
+      .logo
+        width: 1.38rem
+        position: absolute
+        top: 50%
+        left: 50%
+        transform: translate(-50%, -50%)
   .card-footer
     position: absolute
     font-size: .18rem * 3.3

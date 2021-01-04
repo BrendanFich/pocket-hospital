@@ -1,7 +1,9 @@
 <template>
   <div class="cardInfo">
     <div class="card-qrcode">
-      <div id="qrCode" ref="qrCodeDiv" @click="refreshCode"></div>
+      <div id="qrCode" @click="refreshCode">
+        <vue-qr :logoSrc="imageUrl" :text="text" :margin="0" :colorDark="colorDark" ></vue-qr>
+      </div>
     </div>
     <van-cell-group>
       <van-cell title="卡类型" :value="cardInfo.visitCardType" />
@@ -23,9 +25,12 @@
 </template>
 
 <script>
-import QRCode from 'qrcodejs2'
+import vueQr from 'vue-qr'
 export default {
   name: 'cardInfo',
+  components: {
+    vueQr
+  },
   data () {
     return {
       cardInfo: {},
@@ -33,7 +38,10 @@ export default {
       qrcodeText: '',
       qrcodeColor: '',
       timer: null,
-      isDefualt: true
+      isDefualt: true,
+      imageUrl: require('./img/logo_.png'),
+      text: '',
+      colorDark: '#000'
     }
   },
   created () {
@@ -67,7 +75,6 @@ export default {
       })
         .then(res => {
           if (res.code === 0) {
-            this.$refs.qrCodeDiv.innerHTML = ''
             this.qrcodeColor = res.data.color
             this.qrcodeText = res.data.qrCodeText
             tip && this.$toast({ message: '刷新成功', duration: 1500, className: 'toast' })
@@ -79,27 +86,18 @@ export default {
         })
     },
     bindQRCode (qrcodeText) {
-      let colorDark
+      this.text = this.cardInfo.visitCardNo
       if (this.qrcodeColor === 0) {
-        colorDark = '#333333'
+        this.colorDark = '#000000'
       } else if (this.qrcodeColor === 1) {
-        colorDark = '#6bb169'
+        this.colorDark = '#6bb169'
       } else if (this.qrcodeColor === 2) {
-        colorDark = '#f5c443'
+        this.colorDark = '#f5c443'
       } else if (this.qrcodeColor === 3) {
-        colorDark = '#e93423'
+        this.colorDark = '#e93423'
       } else {
-        colorDark = '#333333'
+        this.colorDark = '#000000'
       }
-      let width = document.getElementById('qrCode').clientWidth
-      return new QRCode(this.$refs.qrCodeDiv, {
-        text: qrcodeText,
-        width: width,
-        height: width,
-        colorDark, // 二维码颜色
-        colorLight: '#ffffff', // 二维码背景色
-        correctLevel: QRCode.CorrectLevel.L// 容错率，L/M/H
-      })
     },
     setDefault () {
       this.$post('/api/pat/changeCard',
