@@ -73,6 +73,10 @@ export default {
     payComfirm (ledgerSn) {
       this.$post('/api/doctor/payComfirm', {ledgerSn})
         .then(res => {
+          if (res.data.totalFee !== this.allInfo.regFee) {
+            this.$toast({ message: '支付金额有误，请重试', duration: 1500, className: 'toast' })
+            return
+          }
           this.wxPay(res.data)
         })
         .catch(error => {

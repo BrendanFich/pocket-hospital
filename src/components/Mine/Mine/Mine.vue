@@ -44,11 +44,11 @@
         <!-- <div class="item" @click="noFinish">
           <img src="./img/questionIcon.png" alt />
           <span>随访问卷</span>
-        </div>
-        <div class="item" @click="noFinish">
-          <img src="./img/linkIcon.png" alt />
-          <span>友情链接</span>
         </div> -->
+        <div class="item" @click="shock">
+          <img src="./img/linkIcon.png" alt />
+          <span>测试</span>
+        </div>
       </div>
       <div class="package-date">
         版本信息：{{packageDate}}
@@ -57,6 +57,7 @@
 </template>
 
 <script>
+import wx from 'weixin-js-sdk'
 export default {
   name: 'mine',
   data () {
@@ -72,6 +73,19 @@ export default {
   methods: {
     linkTo (url) {
       this.$router.push(url)
+    },
+    shock () {
+      wx.ready(function () {
+        wx.chooseImage({
+          count: 1, // 默认9
+          sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+          sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+          success: function (res) {
+            var localIds = res.localIds // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+            alert(localIds)
+          }
+        })
+      })
     }
   }
 }

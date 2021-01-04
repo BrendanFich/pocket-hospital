@@ -172,6 +172,10 @@ export default {
         display: inline-block
         font-size: 24px
         color: $color-value-grey
+        max-width: 280px
+        overflow: hidden
+        text-overflow: ellipsis
+        white-space: nowrap
       .serial_number
         line-height: 40px
         font-size: 26px

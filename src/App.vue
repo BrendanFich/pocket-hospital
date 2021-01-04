@@ -56,7 +56,8 @@ export default {
             'openLocation',
             'getLocation',
             'updateAppMessageShareData',
-            'chooseWXPay'
+            'chooseWXPay',
+            'chooseImage'
           ]
         })
         this.$wx.error(function (res) {

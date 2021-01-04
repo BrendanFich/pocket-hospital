@@ -119,6 +119,10 @@ export default {
         .then(() => {
           this.$post('/api/doctor/payComfirm', { ledgerSn: this.$route.params.ledgerSn })
             .then(res => {
+              if (res.data.totalFee !== this.regInfo.regFee) {
+                this.$toast({ message: '支付金额有误，请重试', duration: 1500, className: 'toast' })
+                return
+              }
               wx.ready(function () {
                 wx.chooseWXPay({
                   timestamp: res.data.timestamp,
@@ -135,15 +139,6 @@ export default {
             .catch(error => {
               console.log(error)
             })
-        })
-    },
-    payComfirm (ledgerSn) {
-      this.$post('/api/doctor/payComfirm', { ledgerSn })
-        .then(res => {
-          this.wxPay(res.data)
-        })
-        .catch(error => {
-          console.log(error)
         })
     }
   }
