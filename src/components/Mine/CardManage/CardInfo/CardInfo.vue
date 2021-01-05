@@ -2,7 +2,7 @@
   <div class="cardInfo">
     <div class="card-qrcode">
       <div id="qrCode" @click="refreshCode">
-        <vue-qr :logoSrc="imageUrl" :text="text" :margin="0" :colorDark="colorDark" ></vue-qr>
+        <vue-qr :logoSrc="imageUrl" :text="qrcodeText" :margin="0" :colorDark="colorDark" ></vue-qr>
       </div>
     </div>
     <van-cell-group>
@@ -20,6 +20,7 @@
     </van-field> -->
     <van-button type="info" class="btn" color="#59dca4" @click="setDefault">设为默认</van-button>
     <van-button type="info" class="btn" color="#658cfe" @click="toCardBag" v-if="cardInfo.visitCardType.includes('健康卡')">进入卡包</van-button>
+    <van-button type="info" class="btn" color="#59dca4" @click="levelUp" v-else>升级</van-button>
     <van-button type="default" class="btn redBtn" @click="untie">解绑</van-button>
   </div>
 </template>
@@ -40,7 +41,6 @@ export default {
       timer: null,
       isDefualt: true,
       imageUrl: require('./img/logo_.png'),
-      text: '',
       colorDark: '#000'
     }
   },
@@ -91,7 +91,6 @@ export default {
         })
     },
     bindQRCode (qrcodeText) {
-      this.text = this.cardInfo.visitCardNo
       if (this.qrcodeColor === 0) {
         this.colorDark = '#000000'
       } else if (this.qrcodeColor === 1) {
@@ -103,6 +102,9 @@ export default {
       } else {
         this.colorDark = '#000000'
       }
+    },
+    levelUp () {
+
     },
     setDefault () {
       this.$post('/api/pat/changeCard',
