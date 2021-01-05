@@ -46,6 +46,8 @@ export default {
   },
   created () {
     this.cardInfo = this.$route.params
+  },
+  mounted () {
     if (this.cardInfo.visitCardType.indexOf('电子健康卡') === -1) {
       this.$nextTick(() => {
         this.bindQRCode(this.$route.params.visitCardNo)
@@ -62,6 +64,9 @@ export default {
   watch: {
     qrcodeText (val) {
       this.bindQRCode(val)
+    },
+    '$store.state.healthCardBaseUrl' () { // 刷新页面时，刷新二维码
+      this.refreshCode()
     }
   },
   methods: {
@@ -204,12 +209,15 @@ export default {
       height: 380px
       width: 380px
       margin: 20px auto
+      img
+        height: 380px
+        width: 380px
   h2
     color: $color-word-grey
     font-size: 24px
     padding: 25px 40px
   >>>.van-cell__value
-    min-width: 83%
+    min-width: 81%
   >>>.van-cell:not(:last-child)::after
     right: 16px
   >>>.van-field__label

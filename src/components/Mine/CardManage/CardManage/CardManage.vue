@@ -28,24 +28,11 @@ export default {
     }
   },
   components: { HealthCard: () => import('@/base/HealthCard/HealthCard') },
-  computed: {
-  },
-  methods: {
-    linkTo (path) {
-      this.$router.push(path)
-    },
-    toBandCardHtml () {
-      this.$post('/api/health/addcard/geturl')
-        .then(res => {
-          if (res.code === 0) {
-            window.location = res.data
-          } else {
-            alert('获取跳转地址失败')
-          }
-        })
+  async created () {
+    if (this.$route.query.nc) {
+      await this.fresh(this.$route.query.nc)
+      this.$router.replace({path: '/mine/cardManage', query: {}})
     }
-  },
-  created () {
     this.$post('/api/user/vx_info').then(res => {
       if (res.code === 0) {
         this.bindedCardList = res.data.info.pat_list
@@ -60,6 +47,40 @@ export default {
     }).catch((error) => {
       console.log(error)
     })
+  },
+  methods: {
+    linkTo (path) {
+      this.$router.push(path)
+    },
+    toBandCardHtml () {
+      this.$post('/api/health/addcard/geturl')
+        .then(res => {
+          if (res.code === 0) {
+            window.location = res.data
+          } else {
+            alert('获取跳转地址失败')
+          }
+        })
+    },
+    fresh (newCard) {
+      let newCardObj = JSON.parse(decodeURI(atob(newCard)))
+      console.log(newCardObj)
+      newCardObj.PatientId = newCardObj.PatientId.toString()
+      return new Promise((resolve, reject) => {
+        this.$post('/api/pat/bindCard/fresh', newCardObj)
+          .then(res => {
+            if (res.code === 0) {
+              resolve()
+            } else {
+              this.$toast({ message: res.msg, duration: 1500, className: 'toast' })
+              resolve()
+            }
+          })
+          .catch(error => {
+            resolve(error)
+          })
+      })
+    }
   }
 }
 </script>
