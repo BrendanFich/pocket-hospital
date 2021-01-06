@@ -57,7 +57,8 @@ export default {
             'getLocation',
             'updateAppMessageShareData',
             'chooseWXPay',
-            'chooseImage'
+            'chooseImage',
+            'getLocalImgData'
           ]
         })
         this.$wx.error(function (res) {
@@ -140,7 +141,10 @@ export default {
             jsApiList: [
               'openLocation',
               'getLocation',
-              'updateAppMessageShareData'
+              'updateAppMessageShareData',
+              'chooseWXPay',
+              'chooseImage',
+              'getLocalImgData'
             ]
           })
         })
