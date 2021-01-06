@@ -83,7 +83,7 @@ export default {
           success: function (res) {
             console.log(res.localIds)
             wx.getLocalImgData({
-              localId: res.localIds, // 图片的localID
+              localId: res.localIds[0], // 图片的localID
               success: function (res2) {
                 var localData = res2.localData // localData是图片的base64数据，可以用img标签显示
                 alert(localData)
