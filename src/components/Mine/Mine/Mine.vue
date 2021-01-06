@@ -45,10 +45,10 @@
           <img src="./img/questionIcon.png" alt />
           <span>随访问卷</span>
         </div> -->
-        <div class="item" @click="shock">
+        <!-- <div class="item" @click="shock">
           <img src="./img/linkIcon.png" alt />
           <span>测试</span>
-        </div>
+        </div> -->
       </div>
       <div class="package-date">
         版本信息：{{packageDate}}
