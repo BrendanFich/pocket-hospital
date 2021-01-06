@@ -1,8 +1,8 @@
 <template>
   <div class="cardManage">
     <div class="btns">
-      <van-button type="info" class="addBtn" color="linear-gradient(to right, #45bcec, #63d4f2)" @click="linkTo('/mine/cardManage/bindCard')">绑定就诊卡</van-button>
-      <van-button type="info" class="addBtn" color="linear-gradient(to right, #33cab9, #2ce794)" @click="toBandCardHtml">绑定健康卡</van-button>
+      <!-- <van-button type="info" class="addBtn" color="linear-gradient(to right, #45bcec, #63d4f2)" @click="linkTo('/mine/cardManage/bindCard')">绑定就诊卡</van-button> -->
+      <van-button type="info" class="addBtn" color="linear-gradient(to right, #33cab9, #2ce794)" @click="toBandCardHtml">添加健康卡</van-button>
     </div>
     <h2 v-if="bindedCardList.length > 0">已绑定卡列表</h2>
     <ul class="cardList">
@@ -42,6 +42,22 @@ export default {
         if (index !== -1) {
           this.bindedCardList[index].isDefualt = true
         }
+        this.bindedCardList = this.bindedCardList.map(i => {
+          i.userCode = res.data.info.userCode
+          i.userName = res.data.info.userName
+          return i
+        })
+        console.log(this.bindedCardList)
+        this.bindedCardList = this.bindedCardList.filter((i, index) => {
+          if (i.visitCardType.includes('电子健康卡')) {
+            return true
+          } else {
+            let tempArr = this.bindedCardList.filter((i2, index2) => {
+              return i2.patIdNo === i.patIdNo
+            })
+            return tempArr.length === 1
+          }
+        })
         this.defaultCardNo = res.data.info.visitCardNo
       }
     }).catch((error) => {
@@ -107,7 +123,7 @@ export default {
     justify-content: space-around
     align-items: center
     .addBtn
-      width: 300px
+      width: 660px
       margin: 10px
       border-radius: 10px
   .emptycard

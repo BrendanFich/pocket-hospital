@@ -51,6 +51,7 @@ export default {
   },
   methods: {
     toCardInfo () {
+      console.log(this.cardInfo)
       let params = {
         visitCardType: this.cardInfo.visitCardType || ' ',
         patName: this.cardInfo.patName || ' ',
@@ -59,7 +60,12 @@ export default {
         patIdNo: this.cardInfo.patIdNo || ' ',
         patMobile: this.cardInfo.patMobile || ' ',
         patId: this.cardInfo.patId || ' ',
-        patIdType: this.cardInfo.patIdType || ' '
+        patIdType: this.cardInfo.patIdType || ' ',
+        addressDetail: this.cardInfo.addressDetail || ' ',
+        nation: this.cardInfo.nation || ' ',
+        userCode: this.cardInfo.userCode,
+        userName: this.cardInfo.userName
+
       }
       this.$router.push({
         name: 'cardInfo',

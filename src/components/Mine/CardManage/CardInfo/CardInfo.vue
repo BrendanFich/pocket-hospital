@@ -19,7 +19,7 @@
       </template>
     </van-field> -->
     <van-button type="info" class="btn" color="#59dca4" @click="setDefault">设为默认</van-button>
-    <van-button type="info" class="btn" color="#658cfe" @click="toCardBag" v-if="cardInfo.visitCardType.includes('健康卡')">进入卡包</van-button>
+    <van-button type="info" class="btn" color="#658cfe" @click="toCardBag" v-if="cardInfo.visitCardType.includes('电子健康卡') && cardInfo.patIdType === '1'">进入卡包</van-button>
     <van-button type="info" class="btn" color="#59dca4" @click="levelUp" v-else>升级</van-button>
     <van-button type="default" class="btn redBtn" @click="untie">解绑</van-button>
   </div>
@@ -27,6 +27,7 @@
 
 <script>
 import vueQr from 'vue-qr'
+
 export default {
   name: 'cardInfo',
   components: {
@@ -46,6 +47,9 @@ export default {
   },
   created () {
     this.cardInfo = this.$route.params
+    this.$nextTick(() => {
+      this.qrcodeText = this.cardInfo.visitCardNo
+    })
   },
   mounted () {
     if (this.cardInfo.visitCardType.indexOf('电子健康卡') === -1) {
@@ -72,6 +76,7 @@ export default {
   methods: {
     refreshCode (tip = true) {
       if (this.cardInfo.visitCardType.indexOf('电子健康卡') === -1) return
+      if (!this.$store.state.healthCardBaseUrl) return
       this.$post(this.$store.state.healthCardBaseUrl + '/web/qrcodequery', {
         healthCardId: this.cardInfo.visitCardNo,
         idType: this.cardInfo.patIdType,
@@ -104,7 +109,38 @@ export default {
       }
     },
     levelUp () {
-
+      var data = {
+        Hometel: this.cardInfo.patMobile,
+        Idcardno: this.cardInfo.patIdNo,
+        PatName: this.cardInfo.patName,
+        PatSex: this.cardInfo.patSex,
+        Usercode: this.cardInfo.userCode,
+        Username: this.cardInfo.userName,
+        VisitCardNo: this.cardInfo.visitCardNo,
+        Addressdetail: this.cardInfo.addressDetail === ' ' ? '' : this.cardInfo.addressDetail,
+        DateOfBirth: this.getBirthFormIdNo(this.cardInfo.patIdNo),
+        Nation: this.cardInfo.nation === ' ' ? '' : this.cardInfo.nation
+      }
+      this.$post('/manager/jkcard/newcard',
+        [data])
+        .then(res => {
+          if (res.Code === '0') {
+            this.$toast({
+              type: 'success',
+              message: '升级成功',
+              onClose: () => {
+                this.$router.replace({path: '/mine/cardManage'})
+              },
+              duration: 500
+            })
+          } else {
+            this.$toast.fail('出错')
+          }
+        })
+        .catch(error => {
+          console.log(error)
+          this.$toast.fail('出错')
+        })
     },
     setDefault () {
       this.$post('/api/pat/changeCard',
@@ -115,8 +151,14 @@ export default {
         .then(res => {
           if (res.code === 0) {
             this.$store.commit('updateDefaultNo', this.cardInfo.visitCardNo)
-            this.$toast({ message: '设置成功', duration: 1500, className: 'toast' })
-            this.$router.go(-1)
+            this.$toast({
+              type: 'success',
+              message: '设置成功',
+              onClose: () => {
+                this.$router.replace({path: '/mine/cardManage'})
+              },
+              duration: 500
+            })
           }
         })
         .catch(error => {
@@ -182,6 +224,13 @@ export default {
         return fullName.substring(0, 1) + '*' + fullName.substring(2, 3)// 截取第一个和第三个字符
       } else if (fullName.length > 3) {
         return fullName.substring(0, 1) + '*' + '*' + fullName.substring(3, fullName.length)// 截取第一个和大于第4个字符
+      }
+    },
+    getBirthFormIdNo (idNo) {
+      if (idNo.length === 15) { // 15位身份证
+        return '19' + idNo.substring(6, 8) + '-' + idNo.substring(8, 10) + '-' + idNo.substring(10, 12)
+      } else if (idNo.length === 18) { // 18位身份证
+        return idNo.substring(6, 10) + '-' + idNo.substring(10, 12) + '-' + idNo.substring(12, 14)
       }
     }
   }

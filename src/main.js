@@ -54,7 +54,6 @@ Vue.use(Sidebar)
 Vue.use(SidebarItem)
 Vue.use(Tab)
 Vue.use(Tabs)
-Vue.use(Tabs)
 Vue.use(Calendar)
 Vue.use(Switch)
 
