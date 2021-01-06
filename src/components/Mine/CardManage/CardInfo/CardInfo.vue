@@ -119,7 +119,7 @@ export default {
         VisitCardNo: this.cardInfo.visitCardNo,
         Addressdetail: this.cardInfo.addressDetail === ' ' ? '' : this.cardInfo.addressDetail,
         DateOfBirth: this.getBirthFormIdNo(this.cardInfo.patIdNo),
-        Nation: this.cardInfo.nation === ' ' ? '' : this.cardInfo.nation
+        Nation: this.cardInfo.nation === ' ' ? '未知' : this.cardInfo.nation
       }
       this.$post('/manager/jkcard/newcard',
         [data])
