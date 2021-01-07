@@ -119,7 +119,7 @@ export default {
         .then(() => {
           this.$post('/api/doctor/payComfirm', { ledgerSn: this.$route.params.ledgerSn })
             .then(res => {
-              if (res.data.totalFee !== this.regInfo.regFee) {
+              if (Number(res.data.totalFee) !== Number(this.regInfo.regFee)) {
                 this.$toast({ message: '支付金额有误，请重试', duration: 1500, className: 'toast' })
                 return
               }

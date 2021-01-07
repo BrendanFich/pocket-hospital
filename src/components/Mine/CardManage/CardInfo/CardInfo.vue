@@ -134,12 +134,38 @@ export default {
               duration: 500
             })
           } else {
-            this.$toast.fail('出错')
+            this.$dialog.confirm({
+              title: '升级失败',
+              message: '是否手动添加健康卡？'
+            }).then(() => {
+              this.toBandCardHtml(
+                {
+                  name: this.cardInfo.patName,
+                  idType: '01',
+                  idNumber: this.cardInfo.patIdNo,
+                  birthday: this.getBirthFormIdNo(this.cardInfo.patIdNo),
+                  nation: this.cardInfo.nation === ' ' ? '' : this.cardInfo.nation,
+                  gender: this.cardInfo.patSex,
+                  phone1: this.cardInfo.patMobile,
+                  address: this.cardInfo.addressDetail === ' ' ? '' : this.cardInfo.addressDetail
+                }
+              )
+            })
           }
         })
         .catch(error => {
           console.log(error)
-          this.$toast.fail('出错')
+          this.$toast.fail(error)
+        })
+    },
+    toBandCardHtml (cardInfo) {
+      this.$post('/api/health/addcard/geturl')
+        .then(res => {
+          if (res.code === 0) {
+            window.location = res.data + '?' + JSON.stringify(cardInfo)
+          } else {
+            alert('获取跳转地址失败')
+          }
         })
     },
     setDefault () {
