@@ -13,14 +13,21 @@ export default {
   data () {
     return {
       include: ['sDept'],
-      isBinded: false
+      isBinded: false,
+      cardInfo: {}
     }
   },
   created () {
     this.$post('/api/user/vx_info')
       .then(res => {
-        if (res.data.info.visitName === '') {
+        if (res.data.info.visitCardNo === '') {
+          let index = res.data.info.pat_list.findIndex(i => {
+            return i.visitCardNo === res.data.info.visitCardNo
+          })
+          this.cardInfo = index > -1 ? res.data.info.pat_list[index] : {}
           this.bindCardNotice()
+        } else if (res.data.info.visitCardNo.length !== 64) {
+          this.levelUpNotice()
         } else {
           this.isBinded = true
         }
@@ -33,12 +40,50 @@ export default {
     bindCardNotice () {
       this.$dialog.confirm({
         title: '提示',
-        message: '请先建档绑卡'
+        message: '请先绑卡'
       }).then(() => {
-        this.$router.replace('/mine/cardManage/bindCard')
+        this.$router.replace('/mine/cardManage')
       }).catch(() => {
         this.$router.push('/index')
       })
+    },
+    levelUpNotice () {
+      this.$dialog.confirm({
+        title: '提示',
+        message: '挂号需健康卡，请升级！'
+      }).then(() => {
+        this.toBandCardHtml(
+          {
+            name: this.cardInfo.patName,
+            idType: '01',
+            idNumber: this.cardInfo.patIdNo,
+            birthday: this.getBirthFormIdNo(this.cardInfo.patIdNo),
+            nation: this.cardInfo.nation,
+            gender: this.cardInfo.patSex,
+            phone1: this.cardInfo.patMobile,
+            address: this.cardInfo.addressDetail
+          }
+        )
+      }).catch(() => {
+        this.$router.push('/index')
+      })
+    },
+    getBirthFormIdNo (idNo) {
+      if (idNo.length === 15) { // 15位身份证
+        return '19' + idNo.substring(6, 8) + '-' + idNo.substring(8, 10) + '-' + idNo.substring(10, 12)
+      } else if (idNo.length === 18) { // 18位身份证
+        return idNo.substring(6, 10) + '-' + idNo.substring(10, 12) + '-' + idNo.substring(12, 14)
+      }
+    },
+    toBandCardHtml (cardInfo) {
+      this.$post('/api/health/addcard/geturl')
+        .then(res => {
+          if (res.code === 0) {
+            window.location = res.data + '?' + JSON.stringify(cardInfo)
+          } else {
+            alert('获取跳转地址失败')
+          }
+        })
     }
   },
   watch: {
