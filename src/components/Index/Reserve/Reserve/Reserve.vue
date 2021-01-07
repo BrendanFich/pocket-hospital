@@ -21,12 +21,12 @@ export default {
     this.$post('/api/user/vx_info')
       .then(res => {
         if (res.data.info.visitCardNo === '') {
+          this.bindCardNotice()
+        } else if (res.data.info.visitCardNo.length !== 64) {
           let index = res.data.info.pat_list.findIndex(i => {
             return i.visitCardNo === res.data.info.visitCardNo
           })
           this.cardInfo = index > -1 ? res.data.info.pat_list[index] : {}
-          this.bindCardNotice()
-        } else if (res.data.info.visitCardNo.length !== 64) {
           this.levelUpNotice()
         } else {
           this.isBinded = true
@@ -52,6 +52,7 @@ export default {
         title: '提示',
         message: '挂号需健康卡，请升级！'
       }).then(() => {
+        console.log(this.cardInfo)
         this.toBandCardHtml(
           {
             name: this.cardInfo.patName,
@@ -79,7 +80,8 @@ export default {
       this.$post('/api/health/addcard/geturl')
         .then(res => {
           if (res.code === 0) {
-            window.location = res.data + '?' + JSON.stringify(cardInfo)
+            console.log(res.data + '&cardinfo=' + JSON.stringify(cardInfo))
+            window.location = res.data + '&cardinfo=' + JSON.stringify(cardInfo)
           } else {
             alert('获取跳转地址失败')
           }
