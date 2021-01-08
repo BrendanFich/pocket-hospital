@@ -64,7 +64,7 @@ export default {
     getRegSource (date) {
       this.$post('/api/doctor/getRegSource', {
         deptCode: this.$store.state.deptCode.toString(),
-        patCardNo: this.$store.state.defaultNo,
+        patCardNo: this.$store.state.defaultCard.visitCardNo,
         date
       })
         .then(res => {

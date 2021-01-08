@@ -229,7 +229,7 @@ export default {
       this.$post('/api/doctor/getRegSource', {
         doctorCode: this.$store.state.doctorCode.toString(),
         deptCode: this.$store.state.deptCode.toString(),
-        patCardNo: this.$store.state.defaultNo,
+        patCardNo: this.$store.state.defaultCard.visitCardNo,
         date: this.$store.state.beginTime.split(' ')[0]
       })
         .then(res => {

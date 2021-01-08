@@ -58,7 +58,7 @@ export default {
   methods: {
     getLisList () {
       this.$post('/api/report/getLisList', {
-        patCardNo: this.$store.state.defaultNo,
+        patCardNo: this.$store.state.defaultCard.visitCardNo,
         page: this.page,
         size: 10
       })

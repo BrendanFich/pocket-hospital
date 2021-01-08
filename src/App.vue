@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Header />
-    <router-view class="middleContent"></router-view>
+    <router-view class="middleContent" v-if="show"></router-view>
     <Tabbar />
   </div>
 </template>
@@ -22,7 +22,8 @@ export default {
       nonceStr: '',
       signature: '',
       count: 0,
-      debug: false
+      debug: false,
+      show: false
     }
   },
   async created () {
@@ -75,7 +76,7 @@ export default {
       } else {
         this.getSign()
       }
-      this.testToken()
+      this.show = await this.setDefaultCard()
     }
     if (localStorage.getItem('store')) {
       this.$store.replaceState(
@@ -111,14 +112,24 @@ export default {
           })
       })
     },
-    testToken () {
-      this.$post('/api/user/vx_info')
-        .then(res => {
-          this.$store.commit('updateDefaultNo', res.data.info.visitCardNo)
-        })
-        .catch(error => {
-          console.log(error)
-        })
+    setDefaultCard () {
+      return new Promise((resolve, reject) => {
+        this.$post('/api/user/vx_info')
+          .then(res => {
+            if (res.data.info.visitCardNo) {
+              let index = res.data.info.pat_list.findIndex(i => {
+                return i.visitCardNo === res.data.info.visitCardNo
+              })
+              console.log(index > -1 ? res.data.info.pat_list[index] : {})
+              this.$store.commit('setDefaultCard', index > -1 ? res.data.info.pat_list[index] : {})
+            }
+            resolve(true)
+          })
+          .catch(error => {
+            console.log(error)
+            resolve(true)
+          })
+      })
     },
     getSign () {
       this.$post('/api/user/vx_sign', { url: location.href.split('#')[0] })

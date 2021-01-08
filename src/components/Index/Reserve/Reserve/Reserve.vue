@@ -69,13 +69,6 @@ export default {
         this.$router.push('/index')
       })
     },
-    getBirthFormIdNo (idNo) {
-      if (idNo.length === 15) { // 15位身份证
-        return '19' + idNo.substring(6, 8) + '-' + idNo.substring(8, 10) + '-' + idNo.substring(10, 12)
-      } else if (idNo.length === 18) { // 18位身份证
-        return idNo.substring(6, 10) + '-' + idNo.substring(10, 12) + '-' + idNo.substring(12, 14)
-      }
-    },
     toBandCardHtml (cardInfo) {
       this.$post('/api/health/addcard/geturl')
         .then(res => {
@@ -86,6 +79,13 @@ export default {
             alert('获取跳转地址失败')
           }
         })
+    },
+    getBirthFormIdNo (idNo) {
+      if (idNo.length === 15) { // 15位身份证
+        return '19' + idNo.substring(6, 8) + '-' + idNo.substring(8, 10) + '-' + idNo.substring(10, 12)
+      } else if (idNo.length === 18) { // 18位身份证
+        return idNo.substring(6, 10) + '-' + idNo.substring(10, 12) + '-' + idNo.substring(12, 14)
+      }
     }
   },
   watch: {

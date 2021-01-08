@@ -89,7 +89,41 @@ export default {
           })
       }
     },
+    levelUpNotice () {
+      this.$dialog.confirm({
+        title: '提示',
+        message: '挂号需健康卡，请升级！'
+      }).then(() => {
+        this.toBandCardHtml(
+          {
+            name: this.$store.state.defaultCard.patName,
+            idType: '01',
+            idNumber: this.$store.state.defaultCard.patIdNo,
+            birthday: this.getBirthFormIdNo(this.$store.state.defaultCard.patIdNo),
+            nation: this.$store.state.defaultCard.nation,
+            gender: this.$store.state.defaultCard.patSex,
+            phone1: this.$store.state.defaultCard.patMobile,
+            address: this.$store.state.defaultCard.addressDetail
+          }
+        )
+      }).catch(() => {
+      })
+    },
+    toBandCardHtml (cardInfo) {
+      this.$post('/api/health/addcard/geturl')
+        .then(res => {
+          if (res.code === 0) {
+            console.log(res.data + encodeURIComponent('?cardinfo=') + btoa(encodeURI(JSON.stringify(cardInfo))))
+            window.location = res.data + encodeURIComponent('?cardinfo=') + btoa(encodeURI(JSON.stringify(cardInfo)))
+          } else {
+            alert('获取跳转地址失败')
+          }
+        })
+    },
     pay (ledgerSn) {
+      if (this.$store.state.defaultCard.visitCardNo.length !== 64) {
+        this.levelUpNotice()
+      }
       let self = this
       this.$post('/api/doctor/payComfirm', { ledgerSn })
         .then(res => {

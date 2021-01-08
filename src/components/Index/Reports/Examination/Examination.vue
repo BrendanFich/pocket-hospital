@@ -51,7 +51,7 @@ export default {
   methods: {
     getPacsList () {
       this.$post('/api/report/getPacsList', {
-        patCardNo: this.$store.state.defaultNo,
+        patCardNo: this.$store.state.defaultCard.visitCardNo,
         page: this.page,
         size: 10
       })

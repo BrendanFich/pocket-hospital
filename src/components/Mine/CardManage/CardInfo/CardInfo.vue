@@ -176,7 +176,7 @@ export default {
         })
         .then(res => {
           if (res.code === 0) {
-            this.$store.commit('updateDefaultNo', this.cardInfo.visitCardNo)
+            this.setDefaultCard()
             this.$toast({
               type: 'success',
               message: '设置成功',
@@ -185,6 +185,20 @@ export default {
               },
               duration: 500
             })
+          }
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+    setDefaultCard () {
+      this.$post('/api/user/vx_info')
+        .then(res => {
+          if (res.data.info.visitCardNo) {
+            let index = res.data.info.pat_list.findIndex(i => {
+              return i.visitCardNo === res.data.info.visitCardNo
+            })
+            this.$store.commit('setDefaultCard', index > -1 ? res.data.info.pat_list[index] : {})
           }
         })
         .catch(error => {

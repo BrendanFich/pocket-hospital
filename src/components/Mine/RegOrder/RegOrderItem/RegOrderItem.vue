@@ -48,11 +48,11 @@ export default {
       regInfo: {},
       allInfo: {},
       ledgerSn: '',
-      patCardNo: ''
+      patCardNo: '',
+      cardInfo: {}
     }
   },
   created () {
-    this.getPatCardNo()
     this.getPayItem()
   },
   methods: {
@@ -66,15 +66,6 @@ export default {
           return '未支付'
         }
       }
-    },
-    getPatCardNo () {
-      this.$post('/api/user/vx_info')
-        .then(res => {
-          this.patCardNo = res.data.info.visitCardNo
-        })
-        .catch(err => {
-          console.log(err)
-        })
     },
     cancelRegister () {
       this.$post('/api/register/cancelRegister', {
@@ -110,8 +101,49 @@ export default {
           console.log(err)
         })
     },
+    getBirthFormIdNo (idNo) {
+      if (idNo.length === 15) { // 15位身份证
+        return '19' + idNo.substring(6, 8) + '-' + idNo.substring(8, 10) + '-' + idNo.substring(10, 12)
+      } else if (idNo.length === 18) { // 18位身份证
+        return idNo.substring(6, 10) + '-' + idNo.substring(10, 12) + '-' + idNo.substring(12, 14)
+      }
+    },
+    levelUpNotice () {
+      this.$dialog.confirm({
+        title: '提示',
+        message: '挂号需健康卡，请升级！'
+      }).then(() => {
+        this.toBandCardHtml(
+          {
+            name: this.$store.state.defaultCard.patName,
+            idType: '01',
+            idNumber: this.$store.state.defaultCard.patIdNo,
+            birthday: this.getBirthFormIdNo(this.$store.state.defaultCard.patIdNo),
+            nation: this.$store.state.defaultCard.nation,
+            gender: this.$store.state.defaultCard.patSex,
+            phone1: this.$store.state.defaultCard.patMobile,
+            address: this.$store.state.defaultCard.addressDetail
+          }
+        )
+      }).catch(() => {
+      })
+    },
+    toBandCardHtml (cardInfo) {
+      this.$post('/api/health/addcard/geturl')
+        .then(res => {
+          if (res.code === 0) {
+            console.log(res.data + encodeURIComponent('?cardinfo=') + btoa(encodeURI(JSON.stringify(cardInfo))))
+            window.location = res.data + encodeURIComponent('?cardinfo=') + btoa(encodeURI(JSON.stringify(cardInfo)))
+          } else {
+            alert('获取跳转地址失败')
+          }
+        })
+    },
     pay () {
       let self = this
+      if (this.$store.state.defaultCard.visitCardNo.length !== 64) {
+        this.levelUpNotice()
+      }
       this.$dialog.confirm({
         title: '温馨提示',
         message: '微信端目前只支持自费病人，暂不支持医保结算！如需医保缴费，请前往窗口处排队处理！'
