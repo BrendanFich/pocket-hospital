@@ -92,7 +92,7 @@ export default {
     levelUpNotice () {
       this.$dialog.confirm({
         title: '提示',
-        message: '挂号需健康卡，请升级！'
+        message: '当前卡非健康卡，支付需升级！是否前往升级？'
       }).then(() => {
         this.toBandCardHtml(
           {
@@ -123,27 +123,28 @@ export default {
     pay (ledgerSn) {
       if (this.$store.state.defaultCard.visitCardNo.length < 64) {
         this.levelUpNotice()
-      }
-      let self = this
-      this.$post('/api/doctor/payComfirm', { ledgerSn })
-        .then(res => {
-          self.$wx.ready(function () {
-            self.$wx.chooseWXPay({
-              timestamp: res.data.timestamp,
-              nonceStr: res.data.nonceStr,
-              package: res.data.package,
-              signType: res.data.signType,
-              paySign: res.data.paySign,
-              success: function (res) {
-                self.$router.go(-1)
-                self.$toast('充值成功')
-              }
+      } else {
+        let self = this
+        this.$post('/api/doctor/payComfirm', { ledgerSn })
+          .then(res => {
+            self.$wx.ready(function () {
+              self.$wx.chooseWXPay({
+                timestamp: res.data.timestamp,
+                nonceStr: res.data.nonceStr,
+                package: res.data.package,
+                signType: res.data.signType,
+                paySign: res.data.paySign,
+                success: function (res) {
+                  self.$router.go(-1)
+                  self.$toast('充值成功')
+                }
+              })
             })
           })
-        })
-        .catch(error => {
-          console.log(error)
-        })
+          .catch(error => {
+            console.log(error)
+          })
+      }
     }
   },
   watch: {

@@ -69,7 +69,7 @@ export default {
     levelUpNotice () {
       this.$dialog.confirm({
         title: '提示',
-        message: '挂号需健康卡，请升级！'
+        message: '当前卡非健康卡，支付需升级！是否前往升级？'
       }).then(() => {
         console.log(this.$store.state.defaultCard)
         this.toBandCardHtml(
@@ -101,16 +101,17 @@ export default {
     pay () {
       if (this.$store.state.defaultCard.visitCardNo.length < 64) {
         this.levelUpNotice()
-      }
-      this.$post('/api/out_visit/order/create', {
-        patCardNo: this.$route.params.patCardNo,
-        hisOrdNum: this.$route.params.hisOrdNum
-      })
-        .then(res => {
-          if (res.code === 0 && res.data.LedgerSn) {
-            this.payComfirm(res.data.LedgerSn)
-          }
+      } else {
+        this.$post('/api/out_visit/order/create', {
+          patCardNo: this.$route.params.patCardNo,
+          hisOrdNum: this.$route.params.hisOrdNum
         })
+          .then(res => {
+            if (res.code === 0 && res.data.LedgerSn) {
+              this.payComfirm(res.data.LedgerSn)
+            }
+          })
+      }
     },
     payComfirm (ledgerSn) {
       this.$post('/api/doctor/payComfirm', {ledgerSn})

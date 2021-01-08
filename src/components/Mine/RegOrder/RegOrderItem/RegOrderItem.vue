@@ -111,7 +111,7 @@ export default {
     levelUpNotice () {
       this.$dialog.confirm({
         title: '提示',
-        message: '挂号需健康卡，请升级！'
+        message: '当前卡非健康卡，支付需升级！是否前往升级？'
       }).then(() => {
         this.toBandCardHtml(
           {
@@ -141,37 +141,39 @@ export default {
     },
     pay () {
       let self = this
+      console.log(this.$store.state.defaultCard.visitCardNo.length < 64)
       if (this.$store.state.defaultCard.visitCardNo.length < 64) {
         this.levelUpNotice()
-      }
-      this.$dialog.confirm({
-        title: '温馨提示',
-        message: '微信端目前只支持自费病人，暂不支持医保结算！如需医保缴费，请前往窗口处排队处理！'
-      })
-        .then(() => {
-          this.$post('/api/doctor/payComfirm', { ledgerSn: this.$route.params.ledgerSn })
-            .then(res => {
-              if (Number(res.data.totalFee) !== Number(this.regInfo.regFee)) {
-                this.$toast({ message: '支付金额有误，请重试', duration: 1500, className: 'toast' })
-                return
-              }
-              wx.ready(function () {
-                wx.chooseWXPay({
-                  timestamp: res.data.timestamp,
-                  nonceStr: res.data.nonceStr,
-                  package: res.data.package,
-                  signType: res.data.signType,
-                  paySign: res.data.paySign,
-                  success: res => {
-                    self.getPayItem()
-                  }
+      } else {
+        this.$dialog.confirm({
+          title: '温馨提示',
+          message: '微信端目前只支持自费病人，暂不支持医保结算！如需医保缴费，请前往窗口处排队处理！'
+        })
+          .then(() => {
+            this.$post('/api/doctor/payComfirm', { ledgerSn: this.$route.params.ledgerSn })
+              .then(res => {
+                if (Number(res.data.totalFee) !== Number(this.regInfo.regFee)) {
+                  this.$toast({ message: '支付金额有误，请重试', duration: 1500, className: 'toast' })
+                  return
+                }
+                wx.ready(function () {
+                  wx.chooseWXPay({
+                    timestamp: res.data.timestamp,
+                    nonceStr: res.data.nonceStr,
+                    package: res.data.package,
+                    signType: res.data.signType,
+                    paySign: res.data.paySign,
+                    success: res => {
+                      self.getPayItem()
+                    }
+                  })
                 })
               })
-            })
-            .catch(error => {
-              console.log(error)
-            })
-        })
+              .catch(error => {
+                console.log(error)
+              })
+          })
+      }
     }
   }
 }
