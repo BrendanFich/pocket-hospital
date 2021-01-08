@@ -80,8 +80,8 @@ export default {
       this.$post('/api/health/addcard/geturl')
         .then(res => {
           if (res.code === 0) {
-            console.log(res.data + '?cardinfo=' + btoa(encodeURI(JSON.stringify(cardInfo))))
-            window.location = res.data + '?cardinfo=' + btoa(encodeURI(JSON.stringify(cardInfo)))
+            console.log(res.data + encodeURIComponent('?cardinfo=') + btoa(encodeURI(JSON.stringify(cardInfo))))
+            window.location = res.data + encodeURIComponent('?cardinfo=') + btoa(encodeURI(JSON.stringify(cardInfo)))
           } else {
             alert('获取跳转地址失败')
           }
