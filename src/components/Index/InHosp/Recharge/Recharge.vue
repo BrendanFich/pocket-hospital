@@ -121,7 +121,7 @@ export default {
         })
     },
     pay (ledgerSn) {
-      if (this.$store.state.defaultCard.visitCardNo.length !== 64) {
+      if (this.$store.state.defaultCard.visitCardNo.length < 64) {
         this.levelUpNotice()
       }
       let self = this

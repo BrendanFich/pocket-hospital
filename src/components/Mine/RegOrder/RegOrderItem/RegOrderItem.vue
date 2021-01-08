@@ -141,7 +141,7 @@ export default {
     },
     pay () {
       let self = this
-      if (this.$store.state.defaultCard.visitCardNo.length !== 64) {
+      if (this.$store.state.defaultCard.visitCardNo.length < 64) {
         this.levelUpNotice()
       }
       this.$dialog.confirm({

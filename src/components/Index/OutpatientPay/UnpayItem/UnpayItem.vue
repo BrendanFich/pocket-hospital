@@ -99,7 +99,7 @@ export default {
         })
     },
     pay () {
-      if (this.$store.state.defaultCard.visitCardNo.length !== 64) {
+      if (this.$store.state.defaultCard.visitCardNo.length < 64) {
         this.levelUpNotice()
       }
       this.$post('/api/out_visit/order/create', {

@@ -7,7 +7,7 @@
     </div>
     <van-cell-group>
       <van-cell title="卡类型" :value="cardInfo.visitCardType" />
-      <van-cell title="卡号" :value="cardInfo.visitCardNo"/>
+      <van-cell title="卡号" :value="cardInfo.visitCardNo && cardInfo.visitCardNo.substring(0, 64)"/>
       <van-cell title="姓名" :value="hiddenSomeName(cardInfo.patName)"/>
       <van-cell title="性别" :value="cardInfo.patSex"/>
       <van-cell title="证件号码" :value="hiddenSomeNum(cardInfo.patIdNo)"/>

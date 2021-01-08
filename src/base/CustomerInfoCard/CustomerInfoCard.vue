@@ -11,7 +11,7 @@
         <img src="./img/greenAvatar.png" />
         <div class="textInfo">
           <span class="name">{{visitName}} <span class="status">默认</span></span>
-          <p class="cardNumber">{{visitCardNo.length === 64 ? '健康卡号：' : '就诊卡号：'}}{{visitCardNo}}</p>
+          <p class="cardNumber">{{visitCardNo.length >= 64 ? '健康卡号：' : '就诊卡号：'}}{{visitCardNo.substring(0, 64)}}</p>
         </div>
       </div>
       <router-link to="/mine/cardManage">

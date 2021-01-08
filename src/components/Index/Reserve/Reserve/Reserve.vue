@@ -22,7 +22,7 @@ export default {
       .then(res => {
         if (res.data.info.visitCardNo === '') {
           this.bindCardNotice()
-        } else if (res.data.info.visitCardNo.length !== 64) {
+        } else if (res.data.info.visitCardNo.length < 64) {
           let index = res.data.info.pat_list.findIndex(i => {
             return i.visitCardNo === res.data.info.visitCardNo
           })
