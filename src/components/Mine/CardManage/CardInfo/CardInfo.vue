@@ -2,7 +2,7 @@
   <div class="cardInfo">
     <div class="card-qrcode">
       <div id="qrCode" @click="refreshCode">
-        <vue-qr :logoSrc="imageUrl" logoScale="0.29" :text="qrcodeText" :margin="8" :logoMargin="4" :colorDark="colorDark" :correctLevel="3"></vue-qr>
+        <vue-qr :logoSrc="imageUrl" logoScale="0.29" :text="qrcodeText" :margin="8" :logoMargin="2" :colorDark="colorDark" :correctLevel="3"></vue-qr>
       </div>
     </div>
     <van-cell-group>
