@@ -1,22 +1,22 @@
 <template>
-  <div class="health-card" @click="toCardInfo" :class="{defualt: isDefualt}">
+  <div class="health-card" @click="toCardInfo" :class="{defualt: isDefualt}" style="font-weight: 600;">
     <div class="status" v-if="isDefualt">默认</div>
     <img class="card-bg" src="./img/cardnewbg.png" alt="" />
     <div class="card-top-info">
-      <div class="card-top-org">广东省卫生健康委员会</div>
+      <div class="card-top-org" style="letter-spacing: 0.008rem">广东省卫生健康委员会</div>
       <div class="card-top-title">
         <img src="./img/icon2.png" alt="" />
-        <span>{{cardInfo.visitCardType}}</span>
+        <span style="font-weight: 800">{{cardInfo.visitCardType}}</span>
       </div>
     </div>
     <div class="card-detail-info">
       <div class="card-user-info">
-        <span class="card-user-name">{{hiddenSomeName(cardInfo.patName)}}</span>
-        <span class="card-user-id">{{hiddenSomeNum(cardInfo.patIdNo)}}</span>
+        <span class="card-user-name" style="font-weight: 800">{{cardInfo.patName}}</span>
+        <span class="card-user-id" style="font-weight: 800">{{hiddenSomeNum(cardInfo.patIdNo)}}</span>
       </div>
-      <vue-qr :logoSrc="imageUrl" :text="text" :margin="0" style="width: 5rem"></vue-qr>
+      <vue-qr :logoSrc="imageUrl" logoScale="0.29" :text="text" :margin="8" :logoMargin="4" style="width: 5rem" :correctLevel="3"></vue-qr>
     </div>
-    <div class="card-footer">中华人民共和国国家卫生健康委员会监制</div>
+    <div class="card-footer" style="letter-spacing: 0.008rem">中华人民共和国国家卫生健康委员会监制</div>
   </div>
 </template>
 
@@ -92,13 +92,15 @@ export default {
 
 <style lang="sass" scoped>
 .defualt
-  // border-width: 3px 3px 3px 60px
+  font-family: PingFangSC-Medium, sans-serif
+  font: bold
   border-width: 5px
   border-style: solid
   border-color:  #f69343
   border-radius: 0 .165rem * 3.3 .165rem * 3.3
   margin-top: 20px
 .health-card
+
   display: block
   height: 3.5rem * 3.3
   width: 6.2rem * 3.3
@@ -120,6 +122,7 @@ export default {
     width: 100%
     position: absolute
   .card-top-info
+    font-weight: 800!important
     position: absolute
     top: .23rem * 3.3
     width: calc(100% - .27rem * 3.3 - .34rem * 3.3)

@@ -2,7 +2,7 @@
   <div class="cardInfo">
     <div class="card-qrcode">
       <div id="qrCode" @click="refreshCode">
-        <vue-qr :logoSrc="imageUrl" :text="qrcodeText" :margin="0" :colorDark="colorDark" ></vue-qr>
+        <vue-qr :logoSrc="imageUrl" logoScale="0.29" :text="qrcodeText" :margin="8" :logoMargin="4" :colorDark="colorDark" :correctLevel="3"></vue-qr>
       </div>
     </div>
     <van-cell-group>
@@ -281,6 +281,7 @@ export default {
 @import '~assets/sass/variable'
 @import '~assets/sass/mixin'
 .cardInfo
+  font-family: PingFangSC-Medium, 'PINGFANG MEDIUM'
   background: $color-page-background
   padding-top: 90px
   padding-bottom: 120px
