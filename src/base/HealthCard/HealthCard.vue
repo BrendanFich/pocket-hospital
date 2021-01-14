@@ -14,7 +14,7 @@
         <span class="card-user-name" style="font-weight: 800">{{cardInfo.patName}}</span>
         <span class="card-user-id" style="font-weight: 800">{{hiddenSomeNum(cardInfo.patIdNo)}}</span>
       </div>
-      <vue-qr :logoSrc="imageUrl" logoScale="0.29" :text="text" :margin="8" :logoMargin="4" style="width: 5rem" :correctLevel="3"></vue-qr>
+      <vue-qr :logoSrc="imageUrl" :logoScale="logoScale" :text="text" :margin="8" :logoMargin="4" style="width: 5rem" :correctLevel="3"></vue-qr>
     </div>
     <div class="card-footer" style="letter-spacing: 0.008rem">中华人民共和国国家卫生健康委员会监制</div>
   </div>
@@ -27,7 +27,8 @@ export default {
   data () {
     return {
       imageUrl: require('./img/logo_.png'),
-      text: ''
+      text: '',
+      logoScale: 0.29
     }
   },
   components: {

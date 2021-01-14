@@ -2,7 +2,7 @@
   <div class="cardInfo">
     <div class="card-qrcode">
       <div id="qrCode" @click="refreshCode">
-        <vue-qr :logoSrc="imageUrl" logoScale="0.29" :text="qrcodeText" :margin="8" :logoMargin="2" :colorDark="colorDark" :correctLevel="3"></vue-qr>
+        <vue-qr :logoSrc="imageUrl" :logoScale="logoScale" :text="qrcodeText" :margin="8" :logoMargin="2" :colorDark="colorDark" :correctLevel="3"></vue-qr>
       </div>
     </div>
     <van-cell-group>
@@ -42,10 +42,13 @@ export default {
       timer: null,
       isDefualt: true,
       imageUrl: require('./img/logo_.png'),
-      colorDark: '#000'
+      colorDark: '#000',
+      logoScale: 0.29
     }
   },
   created () {
+    console.log(this.$route.params)
+
     this.cardInfo = this.$route.params
   },
   mounted () {
@@ -240,7 +243,7 @@ export default {
       })
         .then(res => {
           if (res.code === 0) {
-            this.$toast({ message: '解绑成功', duration: 1500, className: 'toast' })
+            this.$toast({ message: '就诊卡解绑成功', duration: 1500, className: 'toast' })
             this.$router.go(-1)
           }
         })
