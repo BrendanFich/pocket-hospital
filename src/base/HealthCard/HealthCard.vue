@@ -56,7 +56,7 @@ export default {
         visitCardType: this.cardInfo.visitCardType || ' ',
         patName: this.cardInfo.patName || ' ',
         patSex: this.cardInfo.patSex || ' ',
-        visitCardNo: this.cardInfo.qrCodeText || ' ',
+        visitCardNo: this.cardInfo.visitCardNo || ' ',
         patIdNo: this.cardInfo.patIdNo || ' ',
         patMobile: this.cardInfo.patMobile || ' ',
         patId: this.cardInfo.patId || ' ',
