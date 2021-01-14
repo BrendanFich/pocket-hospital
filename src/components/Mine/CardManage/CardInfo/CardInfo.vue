@@ -174,16 +174,16 @@ export default {
           patCardNo: this.cardInfo.visitCardNo,
           patName: this.cardInfo.patName
         })
-        .then(res => {
+        .then(async res => {
           if (res.code === 0) {
-            this.setDefaultCard()
+            await this.setDefaultCard()
             this.$toast({
               type: 'success',
               message: '设置成功',
               onClose: () => {
                 this.$router.replace({path: '/mine/cardManage'})
               },
-              duration: 500
+              duration: 600
             })
           }
         })
@@ -192,18 +192,21 @@ export default {
         })
     },
     setDefaultCard () {
-      this.$post('/api/user/vx_info')
-        .then(res => {
-          if (res.data.info.visitCardNo) {
-            let index = res.data.info.pat_list.findIndex(i => {
-              return i.visitCardNo === res.data.info.visitCardNo
-            })
-            this.$store.commit('setDefaultCard', index > -1 ? res.data.info.pat_list[index] : {})
-          }
-        })
-        .catch(error => {
-          console.log(error)
-        })
+      return new Promise((resolve, reject) => {
+        this.$post('/api/user/vx_info')
+          .then(res => {
+            if (res.data.info.visitCardNo) {
+              let index = res.data.info.pat_list.findIndex(i => {
+                return i.visitCardNo === res.data.info.visitCardNo
+              })
+              this.$store.commit('setDefaultCard', index > -1 ? res.data.info.pat_list[index] : {})
+              resolve()
+            }
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      })
     },
     async toCardBag () {
       let orderId = await this.getOrderId()
@@ -243,8 +246,14 @@ export default {
       })
         .then(res => {
           if (res.code === 0) {
-            this.$toast({ message: '就诊卡解绑成功', duration: 1500, className: 'toast' })
-            this.$router.go(-1)
+            this.$toast({
+              type: 'success',
+              message: '解绑成功',
+              onClose: () => {
+                this.$router.replace({path: '/mine/cardManage'})
+              },
+              duration: 600
+            })
           }
         })
     },
