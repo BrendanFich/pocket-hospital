@@ -132,7 +132,7 @@ export default {
       })
     },
     getSign () {
-      this.$post('/api/user/vx_sign', { url: location.protocol + '//' + location.host })
+      this.$post('/api/user/vx_sign', { url: location.href.split('#')[0] })
         .then(res => {
           window.localStorage.setItem(
             'wxSign',
