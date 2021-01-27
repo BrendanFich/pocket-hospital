@@ -1,8 +1,8 @@
 <template>
   <div class="cardManage">
     <div class="btns">
-      <!-- <van-button type="info" class="addBtn" color="linear-gradient(to right, #45bcec, #63d4f2)" @click="linkTo('/mine/cardManage/bindCard')">绑定就诊卡</van-button> -->
-      <van-button type="info" class="addBtn" color="linear-gradient(to right, #33cab9, #2ce794)" @click="toBandCardHtml">添加健康卡</van-button>
+      <van-button v-if="$store.state.visitCardBanding === '1'" type="info" class="addBtn" color="linear-gradient(to right, #45bcec, #63d4f2)" @click="linkTo('/mine/cardManage/bindCard')">绑定就诊卡</van-button>
+      <van-button v-else type="info" class="addBtn" color="linear-gradient(to right, #33cab9, #2ce794)" @click="toBandCardHtml">添加健康卡</van-button>
     </div>
     <h2 v-if="bindedCardList.length > 0">已绑定卡列表</h2>
     <ul class="cardList">

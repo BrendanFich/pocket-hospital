@@ -20,7 +20,8 @@ let state = {
   gpsLongitude: '',
   gpsName: '',
   healthCardBaseUrl: '',
-  autoFreshQrcode: ''
+  autoFreshQrcode: '',
+  visitCardBanding: ''
 }
 
 export default new Vuex.Store({

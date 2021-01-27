@@ -100,6 +100,7 @@ export default {
             this.$store.commit('setLocation', res.data)
             this.$store.commit('setHealthCardBaseUrl', res.data.gdcard_url)
             this.$store.commit('setAutoFreshQrcode', res.data.auto_fresh_qrcode)
+            this.$store.commit('setVisitCardBanding', res.data.visitCardBanding ? res.data.visitCardBanding : '0')
             this.debug = res.data.is_debug
             if (res.data.is_debug) {
               vConsole = new VConsole()

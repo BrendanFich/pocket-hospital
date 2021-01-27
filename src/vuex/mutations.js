@@ -55,6 +55,9 @@ const mutations = {
   },
   setAutoFreshQrcode (state, autoFreshQrcode) {
     state.autoFreshQrcode = autoFreshQrcode
+  },
+  setVisitCardBanding (state, visitCardBanding) {
+    state.visitCardBanding = visitCardBanding
   }
 }
 
