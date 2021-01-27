@@ -121,7 +121,7 @@ export default {
         })
     },
     pay (ledgerSn) {
-      if (this.$store.state.defaultCard.visitCardNo.length < 64 && this.$store.state.visitCardBanding === '1') {
+      if (this.$store.state.defaultCard.visitCardNo.length < 64 && this.$store.state.visitCardBanding === '0') {
         this.levelUpNotice()
       } else {
         let self = this

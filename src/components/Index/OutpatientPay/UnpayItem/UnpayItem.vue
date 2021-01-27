@@ -99,7 +99,7 @@ export default {
         })
     },
     pay () {
-      if (this.$store.state.defaultCard.visitCardNo.length < 64 && this.$store.state.visitCardBanding === '1') {
+      if (this.$store.state.defaultCard.visitCardNo.length < 64 && this.$store.state.visitCardBanding === '0') {
         this.levelUpNotice()
       } else {
         this.$post('/api/out_visit/order/create', {

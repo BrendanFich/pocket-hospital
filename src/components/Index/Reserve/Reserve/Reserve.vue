@@ -27,7 +27,7 @@ export default {
             return i.visitCardNo === res.data.info.visitCardNo
           })
           this.cardInfo = index > -1 ? res.data.info.pat_list[index] : {}
-          if (this.$store.state.visitCardBanding === '1') {
+          if (this.$store.state.visitCardBanding === '0') {
             this.levelUpNotice()
           }
         } else {
