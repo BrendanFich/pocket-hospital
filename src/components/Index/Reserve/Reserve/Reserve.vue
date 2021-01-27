@@ -29,6 +29,8 @@ export default {
           this.cardInfo = index > -1 ? res.data.info.pat_list[index] : {}
           if (this.$store.state.visitCardBanding === '0') {
             this.levelUpNotice()
+          } else {
+            this.isBinded = true
           }
         } else {
           this.isBinded = true
