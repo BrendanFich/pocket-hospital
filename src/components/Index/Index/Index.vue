@@ -80,7 +80,6 @@
         <div class="item"></div>
       </div>
     </div>
-    <!-- <Tabbar></Tabbar> -->
   </div>
 </template>
 

@@ -47,7 +47,7 @@ export default {
   computed: {},
   created () {
     this.$nextTick(function () {
-      this.text = this.cardInfo.qrCodeText
+      this.text = this.$store.state.visitCardBanding === '1' ? this.cardInfo.visitCardNo : this.cardInfo.qrCodeText
     })
   },
   methods: {

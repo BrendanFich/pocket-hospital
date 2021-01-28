@@ -20,7 +20,7 @@
     </van-field> -->
     <van-button type="info" class="btn" color="#59dca4" @click="setDefault">设为默认</van-button>
     <van-button type="info" class="btn" color="#658cfe" @click="toCardBag" v-if="cardInfo.visitCardType.includes('电子健康卡') && cardInfo.patIdType === '1'">进入卡包</van-button>
-    <van-button type="info" class="btn" color="#59dca4" @click="levelUp" v-else>升级</van-button>
+    <van-button type="info" class="btn" color="#59dca4" @click="levelUp" v-else-if="$store.state.visitCardBanding === '0'">升级</van-button>
     <van-button type="default" class="btn redBtn" @click="untie">解绑</van-button>
   </div>
 </template>
@@ -48,7 +48,6 @@ export default {
   },
   created () {
     console.log(this.$route.params)
-
     this.cardInfo = this.$route.params
   },
   mounted () {
@@ -96,6 +95,7 @@ export default {
         })
     },
     bindQRCode (qrcodeText) {
+      this.qrcodeText = qrcodeText
       if (this.qrcodeColor === 0) {
         this.colorDark = '#000000'
       } else if (this.qrcodeColor === 1) {
