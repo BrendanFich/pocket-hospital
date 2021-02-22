@@ -42,6 +42,7 @@ export default {
   },
   created () {
     this.getUnpayItem()
+    console.log(this.$store.state)
   },
   computed: {
   },
@@ -71,17 +72,17 @@ export default {
         title: '提示',
         message: '当前卡非健康卡，支付需升级！是否前往升级？'
       }).then(() => {
-        console.log(this.$store.state.defaultCard)
+        console.log(this.$store.state.defaultCardNo)
         this.toBandCardHtml(
           {
-            name: this.$store.state.defaultCard.patName,
+            name: this.$store.state.defaultCardPatName,
             idType: '01',
-            idNumber: this.$store.state.defaultCard.patIdNo,
-            birthday: this.getBirthFormIdNo(this.$store.state.defaultCard.patIdNo),
-            nation: this.$store.state.defaultCard.nation,
-            gender: this.$store.state.defaultCard.patSex,
-            phone1: this.$store.state.defaultCard.patMobile,
-            address: this.$store.state.defaultCard.addressDetail
+            idNumber: this.$store.state.defaultCardPatIdNo,
+            birthday: this.getBirthFormIdNo(this.$store.state.defaultCardPatIdNo),
+            nation: this.$store.state.defaultCardNation,
+            gender: this.$store.state.defaultCardPatSex,
+            phone1: this.$store.state.defaultCardPatMobile,
+            address: this.$store.state.defaultCardAddressDetail
           }
         )
       }).catch(() => {
@@ -98,8 +99,12 @@ export default {
           }
         })
     },
-    pay () {
-      if (this.$store.state.defaultCard.visitCardNo.length < 64 && this.$store.state.visitCardBanding === '0') {
+    async pay () {
+      if (!this.$store.state.defaultCardNo) {
+        await this.setDefaultCard()
+      }
+      console.log(this.$store.state.defaultCardNo)
+      if (this.$store.state.defaultCardNo.length < 64 && this.$store.state.visitCardBanding === '0') {
         this.levelUpNotice()
       } else {
         this.$post('/api/out_visit/order/create', {
@@ -112,6 +117,25 @@ export default {
             }
           })
       }
+    },
+    setDefaultCard () {
+      return new Promise((resolve, reject) => {
+        this.$post('/api/user/vx_info')
+          .then(res => {
+            if (res.data.info.visitCardNo) {
+              let index = res.data.info.pat_list.findIndex(i => {
+                return i.visitCardNo === res.data.info.visitCardNo
+              })
+              console.log(index > -1 ? res.data.info.pat_list[index] : {})
+              this.$store.commit('setDefaultCard', index > -1 ? res.data.info.pat_list[index] : {})
+            }
+            resolve(true)
+          })
+          .catch(error => {
+            console.log(error)
+            resolve(true)
+          })
+      })
     },
     payComfirm (ledgerSn) {
       this.$post('/api/doctor/payComfirm', {ledgerSn})

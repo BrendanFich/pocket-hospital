@@ -115,7 +115,7 @@ export default {
       this.$post('/api/doctor/getRegSource', {
         doctorCode: this.$store.state.doctorCode.toString(),
         deptCode: this.$store.state.deptCode.toString(),
-        patCardNo: this.$store.state.defaultCard.visitCardNo,
+        patCardNo: this.$store.state.defaultCardNo,
         date
       })
         .then(res => {

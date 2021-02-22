@@ -1,6 +1,12 @@
 const mutations = {
   setDefaultCard (state, defaultCard) {
-    state.defaultCard = defaultCard
+    state.defaultCardNo = defaultCard.visitCardNo
+    state.defaultCardPatName = defaultCard.patName
+    state.defaultCardPatIdNo = defaultCard.patIdNo
+    state.defaultCardNation = defaultCard.nation
+    state.defaultCardPatSex = defaultCard.patSex
+    state.defaultCardPatMobile = defaultCard.patMobile
+    state.defaultCardAddressDetail = defaultCard.addressDetail
   },
   updateDoctorCode (state, doctorCode) {
     state.doctorCode = doctorCode

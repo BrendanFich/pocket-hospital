@@ -225,11 +225,33 @@ export default {
           console.log(error)
         })
     },
-    getRegSource () {
+    setDefaultCard () {
+      return new Promise((resolve, reject) => {
+        this.$post('/api/user/vx_info')
+          .then(res => {
+            if (res.data.info.visitCardNo) {
+              let index = res.data.info.pat_list.findIndex(i => {
+                return i.visitCardNo === res.data.info.visitCardNo
+              })
+              console.log(index > -1 ? res.data.info.pat_list[index] : {})
+              this.$store.commit('setDefaultCard', index > -1 ? res.data.info.pat_list[index] : {})
+            }
+            resolve(true)
+          })
+          .catch(error => {
+            console.log(error)
+            resolve(true)
+          })
+      })
+    },
+    async getRegSource () {
+      if (!this.$store.state.defaultCardNo) {
+        await this.setDefaultCard()
+      }
       this.$post('/api/doctor/getRegSource', {
         doctorCode: this.$store.state.doctorCode.toString(),
         deptCode: this.$store.state.deptCode.toString(),
-        patCardNo: this.$store.state.defaultCard.visitCardNo,
+        patCardNo: this.$store.state.defaultCardNo,
         date: this.$store.state.beginTime.split(' ')[0]
       })
         .then(res => {

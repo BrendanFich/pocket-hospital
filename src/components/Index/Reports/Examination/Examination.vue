@@ -49,9 +49,31 @@ export default {
       winHeight - 54 + 'px'
   },
   methods: {
-    getPacsList () {
+    setDefaultCard () {
+      return new Promise((resolve, reject) => {
+        this.$post('/api/user/vx_info')
+          .then(res => {
+            if (res.data.info.visitCardNo) {
+              let index = res.data.info.pat_list.findIndex(i => {
+                return i.visitCardNo === res.data.info.visitCardNo
+              })
+              console.log(index > -1 ? res.data.info.pat_list[index] : {})
+              this.$store.commit('setDefaultCard', index > -1 ? res.data.info.pat_list[index] : {})
+            }
+            resolve(true)
+          })
+          .catch(error => {
+            console.log(error)
+            resolve(true)
+          })
+      })
+    },
+    async getPacsList () {
+      if (!this.$store.state.defaultCardNo) {
+        await this.setDefaultCard()
+      }
       this.$post('/api/report/getPacsList', {
-        patCardNo: this.$store.state.defaultCard.visitCardNo,
+        patCardNo: this.$store.state.defaultCardNo,
         page: this.page,
         size: 10
       })

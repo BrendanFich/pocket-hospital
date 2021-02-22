@@ -77,6 +77,7 @@ export default {
         this.getSign()
       }
       this.show = await this.setDefaultCard()
+      console.log(this.$store.state, '=============')
     }
     if (localStorage.getItem('store')) {
       this.$store.replaceState(
@@ -103,7 +104,7 @@ export default {
             this.$store.commit('setVisitCardBanding', res.data.visitCardBanding ? res.data.visitCardBanding : '0')
             this.debug = res.data.is_debug
             if (res.data.is_debug) {
-              vConsole = new VConsole()
+              // vConsole = new VConsole()
               console.log(vConsole.version)
             }
             resolve()
