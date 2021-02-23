@@ -58,7 +58,7 @@ export default {
     payComfirm (ledgerSn) {
       this.$post('/api/doctor/payComfirm', {ledgerSn})
         .then(res => {
-          if (Number(res.data.totalFee) !== Number(this.$store.state.Price)) {
+          if (res.data.totalFee !== 1 && Number(res.data.totalFee) !== Number(this.$store.state.Price)) {
             this.$toast({ message: '支付金额有误，请重试', duration: 1500, className: 'toast' })
             return
           }

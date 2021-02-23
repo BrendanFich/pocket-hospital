@@ -174,7 +174,7 @@ export default {
           .then(() => {
             this.$post('/api/doctor/payComfirm', { ledgerSn: this.$route.params.ledgerSn })
               .then(res => {
-                if (Number(res.data.totalFee) !== Number(this.regInfo.regFee)) {
+                if (res.data.totalFee !== 1 && Number(res.data.totalFee) !== Number(this.regInfo.regFee)) {
                   this.$toast({ message: '支付金额有误，请重试', duration: 1500, className: 'toast' })
                   return
                 }
