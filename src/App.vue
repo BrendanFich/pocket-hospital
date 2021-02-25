@@ -104,7 +104,7 @@ export default {
             this.$store.commit('setVisitCardBanding', res.data.visitCardBanding ? res.data.visitCardBanding : '0')
             this.debug = res.data.is_debug
             if (res.data.is_debug) {
-              // vConsole = new VConsole()
+              vConsole = new VConsole()
               console.log(vConsole.version)
             }
             resolve()
