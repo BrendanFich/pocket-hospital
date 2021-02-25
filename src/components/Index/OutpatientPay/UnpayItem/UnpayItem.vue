@@ -142,9 +142,11 @@ export default {
         .then(res => {
           console.log(Number(res.data.totalFee))
           console.log(Number(this.allInfo.selfAmt))
-          if (res.data.totalFee !== 1 && Number(res.data.totalFee) !== Number(this.allInfo.selfAmt)) {
-            this.$toast({ message: '支付金额有误，请重试', duration: 1500, className: 'toast' })
-            return
+          if (res.data.code === 0) {
+            if (res.data.totalFee !== 1 && Number(res.data.totalFee) !== Number(this.allInfo.selfAmt)) {
+              this.$toast({ message: '支付金额有误，请重试', duration: 1500, className: 'toast' })
+              return
+            }
           }
           this.wxPay(res.data)
         })
