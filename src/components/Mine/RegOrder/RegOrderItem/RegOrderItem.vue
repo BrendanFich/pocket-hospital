@@ -174,22 +174,24 @@ export default {
           .then(() => {
             this.$post('/api/doctor/payComfirm', { ledgerSn: this.$route.params.ledgerSn })
               .then(res => {
-                if (res.data.totalFee !== 1 && Number(res.data.totalFee) !== Number(this.regInfo.regFee)) {
-                  this.$toast({ message: '支付金额有误，请重试', duration: 1500, className: 'toast' })
-                  return
-                }
-                wx.ready(function () {
-                  wx.chooseWXPay({
-                    timestamp: res.data.timestamp,
-                    nonceStr: res.data.nonceStr,
-                    package: res.data.package,
-                    signType: res.data.signType,
-                    paySign: res.data.paySign,
-                    success: res => {
-                      self.getPayItem()
-                    }
+                if (res.data.code === 0) {
+                  if (res.data.totalFee !== 1 && Number(res.data.totalFee) !== Number(this.regInfo.regFee)) {
+                    this.$toast({ message: '支付金额有误，请重试', duration: 1500, className: 'toast' })
+                    return
+                  }
+                  wx.ready(function () {
+                    wx.chooseWXPay({
+                      timestamp: res.data.timestamp,
+                      nonceStr: res.data.nonceStr,
+                      package: res.data.package,
+                      signType: res.data.signType,
+                      paySign: res.data.paySign,
+                      success: res => {
+                        self.getPayItem()
+                      }
+                    })
                   })
-                })
+                }
               })
               .catch(error => {
                 console.log(error)
