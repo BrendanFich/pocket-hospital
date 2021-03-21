@@ -67,6 +67,7 @@ export default {
     }
   },
   created () {
+    /* eslint-disable */
     this.packageDate = packageDate
   },
   components: { CustomerInfoCard: () => import('@/base/CustomerInfoCard/CustomerInfoCard') },
