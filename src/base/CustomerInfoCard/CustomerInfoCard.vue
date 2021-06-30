@@ -27,7 +27,6 @@ export default {
   name: 'customerInfoCard',
   data () {
     return {
-      defualtCard: {},
       visitName: '',
       visitCardNo: '',
       patIdNo: '',
@@ -52,19 +51,10 @@ export default {
         if (res.code === 0) {
           this.visitName = res.data.info.visitName
           this.visitCardNo = res.data.info.visitCardNo
-          if (res.data.info.pat_list.length > 0) {
-            this.defualtCard = res.data.info.pat_list.filter(item => item.visitCardNo === this.visitCardNo)[0]
-            this.inPatId = this.defualtCard.patId
-            this.patIdNo = this.defualtCard.patIdNo
-          } else {
-            this.inPatId = ''
-            this.patIdNo = ''
-          }
-          this.$emit('defualtCard', this.defualtCard)
           this.$emit('visitName', res.data.info.visitName)
           this.$emit('visitCardNo', res.data.info.visitCardNo)
-          this.$emit('patIdNo', this.patIdNo)
-          this.$emit('inPatId', this.inPatId)
+          this.$emit('patIdNo', res.data.info.patIdNo)
+          this.$emit('inPatId', res.data.info.patId)
           if (res.data.info.visitName === '') {
             this.isShowBandTips = true
           }
