@@ -116,7 +116,13 @@ export default {
                   duration: 1000,
                   className: 'toast'
                 })
-                this.payComfirm(res.data.LedgerSn)
+                if (!res.data.Money === 0) {
+                  this.payComfirm(res.data.LedgerSn)
+                } else {
+                  this.$toast({ message: '挂号成功', duration: 1500, className: 'toast' })
+                  this.$router.go(-4)
+                }
+                this.$router.push()
               } else {
                 this.$toast({
                   message: res.msg,

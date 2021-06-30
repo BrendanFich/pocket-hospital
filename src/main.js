@@ -65,6 +65,18 @@ Vue.prototype.$dialog = Dialog
 Vue.prototype.$post = util.http.post
 Vue.prototype.$wx = wx
 
+/*
+现在前端支付流程是
+调用这三个接口生成订单
+/api/doctor/register 挂号
+/api/out_visit/order/create 门诊订单
+/api/invisit/payRecharge 住院充值
+返回LedgerSn
+再传LedgerSn给/api/doctor/payComfirm
+获取支付凭证：timestamp,nonceStr,package,signType,paySign
+再用这些调用微信API 页面弹出支付弹窗
+*/
+
 Vue.config.productionTip = false
 router.beforeEach((to, from, next) => {
   Dialog.close()
