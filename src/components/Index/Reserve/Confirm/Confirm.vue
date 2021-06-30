@@ -108,6 +108,7 @@ export default {
             deptCode: this.$store.state.deptCode.toString(),
             doctorCode: this.$store.state.doctorCode.toString()
           }
+          //
           this.$post('/api/doctor/register', configdata)
             .then(res => {
               if (res.code === 0) {
