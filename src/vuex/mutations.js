@@ -55,15 +55,6 @@ const mutations = {
     state.gpsLatitude = data.gps_latitude
     state.gpsLongitude = data.gps_longitude
     state.gpsName = data.gps_name
-  },
-  setHealthCardBaseUrl (state, gdcardUrl) {
-    state.healthCardBaseUrl = gdcardUrl
-  },
-  setAutoFreshQrcode (state, autoFreshQrcode) {
-    state.autoFreshQrcode = autoFreshQrcode
-  },
-  setVisitCardBanding (state, visitCardBanding) {
-    state.visitCardBanding = visitCardBanding
   }
 }
 

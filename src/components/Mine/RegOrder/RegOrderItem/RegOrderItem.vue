@@ -55,6 +55,11 @@ export default {
   created () {
     this.getPayItem()
   },
+  computed: {
+    visitCardBanding () {
+      return localStorage.getItem('visitCardBanding')
+    }
+  },
   methods: {
     status (backRegistInd, visitFlag) {
       if (this.regInfo.backRegistInd === '1') {
@@ -164,7 +169,7 @@ export default {
       }
       let self = this
       console.log(this.$store.state.defaultCardNo.length < 64)
-      if (this.$store.state.defaultCardNo.length < 64 && this.$store.state.visitCardBanding === '0') {
+      if (this.$store.state.defaultCardNo.length < 64 && this.visitCardBanding === '0') {
         this.levelUpNotice()
       } else {
         this.$dialog.confirm({

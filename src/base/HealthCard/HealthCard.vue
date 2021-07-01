@@ -44,10 +44,14 @@ export default {
       required: false
     }
   },
-  computed: {},
+  computed: {
+    visitCardBanding () {
+      return localStorage.getItem('visitCardBanding')
+    }
+  },
   created () {
     this.$nextTick(function () {
-      this.text = this.$store.state.visitCardBanding === '1' ? this.cardInfo.visitCardNo : this.cardInfo.qrCodeText
+      this.text = this.visitCardBanding === '1' ? this.cardInfo.visitCardNo : this.cardInfo.qrCodeText
     })
   },
   methods: {

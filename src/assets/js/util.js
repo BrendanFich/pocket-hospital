@@ -31,7 +31,6 @@ http.ajax.interceptors.request.use(
 // 响应拦截
 http.ajax.interceptors.response.use(
   res => {
-    console.log(res)
     Toast.clear()
     if (res.data.code === 401) {
       localStorage.removeItem('token')
@@ -96,7 +95,6 @@ http.post = (url, data) => {
   } else {
     reqUrl = apiBaseUrl + url
   }
-  console.log(data)
   return new Promise((resolve, reject) => {
     http.ajax
       .post(reqUrl, data)

@@ -17,6 +17,11 @@ export default {
       cardInfo: {}
     }
   },
+  computed: {
+    visitCardBanding () {
+      return localStorage.getItem('visitCardBanding')
+    }
+  },
   created () {
     this.$post('/api/user/vx_info')
       .then(res => {
@@ -27,7 +32,7 @@ export default {
             return i.visitCardNo === res.data.info.visitCardNo
           })
           this.cardInfo = index > -1 ? res.data.info.pat_list[index] : {}
-          if (this.$store.state.visitCardBanding === '0') {
+          if (this.visitCardBanding === '0') {
             this.levelUpNotice()
           } else {
             this.isBinded = true

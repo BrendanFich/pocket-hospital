@@ -45,6 +45,9 @@ export default {
     console.log(this.$store.state)
   },
   computed: {
+    visitCardBanding () {
+      return localStorage.getItem('visitCardBanding')
+    }
   },
   methods: {
     getUnpayItem () {
@@ -104,7 +107,7 @@ export default {
         await this.setDefaultCard()
       }
       console.log(this.$store.state.defaultCardNo)
-      if (this.$store.state.defaultCardNo.length < 64 && this.$store.state.visitCardBanding === '0') {
+      if (this.$store.state.defaultCardNo.length < 64 && this.visitCardBanding === '0') {
         this.levelUpNotice()
       } else {
         this.$post('/api/out_visit/order/create', {

@@ -38,6 +38,11 @@ export default {
       resOver: false
     }
   },
+  computed: {
+    visitCardBanding () {
+      return localStorage.getItem('visitCardBanding')
+    }
+  },
   methods: {
     getPatIdNo (val) {
       this.patIdNo = val
@@ -124,7 +129,7 @@ export default {
       if (!this.$store.state.defaultCardNo) {
         await this.setDefaultCard()
       }
-      if (this.$store.state.defaultCardNo.length < 64 && this.$store.state.visitCardBanding === '0') {
+      if (this.$store.state.defaultCardNo.length < 64 && this.visitCardBanding === '0') {
         this.levelUpNotice()
       } else {
         let self = this

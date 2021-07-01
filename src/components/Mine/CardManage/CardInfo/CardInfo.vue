@@ -20,7 +20,7 @@
     </van-field> -->
     <van-button type="info" class="btn" color="#59dca4" @click="setDefault">设为默认</van-button>
     <van-button type="info" class="btn" color="#658cfe" @click="toCardBag" v-if="cardInfo.visitCardType.includes('电子健康卡') && cardInfo.patIdType === '1'">进入卡包</van-button>
-    <van-button type="info" class="btn" color="#59dca4" @click="levelUp" v-else-if="$store.state.visitCardBanding === '0'">升级</van-button>
+    <van-button type="info" class="btn" color="#59dca4" @click="levelUp" v-else-if="visitCardBanding === '0'">升级</van-button>
     <van-button type="default" class="btn redBtn" @click="untie">解绑</van-button>
   </div>
 </template>
@@ -46,8 +46,18 @@ export default {
       logoScale: 0.29
     }
   },
+  computed: {
+    visitCardBanding () {
+      return localStorage.getItem('visitCardBanding')
+    },
+    autoFreshQrcode () {
+      return localStorage.getItem('autoFreshQrcode')
+    },
+    healthCardBaseUrl () {
+      return localStorage.getItem('healthCardBaseUrl')
+    }
+  },
   created () {
-    console.log(this.$route.params)
     this.cardInfo = this.$route.params
   },
   mounted () {
@@ -57,7 +67,7 @@ export default {
       })
     }
     this.refreshCode(false)
-    if (this.cardInfo.visitCardType.indexOf('电子健康卡') !== -1 && this.$store.state.autoFreshQrcode) {
+    if (this.cardInfo.visitCardType.indexOf('电子健康卡') !== -1 && this.autoFreshQrcode) {
       this.timer = setInterval(() => { this.refreshCode() }, 3 * 60 * 1000)
     }
   },
@@ -68,15 +78,15 @@ export default {
     qrcodeText (val) {
       this.bindQRCode(val)
     },
-    '$store.state.healthCardBaseUrl' () { // 刷新页面时，刷新二维码
+    healthCardBaseUrl () { // 刷新页面时，刷新二维码
       this.refreshCode()
     }
   },
   methods: {
     refreshCode (tip = true) {
       if (this.cardInfo.visitCardType.indexOf('电子健康卡') === -1) return
-      if (!this.$store.state.healthCardBaseUrl) return
-      this.$post(this.$store.state.healthCardBaseUrl + '/web/qrcodequery', {
+      if (!this.healthCardBaseUrl) return
+      this.$post(this.healthCardBaseUrl + '/web/qrcodequery', {
         healthCardId: this.cardInfo.visitCardNo,
         idType: this.cardInfo.patIdType,
         idNumber: this.cardInfo.patIdNo,
@@ -224,7 +234,7 @@ export default {
     },
     getOrderId () {
       return new Promise((resolve, reject) => {
-        this.$post(this.$store.state.healthCardBaseUrl + '/web/cardbagorderid', {
+        this.$post(this.healthCardBaseUrl + '/web/cardbagorderid', {
           qrCodeText: this.qrcodeText
         })
           .then(res => {
