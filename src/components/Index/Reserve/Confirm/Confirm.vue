@@ -58,8 +58,9 @@ export default {
     payComfirm (ledgerSn) {
       this.$post('/api/doctor/payComfirm', {ledgerSn})
         .then(res => {
-          console.log(res)
-          if (res.data.code === 0) {
+          if (res.code === 0) {
+            console.log('后端返回的金额:', res.data.totalFee)
+            console.log('存在前端的金额:', this.$store.state.Price)
             if (res.data.totalFee !== 1 && Number(res.data.totalFee) !== Number(this.$store.state.Price)) {
               this.$toast({ message: '支付金额有误，请重试', duration: 1500, className: 'toast' })
               return
@@ -123,7 +124,6 @@ export default {
                   this.$toast({ message: '挂号成功', duration: 1500, className: 'toast' })
                   this.$router.go(-4)
                 }
-                this.$router.push()
               } else {
                 this.$toast({
                   message: res.msg,
