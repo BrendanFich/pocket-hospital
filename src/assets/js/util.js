@@ -18,8 +18,10 @@ http.ajax.interceptors.request.use(
       store.commit('changePage', cancel)
     })
     Toast.loading()
-    if (localStorage.token) {
-      config.headers.Authorization = localStorage.token
+    if (localStorage.getItem('token')) {
+      config.headers.Authorization = localStorage.getItem('token')
+    } else {
+      window.location.href = authUrl
     }
     return config
   },
