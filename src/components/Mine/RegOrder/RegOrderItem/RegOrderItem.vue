@@ -214,7 +214,7 @@ export default {
 .regOrderItem
   background: $color-page-background
   padding-top: 90px
-  height: calc(100vh - 98px)
+  height: calc(100vh - 188px)
   overflow: auto
   &::-webkit-scrollbar
     display: none
