@@ -1,36 +1,46 @@
 <template>
   <div class="confirm">
-    <CustomerInfoCard @visitName="getVisitName" @visitCardNo="getVisitCardNo" :temporaryCardNo= temporaryCardNo :temporaryCardPatname = temporaryCardPatname></CustomerInfoCard>
+    <CustomerInfoCard
+      @getDefualtCard="getDefualtCard"
+      :temporaryCardNo="temporaryCardNo"
+      :temporaryCardPatname="temporaryCardPatname"
+    ></CustomerInfoCard>
     <div class="orderInfo">
       <ul>
         <li>
           <span class="key">院区</span>
-          <span class="value">{{$store.state.area}}</span>
+          <span class="value">{{ $store.state.area }}</span>
         </li>
         <li>
           <span class="key">科室</span>
-          <span class="value">{{$store.state.deptName}}</span>
+          <span class="value">{{ $store.state.deptName }}</span>
         </li>
         <li>
           <span class="key">医生</span>
-          <span class="value">{{$store.state.doctorName}}</span>
+          <span class="value">{{ $store.state.doctorName }}</span>
         </li>
         <li>
           <span class="key">就诊日期</span>
-          <span class="value">{{$store.state.beginTime.split(' ')[0]}}</span>
+          <span class="value">{{ $store.state.beginTime.split(" ")[0] }}</span>
         </li>
         <li>
           <span class="key">时间段</span>
-          <span class="value">{{$store.state.beginTime.split(' ')[1]+ '-' + $store.state.endTime.split(' ')[1]}}</span>
+          <span class="value">{{
+            $store.state.beginTime.split(" ")[1] +
+              "-" +
+              $store.state.endTime.split(" ")[1]
+          }}</span>
         </li>
         <li>
           <span class="key">诊金</span>
-          <span class="value">{{$store.state.Price/100}}元</span>
+          <span class="value">{{ $store.state.Price / 100 }}元</span>
         </li>
       </ul>
     </div>
     <div class="notice">温馨提示：微信暂不支持医保结算！</div>
-    <mt-button class="confirmBtn" type="primary" @click="confirm">确认挂号</mt-button>
+    <mt-button class="confirmBtn" type="primary" @click="confirm"
+      >确认挂号</mt-button
+    >
   </div>
 </template>
 
@@ -38,7 +48,9 @@
 import wx from 'weixin-js-sdk'
 export default {
   name: 'confirm',
-  components: { CustomerInfoCard: () => import('@/base/CustomerInfoCard/CustomerInfoCard') },
+  components: {
+    CustomerInfoCard: () => import('@/base/CustomerInfoCard/CustomerInfoCard')
+  },
   data () {
     return {
       patCardNo: '',
@@ -49,26 +61,41 @@ export default {
     }
   },
   methods: {
-    getVisitName (visitName) {
-      this.visitName = visitName
-    },
-    getVisitCardNo (visitCardNo) {
-      this.visitCardNo = visitCardNo
+    getDefualtCard (val) {
+      this.visitName = val.patName
+      this.visitCardNo = val.visitCardNo
     },
     payComfirm (ledgerSn) {
-      this.$post('/api/doctor/payComfirm', {ledgerSn})
+      this.$post('/api/doctor/payComfirm', { ledgerSn })
         .then(res => {
           if (res.code === 0) {
             console.log('后端返回的金额:', res.data.totalFee)
             console.log('存在前端的金额:', this.$store.state.Price)
-            if (res.data.totalFee !== 1 && Number(res.data.totalFee) !== Number(this.$store.state.Price)) {
-              this.$toast({ message: '支付金额有误，请重试', duration: 1500, className: 'toast' })
+            if (
+              res.data.totalFee !== 1 &&
+              Number(res.data.totalFee) !== Number(this.$store.state.Price)
+            ) {
+              this.$toast({
+                message: '支付金额有误，请重试',
+                duration: 1500,
+                className: 'toast'
+              })
               return
             }
-            if (res.data.paySign && res.data.nonceStr && res.data.package && res.data.signType && res.data.paySign) {
+            if (
+              res.data.paySign &&
+              res.data.nonceStr &&
+              res.data.package &&
+              res.data.signType &&
+              res.data.paySign
+            ) {
               this.wxPay(res.data)
             } else {
-              this.$toast({ message: '挂号成功', duration: 1500, className: 'toast' })
+              this.$toast({
+                message: '挂号成功',
+                duration: 1500,
+                className: 'toast'
+              })
               this.$router.go(-4)
             }
           }
@@ -87,21 +114,31 @@ export default {
           signType: config.signType,
           paySign: config.paySign,
           success: function (res) {
-            self.$toast({ message: '挂号成功', duration: 1500, className: 'toast' })
+            self.$toast({
+              message: '挂号成功',
+              duration: 1500,
+              className: 'toast'
+            })
             self.$router.go(-4)
           },
           cancel: function (res) {
-            self.$toast({ message: '请及时支付挂号费', duration: 1500, className: 'toast' })
+            self.$toast({
+              message: '请及时支付挂号费',
+              duration: 1500,
+              className: 'toast'
+            })
             self.$router.go(-4)
           }
         })
       })
     },
     confirm () {
-      this.$dialog.confirm({
-        title: '温馨提示',
-        message: '微信端目前只支持自费病人，暂不支持医保结算！如需医保缴费，请前往窗口处排队处理！'
-      })
+      this.$dialog
+        .confirm({
+          title: '温馨提示',
+          message:
+            '微信端目前只支持自费病人，暂不支持医保结算！如需医保缴费，请前往窗口处排队处理！'
+        })
         .then(() => {
           let configdata = {
             beginTime: this.$store.state.beginTime,
@@ -121,7 +158,11 @@ export default {
                 if (res.data.Money !== 0 && res.data.Money !== '0') {
                   this.payComfirm(res.data.LedgerSn)
                 } else {
-                  this.$toast({ message: '挂号成功', duration: 1500, className: 'toast' })
+                  this.$toast({
+                    message: '挂号成功',
+                    duration: 1500,
+                    className: 'toast'
+                  })
                   this.$router.go(-4)
                 }
               } else {

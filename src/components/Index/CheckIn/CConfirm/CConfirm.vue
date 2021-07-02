@@ -1,6 +1,6 @@
 <template>
   <div class="cConfirm">
-    <CustomerInfoCard @visitCardNo="getVisitCardNo"></CustomerInfoCard>
+    <CustomerInfoCard @getDefualtCard="getDefualtCard"></CustomerInfoCard>
     <div v-if="regList.length > 0">
       <div class="paidTime">请选择挂号信息</div>
       <div
@@ -135,8 +135,8 @@ export default {
           console.log(error)
         })
     },
-    getVisitCardNo (val) {
-      this.visitCardNo = val
+    getDefualtCard (val) {
+      this.visitCardNo = val.visitCardNo
     },
     confirm () {
       let self = this

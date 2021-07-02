@@ -51,10 +51,10 @@ export default {
         if (res.code === 0) {
           this.visitName = res.data.info.visitName
           this.visitCardNo = res.data.info.visitCardNo
-          this.$emit('visitName', res.data.info.visitName)
-          this.$emit('visitCardNo', res.data.info.visitCardNo)
-          this.$emit('patIdNo', res.data.info.patIdNo)
-          this.$emit('inPatId', res.data.info.patId)
+          let defualtCard = Array.isArray(res.data.info.pat_list) && res.data.info.pat_list.find(i => {
+            return res.data.info.visitCardNo === i.visitCardNo
+          })
+          this.$emit('getDefualtCard', defualtCard)
           if (res.data.info.visitName === '') {
             this.isShowBandTips = true
           }

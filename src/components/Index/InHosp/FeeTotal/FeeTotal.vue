@@ -1,8 +1,7 @@
 <template>
   <div class="outCount">
     <CustomerInfoCard
-      @visitName="getVisitName"
-      @patIdNo="getPatIdNo"
+      @getDefualtCard="getDefualtCard"
     ></CustomerInfoCard>
     <div v-show="resOver">
       <div class="notice" v-if="isInpat">暂无该病人住院信息</div>
@@ -69,11 +68,9 @@ export default {
           console.log(error)
         })
     },
-    getPatIdNo (val) {
-      this.patIdNo = val
-    },
-    getVisitName (val) {
-      this.visitName = val
+    getDefualtCard (val) {
+      this.patIdNo = val.visitCardNo
+      this.visitName = val.patName
     }
   },
   watch: {

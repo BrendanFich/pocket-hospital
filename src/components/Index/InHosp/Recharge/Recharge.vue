@@ -1,9 +1,7 @@
 <template>
   <div class="recharge">
     <CustomerInfoCard
-      @visitName="getVisitName"
-      @patIdNo="getPatIdNo"
-      @inPatId="getinPatId"
+      @getDefualtCard="getDefualtCard"
     ></CustomerInfoCard>
     <div v-show="resOver">
       <div class="notice" v-if="isInpat">无该病人住院信息，无法预交费</div>
@@ -44,14 +42,10 @@ export default {
     }
   },
   methods: {
-    getPatIdNo (val) {
-      this.patIdNo = val
-    },
-    getVisitName (val) {
-      this.visitName = val
-    },
-    getinPatId (val) {
-      this.inPatId = val
+    getDefualtCard (val) {
+      this.patIdNo = val.patIdNo
+      this.visitName = val.patName
+      this.inPatId = val.patId
     },
     selectNumber (number) {
       this.number = number
