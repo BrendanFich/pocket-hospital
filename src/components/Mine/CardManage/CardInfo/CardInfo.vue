@@ -1,6 +1,6 @@
 <template>
   <div class="cardInfo">
-    <div class="card-qrcode">
+    <div class="card-qrcode" v-if="isVisitCardBanding">
       <div id="qrCode" @click="refreshCode">
         <vue-qr :logoSrc="imageUrl" :logoScale="logoScale" :text="qrcodeText" :margin="8" :logoMargin="2" :colorDark="colorDark" :correctLevel="3"></vue-qr>
       </div>
@@ -19,8 +19,8 @@
       </template>
     </van-field> -->
     <van-button type="info" class="btn" color="#59dca4" @click="setDefault">设为默认</van-button>
-    <van-button type="info" class="btn" color="#658cfe" @click="toCardBag" v-if="cardInfo.visitCardType.includes('电子健康卡') && cardInfo.patIdType === '1'">进入卡包</van-button>
-    <van-button type="info" class="btn" color="#59dca4" @click="levelUp" v-else-if="visitCardBanding === '0'">升级</van-button>
+    <van-button type="info" class="btn" color="#658cfe" @click="toCardBag" v-if="cardInfo.visitCardType.includes('电子健康卡') && cardInfo.patIdType === '1' && isVisitCardBanding">进入卡包</van-button>
+    <van-button type="info" class="btn" color="#59dca4" @click="levelUp" v-else-if="isVisitCardBanding">升级</van-button>
     <van-button type="default" class="btn redBtn" @click="untie">解绑</van-button>
   </div>
 </template>
@@ -47,8 +47,8 @@ export default {
     }
   },
   computed: {
-    visitCardBanding () {
-      return localStorage.getItem('visitCardBanding')
+    isVisitCardBanding () {
+      return localStorage.getItem('visitCardBanding') === '0'
     },
     autoFreshQrcode () {
       return localStorage.getItem('autoFreshQrcode')
@@ -61,13 +61,13 @@ export default {
     this.cardInfo = this.$route.params
   },
   mounted () {
-    if (this.cardInfo.visitCardType.indexOf('电子健康卡') === -1) {
+    if (this.cardInfo.visitCardType.indexOf('电子健康卡') === -1 && this.isVisitCardBanding) {
       this.$nextTick(() => {
         this.bindQRCode(this.$route.params.visitCardNo)
       })
     }
-    this.refreshCode(false)
-    if (this.cardInfo.visitCardType.indexOf('电子健康卡') !== -1 && this.autoFreshQrcode) {
+    this.isVisitCardBanding && this.refreshCode(false)
+    if (this.cardInfo.visitCardType.indexOf('电子健康卡') !== -1 && this.autoFreshQrcode && this.isVisitCardBanding) {
       this.timer = setInterval(() => { this.refreshCode() }, 3 * 60 * 1000)
     }
   },
@@ -79,7 +79,7 @@ export default {
       this.bindQRCode(val)
     },
     healthCardBaseUrl () { // 刷新页面时，刷新二维码
-      this.refreshCode()
+      this.isVisitCardBanding && this.refreshCode()
     }
   },
   methods: {
