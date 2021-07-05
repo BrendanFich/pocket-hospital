@@ -31,6 +31,7 @@ export default {
   },
   methods: {
     getDefualtCard (val) {
+      this.patCardNo = val.visitCardNo
       this.getOrderList(val.visitCardNo, val.visitCardType)
     },
     getOrderList (patCardNo, patCardType) {

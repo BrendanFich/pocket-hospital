@@ -21,7 +21,11 @@ http.ajax.interceptors.request.use(
     if (localStorage.getItem('token')) {
       config.headers.Authorization = localStorage.getItem('token')
     } else {
-      window.location.href = authUrl
+      process.env.NODE_ENV === 'production' ? (window.location.href = authUrl) : Toast({
+        message: 'token过期',
+        duration: 1500,
+        className: 'toast'
+      })
     }
     return config
   },
