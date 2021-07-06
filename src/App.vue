@@ -29,7 +29,9 @@ export default {
   async created () {
     if (this.getUrlParam('token')) {
       window.localStorage.setItem('token', this.getUrlParam('token'))
-      window.location.href = window.location.href.split('?')[0]
+      if (!window.location.href.includes('#/outpatientPay/unpayItem')) {
+        window.location.href = window.location.href.split('?')[0]
+      }
     }
     if (this.getUrlParam('msg')) {
       let errorMsg = decodeURIComponent(this.getUrlParam('msg'))

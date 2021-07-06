@@ -21,11 +21,19 @@ http.ajax.interceptors.request.use(
     if (localStorage.getItem('token')) {
       config.headers.Authorization = localStorage.getItem('token')
     } else {
-      process.env.NODE_ENV === 'production' ? (window.location.href = authUrl) : Toast({
-        message: 'token过期',
-        duration: 1500,
-        className: 'toast'
-      })
+      if (process.env.NODE_ENV === 'production') {
+        let href = authUrl
+        if (window.location.href.includes('#/outpatientPay/unpayItem')) {
+          href = authUrl + `?redirect_url=${window.location.href.split('#')[1]}`
+        }
+        window.location.href = href
+      } else {
+        Toast({
+          message: 'token过期',
+          duration: 1500,
+          className: 'toast'
+        })
+      }
     }
     return config
   },
