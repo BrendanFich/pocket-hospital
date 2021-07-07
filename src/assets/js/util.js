@@ -17,7 +17,6 @@ http.ajax.interceptors.request.use(
     config.cancelToken = new CancelToken(cancel => {
       store.commit('changePage', cancel)
     })
-    Toast.loading()
     if (localStorage.getItem('token')) {
       config.headers.Authorization = localStorage.getItem('token')
     } else {
@@ -45,7 +44,6 @@ http.ajax.interceptors.request.use(
 // 响应拦截
 http.ajax.interceptors.response.use(
   res => {
-    Toast.clear()
     if (res.data.code === 401) {
       localStorage.removeItem('token')
       if (process.env.NODE_ENV === 'production') {
@@ -75,7 +73,6 @@ http.ajax.interceptors.response.use(
     return res
   },
   err => {
-    Toast.clear()
     console.error(err)
     // 若请求超时，再请求一次
     let originalRequest = err.config
