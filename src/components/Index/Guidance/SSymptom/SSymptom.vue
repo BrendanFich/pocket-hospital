@@ -129,7 +129,6 @@ export default {
     margin-bottom: 20px
     .searchTags
       width: 710px
-      height: 160px
       padding: 0 20px
       overflow: auto
       .tag
