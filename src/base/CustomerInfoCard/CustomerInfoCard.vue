@@ -20,7 +20,7 @@
     </div>
     <van-popup v-model="show">
       <div class="card-qrcode">
-        <div id="qrCode" @click="refreshCode">
+        <div id="qrCode">
           <vue-qr :logoSrc="imageUrl" :logoScale="logoScale" :text="qrcodeText" :margin="8" :logoMargin="2" :colorDark="colorDark" :correctLevel="3"></vue-qr>
         </div>
       </div>
@@ -29,8 +29,10 @@
 </template>
 
 <script>
+import vueQr from 'vue-qr'
 export default {
   name: 'customerInfoCard',
+  components: {vueQr},
   data () {
     return {
       defualtCard: {},
@@ -39,7 +41,9 @@ export default {
       patIdNo: '',
       inPatId: '',
       isShowBandTips: false,
-      show: false
+      show: false,
+      qrcodeText: '',
+      colorDark: '#000'
     }
   },
   props: {
@@ -73,31 +77,8 @@ export default {
   },
   methods: {
     showQRcode () {
-      if (this.defualtCard.visitCardNo.length >= 64 && this.healthCardBaseUrl) {
-        this.refreshCode()
-      } else {
-        this.bindQRCode(this.defualtCard.visitCardNo)
-      }
+      this.bindQRCode(this.defualtCard.visitCardNo)
       this.show = true
-    },
-    refreshCode (tip = true) {
-      this.$post(this.healthCardBaseUrl + '/web/qrcodequery', {
-        healthCardId: this.defualtCard.visitCardNo,
-        idType: this.defualtCard.patIdType,
-        idNumber: this.defualtCard.patIdNo,
-        codeType: '0' // 0动态码 1静态码
-      })
-        .then(res => {
-          if (res.code === 0) {
-            this.qrcodeColor = res.data.color
-            this.qrcodeText = res.data.qrCodeText
-            tip && this.$toast({ message: '刷新成功', duration: 1500, className: 'toast' })
-          }
-        })
-        .catch(error => {
-          console.log(error)
-          this.$toast({ message: '刷新二维码失败', duration: 1500, className: 'toast' })
-        })
     },
     bindQRCode (qrcodeText) {
       this.qrcodeText = qrcodeText
@@ -184,7 +165,7 @@ export default {
     #qrCode
       height: 380px
       width: 380px
-      margin: 20px auto
+      margin: 20px
       img
         height: 380px
         width: 380px

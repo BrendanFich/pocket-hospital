@@ -61,12 +61,13 @@ export default {
     this.cardInfo = this.$route.params
   },
   mounted () {
-    if (this.cardInfo.visitCardType.indexOf('电子健康卡') === -1) {
+    if (this.cardInfo.visitCardType.indexOf('电子健康卡') === -1 || !this.isVisitCardBanding) {
       this.$nextTick(() => {
         this.bindQRCode(this.$route.params.visitCardNo)
       })
+    } else {
+      this.refreshCode(false)
     }
-    this.refreshCode(false)
     if (this.cardInfo.visitCardType.indexOf('电子健康卡') !== -1 && this.autoFreshQrcode && this.isVisitCardBanding) {
       this.timer = setInterval(() => { this.refreshCode() }, 3 * 60 * 1000)
     }
@@ -84,7 +85,7 @@ export default {
   },
   methods: {
     refreshCode (tip = true) {
-      if (this.cardInfo.visitCardType.indexOf('电子健康卡') === -1) return
+      if (this.cardInfo.visitCardType.indexOf('电子健康卡') === -1 || !this.isVisitCardBanding) return
       if (!this.healthCardBaseUrl) return
       this.$post(this.healthCardBaseUrl + '/web/qrcodequery', {
         healthCardId: this.cardInfo.visitCardNo,
