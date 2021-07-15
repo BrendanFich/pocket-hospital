@@ -1,6 +1,6 @@
 <template>
   <div class="cardInfo">
-    <div class="card-qrcode" v-if="isVisitCardBanding">
+    <div class="card-qrcode">
       <div id="qrCode" @click="refreshCode">
         <vue-qr :logoSrc="imageUrl" :logoScale="logoScale" :text="qrcodeText" :margin="8" :logoMargin="2" :colorDark="colorDark" :correctLevel="3"></vue-qr>
       </div>
@@ -61,12 +61,12 @@ export default {
     this.cardInfo = this.$route.params
   },
   mounted () {
-    if (this.cardInfo.visitCardType.indexOf('电子健康卡') === -1 && this.isVisitCardBanding) {
+    if (this.cardInfo.visitCardType.indexOf('电子健康卡') === -1) {
       this.$nextTick(() => {
         this.bindQRCode(this.$route.params.visitCardNo)
       })
     }
-    this.isVisitCardBanding && this.refreshCode(false)
+    this.refreshCode(false)
     if (this.cardInfo.visitCardType.indexOf('电子健康卡') !== -1 && this.autoFreshQrcode && this.isVisitCardBanding) {
       this.timer = setInterval(() => { this.refreshCode() }, 3 * 60 * 1000)
     }
